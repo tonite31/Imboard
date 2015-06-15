@@ -1,0 +1,59 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+<meta name="viewport" content="width=device-width" />
+
+<title>사용자정보편집</title>
+
+<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-reset-1.0.css" />
+<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-ui-1.0.css" />
+
+<script src="/content/lib/jquery/jquery-1.10.2.js"></script>
+<script src="/content/lib/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="/content/module/imboard/js/imboard-api-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-ui-1.0.js"></script>
+
+<script>
+$(document).ready(function()
+{
+	var rect = $("#container").get(0).getBoundingClientRect();
+	$("#container").css("margin-top", $(window).height()/2.3 - rect.height/2 + "px");
+	
+	$("#form").compile(function(data)
+	{
+		var result = $.api.user.insertUser(data);
+		if(result.code == 1000)
+		{
+			location.href = "/redirect";
+		}
+		else
+		{
+			alert("사용자등록이 실패했습니다.");
+		}
+	});
+});
+</script>
+</head>
+<body>
+	<div id="container" style="margin:0 auto; width: 400px; text-align: center;">
+		<h2>당신은 누구십니까?</h2>
+		<form data-component="form" id="form">
+			<p>
+				<input type="hidden" name="id" value="#{user.id}"/>
+				<input type="hidden" name="provider" value="#{user.provider}"/>
+				<input type="text" name="displayId" class="textinput default" style="font-size:15px; width: 250px;" placeholder="아이디" required="required" pattern="[a-z0-9]{20}" autofocus="autofocus"/>
+				<input type="text" name="name" class="textinput default" style="font-size:15px; width: 250px;" placeholder="이름 혹은 별명" required="required"/>
+			</p>
+			<p>
+				<textarea name="description" class="textinput default" style="font-size:15px; width: 250px; height: 150px;" placeholder="설명"></textarea>
+			</p>
+			<p>
+				<input type="submit" class="btn default" style="font-size:15px;" value="저장"/>
+			</p>
+		</form>
+	</div>
+</body>
+</html>

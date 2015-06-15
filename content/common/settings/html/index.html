@@ -1,0 +1,54 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>설정</title>
+
+<script src="/content/lib/ckeditor/ckeditor.js"></script>
+<script src="/content/lib/jquery/jquery-1.10.2.js"></script>
+<script src="/content/lib/handlebars/handlebars-v1.3.0.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/content/common/settings/lib/bootstrap/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css" href="/content/common/settings/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="/content/common/settings/css/index.css" />
+<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-ui-1.0.css" />
+
+<script src="/content/lib/ckeditor/ckeditor.js"></script>
+<script src="/content/lib/jquery/jquery-1.10.2.js"></script>
+<script src="/content/common/settings/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/content/lib/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="/content/module/imboard/js/imboard-api-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-ui-1.0.js"></script>
+<script src="/content/module/imboard/js/handlebar-helper-1.0.js"></script>
+
+<script src="/content/common/settings/js/index.js"></script>
+
+</head>
+<body>
+	<div class="col-sm-2" style="padding-top:15px;">
+		<ul class="list-group">
+			<li class="list-group-item"><a href="/"><span class="glyphicon glyphicon-arrow-left"></span> 돌아가기</a></li>
+		  	<li class="list-group-item"><a href="?piece=board">게시판관리</a></li>
+			<li class="list-group-item"><a href="?piece=menu">메뉴관리</a></li>
+			<li class="list-group-item"><a href="?piece=role">권한레벨관리</a></li>
+			<li class="list-group-item"><a href="?piece=urlAuth">URL권한관리</a></li>
+			<li class="list-group-item"><a href="?piece=member">멤버관리</a></li>
+			<li class="list-group-item"><a href="?piece=visitor">접속통계</a></li>
+			<li class="list-group-item"><a href="?piece=admin">관리자 계정관리</a></li>
+		</ul>
+<!-- 		<ul class="tabs" data-component="tabs" data-autocompile="true" id="tabList" style="padding: 10px 20px 0;"> -->
+<!-- 			<li><a href="?piece=board" class="tab selected">게시판관리</a></li> -->
+<!-- 			<li><a href="?piece=menuForBlog" class="tab">블로그&amp;카페형 메뉴관리</a></li> -->
+<!-- 			<li><a href="?piece=role" class="tab">권한레벨관리</a></li> -->
+<!-- 			<li><a href="?piece=urlAuth" class="tab">URL 권한관리</a></li> -->
+<!-- 			<li><a href="#" class="tab">메뉴관리</a></li> -->
+<!-- 			<li><a href="?piece=member" class="tab">멤버관리</a></li> -->
+<!-- 			<li><a href="?piece=admin" class="tab">관리자 계정관리</a></li> -->
+<!-- 			<li><a href="?piece=visitor" class="tab">접속통계</a></li> -->
+<!-- 		</ul> -->
+	</div>
+	<div class="col-sm-10" data-component="piece" data-key="piece"></div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<style>
+p
+{
+	margin:5px;
+}
+</style>
+
+<div style="margin: 0 auto; width: 500px; text-align: center;">
+	<h4>관리자 계정의 이름과 비밀번호를 변경하거나 초기화 할 수 있습니다</h4>
+	<form id="form" data-component="form">
+		<fieldset style="border-top: 1px solid #dfdfdf; border-right:0; border-left:0; border-bottom:0;">
+			<p><input type="text" class="textinput default" name="id" style="font-size:15px;" readonly="readonly" value="%{user.id}" /></p>
+			<p><input type="text" class="textinput default" name="name" style="font-size:15px;" value="%{user.name}" /></p>
+			<p><input type="password" class="textinput default" name="password" style="font-size:15px;" placeholder="비밀번호" /></p>
+			<p><input type="password" class="textinput default" name="passwordConfirm" style="font-size:15px;" placeholder="비밀번호 확인" /></p>
+			<p><span style="font-size:12px; color:red; display:none;" id="errorMessage">등록된 이메일이 없거나 비밀번호가 일치하지 않습니다</span></p>
+			<p>
+				<input type="submit" class="btn default" style="font-size:15px;" value="저장">
+				<input type="button" class="btn default" style="font-size:15px;" data-role="submit" data-role-type="initialize" value="초기화">
+			</p>
+		</fieldset>
+	</form>
+</div>

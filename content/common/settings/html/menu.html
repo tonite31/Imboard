@@ -1,0 +1,24 @@
+<script id="imboard-settings-menu-template" type="text/x-handlebars-template">
+{{#if list}}
+{{#each list}}
+<li data-id="{{id}}">
+	<span data-name>{{name}}</span>
+	<div>
+	<select data-id="{{id}}">
+		<option value="" {{#equals viewLevel ''}}selected{{/equals}}>Everyone</option>
+		{{#if ../../roleList}}
+		{{#each ../../roleList}}
+			<option value="{{level}}" {{#equals ../../viewLevel level}}selected{{/equals}}>{{name}}</option>
+		{{/each}}
+		{{/if}}
+	</select>
+	<button type="button" class="btn btn-default" data-id="delete"><span class="glyphicon glyphicon-minus"></span></button>
+	<button type="button" class="btn btn-default" data-id="up"><span class="glyphicon glyphicon-arrow-up"></span></button>
+	<button type="button" class="btn btn-default" data-id="down"><span class="glyphicon glyphicon-arrow-down"></span></button>
+	</div>
+</li>
+{{/each}}
+{{/if}}
+</script>
+
+<div id="menu"></div>

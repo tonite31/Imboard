@@ -1,0 +1,32 @@
+<script id="settings-menu-template" type="text/x-handlebars-template">
+{{#if menuList}}
+<ul>
+{{#each menuList}}
+	{{#equals type 0}}
+	<li data-priority="{{priority}}">{{name}}</li>
+	{{/equals}}
+	{{#equals type 1}}
+	<li data-priority="{{priority}}">[그룹]{{name}}</li>
+	{{/equals}}
+	{{#equals type 2}}
+	<li data-priority="{{priority}}"><hr/></li>
+	{{/equals}}
+{{/each}}
+</ul>
+{{/if}}
+</script>
+
+<div class="colgroup" style="min-width: 700px; width: 70%; margin:20px auto;">
+	<div class="col col-2-9" style="border: 1px solid #dfdfdf;">
+		<div style="text-align: center;">
+			<select class="selecbox" style="width: 70%;" id="typeSelect">
+				<option value="0">게시판</option>
+				<option value="1">그룹</option>
+				<option value="2">구분선</option>
+			</select>
+			<button type="button" class="btn default" id="addType">추가</button>
+		</div>
+		<div id="menuList" data-bind="menuList" data-template-id="settings-menu-template"></div>
+	</div>
+	<div class="col col-7-9" style="border: 1px solid yellow;"></div>
+</div>

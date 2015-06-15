@@ -1,0 +1,60 @@
+{
+	"frame" : "sample",
+	"server" :
+	{
+	    "port" : 3000,
+	    "host" : "http://localhost:3000"
+	},
+	"log" :
+	{
+	    "level" : "debug",
+	    "colorize" : true
+	},
+	"code" :
+	{
+		"SUCCESS" : "1000",
+		"ERROR" : "-9999",
+		"ACCESS_DENIED" : "-9998",
+		"SIGNIN" : "-9997",
+		"DUPLICATED" : "-9996",
+		"KEY_UNDEFINED" : "-9995",
+		"DATA_NOT_FOUND" : "-9994"
+	},
+	"jdbc":
+	{
+        "host"     : "ip",
+        "user"     : "user",
+        "password" : "password",
+        "database" : "dbname",
+        "typeCast" : true,
+        "multipleStatements": true
+	},
+	"encryptKey" : "imboard_encrypt_key",
+	"openAuth" :
+	{
+		"facebook" :
+		{
+			"appId" : "appId",
+			"secret" : "secret"
+		},
+		"twitter" :
+		{
+			"appId" : "appId",
+			"secret" : "secret"
+		},
+		"google" :
+		{
+			"appId" : "appId",
+			"secret" : "secret"
+		}
+	},
+	"aws" :
+	{
+		"accessKeyId" : "accessKeyId",
+		"secretAccessKey" : "secretAccessKey",
+		"s3" : {
+			"bucketName" : "bucketName",
+			"resourcesUrl" : "prefixUrl"
+		}
+	}
+}

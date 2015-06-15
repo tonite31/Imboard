@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+    <resultMap type="CommentVo" id="commentResult">
+        <result column="BOARD_ID" property="boardId" />
+        <result column="ARTICLE_SEQ" property="articleSeq" />
+        <result column="SEQ" property="seq" />
+        <result column="CONTENT" property="content" />
+        <result column="REGISTER_DATE" property="registerDate" />
+        <result column="GOOD" property="good" />
+        <result column="BAD" property="bad" />
+        <result column="WRITER_ID" property="writerId" />
+        <result column="WRITER_NAME" property="writerName" />
+        <result column="DISPLAY_ID" property="displayId" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="PARENT_WRITER_ID" property="parentWriterId" />
+        <result column="PARENT_WRITER_NAME" property="parentWriterName" />
+        <result column="PARENT_SEQ" property="parentSeq" />
+        <result column="STATUS" property="status" />
+    </resultMap>
+    
+    <select id="getNextSeq" parameterType="CommentVo" resultType="String">
+		SELECT
+			CASE
+				WHEN MAX(SEQ) IS NULL THEN 0
+				ELSE MAX(SEQ) + 1
+			END as SEQ
+		FROM
+			IMB_COMMENT
+		WHERE BOARD_ID = #{boardId} AND ARTICLE_SEQ = #{articleSeq}
+    </select>
+    
+    <select id="getCommentListCount" parameterType="CommentVo" resultType="String">
+        SELECT
+        	COUNT(IMBOARD_ID) AS COUNT
+        FROM
+        	IMB_COMMENT
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	<if test="#{content}">
+            AND CONTENT LIKE CONCAT('%',#{content},'%')
+        	</if>
+        ORDER BY
+        	GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
+     	<if test="startIndex">
+        	<if test="endIndex">
+        		LIMIT #{startIndex}, #{endIndex}
+        	</if>
+        </if>
+    </select>
+    
+    <select id="getCommentList" parameterType="CommentVo" resultMap="commentResult">
+        SELECT
+        	A.BOARD_ID,
+        	A.ARTICLE_SEQ,
+        	A.SEQ,
+        	A.CONTENT,
+        	<choose>
+        	    <when test="!#{registerDateType} or #{registerDateType} == 'short'">
+        	        (
+			        	CASE
+			        		WHEN DATE_FORMAT(now(), '%Y-%m-%d') = DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d') THEN DATE_FORMAT(A.REGISTER_DATE, '%H:%i:%s')
+			        		ELSE DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d')
+			        	END
+		        	) AS REGISTER_DATE,
+        	    </when>
+        	    <when test="#{registerDateType} == 'long'">
+        	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+        	    </when>
+        	</choose>
+        	A.GOOD,
+        	A.BAD,
+        	WRITER_ID,
+        	B.DISPLAY_ID AS DISPLAY_ID,
+        	CASE
+        		WHEN B.NAME IS NULL THEN A.WRITER_NAME
+        		ELSE B.NAME
+        	END AS WRITER_NAME,
+        	A.PARENT_WRITER_ID,
+        	CASE
+        		WHEN C.NAME IS NULL THEN A.PARENT_WRITER_NAME
+        		ELSE C.NAME
+        	END AS PARENT_WRITER_NAME,
+        	A.PARENT_SEQ,
+        	A.GROUP_ID,
+        	A.STATUS
+        FROM
+        	IMB_COMMENT AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+        	LEFT OUTER JOIN IMB_USER C ON A.PARENT_WRITER_ID = C.ID
+        WHERE
+        		A.BOARD_ID = #{boardId}
+        	AND A.ARTICLE_SEQ = #{articleSeq}
+        	<if test="#{content}">
+            AND CONTENT LIKE CONCAT('%',#{content},'%')
+        	</if>
+        ORDER BY
+        	A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
+     	<if test="#{startIndex} and #{endIndex}">
+       		LIMIT #{startIndex}, #{endIndex}
+        </if>
+    </select>
+    
+    <select id="getComment" parameterType="CommentVo" resultMap="commentResult">
+        SELECT
+        	A.BOARD_ID,
+        	A.ARTICLE_SEQ,
+        	A.SEQ,
+        	A.CONTENT,
+        	<choose>
+        	    <when test="!#{registerDateType} or #{registerDateType} == 'short'">
+        	        (
+			        	CASE
+			        		WHEN DATE_FORMAT(now(), '%Y-%m-%d') = DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d') THEN DATE_FORMAT(A.REGISTER_DATE, '%H:%i:%s')
+			        		ELSE DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d')
+			        	END
+		        	) AS REGISTER_DATE,
+        	    </when>
+        	    <when test="#{registerDateType} == 'long'">
+        	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+        	    </when>
+        	</choose>
+        	A.GOOD,
+        	A.BAD,
+        	WRITER_ID,
+        	WRITER_NAME,
+        	B.DISPLAY_ID AS DISPLAY_ID,
+        	A.PARENT_WRITER_ID,
+        	A.PARENT_WRITER_NAME,
+        	A.PARENT_SEQ,
+        	A.GROUP_ID,
+        	A.STATUS
+        FROM
+        	IMB_COMMENT AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+        WHERE
+        		A.BOARD_ID = #{boardId}
+        	AND A.ARTICLE_SEQ = #{articleSeq}
+        	AND A.SEQ = #{seq}
+        ORDER BY
+        	A.GROUP_ID, A.SEQ
+    </select>
+    
+    <insert id="insertComment" parameterType="CommentVo">
+        INSERT INTO	IMB_COMMENT
+        	(BOARD_ID, ARTICLE_SEQ, SEQ, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, PARENT_WRITER_ID, PARENT_WRITER_NAME)
+        VALUES
+        	(
+        		#{boardId},
+        		#{articleSeq},
+        		#{seq},
+        		#{content},
+        		#{writerId},
+        		#{writerName},
+        		<choose>
+        		    <when test="#{groupId}">
+        		        #{groupId}
+        		    </when>
+        		    <otherwise>
+		       			#{seq}
+        		    </otherwise>
+        		</choose>,
+        		#{parentSeq},
+        		#{parentWriterId},
+        		#{parentWriterName}
+        	)
+    </insert>
+    
+    <update id="updateComment" parameterType="CommentVo">
+        UPDATE IMB_COMMENT SET
+        	CONTENT = #{content},
+        	REGISTER_DATE = CURRENT_TIMESTAMP
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateGood" parameterType="CommentVo">
+        UPDATE IMB_COMMENT SET
+        	GOOD = GOOD + 1
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateBad" parameterType="CommentVo">
+        UPDATE IMB_COMMENT SET
+        	BAD = BAD + 1
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateCommentStatus" parameterType="CommentVo">
+        UPDATE IMB_COMMENT SET
+        	STATUS = #{status}
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <delete id="deleteComment" parameterType="CommentVo">
+        DELETE FROM
+        	IMB_COMMENT
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </delete>
+    
+    <delete id="deleteCommentByArticle" parameterType="CommentVo">
+        DELETE FROM
+        	IMB_COMMENT
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+    </delete>
+</mapper>

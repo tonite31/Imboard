@@ -1,0 +1,43 @@
+<script id="imboard-settings-imboard-template" type="text/x-handlebars-template">
+	<div class="panel panel-info">
+		<div class="panel-heading" style="text-align:right; position:relative;">
+			<span style="position:absolute; left:15px; color:red; font-size:12px; line-height:35px;" data-id="result"></span>
+			<button type="button" class="btn btn-default" id="save">저장</button>
+		</div>
+		<div class="panel-body">
+			<p>
+				<label>로고</label>
+				<img class="logo" id="logoPath" data-param="logoPath" src="{{#if logoPath}}{{logoPath}}{{else}}http://www.dienc.co.kr/board/img/board/no_img.jpg{{/if}}" style="width:100px; height:100px;"/>
+				<button type="button" class="btn btn-default" style="vertical-align:bottom;" data-component="image-uploader" data-target="logoPath" data-target-type="img">업로드</button>
+			</p>
+			<p>
+				<label>임보드 주소</label>
+				<span>http://imboardworld.com/{{id}}</span>
+			</p>
+			<p>	
+				<label>임보드 이름</label>
+				<input type="text" data-param="name" value="{{name}}" style="width: 40%;">			
+			</p>
+			<p>
+				<label for="publicYn">공개여부	</label>
+				<input type="radio" name="publicYn" data-param="publicYn" value="Y" {{#equals publicYn "Y"}}checked="checked"{{/equals}}/>&nbsp;&nbsp;<span>공개</span>
+				<input type="radio" name="publicYn" data-param="publicYn" value="N" {{#equals publicYn "N"}}checked="checked"{{/equals}} style="margin-left:10px;"/>&nbsp;&nbsp;<span>비공개</span>
+			</p>
+			<p>
+				<label for="autoJoinYn">자동가입여부</label>
+				<input type="radio" name="autoJoinYn" data-param="autoJoinYn" value="Y" {{#equals autoJoinYn "Y"}}checked="checked"{{/equals}}/>&nbsp;&nbsp;<span>자동가입</span>
+				<input type="radio" name="autoJoinYn" data-param="autoJoinYn" value="N" {{#equals autoJoinYn "N"}}checked="checked"{{/equals}} style="margin-left:10px;"/>&nbsp;&nbsp;<span>가입절차필요</span>
+			</p>
+			<p>
+				<label for="keyword">키워드</label>
+				<input type="text" id="keyword" data-param="keyword" value="{{keyword}}" style="width: 40%;" />
+			</p>
+			<p>	
+				<label for="description">설명</label>
+				<textarea id="description" name="description" data-param="description" style="width: 40%; height:70px;">{{description}}</textarea>
+			</p>
+		</div>
+	</div>
+</script>
+
+<div id="imboard"></div>

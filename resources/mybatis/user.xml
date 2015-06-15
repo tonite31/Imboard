@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+    <resultMap type="UserVo" id="userResult">
+        <result column="ID" property="id" />
+        <result column="DISPLAY_ID" property="displayId" />
+        <result column="NAME" property="name" />
+        <result column="PASSWORD" property="password" />
+        <result column="PROVIDER" property="provider" />
+        <result column="USER_STATUS" property="userStatus" />
+        <result column="DROP_OUT_DATE" property="dropOutDate" />
+        <result column="REGISTER_DATE" property="registerDate" />
+        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
+        <result column="POINT" property="point" />
+        <result column="LAST_ACCESS_DATE" property="lastAccessDate" />
+        <result column="LEVEL" property="level" />
+    </resultMap>
+    
+    <select id="getUserList" parameterType="UserVo" resultMap="userResult">
+    	SELECT *
+    	FROM
+    	(
+    	SELECT
+        	A.ID,
+        	A.DISPLAY_ID,
+			A.NAME,
+			'' AS PASSWORD,
+			A.PROVIDER,
+			DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+			A.USER_STATUS,
+			A.DROP_OUT_DATE,
+			A.PROFILE_IMG_URL,
+			A.POINT,
+			DATE_FORMAT(A.LAST_ACCESS_DATE, '%Y-%m-%d %H:%i:%s') AS LAST_ACCESS_DATE,
+			if ( isnull(A.LEVEL), (SELECT LEVEL FROM (SELECT MIN(POINT), LEVEL FROM (SELECT (U.POINT - R.POINT) AS POINT, R.LEVEL FROM IMB_ROLE R, IMB_USER U WHERE U.ID = #{id} AND R.LEVEL > 0) LT WHERE POINT > 0) RE), A.LEVEL) AS LEVEL
+        FROM
+        	IMB_USER A
+    	) B
+    	ORDER BY LEVEL
+    </select>
+    
+    <select id="getUser" parameterType="userVo" resultMap="userResult">
+        SELECT
+        	A.ID,
+        	A.DISPLAY_ID,
+			A.NAME,
+			A.PASSWORD,
+			A.PROVIDER,
+			DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+			A.USER_STATUS,
+			A.DROP_OUT_DATE,
+			A.PROFILE_IMG_URL,
+			A.POINT,
+			DATE_FORMAT(A.LAST_ACCESS_DATE, '%Y-%m-%d %H:%i:%s') AS LAST_ACCESS_DATE
+			<if test="#{id} != null">,if ( isnull(A.LEVEL), (SELECT LEVEL FROM (SELECT MIN(POINT), LEVEL FROM (SELECT (U.POINT - R.POINT) AS POINT, R.LEVEL FROM IMB_ROLE R, IMB_USER U WHERE U.ID = #{id} AND R.LEVEL > 0) LT WHERE POINT > 0) RE), A.LEVEL) AS LEVEL</if> 
+        FROM
+        	IMB_USER A
+        WHERE
+        		1=1
+       		<if test="#{id} != null">
+       			AND ID = #{id}
+       		</if>
+       		<if test="#{displayId} != null">
+       			AND DISPLAY_ID = #{displayId}
+       		</if>
+       		<if test="#{name} != null">
+       			AND NAME = #{name}
+       		</if>
+    </select>
+    
+    <insert id="insertUser" parameterType="UserVo">
+        INSERT INTO IMB_USER
+        	(ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL)
+        VALUES
+        	(
+        		#{id},
+        		#{displayId},
+        		#{provider},
+        		#{name},
+        		#{profileImgUrl}
+        	)
+    </insert>
+    
+    <update id="updateUser" parameterType="UserVo">
+        UPDATE
+        	IMB_USER
+       	SET
+       		NAME = #{name},
+       		DISPLAY_ID = #{displayId},
+       		PROFILE_IMG_URL = #{profileImgUrl}
+        	<if test="#{userStatus} != null">
+        		,USER_STATUS = #{userStatus}
+        	</if>
+        	<if test="#{level} != null">
+        		,LEVEL = #{level}
+        	</if>
+        WHERE
+    		ID = #{id}
+    </update>
+    
+     <update id="updateLastAccessDate" parameterType="UserVo">
+        UPDATE
+        	IMB_USER
+       	SET
+        	LAST_ACCESS_DATE = CURRENT_TIMESTAMP
+        WHERE
+    		ID = #{id}
+    </update>
+    
+    <update id="updateUserPassword" parameterType="UserVo">
+        UPDATE
+        	IMB_USER
+       	SET
+        	PASSWORD = #{password}
+        WHERE
+    		ID = #{id}
+    </update>
+    
+    <delete id="deleteUser" parameterType="UserVo">
+        DELETE FROM
+        	IMB_USER
+        WHERE
+       		ID = #{id}
+    </delete>
+</mapper>

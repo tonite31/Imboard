@@ -1,0 +1,22 @@
+a, a:VISITED, a:ACTIVE, a:FOCUS{
+	color: #444;
+	text-decoration: none;
+}
+
+ul, li
+{
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+
+h1, h2 { margin:0; }
+
+h1 { font-size: 50px; }
+h2 { font-size: 30px; }
+
+html, body
+{
+	margin:0;
+	padding:0;
+}

@@ -1,0 +1,12 @@
+{
+	"signin" :
+	{
+		"ko-KR" : "로그인",
+		"en-US" : "Sign in"
+	},
+	"signup" :
+	{
+		"ko-KR" : "회원등록",
+		"en-US" : "Sign up"
+	}
+}

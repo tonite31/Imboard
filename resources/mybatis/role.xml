@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="role">
+    <resultMap type="RoleVo" id="roleResult">
+        <result column="LEVEL" property="level" />
+        <result column="NAME" property="name" />
+        <result column="POINT" property="point" />
+        <result column="EDITABLE" property="editable" />
+    </resultMap>
+    
+    <select id="getRoleList" parameterType="String" resultMap="roleResult">
+        SELECT
+        	LEVEL,
+        	NAME,
+        	POINT,
+        	EDITABLE
+        FROM
+        	IMB_ROLE
+        ORDER BY
+        	LEVEL
+    </select>
+    
+    <select id="getRole" parameterType="RoleVo" resultMap="roleResult">
+        SELECT
+        	LEVEL,
+        	NAME,
+        	POINT,
+        	EDITABLE
+        FROM
+        	IMB_ROLE
+        WHERE
+        	LEVEL = #{level}
+    </select>
+    
+    <insert id="insertRole" parameterType="RoleVo">
+        INSERT IMB_ROLE
+        	(LEVEL, NAME, POINT, EDITABLE)
+        VALUES
+        	(
+        		#{level},
+        		#{name},
+        		#{point},
+        		#{editable}
+        	)
+    </insert>
+    
+    <update id="updateRole" parameterType="RoleVo">
+        UPDATE
+        	IMB_ROLE
+       	SET
+        	NAME = #{name},
+        	POINT = #{point}
+        WHERE
+        	LEVEL = #{level}
+    </update>
+    
+    <delete id="deleteRole" parameterType="RoleVo">
+        DELETE FROM
+        	IMB_ROLE
+        WHERE
+        	LEVEL = #{level}
+    </delete>
+</mapper>

@@ -1,0 +1,54 @@
+<script id="imboard-settings-member-template" type="text/x-handlebars-template">
+{{#if userList}}
+{{#each userList}}
+	<tr data-id="{{id}}">
+		<td style="padding-left:20px;">{{name}}</td>
+		<td class="center">{{provider}}</td>
+		<td class="right">{{point}}</td>
+		<td class="center">
+			{{#equals level -2}}
+				마스터
+			{{/equals}}
+			{{#notequals level -2}}
+				<select>
+				{{#if ../../../roleList}}
+				{{#each ../../../roleList}}
+					{{#notequals level -2}}
+					<option value="{{level}}" {{#equals level ../../level}}selected="selected"{{/equals}}>{{name}}</option>
+					{{/notequals}}
+				{{/each}}
+				{{/if}}
+				</select>
+			{{/notequals}}
+		</td>
+		<td class="center">{{joinDate}}</td>
+		<td class="center">{{lastAccessDate}}</td>
+	</tr>
+{{/each}}
+{{/if}}
+</script>
+
+<div id="member" style="width: 60%; margin:60px auto; position:relative;">
+<table class="datatable">
+	<colgroup>
+		<col width="25%"/>
+		<col width="10%"/>
+		<col width="10%"/>
+		<col width="10%"/>
+		<col width="22.5%"/>
+		<col width="22.5%"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center">이름</th>
+			<th class="center">가입경로</th>
+			<th class="center">포인트</th>
+			<th class="center">레벨</th>
+			<th class="center">가입일</th>
+			<th class="center">마지막 접속일</th>
+		</tr>
+	</thead>
+	<tbody data-bind="userList" data-template-id="imboard-settings-member-template">
+	</tbody>
+</table>
+</div>

@@ -1,0 +1,51 @@
+#imboard
+{
+	width: 960px;
+	margin: 0 auto;
+	padding: 20px 0;
+}
+
+#imboard .panel-body
+{
+	padding:0 15px;
+}
+
+#imboard p
+{
+	padding: 15px;
+	border-top: 1px solid #dedede;
+}
+
+#imboard p:FIRST-CHILD
+{
+	border-top:0;
+}
+
+#imboard p input, #imboard p select, #imboard p textarea
+{
+	margin:0;
+	padding:5px;
+	border-radius:3px;
+	border: 1px solid #c8c8c8;
+}
+
+#imboard p input:FOCUS, #imboard p textarea:FOCUS
+{
+	border-color: #56b4ef;
+}
+
+#imboard p label
+{
+	width:15%;
+}
+
+#imboard p *
+{
+	vertical-align: middle;
+}
+
+.logo
+{
+	border: 1px solid #c8c8c8;
+	border-radius:5px;
+}

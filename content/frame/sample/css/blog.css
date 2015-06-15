@@ -1,0 +1,17 @@
+.doc
+{
+	background-color: #eee;
+	margin-top:55px;
+	margin-bottom:55px;
+}
+
+.doc .subject
+{
+	padding-bottom: 15px;
+	border-bottom: 1px dashed #dfdfdf;
+}
+
+.doc .content
+{
+	padding: 15px 0;
+}

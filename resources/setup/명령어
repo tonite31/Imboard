@@ -1,0 +1,10 @@
+tar --exclude=.svn --exclude=.settings --exclude=.project --exclude=.log --exclude=.DS_Store --exclude=.git -cvf Imboard.tar Imboard
+
+
+create user 'userId'@'%' identified by 'userpassword';
+grant all privileges on *.* to 'userid'@'%';
+grant all privileges on dbname.* to 'userid'@'%';
+
+create user 'userId'@'localhost' identified by 'userpassword';
+grant all privileges on *.* to 'userid'@'localhost';
+grant all privileges on dbname.* to 'userid'@'localhost';ex

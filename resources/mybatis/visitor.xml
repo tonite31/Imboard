@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="visitor">
+    <resultMap type="VisitorVo" id="typeResult">
+        <result column="TYPE" property="type" />
+        <result column="COUNT" property="count" />
+    </resultMap>
+    
+    <resultMap type="VisitorVo" id="visitorResult">
+        <result column="IP" property="ip" />
+        <result column="USER_AGENT" property="userAgent" />
+        <result column="REFERER" property="referer" />
+        <result column="ACCESS_DATE" property="accessDate" />
+    </resultMap>
+    
+    <select id="getVisitorList" parameterType="String" resultMap="typeResult">
+        SELECT
+        	${type} AS TYPE,
+        	COUNT(*) AS COUNT
+        FROM
+        	(
+        		SELECT
+        			USER_AGENT,
+        			REFERER,
+        			DATE_FORMAT(ACCESS_DATE, '%Y-%m-%d') AS ACCESS_DATE
+        		FROM
+        			IMB_VISITOR
+        	) A
+        GROUP BY
+        	${type}
+    </select>
+    
+    <select id="getVisitor" parameterType="VisitorVo" resultMap="visitorResult">
+    	SELECT
+    		IP,
+    		USER_AGENT,
+    		REFERER,
+    		ACCESS_DATE
+    	FROM
+    		IMB_VISITOR
+    	WHERE
+    			IP = #{ip}
+    		AND USER_AGENT = #{userAgent}
+    		AND REFERER = #{referer}
+    		AND DATE_FORMAT(ACCESS_DATE, '%Y-%m-%d %H:%i') = #{accessDate}
+    </select>
+    
+    <insert id="insertVisitor" parameterType="VisitorVo">
+        INSERT IMB_VISITOR
+        	(IP, USER_AGENT, REFERER, ACCESS_DATE)
+        VALUES
+        	(
+        		#{ip},
+        		#{userAgent},
+        		#{referer},
+        		DATE_FORMAT(now(), '%Y-%m-%d %H:%i')
+        	)
+    </insert>
+    
+    <delete id="deleteVisitor" parameterType="VisitorVo">
+        DELETE FROM
+        	IMB_VISITOR
+        WHERE
+        	ACCESS_DATE &lt;= DATE_ADD(now(), interval -3 month)  
+    </delete>
+</mapper>

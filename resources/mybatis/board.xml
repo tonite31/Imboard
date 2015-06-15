@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+    <resultMap type="BoardVo" id="boardResult">
+        <result column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="PRIORITY" property="priority" />
+        <result column="DESCRIPTION" property="description"/>
+        <result column="USE_YN" property="useYn"/>
+        <result column="VIEW_LIST_LEVEL" property="viewListLevel"></result>
+        <result column="VIEW_DETAIL_LEVEL" property="viewDetailLevel"></result>
+        <result column="WRITE_LEVEL" property="writeLevel"></result>
+        <result column="WRITE_COMMENT_LEVEL" property="writeCommentLevel"></result>
+    </resultMap>
+    
+    <select id="getBoardList" resultMap="boardResult">
+        SELECT
+        	A.ID,
+        	A.NAME,
+        	A.PRIORITY,
+        	A.DESCRIPTION,
+        	A.USE_YN,
+        	B.VIEW_LIST_LEVEL,
+        	B.VIEW_DETAIL_LEVEL,
+        	B.WRITE_LEVEL,
+        	B.WRITE_COMMENT_LEVEL
+        FROM
+        	IMB_BOARD A
+        	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
+        ORDER BY A.PRIORITY
+    </select>
+    
+    <select id="getBoard" parameterType="BoardVo" resultMap="boardResult">
+        SELECT
+        	A.ID,
+        	A.NAME,
+        	A.PRIORITY,
+        	A.DESCRIPTION,
+        	A.USE_YN,
+        	B.VIEW_LIST_LEVEL,
+        	B.VIEW_DETAIL_LEVEL,
+        	B.WRITE_LEVEL,
+        	B.WRITE_COMMENT_LEVEL
+        FROM
+        	IMB_BOARD A
+        	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
+        WHERE
+        	A.ID = #{id}
+    </select>
+    
+    <select id="getBoardByName" parameterType="BoardVo" resultMap="boardResult">
+        SELECT
+        	A.ID,
+        	A.NAME,
+        	A.PRIORITY,
+        	A.DESCRIPTION,
+        	A.USE_YN,
+        	B.VIEW_LIST_LEVEL,
+        	B.VIEW_DETAIL_LEVEL,
+        	B.WRITE_LEVEL,
+        	B.WRITE_COMMENT_LEVEL
+        FROM
+        	IMB_BOARD A
+        	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
+        WHERE
+        	A.NAME = #{name}
+    </select>
+    
+    <insert id="insertBoard" parameterType="BoardVo">
+        INSERT IMB_BOARD
+        	(ID, NAME, PRIORITY, DESCRIPTION, USE_YN)
+        VALUES
+        	(
+        		#{id},
+        		#{name},
+        		#{priority},
+        		#{description},
+        		#{useYn}
+        	)
+    </insert>
+    
+    <update id="updateBoard" parameterType="BoardVo">
+        UPDATE
+        	IMB_BOARD
+       	SET
+        	NAME = #{name},
+        	DESCRIPTION = #{description},
+        	PRIORITY = #{priority},
+        	USE_YN = #{useYn}
+        WHERE
+       		ID = #{id}
+    </update>
+    
+    <delete id="deleteBoard" parameterType="BoardVo">
+        DELETE FROM
+        	IMB_BOARD
+        WHERE
+       		ID = #{id}
+    </delete>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="menu">
+    <resultMap type="MenuVo" id="menuResult">
+        <result column="ID" property="id" />
+        <result column="NAME" property="name" />
+        <result column="TYPE" property="type" />
+        <result column="PARAMETER" property="parameter" />
+        <result column="PRIORITY" property="priority" />
+        <result column="PARENT_MENU_ID" property="parentMenuId" />
+        <result column="VIEW_LEVEL" property="viewLevel"/>
+        <result column="CHILD_MENU_COUNT" property="childMenuCount"/>
+    </resultMap>
+    
+    <select id="getMenuList" parameterType="string" resultMap="menuResult">
+        SELECT
+        	ID,
+        	NAME,
+        	TYPE,
+        	PARAMETER,
+        	PRIORITY,
+        	PARENT_MENU_ID,
+        	VIEW_LEVEL,
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        FROM
+        	IMB_MENU A
+        WHERE
+        	<choose>
+        		<when test="#{parentMenuId} == null or #{parentMenuId} == ''">PARENT_MENU_ID IS NULL OR PARENT_MENU_ID = ID</when>
+        		<otherwise>PARENT_MENU_ID = #{parentMenuId}</otherwise>
+        	</choose>
+        ORDER BY
+        	PARENT_MENU_ID, PRIORITY
+    </select>
+    
+    <select id="getMenu" parameterType="MenuVo" resultMap="menuResult">
+        SELECT
+        	ID,
+        	NAME,
+        	TYPE,
+        	PARAMETER,
+        	PRIORITY,
+        	PARENT_MENU_ID,
+        	VIEW_LEVEL,
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        FROM
+        	IMB_MENU A
+        WHERE
+        	1 = 1
+        	<if test="#{id} != null">
+        		AND ID = #{id}
+        	</if>
+        	<if test="#{name} != null">
+        		AND NAME = #{name}
+        	</if>
+        	<if test="#{type}">
+        		AND TYPE = #{type}
+        	</if>
+        	<if test="#{parameter}">
+        		AND PARAMETER = #{parameter}
+        	</if>
+        	<if test="#{parentMenuId}">
+        		AND PARENT_MENU_ID = #{parentMenuId}
+        	</if>
+    </select>
+    
+    <select id="getMenuByName" parameterType="MenuVo" resultMap="menuResult">
+        SELECT
+        	ID,
+        	NAME,
+        	TYPE,
+        	PARAMETER,
+        	PRIORITY,
+        	PARENT_MENU_ID,
+        	VIEW_LEVEL,
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        FROM
+        	IMB_MENU A
+        WHERE
+        	ID = #{name}
+    </select>
+    
+    <insert id="insertMenu" parameterType="MenuVo">
+        INSERT IMB_MENU
+        	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL)
+        VALUES
+        	(
+        		#{id},
+        		#{name},
+        		#{type},
+        		#{parameter},
+        		#{priority},
+        		#{parentMenuId},
+        		#{viewLevel}
+        	)
+    </insert>
+    
+    <update id="updateMenu" parameterType="MenuVo">
+        UPDATE
+        	IMB_MENU
+       	SET
+       		NAME = #{name}
+       		<if test="#{type} != null">TYPE = #{type}</if>
+       		<if test="#{parameter} != null">,PARAMETER = #{parameter}</if>
+       		<if test="#{priority} != null">,PRIORITY = #{priority}</if>
+       		<if test="#{parentMenuId} != null">,PARENT_MENU_ID = #{parentMenuId}</if>
+       		<if test="#{viewLevel} != null">,VIEW_LEVEL = #{viewLevel}</if>
+        WHERE
+       		ID = #{id}
+    </update>
+    
+    <delete id="deleteMenu" parameterType="MenuVo">
+        DELETE FROM
+        	IMB_MENU
+        WHERE
+       		ID = #{id}
+    </delete>
+</mapper>

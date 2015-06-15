@@ -1,0 +1,56 @@
+<script id="settings-new-role-template" type="text/x-handlebars-template">
+<tr id="new-row" style="background-color:#efefef;">
+	<td><input type="number" id="level" style="width:100%;" class="textinput"/></td>
+	<td><input type="text" id="name" style="width:100%;" class="textinput"/></td>
+	<td><input type="number" id="point" style="width:100%;" class="textinput" pattern="\d*"/></td>
+	<td class="center">
+		<button type="button" class="btn default" id="save">저장</button>
+		<button type="button" class="btn default" id="cancel">취소</button>
+	</td>
+</tr>
+</script>
+
+<script id="settings-role-list-template" type="text/x-handlebars-template">
+{{#if roleList}}
+{{#each roleList}}
+{{#equals editable "Y"}}
+<tr data-component="form">
+	<td><input type="number" name="level" value="{{level}}" style="width:100%;" class="textinput" readonly="readonly"/></td>
+	<td><input type="text" name="name" value="{{name}}" style="width:100%;" class="textinput"/></td>
+	<td><input type="number" name="point" value="{{point}}" style="width:100%;" class="textinput"/></td>
+	<td class="center">
+		<button type="button" class="btn default" data-role="submit" data-role-type="save">저장</button>
+		<button type="button" class="btn default" data-role="submit" data-role-type="delete">삭제</button>
+	</td>
+</tr>
+{{/equals}}
+{{#equals editable "N"}}
+{{/equals}}
+{{/each}}
+{{/if}}
+</script>
+
+<div id="role" style="width:60%; margin:0 auto;">
+	<p style="text-align:right; margin-top: 30px; margin-bottom:5px;">
+		<button type="button" class="btn default" id="add-level-button">레벨 추가</button>
+	</p>
+	<table class="datatable">
+		<colgroup>
+			<col style="width: 25%;"/>
+			<col style="width: 35%;"/>
+			<col style="width: 25%;"/>
+			<col style="width: 15%;"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th>레벨</th>
+				<th>레벨명</th>
+				<th>포인트</th>
+				<th>변경내용저장</th>
+			</tr>
+		</thead>
+		<tbody id="roleBody" data-bind="roleList" data-template-id="settings-role-list-template">
+		</tbody>
+	</table>
+	<p id="description" style="color:red; text-align:center;"></p>
+</div>

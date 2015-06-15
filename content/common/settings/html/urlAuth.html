@@ -1,0 +1,54 @@
+<script id="urlAuthTemplate" type="text/x-handlebars-template">
+{{#if urlAuthList}}
+{{#each urlAuthList}}
+{{#notequals editable "N"}}
+<tr data-component="form">
+	<td>
+		<span name="url">{{url}}</span>
+	</td>
+	<td class="center">
+		<select name="level">
+		{{#if ../../../roleList}}
+		{{#each ../../../roleList}}
+			<option value="{{level}}" {{#equals level ../../level}}selected="selected"{{/equals}}>{{name}}</option>
+		{{/each}}
+		{{/if}}
+		</select>
+	</td>
+	<td class="center">
+		<select name="useYn">
+			<option value="Y" {{#equals "Y" useYn}}selected="selected"{{/equals}}>Y</option>
+			<option value="N" {{#equals "N" useYn}}selected="selected"{{/equals}}>N</option>
+		</select>
+	</td>
+	<td class="center">
+		<button type="button" class="btn default" data-role="submit">삭제</button>
+	</td>
+</tr>
+{{/notequals}}
+{{/each}}
+{{/if}}
+</script>
+
+<div style="width: 60%; margin:0 auto; position:relative;">
+	<p style="text-align:right; margin-top: 30px; margin-bottom:5px;">
+		<button type="button" class="btn default" id="addUrlAuth">권한추가</button>
+	</p>
+	<table class="datatable" id="table">
+		<colgroup>
+			<col style="width: 50%;"/>
+			<col style="width: 20%;"/>
+			<col style="width: 15%;"/>
+			<col style="width: 15%;"/>
+		</colgroup>
+		<thead>
+			<tr>
+				<th>URL</th>
+				<th>레벨</th>
+				<th>사용여부</th>
+				<th>삭제</th>
+			</tr>
+		</thead>
+		<tbody data-bind="urlAuthListWithRole" data-template-id="urlAuthTemplate"></tbody>
+	</table>
+</div>

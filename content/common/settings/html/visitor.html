@@ -1,0 +1,36 @@
+<script id="imboard-settings-visitor-template" type="text/x-handlebars-template">
+{{#if visitorList}}
+{{#each visitorList}}
+{{#notempty type}}
+	<tr>
+		<td>{{type}}</td>
+		<td class="center">{{count}}</td>
+	</tr>
+{{/notempty}}
+{{/each}}
+{{/if}}
+</script>
+
+<div id="visitor" style="width: 90%; margin:60px auto; position:relative;">
+<p>
+	<select class="selecbox" id="typeSelect">
+		<option value="browser">브라우저별</option>
+		<option value="referer">유입 URL별</option>
+		<option value="date">접속일자별</option>
+	</select>
+</p>
+<table class="datatable">
+	<colgroup>
+		<col width="80%"/>
+		<col width="20%"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center" id="typeHeader">브라우저 이름</th>
+			<th class="center">접속 수</th>
+		</tr>
+	</thead>
+	<tbody id="tbody" data-bind="visitorList" data-template-id="imboard-settings-visitor-template">
+	</tbody>
+</table>
+</div>

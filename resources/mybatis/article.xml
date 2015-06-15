@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="article">
+    <resultMap type="ArticleVo" id="articleResult">
+        <result column="BOARD_ID" property="boardId" />
+        <result column="BOARD_NAME" property="boardName" />
+        <result column="SEQ" property="seq" />
+        <result column="SUBJECT" property="subject" />
+        <result column="CONTENT" property="content" typeHandler="BlobTypeHandler" javaType="java.lang.String"/>
+        <result column="REGISTER_DATE" property="registerDate" />
+        <result column="HIT" property="hit" />
+        <result column="GOOD" property="good" />
+        <result column="BAD" property="bad" />
+        <result column="WRITER_ID" property="writerId" />
+        <result column="WRITER_NAME" property="writerName" />
+        <result column="DISPLAY_ID" property="displayId" />
+        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="PARENT_ARTICLE_WRITER_ID" property="parentArticleWriterId" />
+        <result column="STATUS" property="status" />
+        <result column="THUMBNAIL_URL" property="thumbnailUrl" />
+        <result column="TAG" property="tag" />
+        <result column="COMMENT_COUNT" property="commentCount" />
+        <result column="PASSWORD" property="password" />
+        <result column="IS_NOTICE" property="isNotice" />
+        <result column="READ_STATUS" property="readStatus" />
+    </resultMap>
+    
+    <select id="getNextSeq" parameterType="ArticleVo" resultType="String">
+        SELECT
+        	MAX(SEQ) AS SEQ
+        FROM
+        	IMB_ARTICLE
+        WHERE
+        	BOARD_ID = #{boardId}
+    </select>
+    
+    <select id="getArticleListCount" parameterType="ArticleVo" resultType="String">
+        SELECT
+        	COUNT(*) AS COUNT
+        FROM
+        	(
+        		SELECT
+        			C.STATUS AS READ_STATUS
+        		FROM
+        			IMB_ARTICLE A LEFT OUTER JOIN IMB_ARTICLE_READER C ON A.BOARD_ID = C.BOARD_ID AND A.SEQ = C.ARTICLE_SEQ AND C.USER_ID = #{signinUserId}
+        			LEFT OUTER JOIN IMB_BOARD_AUTH D ON A.BOARD_ID = D.BOARD_ID
+        			LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+        		WHERE
+        				(IS_NOTICE IS NULL OR IS_NOTICE = 'N')
+        			AND (D.VIEW_LIST_LEVEL IS NULL OR D.VIEW_LIST_LEVEL &gt;= #{signinUserLevel})
+        			AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+        			<if test="#{boardId}">
+        				AND A.BOARD_ID = #{boardId}
+        			</if>
+        			<if test="#{subject}">
+			            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
+			        </if>
+			        <if test="#{content}">
+			            AND CONTENT LIKE CONCAT('%',#{content},'%')
+			        </if>
+			        <if test="#{writerId}">
+			            AND WRITER_ID = #{writerId}
+			        </if>
+			        <if test="#{writerName}">
+			            AND WRITER_NAME = #{writerName}
+			        </if>
+			        <if test="#{tag}">
+			            AND TAG LIKE CONCAT('%', #{tag}, '%')
+			        </if>
+			        <if test="#{readStatus}">
+			        	AND C.STATUS = #{readStatus}
+			        </if>
+			        <if test="#{likeDisplayId}">
+			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeDisplayId}, '%')
+			        </if>
+			        <if test="#{displayId}">
+			        	AND B.DISPLAY_ID = #{displayId}
+			        </if>
+			        <if test="#{registerDate}">
+			            AND DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') = #{registerDate} 
+			        </if>
+			        <if test="#{thumbnailUrl} == 'true'">
+						AND THUMBNAIL_URL IS NOT NULL    
+						AND THUMBNAIL_URL != ''        
+			        </if>
+			        ORDER BY
+			        	A.REGISTER_DATE DESC <if test="#{useOrderByGroupId}">, A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
+        	) B
+     	<if test="startIndex">
+        	<if test="endIndex">
+        		LIMIT #{startIndex}, #{endIndex}
+        	</if>
+        </if>
+    </select>
+    
+    <select id="getArticleList" parameterType="ArticleVo" resultMap="articleResult">
+    	SELECT
+    		*
+    	FROM
+    	(
+       	<if test="#{isNotice} == null or #{isNotice} == 'Y'">
+       	(SELECT
+        	A.BOARD_ID,
+        	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
+        	A.SEQ,
+        	A.SUBJECT,
+        	<choose>
+        	    <when test="#{withContent} == 'true'">
+        	        A.CONTENT,
+        	    </when>
+        	    <otherwise>
+					'' AS CONTENT,        	        
+        	    </otherwise>
+        	</choose>
+   	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+        	A.HIT,
+        	A.GOOD,
+        	A.BAD,
+        	A.WRITER_ID,
+        	A.GROUP_ID,
+        	A.WRITER_NAME,
+        	B.DISPLAY_ID AS DISPLAY_ID,
+        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+        	A.STATUS,
+        	A.THUMBNAIL_URL,
+        	A.TAG,
+        	A.IS_NOTICE,
+        	(SELECT COUNT(SEQ) FROM IMB_COMMENT WHERE A.BOARD_ID = BOARD_ID AND A.SEQ = ARTICLE_SEQ) AS COMMENT_COUNT,
+        	A.PASSWORD,
+        	C.STATUS AS READ_STATUS
+        FROM
+        	IMB_ARTICLE AS A
+        	LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+        	LEFT OUTER JOIN IMB_ARTICLE_READER C ON C.BOARD_ID = A.BOARD_ID AND C.ARTICLE_SEQ = A.SEQ AND C.USER_ID = #{signinUserId}
+        	LEFT OUTER JOIN IMB_BOARD_AUTH D ON A.BOARD_ID = D.BOARD_ID
+        WHERE
+        		A.IS_NOTICE = 'Y'
+        	AND (D.VIEW_LIST_LEVEL IS NULL OR D.VIEW_LIST_LEVEL &gt;= #{signinUserLevel})
+        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+        	<if test="#{boardId}">
+	        	AND A.BOARD_ID = #{boardId}
+	        </if>
+	        )
+       	</if>
+       	<if test="#{isNotice} == null">
+       		UNION
+       	</if>
+       	<if test="#{isNotice} != 'Y'">
+       		(SELECT
+	        	A.BOARD_ID,
+	        	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
+	        	A.SEQ,
+	        	A.SUBJECT,
+	        	<choose>
+	        	    <when test="#{withContent} == 'true'">
+	        	        A.CONTENT,
+	        	    </when>
+	        	    <otherwise>
+						'' AS CONTENT,        	        
+	        	    </otherwise>
+	        	</choose>
+	   	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+	        	A.HIT,
+	        	A.GOOD,
+	        	A.BAD,
+	        	A.WRITER_ID,
+	        	A.GROUP_ID,
+	        	A.WRITER_NAME,
+	        	B.DISPLAY_ID AS DISPLAY_ID,
+	        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+	        	A.STATUS,
+	        	A.THUMBNAIL_URL,
+	        	A.TAG,
+	        	A.IS_NOTICE,
+	        	(SELECT COUNT(SEQ) FROM IMB_COMMENT WHERE A.BOARD_ID = BOARD_ID AND A.SEQ = ARTICLE_SEQ) AS COMMENT_COUNT,
+	        	A.PASSWORD,
+	        	C.STATUS AS READ_STATUS
+	        FROM
+	        	IMB_ARTICLE AS A
+	        	LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+	        	LEFT OUTER JOIN IMB_ARTICLE_READER C ON C.BOARD_ID = A.BOARD_ID AND C.ARTICLE_SEQ = A.SEQ AND C.USER_ID = #{signinUserId}
+	        	LEFT OUTER JOIN IMB_BOARD_AUTH D ON A.BOARD_ID = D.BOARD_ID
+	        WHERE
+	        		(IS_NOTICE IS NULL OR IS_NOTICE = 'N')
+	        	AND (D.VIEW_LIST_LEVEL IS NULL OR D.VIEW_LIST_LEVEL &gt;= #{signinUserLevel})
+	        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+	        <if test="#{boardId}">
+	        	AND A.BOARD_ID = #{boardId}
+	        </if>
+	        <if test="#{subject}">
+	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
+	        </if>
+	        <if test="#{content}">
+	            AND CONTENT LIKE CONCAT('%',#{content},'%')
+	        </if>
+	        <if test="#{writerId}">
+	            AND WRITER_ID = #{writerId}
+	        </if>
+	        <if test="#{writerName}">
+	            AND WRITER_NAME = #{writerName}
+	        </if>
+	        <if test="#{tag}">
+	            AND TAG LIKE CONCAT('%', #{tag}, '%')
+	        </if>
+	        <if test="#{readStatus}">
+	        	AND C.STATUS = #{readStatus}
+	        </if>
+	        <if test="#{likeDisplayId}">
+	        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeDisplayId}, '%')
+	        </if>
+	        <if test="#{displayId}">
+	        	AND B.DISPLAY_ID = #{displayId}
+	        </if>
+	        <if test="#{registerDate}">
+	            AND DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') = #{registerDate} 
+	        </if>
+	        <if test="#{thumbnailUrl} == 'true'">
+				AND THUMBNAIL_URL IS NOT NULL     
+				AND THUMBNAIL_URL != ''       
+	        </if>
+	     	)
+       	</if>
+       	) ARTICLE
+       	ORDER BY
+	        	IS_NOTICE DESC, REGISTER_DATE DESC <if test="#{useOrderByGroupId}">, GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
+	    <if test="#{startIndex} != null and #{endIndex} != null">
+	       	LIMIT #{startIndex}, #{endIndex}
+        </if>
+    </select>
+    
+    <select id="getArticle" parameterType="ArticleVo" resultMap="articleResult">
+        SELECT
+        	A.BOARD_ID,
+        	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
+        	SEQ,
+        	SUBJECT,
+        	CONTENT,
+   	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
+        	HIT,
+        	GOOD,
+        	BAD,
+        	A.WRITER_ID,
+        	B.DISPLAY_ID AS DISPLAY_ID,
+        	GROUP_ID,
+        	A.WRITER_NAME,
+        	STATUS,
+        	THUMBNAIL_URL,
+        	TAG,
+        	IS_NOTICE,
+        	(SELECT COUNT(SEQ) FROM IMB_COMMENT WHERE A.BOARD_ID = BOARD_ID AND A.SEQ = ARTICLE_SEQ) AS COMMENT_COUNT,
+        	A.PASSWORD,
+        	(SELECT STATUS FROM IMB_ARTICLE_READER WHERE BOARD_ID = A.BOARD_ID AND ARTICLE_SEQ = A.SEQ AND USER_ID = #{signinUserId}) AS READ_STATUS
+        FROM
+        	IMB_ARTICLE AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID LEFT OUTER JOIN IMB_BOARD_AUTH D ON D.BOARD_ID = A.BOARD_ID
+        WHERE
+        	(D.VIEW_DETAIL_LEVEL IS NULL OR D.VIEW_DETAIL_LEVEL &gt;= #{signinUserLevel})
+        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+        	<if test="#{boardId}">
+        		AND A.BOARD_ID = #{boardId}
+        	</if>
+        	<if test="#{seq}">
+        	    AND SEQ = #{seq}
+        	</if>
+        	<if test="#{subject}">
+	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
+	        </if>
+	        <if test="#{content}">
+	            AND CONTENT LIKE CONCAT('%',#{content},'%')
+	        </if>
+	        <if test="#{writerId}">
+	            AND WRITER_ID = #{writerId}
+	        </if>
+	        <if test="#{writerName}">
+	            AND WRITER_NAME = #{writerName}
+	        </if>
+	        <if test="#{tag}">
+	            AND TAG LIKE CONCAT('%',#{tag},'%')
+	        </if>
+	        <if test="#{isNotice}">
+	        	AND IS_NOTICE = #{isNotice}
+	        </if>
+	        <if test="#{registerDate}">
+	            AND DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') = #{registerDate} 
+	        </if>
+	        <if test="#{thumbnailUrl} == 'true'">
+				AND THUMBNAIL_URL IS NOT NULL
+				AND THUMBNAIL_URL != ''       
+	        </if>
+    </select>
+    
+    <insert id="insertArticle" parameterType="ArticleVo">
+        INSERT INTO	IMB_ARTICLE
+        	(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, THUMBNAIL_URL, TAG, PASSWORD, IS_NOTICE)
+        VALUES
+        	(
+        		#{boardId},
+        		#{seq},
+        		#{subject},
+        		#{content},
+        		#{writerId},
+        		(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),
+        		<choose>
+        		    <when test="#{groupId}">
+        		        #{groupId}
+        		    </when>
+        		    <otherwise>
+		       			#{seq},
+        		    </otherwise>
+        		</choose>,
+        		#{parentSeq},
+        		#{thumbnailUrl},
+        		#{tag},
+        		#{password},
+        		#{isNotice}
+        	)
+    </insert>
+    
+    <insert id="insertArticleWithSeq" parameterType="ArticleVo">
+        INSERT INTO	IMB_ARTICLE
+        	(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, THUMBNAIL_URL, TAG, PASSWORD, IS_NOTICE, STATUS)
+        VALUES
+        	(
+        		#{boardId},
+        		#{seq},
+        		#{subject},
+        		#{content},
+        		#{writerId},
+        		(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),
+        		<choose>
+        		    <when test="groupId">
+        		        #{groupId}
+        		    </when>
+        		    <otherwise>
+		       			#{seq}
+        		    </otherwise>
+        		</choose>,
+        		#{parentSeq},
+        		#{thumbnailUrl},
+        		#{tag},
+        		#{password},
+        		#{isNotice},
+        		<choose>
+        			<when test="#{status}">
+        				#{status}
+        			</when>
+        			<otherwise>
+        				1
+        			</otherwise>
+        		</choose>
+        	)
+    </insert>
+    
+    <update id="updateArticle" parameterType="ArticleVo">
+        UPDATE IMB_ARTICLE SET
+        	SUBJECT = #{subject},
+        	CONTENT = #{content},
+        	THUMBNAIL_URL = #{thumbnailUrl},
+        	TAG = #{tag},
+        	STATUS = #{status},
+        	PASSWORD = #{password},
+        	IS_NOTICE = #{isNotice}
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateHit" parameterType="ArticleVo">
+        UPDATE IMB_ARTICLE SET
+        	HIT = HIT + 1
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateGood" parameterType="ArticleVo">
+        UPDATE IMB_ARTICLE SET
+        	GOOD = GOOD + 1
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateBad" parameterType="ArticleVo">
+        UPDATE IMB_ARTICLE SET
+        	BAD = BAD + 1
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <update id="updateArticleStatus" parameterType="ArticleVo">
+        UPDATE IMB_ARTICLE SET
+        	STATUS = #{status}
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </update>
+    
+    <delete id="deleteArticle" parameterType="ArticleVo">
+        DELETE FROM
+        	IMB_ARTICLE
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND SEQ = #{seq}
+    </delete>
+</mapper>

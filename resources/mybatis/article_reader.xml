@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="articleReader">
+    <resultMap type="ArticleReaderVo" id="articleReaderResult">
+        <result column="BOARD_ID" property="boardId" />
+        <result column="ARTICLE_SEQ" property="articleSeq" />
+        <result column="USER_ID" property="userId" />
+        <result column="STATUS" property="status" />
+    </resultMap>
+    
+    <select id="getArticleReader" parameterType="ArticleReaderVo" resultMap="articleReaderResult">
+        SELECT
+        	BOARD_ID,
+        	ARTICLE_SEQ,
+        	USER_ID,
+        	STATUS
+        FROM
+        	IMB_ARTICLE_READER
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND USER_ID = #{userId}
+    </select>
+    
+    <insert id="insertArticleReader" parameterType="ArticleReaderVo">
+        INSERT IMB_ARTICLE_READER
+        	(
+	        	BOARD_ID,
+	        	ARTICLE_SEQ,
+	        	USER_ID,
+	        	STATUS
+        	)
+        VALUES
+        	(
+        		#{boardId},
+        		#{articleSeq},
+        		#{userId},
+        		#{status}
+        	)
+    </insert>
+    
+    <update id="updateArticleReaderStatus" parameterType="ArticleReaderVo">
+    	UPDATE
+    		IMB_ARTICLE_READER
+    	SET
+    		STATUS = #{status}
+    	WHERE
+       		BOARD_ID = #{boardId}
+       	AND ARTICLE_SEQ = #{articleSeq}
+       	AND USER_ID = #{userId}
+    </update>
+    
+    <delete id="deleteArticleReader" parameterType="ArticleReaderVo">
+        DELETE FROM
+        	IMB_ARTICLE_READER
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND USER_ID = #{userId}
+    </delete>
+</mapper>

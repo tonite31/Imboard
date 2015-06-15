@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="boardAuth">
+    <resultMap type="BoardAuthVo" id="boardAuthResult">
+        <result column="BOARD_ID" property="boardId" />
+        <result column="VIEW_LIST_LEVEL" property="viewListLevel" />
+        <result column="VIEW_DETAIL_LEVEL" property="viewDetailLevel" />
+        <result column="WRITE_LEVEL" property="writeLevel"/>
+        <result column="WRITE_COMMENT_LEVEL" property="writeLevel"/>
+    </resultMap>
+    
+    <select id="getBoardAuth" parameterType="string" resultMap="boardAuthResult">
+        SELECT
+        	BOARD_ID,
+        	VIEW_LIST_LEVEL,
+        	VIEW_DETAIL_LEVEL,
+        	WRITE_LEVEL,
+        	WRITE_COMMENT_LEVEL
+        FROM
+        	IMB_BOARD_AUTH
+        WHERE
+        	BOARD_ID = #{boardId}
+    </select>
+    
+    <insert id="insertBoardAuth" parameterType="BoardAuthVo">
+        INSERT IMB_BOARD_AUTH
+        	(BOARD_ID, VIEW_LIST_LEVEL, VIEW_DETAIL_LEVEL, WRITE_LEVEL, WRITE_COMMENT_LEVEL)
+        VALUES
+        	(
+        		#{boardId},
+        		#{viewListLevel},
+        		#{viewDetailLevel},
+        		#{writeLevel},
+        		#{writeCommentLevel}
+        	)
+    </insert>
+    
+    <update id="updateBoardAuth" parameterType="BoardAuthVo">
+        UPDATE
+        	IMB_BOARD_AUTH
+       	SET
+        	VIEW_LIST_LEVEL = #{viewListLevel},
+        	WRITE_LEVEL = #{writeLevel},
+        	VIEW_DETAIL_LEVEL = #{viewDetailLevel},
+        	WRITE_COMMENT_LEVEL = #{writeCommentLevel}
+        WHERE
+       		BOARD_ID = #{boardId}
+    </update>
+    
+    <delete id="deleteBoardAuth" parameterType="string">
+        DELETE FROM
+        	IMB_BOARD_AUTH
+        WHERE
+       		BOARD_ID = #{boardId}
+    </delete>
+</mapper>

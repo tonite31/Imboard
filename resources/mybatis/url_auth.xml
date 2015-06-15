@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="urlAuth">
+    <resultMap type="UrlAuthVo" id="urlAuthResult">
+        <result column="URL" property="url" />
+        <result column="LEVEL" property="level" />
+        <result column="USE_YN" property="useYn" />
+        <result column="EDITABLE" property="editable" />
+    </resultMap>
+    
+    <select id="getUrlAuthList" parameterType="UrlAuthVo" resultMap="urlAuthResult">
+        SELECT
+        	URL,
+        	LEVEL,
+        	USE_YN,
+        	EDITABLE
+        FROM
+        	IMB_URL_AUTH A
+        ORDER BY
+        	URL
+    </select>
+    
+    <select id="getUrlAuth" parameterType="UrlAuthVo" resultMap="urlAuthResult">
+        SELECT
+        	URL,
+        	LEVEL,
+        	USE_YN
+        FROM
+        	IMB_URL_AUTH A
+        WHERE
+       		#{url} REGEXP URL
+       		<if test="#{useYn} != null">
+       			AND USE_YN = #{useYn}
+       		</if>
+    </select>
+    
+    <insert id="insertUrlAuth" parameterType="UrlAuthVo">
+        INSERT IMB_URL_AUTH
+        	(URL, LEVEL, USE_YN, EDITABLE)
+        VALUES
+        	(#{url}, #{level}, #{useYn}, #{editable})
+    </insert>
+    
+    <update id="updateUrlAuth" parameterType="UrlAuthVo">
+        UPDATE
+        	IMB_URL_AUTH
+       	SET
+        	USE_YN = #{useYn}
+        	<if test="#{level} != null && #{level} != ''">,LEVEL = #{level}</if>
+        WHERE
+        		URL = #{url}
+       		AND (EDITABLE != 'N' OR EDITABLE IS NULL)
+    </update>
+    
+    <delete id="deleteUrlAuth" parameterType="string">
+        DELETE FROM
+        	IMB_URL_AUTH
+        WHERE
+        		URL = #{url}
+        	AND (EDITABLE != 'N' OR EDITABLE IS NULL)
+    </delete>
+</mapper>

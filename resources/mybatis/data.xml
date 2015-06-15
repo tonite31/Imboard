@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data">
+    <resultMap type="DataVo" id="dataResult">
+        <result column="ID" property="id" />
+        <result column="DATA" property="data" typeHandler="BlobTypeHandler" javaType="java.lang.String"/>
+    </resultMap>
+    
+    <select id="getData" parameterType="DataVo" resultMap="dataResult">
+        SELECT
+        	ID,
+        	DATA
+        FROM
+        	IMB_DATA
+        WHERE
+        	ID = #{id}
+    </select>
+    
+    <insert id="insertData" parameterType="DataVo">
+        INSERT IMB_DATA
+        	(ID, DATA)
+        VALUES
+        	(
+        		#{id},
+        		#{data}
+        	)
+    </insert>
+    
+    <update id="updateData" parameterType="DataVo">
+        UPDATE
+        	IMB_DATA
+       	SET
+       		DATA = #{data}
+        WHERE
+       		ID = #{id}
+    </update>
+    
+    <delete id="deleteData" parameterType="DataVo">
+        DELETE FROM
+        	IMB_DATA
+        WHERE
+       		ID = #{id}
+    </delete>
+</mapper>

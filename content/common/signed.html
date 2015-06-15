@@ -1,0 +1,40 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+<meta name="viewport" content="width=device-width" />
+
+<title>#{lan.signin}</title>
+
+<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-ui-1.0.css" />
+
+<script src="/content/lib/ckeditor/ckeditor.js"></script>
+<script src="/content/lib/jquery/jquery-1.10.2.js"></script>
+<script src="/content/lib/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="/content/module/imboard/js/imboard-api-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-1.0.js"></script>
+<script src="/content/module/imboard/js/imboard-ui-1.0.js"></script>
+
+<script>
+$(document).ready(function()
+{
+	var rect = $("#container").get(0).getBoundingClientRect();
+	$("#container").css("margin-top", $(window).height()/2.3 - rect.height/2 + "px");
+	
+	$("#prev").on("click", function()
+	{
+		history.back();
+	});
+});
+</script>
+</head>
+<body>
+	<div id="container" style="margin:0 auto; width: 400px; text-align: center;">
+		<h1>이미 로그인되어있습니다</h1>
+		<p>
+			<button type="button" id="prev">이전페이지로 돌아가기</button>
+		</p>
+	</div>
+</body>
+</html>
