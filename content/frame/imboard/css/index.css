@@ -1,0 +1,221 @@
+*
+{
+	color: #565656;
+}
+
+.container-fluid
+{
+	padding:0;
+}
+
+.nav-header
+{
+	background-color: #fefefe;
+}
+
+.nav-header .navbar
+{
+	background: #fefefe;
+	border-radius:0;
+	box-shadow:none;
+	border:0;
+	margin:0;
+}
+
+.navbar-default .navbar-nav>.active>a
+{
+	background: #e7e7e7;
+	box-shadow: none;
+}
+
+.navbar-brand, .navbar-nav>li>a
+{
+	text-shadow: none;
+}
+
+.navbar-default .navbar-brand
+{
+	font-size:22px;
+	color:#444;
+}
+
+.jumbotron
+{
+	background-color: #183F66;
+}
+
+.jumbotron h1, .jumbotron p
+{
+	color: #efefef;
+}
+
+.jumbotron p
+{
+	margin:15px 0;
+}
+
+.jumbotron p
+{
+	font-size:17px;
+}
+
+.index-button-area
+{
+	height:100%;
+	font-size:0;
+	text-align: center;
+}
+
+.index-button-area > .verticalbar
+{
+	width:0;
+	height:100%;
+}
+
+.index-button-area > div
+{
+	display:inline-block;
+	vertical-align: middle;
+}
+
+.aside-button-group
+{
+	text-align: center;
+}
+
+.aside-button-group > p
+{
+	display:inline-block;
+	margin-left:5px;
+	margin-right:5px;
+}
+
+.aside-button-group > p > a
+{
+	width: 120px;
+}
+
+.btn
+{
+	border-radius:0;
+}
+
+.btn-outline
+{
+	color: #efefef;
+	background-color: transparent;
+	border-color:#dfdfdf;
+}
+
+.btn-outline:HOVER {
+	background-color: #efefef;
+	border-color: #a0a0a0;
+	color:#333;
+}
+
+.btn-outline span
+{
+	font-size:18px;
+}
+
+.btn-outline span, .btn-outline small
+{
+	color: inherit;
+}
+
+.btn-outline small
+{
+	font-size:12px;
+}
+
+.btn-outline.black
+{
+	color:#555;
+}
+
+.btn-outline.black:HOVER
+{
+	color:black;
+}
+
+.doc h2
+{
+	font-size:24px;
+}
+
+.feature
+{
+	text-align: center;
+}
+
+.feature > img
+{
+	width: 70%;
+}
+
+.feature > p
+{
+	text-align: left;
+}
+
+footer
+{
+	border-top: 1px solid #dfdfdf;
+	text-align: center;
+	padding: 40px;
+}
+
+footer p
+{
+	margin:0;
+}
+
+@media (min-width: 768px)
+{
+	.index-button-area
+	{
+		position: absolute;
+		top:0;
+		right:15px;
+	}
+	
+	.jumbotron h1
+	{
+		font-size:75px;
+	}
+	
+	.jumbotron p
+	{
+		font-size:21px;
+	}
+	
+	.aside-button-group > p
+	{
+		display:block;
+	}
+	
+	.aside-button-group > p > a
+	{
+		width: 150px;
+	}
+	
+	.container
+	{
+		padding:0;
+	}
+	
+	.doc
+	{
+		padding: 50px 0;
+	}
+	
+	.doc h2
+	{
+		font-size:30px;
+	}
+	
+	.lead
+	{
+		font-size: 19px;
+	}
+}

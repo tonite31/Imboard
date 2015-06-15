@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="Title" content="임보드">
+<meta name="author" content="Alprensia"/>
+<meta name="reply-to" content="tonite32@gmail.com"/>
+<meta name="robots" content="INDEX, FOLLOW" />
+<meta name="description" content="가장 간편한 웹페이지 제작 플랫폼"/>
+
+<title>Imboard</title>
+
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/css/index.css" />
+
+<script src="#{path.lib}/jquery/jquery-1.10.2.js"></script>
+<script src="#{path.root}/lib/bootstrap/bootstrap.min.js"></script>
+<script src="#{path.lib}/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="#{path.module}/imboard/js/imboard-api-1.0.js"></script>
+<script src="#{path.module}/imboard/js/imboard-ui-1.0.js"></script>
+<script src="#{path.module}/imboard/js/handlebar-helper-1.0.js"></script>
+
+<script src="#{path.root}/js/index.js"></script>
+
+<script id="articleListTemplate" type="text/x-handlebars-template">
+{{#if articleList}}
+{{#each articleList}}
+	<li class="list-group-item">{{subject}}</li>
+{{/each}}
+{{/if}}
+</script>
+
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shLegacy.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushDelphi.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushDiff.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushGroovy.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPython.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushRuby.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushScala.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushSql.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushVb.js"></script>
+<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
+<link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shCore.css">
+<link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shThemeDefault.css">
+
+<script>
+$(document).ready(function()
+{
+	SyntaxHighlighter.all();
+	dp.SyntaxHighlighter.HighlightAll('code');
+	
+	$("#testForm").compile(function(param)
+	{
+		$("#testFormResult").html("<strong>결과</strong>\n<span>" + JSON.stringify(param) + "</span>");
+	});
+});
+</script>
+</head>
+
+<body>
+	<header class="nav-header">
+		<div class="container">
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+			    <!-- Brand and toggle get grouped for better mobile display -->
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+							<span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+				      	</button>
+				      	<a class="navbar-brand" href="/">Imboard</a>
+				    </div>
+				
+				    <!-- Collect the nav links, forms, and other content for toggling -->
+				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						<ul class="nav navbar-nav">
+						  	<li><a href="?piece=gettingstarted">시작하기</a></li>
+						  	<li><a href="?piece=document">문서</a></li>
+						  	<li><a href="#">커뮤니티</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+						  	<li><a href="#">Blog</a></li>
+						  	<li><a href="#">Contact</a></li>
+						</ul>
+				    </div><!-- /.navbar-collapse -->
+				</div><!-- /.container-fluid -->
+			</nav>
+		</div>
+	</header>
+	<div data-component="piece">
+		<div class="jumbotron">
+			<div class="container" style="position:relative;">
+				<h1>Imboard</h1>
+				<p>임보드는 다양한 웹페이지 또는 웹서비스를 개발할 수 있는 nodejs기반 게시판 플랫폼입니다.</p>
+				<div class="index-button-area">
+					<div class="verticalbar"></div>
+					<div class="aside-button-group">
+						<p><a class="btn btn-outline" href="?piece=gettingstarted#download"><span>다운로드</span><br/><small>최신버전 v0.0.1</small></a></p>
+						<p><a class="btn btn-outline" href="https://github.com/tonite31/imboard" target="_blank"><span>GitHub</span><br/><small>개발중인버전</small></a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container doc">
+			<h2>nodejs, HTML, JS, CSS기반으로 웹페이지를 제작합니다.</h2>
+			<p class="lead">
+				당연하게도 임보드로 제작하는 웹페이지는 HTML과 JS, CSS만으로 작성할 수 있습니다.
+				물론 <a href="https://jquery.com/" target="_blank">jQuery</a>와 화면에 데이터를 조합하는데 도움을 주는 <a href="http://handlebarsjs.com/" target="_blank">Handlebars</a>라는 자바스크립트 라이브러리가 반드시 필요하지만 전혀 어렵지 않습니다.
+			</p>
+		</div>
+		<div class="container doc">
+			<h2>프론트엔드에 집중하십시오. 백엔드는 이미 준비되어있습니다.</h2>
+			<p class="lead">
+				아름다운 화면을 디자인하는데 집중하세요! 필요한 대부분의 서버기능, 화면제작에 필요하지만 구현이 까다롭거나 단순하고 지루한 반복작업들을 최소화할 수 있는 다양한 컴포넌트들이 제공됩니다. 데이터를 관리하는 관리자페이지는 덤입니다.
+				못믿으시겠다면 <a href="?piece=document">문서</a>페이지를 확인해보세요!
+			</p>
+		</div>
+<!-- 		<div class="container doc"> -->
+<!-- 			<h2>가장 간편한 웹페이지 제작 플랫폼</h2> -->
+<!-- 			<h3 class="lead">블로그나 커뮤니티사이트뿐만 아니라 개인용, 기업용 홈페이지까지 원하는 모든 웹페이지를 간편하게 누구나 제작할 수 있습니다.</h3> -->
+<!-- 			<div style="margin: 40px auto;"></div> -->
+<!-- 			<div class="row"> -->
+<!-- 				<div class="col-sm-4 feature"> -->
+<!-- 					<img src="http://lemberg.co.uk/sites/default/files/styles/service_icon/public/approatch_image/Front-end%20development%20-%20User%20interact_x2-01.png?itok=V788CUON"/> -->
+<!-- 					<h3>HTML, JS, CSS</h3> -->
+<!-- 					<p> -->
+<!-- 						임보드는 웹페이지 <abbr title="웹페이지 화면들의 집합으로 워드프레스의 테마와 성격이 비슷합니다">프레임</abbr>을 HTML, JS, CSS로 제작할 수 있습니다. 심지어 서버모듈도 nodejs기반으로 제작되었기때문에 어려움없이 수정하거나 확장할 수 있습니다. -->
+<!-- 		      		</p> -->
+<!-- 		    	</div> -->
+<!-- 		    	<div class="col-sm-4 feature"> -->
+<!-- 		    		<img src="http://lemberg.co.uk/sites/default/files/styles/service_icon/public/approatch_image/Front-end%20development%20-%20User%20interact_x2-01.png?itok=V788CUON"/> -->
+<!-- 		      		<h3>Built-in Module</h3> -->
+<!-- 		      		<p> -->
+<!-- 				        매우 간단한 방법으로 서버의 데이터를 불러오거나 구현이 까다로운 기능 또는 단순한 반복작업을 최소화할 수 있는 다양한 빌트인 모듈이 준비되어있습니다. -->
+<!-- 		      		</p> -->
+<!-- 		    	</div> -->
+<!-- 		    	<div class="col-sm-4 feature"> -->
+<!-- 		    		<img src="http://lemberg.co.uk/sites/default/files/styles/service_icon/public/approatch_image/Front-end%20development%20-%20User%20interact_x2-01.png?itok=V788CUON"/> -->
+<!-- 		      		<h3>Share</h3> -->
+<!-- 			      	<p> -->
+<!-- 			      		임보드의 웹페이지 프레임 또는 모듈을 공유할 수 있습니다. 직접 제작한 프레임과 모듈을 공유하거나 다운로드 받아서 적용할수도 있습니다. -->
+<!-- 					</p> -->
+<!-- 		    	</div> -->
+<!-- 		  	</div> -->
+<!-- 		</div> -->
+		<div class="container doc">
+			<h2>코드예제</h2>
+			<h3 class="lead">간단한 마크업 문법으로 게시판의 글 목록을 불러올 수 있습니다.</h3>
+			<div class="row">
+				<div class="col-sm-8">
+					<textarea name="code" class="brush:html;">
+<!-- Handlebars Template -->
+&lt;script id="articleListTemplate" type="text/x-handlebars-template"&gt;
+	{{#if articleList}}
+	{{#each articleList}}
+		&lt;li class="list-group-item"&gt;{{subject}}&lt;/li&gt;
+	{{/each}}
+	{{/if}}
+&lt;/script&gt;
+
+<!-- Imboard Markup data bind -->
+&lt;div class="col-sm-4" data-bind="board" data-param='{"boardId" : "test"}'&gt;
+	&lt;strong style="padding: 10px; display:inline-block;"&gt;{{name}}&lt;/strong&gt;
+	&lt;ul class="list-group" data-bind="articleList" data-param='{"boardId" : "test"}'
+		data-template-id="articleListTemplate"&gt;&lt;/ul&gt;
+&lt;/div&gt;
+					</textarea>
+				</div>
+				<div class="col-sm-4" data-bind="board" data-param='{"boardId" : "test"}'>
+					<strong style="padding: 10px; display:inline-block;">{{name}}</strong>
+					<ul class="list-group" data-bind="articleList" data-param='{"boardId" : "test"}' data-template-id="articleListTemplate"></ul>
+				</div>
+			</div>
+<!-- 		</div> -->
+<!-- 		<div class="container doc"> -->
+<!-- 			<h3 class="lead">폼데이터를 간편하게 추출할 수 있습니다.</h3> -->
+<!-- 			<div class="col-sm-8"> -->
+<!-- 				<strong>스크립트</strong> -->
+<!-- 				<textarea name="code" class="brush:js;"> -->
+<!-- $("#testForm").compile(function(param) -->
+<!-- { -->
+<!-- 	$("#testFormResult").html("&lt;strong&gt;결과&lt;/strong&gt;\n&lt;span&gt;" + JSON.stringify(param) + "&lt;/span&gt;"); -->
+<!-- }); -->
+<!-- 				</textarea> -->
+<!-- 				<strong>마크업</strong> -->
+<!-- 				<textarea name="code" class="brush:html;"> -->
+<!-- &lt;form data-component="form" id="testForm"&gt; -->
+<!-- 	&lt;p&gt;&lt;input type="text" name="textinput"/&gt;&lt;/p&gt; -->
+<!-- 	&lt;p&gt; -->
+<!-- 		&lt;label&gt;&lt;input type="radio" name="radio" value="radio1"/&gt; Radio1&lt;/label&gt; -->
+<!-- 		&lt;label&gt;&lt;input type="radio" name="radio" value="radio2"/&gt; Radio2&lt;/label&gt; -->
+<!-- 	&lt;/p&gt; -->
+<!-- 	&lt;p&gt; -->
+<!-- 		&lt;select name="select"&gt; -->
+<!-- 			&lt;option value="select1"&gt;Select1&lt;/option&gt; -->
+<!-- 			&lt;option value="select2"&gt;Select2&lt;/option&gt; -->
+<!-- 		&lt;/select&gt; -->
+<!-- 	&lt;/p&gt; -->
+<!-- 	&lt;p&gt; -->
+<!-- 		&lt;label&gt;&lt;input type="checkbox" name="checkbox" value="checkbox1"/&gt; Checkbox1&lt;/label&gt; -->
+<!-- 		&lt;label&gt;&lt;input type="checkbox" name="checkbox" value="checkbox2"/&gt; Checkbox2&lt;/label&gt; -->
+<!-- 	&lt;/p&gt; -->
+<!-- 	&lt;p&gt; -->
+<!-- 		&lt;input type="submit" class="btn btn-default" value="추출"/&gt; -->
+<!-- 	&lt;/p&gt; -->
+<!-- &lt;/form&gt; -->
+<!-- &lt;div id="testFormResult" style="margin-top:15px; padding-top:15px; border-top: 1px solid #dfdfdf;"&gt;&lt;/div&gt; -->
+<!-- 				</textarea> -->
+<!-- 			</div> -->
+<!-- 			<div class="col-sm-4"> -->
+<!-- 				<form data-component="form" id="testForm"> -->
+<!-- 					<p><input type="text" name="textinput"/></p> -->
+<!-- 					<p> -->
+<!-- 						<label><input type="radio" name="radio" value="radio1"/> Radio1</label> -->
+<!-- 						<label><input type="radio" name="radio" value="radio2"/> Radio2</label> -->
+<!-- 					</p> -->
+<!-- 					<p> -->
+<!-- 						<select name="select"> -->
+<!-- 							<option value="select1">Select1</option> -->
+<!-- 							<option value="select2">Select2</option> -->
+<!-- 						</select> -->
+<!-- 					</p> -->
+<!-- 					<p> -->
+<!-- 						<label><input type="checkbox" name="checkbox" value="checkbox1"/> Checkbox1</label> -->
+<!-- 						<label><input type="checkbox" name="checkbox" value="checkbox2"/> Checkbox2</label> -->
+<!-- 					</p> -->
+<!-- 					<p> -->
+<!-- 						<input type="submit" class="btn btn-default" value="추출"/> -->
+<!-- 					</p> -->
+<!-- 				</form> -->
+<!-- 				<div id="testFormResult" style="margin-top:15px; padding-top:15px; border-top: 1px solid #dfdfdf;"></div> -->
+<!-- 			</div> -->
+		</div>
+	</div>
+	<footer>
+		<p>Code licensed under <a rel="license" href="https://github.com/tonite31/imboard/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a rel="license" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a></p>
+	</footer>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<script id="writeAreaTemplate" type="text/x-handlebars-template">
+<div id="writeArea">
+	<p></p>
+	<div class="wrapper colgroup">
+		<form data-component="form" id="writeForm">
+		<input type="text" class="textinput" placeholder="제목을 입력하세요" autofocus="autofocus" style="display:block; width:100%; margin-bottom:5px;"/>
+		<div class="col" style="width: 70%; vertical-align: top;">
+			<textarea id="ckeditor" data-component="ckeditor" data-theme="simple" data-config='{"height" : "200px"}'></textarea>
+		</div>
+		<div class="col" style="width: 30%; vertical-align: top; text-align: center; padding-left:5px;">
+			<div data-component="image-uploader" data-autocompile="true" data-target="image-upload-area" data-append-type="html" id="image-upload-area" class="image-upload-area" style="width:100%; height:300px;">
+		 		<label style="display:inline-block; margin-top: 145px;">여기를 클릭하거나 이미지를 끌어다 놓으세요.</label>
+			</div>
+		</div>
+		<p style="text-align:center;">
+			<button class="btn default" style="font-size:15px;">저장</button>
+			<button type="button" class="btn default" style="font-size:15px;">취소</button>
+		</p>
+		</form>
+	</div>
+</div>
+</script>
+
+<div class="background" style="position: relative;">
+	<button type="button" style="position:absolute; right:10px; top:10px;" class="btn default" id="write">글쓰기</button>
+</div>
+<div id="articleArea">
+<div class="background">
+	<div class="wrapper colgroup">
+		<h2>클라이언트 영역에 집중하십시오</h2>
+		<div class="col" style="width: 70%; vertical-align: top;">
+			<article style="font-size:18px;">
+				<p>골치아픈 서버작업이 필요없습니다. 웹페이지 구축을 위한 서버는 이미 준비되어있습니다.</p>
+				<p>관리자 페이지를 통해 각종 데이터를 관리하고 통계를 확인 할 수도 있습니다.</p>
+				<p>HTML5, JS, CSS를 활용해서 멋진 웹페이지를 제작해보십시오.</p>
+				<p>물론 필요하다면 nodejs로 구축된 서버를 직접 커스터마이징하거나 추가적인 모듈을 개발할수도 있습니다.</p>
+			</article>
+		</div>
+		<div class="col" style="width: 30%; vertical-align: top; text-align: right;">
+			<img src="http://fv-fahrnau.de/wp-content/uploads/2013/09/feat_homepage.jpg" style="width:100%;"/>
+		</div>
+	</div>
+</div>
+</div>
