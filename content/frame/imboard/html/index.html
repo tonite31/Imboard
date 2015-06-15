@@ -56,19 +56,6 @@
 <script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
 <link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shCore.css">
 <link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shThemeDefault.css">
-
-<script>
-$(document).ready(function()
-{
-	SyntaxHighlighter.all();
-	dp.SyntaxHighlighter.HighlightAll('code');
-	
-	$("#testForm").compile(function(param)
-	{
-		$("#testFormResult").html("<strong>결과</strong>\n<span>" + JSON.stringify(param) + "</span>");
-	});
-});
-</script>
 </head>
 
 <body>
@@ -107,7 +94,7 @@ $(document).ready(function()
 		<div class="jumbotron">
 			<div class="container" style="position:relative;">
 				<h1>Imboard</h1>
-				<p>임보드는 nodejs기반 웹페이지 개발 플랫폼입니다.</p>
+				<p>임보드는 nodejs기반 웹페이지 개발 플랫폼입니다. 간다한 마크업문법으로 </p>
 				<div class="index-button-area">
 					<div class="verticalbar"></div>
 					<div class="aside-button-group">
@@ -118,9 +105,9 @@ $(document).ready(function()
 			</div>
 		</div>
 		<div class="container doc">
-			<h2>간편하게 웹페이지를 개발할 수 있습니다.</h2>
+			<h2>웹페이지 개발이 간편해집니다.</h2>
 			<p class="lead">
-				<iframe src="/example.page" class="exampleContainer"></iframe>
+				
 			</p>
 		</div>
 		<div class="container doc">
