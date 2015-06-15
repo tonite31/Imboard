@@ -170,13 +170,13 @@ function replaceData(html, req)
 			}
 		}
 		
-		matchs = html.match(/\#{frame.[^}]*}/gi);
+		matchs = html.match(/\#{path.[^}]*}/gi);
 		if(matchs != null)
 		{
-			var frameData = {name : _config.frame, root : "/content/frame/" + _config.frame};
+			var frameData = {root : "/content/frame/" + _config.frame, module : "/content/module", lib : "/content/lib"};
 			for(var i=0; i<matchs.length; i++)
 			{
-				var key = matchs[i].replace("#{frame.", "").replace("}", "");
+				var key = matchs[i].replace("#{path.", "").replace("}", "");
 				var value = frameData[key];
 				
 				if(value == null)
