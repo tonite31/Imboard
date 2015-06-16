@@ -68,7 +68,6 @@
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-						  	<li><a href="?piece=gettingstarted">시작하기</a></li>
 						  	<li><a href="?piece=document">문서</a></li>
 						  	<li><a href="#">커뮤니티</a></li>
 						</ul>
@@ -81,7 +80,7 @@
 			</nav>
 		</div>
 	</header>
-	<div data-component="piece">
+	<div data-component="piece" data-key="piece">
 		<div class="jumbotron">
 			<div class="container" style="position:relative;">
 				<h1>Imboard</h1>
@@ -93,7 +92,7 @@
 			<div class="feature">
 				<div>
 					<p>임보드의 최신버전은 zip과 tar.gz형태로 배포됩니다.</p>
-					<p> 개발중인버전은 <a href="https://github.com/tonite31/Imboard/tree/development" target="_blank">https://github.com/tonite31/Imboard/tree/development</a>에 방문하면 다운로드 받을 수 있습니다.</p>
+					<p> 개발중인버전은 <a href="https://github.com/tonite31/Imboard/tree/development" target="_blank">https://github.com/tonite31/Imboard/tree/development</a> 에서 다운로드 받을 수 있습니다.</p>
 					<p>만약 npm을 사용할 수 있다면 커맨드라인에서 npm install imboard 명령어를 입력하면 간편하게 설치할 수 있습니다.</p>
 				</div>
 				<div class="right">
@@ -102,19 +101,31 @@
 				</div>
 			</div>
 		</div>
+		<hr class="container"/>
 		<div class="container doc">
 			<h2>설치하기</h2>
 			<div class="feature">
 				<div>
 					<h3>사전준비</h3>
 					<p>1. 웹서버</p>
-					<p>냠냠</p>
+					<p>임보드를 설치할 호스팅 서버 또는 개인 서버가 필요합니다.</p>
+					<p>2. nodejs &amp; MySQL</p>
+					<p>임보드는 nodejs기반 플랫폼이며 데이터베이스는 MySQL을 사용합니다. 최신버전의 <a href="https://nodejs.org" target="_blank">nodejs</a>와 <a href="http://dev.mysql.com/downloads/mysql/" target="_blank">MySQL</a>을 다운로드하여 설치해주시기 바랍니다.</p>
+					<p>3. 필요한 nodejs 모듈 설치</p>
+					<p>임보드의 루트 디렉토리에서 <strong>npm install</strong> 명령어를 수행합니다.</p>
+					<p>4. 설정파일 수정</p>
+					<p><strong>resources/properties/config.json</strong> 파일을 열어서 자신의 환경에 맞게 설정값을 입력합니다.</p>
+					<p>5. 임보드 어플리케이션 실행</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
+					<p>6. 웹페이지 접속</p>
+					<p>웹브라우저를 열어서 주소창에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
 				</div>
 			</div>
 		</div>
 	</div>
 	<footer>
 		<p>Code licensed under <a rel="license" href="https://github.com/tonite31/imboard/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a rel="license" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a></p>
+		<p>Currently v0.0.2, <a href="https://github.com/tonite31/Imboard" target="_blank">GitHub</a>, <a href="#">Contact</a></p>
 	</footer>
 </body>
 

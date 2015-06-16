@@ -162,4 +162,10 @@ footer
 footer p
 {
 	margin:0;
+	padding: 2px 0;
+}
+
+footer p a
+{
+	margin:0 2.5px;
 }
