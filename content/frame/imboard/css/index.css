@@ -112,28 +112,44 @@
 	font-size:24px;
 }
 
-.horizontalContainer
+.doc h3
+{
+	font-size:20px;
+}
+
+.doc h4
+{
+	font-size: 16px;
+}
+
+.feature
 {
 	font-size:0;
 }
 
-.horizontalContainer > div
+.feature > div
 {
 	display:inline-block;
-	width:30%;
+	width:15%;
 	font-size:15px;
 	vertical-align: top;
 }
 
-.horizontalContainer > div:FIRST-CHILD
+.feature > div:FIRST-CHILD
 {
-	width: 70%;
+	width: 85%;
+	padding-right: 10px;
 }
 
-.horizontalContainer > div p
+.feature > div p
 {
 	margin:0;
 	padding: 10px 0;
+}
+
+.feature .right
+{
+	text-align: center;
 }
 
 footer
