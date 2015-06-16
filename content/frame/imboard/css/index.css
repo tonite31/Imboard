@@ -157,6 +157,7 @@ footer
 	border-top: 1px solid #dfdfdf;
 	text-align: center;
 	padding: 40px;
+	clear: both;
 }
 
 footer p
