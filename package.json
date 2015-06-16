@@ -1,5 +1,5 @@
 {
-  "name": "Imboard",
+  "name": "imboard",
   "version": "0.0.1",
   "description": "",
   "repository": {
@@ -29,9 +29,7 @@
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
     "passport-twitter": "^1.0.2",
-    "pem": "^1.7.2",
     "querystring": "^0.2.0",
-    "request": "^2.40.0",
     "serve-favicon": "^2.1.6",
     "winston": "^0.7.3"
   },

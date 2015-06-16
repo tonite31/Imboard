@@ -33,7 +33,6 @@ var session = require('express-session');
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var favicon = require('serve-favicon');
-var pem = require("pem");
 var https = require("https");
 
 var Logger  = require(_path.lib + "/Logger");

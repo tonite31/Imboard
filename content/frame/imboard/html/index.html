@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <meta name="Title" content="임보드">
 <meta name="author" content="Alprensia"/>
@@ -26,14 +25,6 @@
 <script src="#{path.module}/imboard/js/handlebar-helper-1.0.js"></script>
 
 <script src="#{path.root}/js/index.js"></script>
-
-<script id="articleListTemplate" type="text/x-handlebars-template">
-{{#if articleList}}
-{{#each articleList}}
-	<li class="list-group-item">{{subject}}</li>
-{{/each}}
-{{/if}}
-</script>
 
 <script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
 <script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shLegacy.js"></script>
@@ -94,109 +85,21 @@
 		<div class="jumbotron">
 			<div class="container" style="position:relative;">
 				<h1>Imboard</h1>
-				<p>임보드는 nodejs기반 웹페이지 개발 플랫폼입니다. 간다한 마크업문법으로 </p>
-				<div class="index-button-area">
-					<div class="verticalbar"></div>
-					<div class="aside-button-group">
-						<p><a class="btn btn-outline" href="?piece=gettingstarted#download"><span>다운로드</span><br/><small>최신버전 v0.0.1</small></a></p>
-						<p><a class="btn btn-outline" href="https://github.com/tonite31/imboard" target="_blank"><span>GitHub</span><br/><small>개발중인버전</small></a></p>
-					</div>
-				</div>
+				<p>임보드는 웹페이지 개발을 간편하게 할 수 있는 nodejs기반 플랫폼입니다. HTML5의 속성을 지정하는것만으로 레이아웃을 구성하고 데이터를 화면에 조합할 수 있습니다.</p>
 			</div>
 		</div>
 		<div class="container doc">
-			<h2>웹페이지 개발이 간편해집니다.</h2>
-			<p class="lead">
-				
-			</p>
-		</div>
-		<div class="container doc">
-			<h2>코드예제</h2>
-			<h3 class="lead">간단한 마크업 문법으로 게시판의 글 목록을 불러올 수 있습니다.</h3>
-			<div class="row">
-				<div class="col-sm-8">
-					<textarea name="code" class="brush:html;">
-<!-- Handlebars Template -->
-&lt;script id="articleListTemplate" type="text/x-handlebars-template"&gt;
-	{{#if articleList}}
-	{{#each articleList}}
-		&lt;li class="list-group-item"&gt;{{subject}}&lt;/li&gt;
-	{{/each}}
-	{{/if}}
-&lt;/script&gt;
-
-<!-- Imboard Markup data bind -->
-&lt;div class="col-sm-4" data-bind="board" data-param='{"boardId" : "test"}'&gt;
-	&lt;strong style="padding: 10px; display:inline-block;"&gt;{{name}}&lt;/strong&gt;
-	&lt;ul class="list-group" data-bind="articleList" data-param='{"boardId" : "test"}'
-		data-template-id="articleListTemplate"&gt;&lt;/ul&gt;
-&lt;/div&gt;
-					</textarea>
+			<h2>다운로드</h2>
+			<div class="horizontalContainer">
+				<div>
+					<p>임보드의 최신버전은 zip과 tar.gz형태로 배포됩니다.</p>
+					<p>만약 npm을 사용할 수 있다면 커맨드라인에서 npm install imboard 명령어를 입력하면 간편하게 설치할 수 있습니다.</p>
 				</div>
-				<div class="col-sm-4" data-bind="board" data-param='{"boardId" : "test"}'>
-					<strong style="padding: 10px; display:inline-block;">{{name}}</strong>
-					<ul class="list-group" data-bind="articleList" data-param='{"boardId" : "test"}' data-template-id="articleListTemplate"></ul>
+				<div>
+					<p><a href="#" class="btn btn-outline black" style="width: 150px;">임보드 0.0.1.zip<br/>다운로드</a></p>
+					<p><a href="#" class="btn btn-outline black" style="width: 150px;">임보드 0.0.1.tar.gz<br/>다운로드</a></p>
 				</div>
 			</div>
-<!-- 		</div> -->
-<!-- 		<div class="container doc"> -->
-<!-- 			<h3 class="lead">폼데이터를 간편하게 추출할 수 있습니다.</h3> -->
-<!-- 			<div class="col-sm-8"> -->
-<!-- 				<strong>스크립트</strong> -->
-<!-- 				<textarea name="code" class="brush:js;"> -->
-<!-- $("#testForm").compile(function(param) -->
-<!-- { -->
-<!-- 	$("#testFormResult").html("&lt;strong&gt;결과&lt;/strong&gt;\n&lt;span&gt;" + JSON.stringify(param) + "&lt;/span&gt;"); -->
-<!-- }); -->
-<!-- 				</textarea> -->
-<!-- 				<strong>마크업</strong> -->
-<!-- 				<textarea name="code" class="brush:html;"> -->
-<!-- &lt;form data-component="form" id="testForm"&gt; -->
-<!-- 	&lt;p&gt;&lt;input type="text" name="textinput"/&gt;&lt;/p&gt; -->
-<!-- 	&lt;p&gt; -->
-<!-- 		&lt;label&gt;&lt;input type="radio" name="radio" value="radio1"/&gt; Radio1&lt;/label&gt; -->
-<!-- 		&lt;label&gt;&lt;input type="radio" name="radio" value="radio2"/&gt; Radio2&lt;/label&gt; -->
-<!-- 	&lt;/p&gt; -->
-<!-- 	&lt;p&gt; -->
-<!-- 		&lt;select name="select"&gt; -->
-<!-- 			&lt;option value="select1"&gt;Select1&lt;/option&gt; -->
-<!-- 			&lt;option value="select2"&gt;Select2&lt;/option&gt; -->
-<!-- 		&lt;/select&gt; -->
-<!-- 	&lt;/p&gt; -->
-<!-- 	&lt;p&gt; -->
-<!-- 		&lt;label&gt;&lt;input type="checkbox" name="checkbox" value="checkbox1"/&gt; Checkbox1&lt;/label&gt; -->
-<!-- 		&lt;label&gt;&lt;input type="checkbox" name="checkbox" value="checkbox2"/&gt; Checkbox2&lt;/label&gt; -->
-<!-- 	&lt;/p&gt; -->
-<!-- 	&lt;p&gt; -->
-<!-- 		&lt;input type="submit" class="btn btn-default" value="추출"/&gt; -->
-<!-- 	&lt;/p&gt; -->
-<!-- &lt;/form&gt; -->
-<!-- &lt;div id="testFormResult" style="margin-top:15px; padding-top:15px; border-top: 1px solid #dfdfdf;"&gt;&lt;/div&gt; -->
-<!-- 				</textarea> -->
-<!-- 			</div> -->
-<!-- 			<div class="col-sm-4"> -->
-<!-- 				<form data-component="form" id="testForm"> -->
-<!-- 					<p><input type="text" name="textinput"/></p> -->
-<!-- 					<p> -->
-<!-- 						<label><input type="radio" name="radio" value="radio1"/> Radio1</label> -->
-<!-- 						<label><input type="radio" name="radio" value="radio2"/> Radio2</label> -->
-<!-- 					</p> -->
-<!-- 					<p> -->
-<!-- 						<select name="select"> -->
-<!-- 							<option value="select1">Select1</option> -->
-<!-- 							<option value="select2">Select2</option> -->
-<!-- 						</select> -->
-<!-- 					</p> -->
-<!-- 					<p> -->
-<!-- 						<label><input type="checkbox" name="checkbox" value="checkbox1"/> Checkbox1</label> -->
-<!-- 						<label><input type="checkbox" name="checkbox" value="checkbox2"/> Checkbox2</label> -->
-<!-- 					</p> -->
-<!-- 					<p> -->
-<!-- 						<input type="submit" class="btn btn-default" value="추출"/> -->
-<!-- 					</p> -->
-<!-- 				</form> -->
-<!-- 				<div id="testFormResult" style="margin-top:15px; padding-top:15px; border-top: 1px solid #dfdfdf;"></div> -->
-<!-- 			</div> -->
 		</div>
 	</div>
 	<footer>

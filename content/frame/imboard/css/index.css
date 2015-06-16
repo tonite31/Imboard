@@ -3,7 +3,7 @@
 	color: #565656;
 }
 
-.container-fluid
+.container, .container-fluid
 {
 	padding:0;
 }
@@ -59,42 +59,6 @@
 	font-size:17px;
 }
 
-.index-button-area
-{
-	height:100%;
-	font-size:0;
-	text-align: center;
-}
-
-.index-button-area > .verticalbar
-{
-	width:0;
-	height:100%;
-}
-
-.index-button-area > div
-{
-	display:inline-block;
-	vertical-align: middle;
-}
-
-.aside-button-group
-{
-	text-align: center;
-}
-
-.aside-button-group > p
-{
-	display:inline-block;
-	margin-left:5px;
-	margin-right:5px;
-}
-
-.aside-button-group > p > a
-{
-	width: 120px;
-}
-
 .btn
 {
 	border-radius:0;
@@ -138,24 +102,38 @@
 	color:black;
 }
 
+.doc
+{
+	padding:15px 0;
+}
+
 .doc h2
 {
 	font-size:24px;
 }
 
-.feature
+.horizontalContainer
 {
-	text-align: center;
+	font-size:0;
 }
 
-.feature > img
+.horizontalContainer > div
+{
+	display:inline-block;
+	width:30%;
+	font-size:15px;
+	vertical-align: top;
+}
+
+.horizontalContainer > div:FIRST-CHILD
 {
 	width: 70%;
 }
 
-.feature > p
+.horizontalContainer > div p
 {
-	text-align: left;
+	margin:0;
+	padding: 10px 0;
 }
 
 footer
@@ -168,61 +146,4 @@ footer
 footer p
 {
 	margin:0;
-}
-
-@media (min-width: 768px)
-{
-	.index-button-area
-	{
-		position: absolute;
-		top:0;
-		right:15px;
-	}
-	
-	.jumbotron h1
-	{
-		font-size:75px;
-	}
-	
-	.jumbotron p
-	{
-		font-size:21px;
-	}
-	
-	.aside-button-group > p
-	{
-		display:block;
-	}
-	
-	.aside-button-group > p > a
-	{
-		width: 150px;
-	}
-	
-	.container
-	{
-		padding:0;
-	}
-	
-	.doc
-	{
-		padding: 50px 0;
-	}
-	
-	.doc h2
-	{
-		font-size:30px;
-	}
-	
-	.lead
-	{
-		font-size: 19px;
-	}
-}
-
-.exampleContainer
-{
-	border:0;
-	width: 100%;
-	height: 600px;
 }
