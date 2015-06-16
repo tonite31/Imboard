@@ -22,10 +22,10 @@
 	},
 	"jdbc":
 	{
-        "host"     : "54.64.10.181",
-        "user"     : "imboard",
-        "password" : "imboard",
-        "database" : "imboard",
+        "host"     : "ip",
+        "user"     : "user",
+        "password" : "password",
+        "database" : "database",
         "typeCast" : true,
         "multipleStatements": true
 	},
