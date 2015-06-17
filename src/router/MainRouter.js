@@ -61,22 +61,22 @@ module.exports.main =
 			{
 				var html = Render.getData(global._path.content + "/common/signup.html");
 				html = replaceData(html, req);
-
-				if(req.query.piece != null && req.query.piece == "setPassword")
-				{
-					if(req.session.signupKey == req.query.key)
-					{
-						$ = cheerio.load(html);
-						$("*[data-component='piece']").html(Render.getData(_path.content + "/common/signup2.html"));
-						html = $.html();
-					}
-					else
-					{
-						$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
-						$("h1").text("잘못된경로로 접속하셨습니다");
-						html = $.html();
-					}
-				}
+//
+//				if(req.query.piece != null && req.query.piece == "setPassword")
+//				{
+//					if(req.session.signupKey == req.query.key)
+//					{
+//						$ = cheerio.load(html);
+//						$("*[data-fragment]").html(Render.getData(_path.content + "/common/signup2.html"));
+//						html = $.html();
+//					}
+//					else
+//					{
+//						$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
+//						$("h1").text("잘못된경로로 접속하셨습니다");
+//						html = $.html();
+//					}
+//				}
 				
 				Render.render(req, res, html);
 			}
@@ -237,12 +237,10 @@ function getLayout(req, res, folder, frame, path)
 
 function bindPiece(req, folder, frame, path, $, el)
 {
-	$(el).find("*[data-component='piece']").each(function()
+	$(el).find("*[data-fragment]").each(function()
 	{
-		var key = $(this).attr("data-key");
-
-		$(this).removeAttr("data-component");
-		$(this).removeAttr("data-key");
+		var key = $(this).attr("data-fragment");
+		$(this).removeAttr("data-fragment");
 		
 		if(req.query && req.query.hasOwnProperty(key))
 		{
