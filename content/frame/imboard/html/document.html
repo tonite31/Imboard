@@ -1,3 +1,37 @@
+<script id="boardListTemplate" type="text/x-handlebars-template">
+{{#if boardList}}
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 20%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 10%;"/>
+		<col style="width: 10%;"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th>아이디</th>
+			<th>이름</th>
+			<th>설명</th>
+			<th>우선순위</th>
+			<th>사용여부</th>
+		</tr>
+	</thead>
+{{#each boardList}}
+	<tbody>
+		<tr>
+			<td>{{id}}</td>
+			<td>{{name}}</td>
+			<td>{{description}}</td>
+			<td>{{priority}}</td>
+			<td>{{useYn}}</td>
+		</tr>
+	</tbody>
+{{/each}}
+</table>
+{{/if}}
+</script>
+
 <div class="jumbotron">
 	<div class="container">
 		<h1>문서</h1>
@@ -11,22 +45,31 @@
 			<h2 id="doc1">1. data-bind 모듈</h2>
 			<div>
 				<h3 id="doc1-1">1-1. 개요</h3>
-				<p>data-bind 모듈은 HTML 태그에 data-bind 속성과 data-param(optional) 속성을 지정해서 사용할 수 있습니다. 불러온 데이터는 <a href="http://handlebarsjs.com/" target="_blank">Handlebars</a> 문법으로 화면에 조합할 수 있습니다.</p>
-			</div>
-			<div>
-				<h3 id="doc1-2">1-2. Common 모듈</h3>
-				<p>공통 모듈입니다.</p>
-				<div class="panel panel-default">
-					<div class="panel-body"></div>
-					<div class="panel-footer"></div>
-				</div>
+				<p>data-bind 모듈은 예제와 같이 HTML 태그에 data-bind 속성과 data-param(optional) 속성을 지정해서 사용할 수 있습니다. 불러온 데이터는 <a href="http://handlebarsjs.com/" target="_blank">Handlebars</a> 문법으로 화면에 조합할 수 있습니다.</p>
+				<p>&lt;div data-bind="모듈명" data-param='{"key" : "value"}'&gt;&lt;/div&gt;</p>
 			</div>
 			<div>
 				<h3 id="doc1-2">1-2. Board 모듈</h3>
-				<p>게시판 목록을 불러오는 모듈입니다.</p>
 				<div class="panel panel-default">
-					<div class="panel-body"></div>
-					<div class="panel-footer"></div>
+					<div class="panel-body">
+						<div data-bind="boardList" data-template-id="boardListTemplate" style="width: 30%;"></div>
+					</div>
+					<div class="panel-footer">
+					<pre>
+&lt;script id="boardListTemplate" type="text/x-handlebars-template"&gt;
+{{#if boardList}}
+&lt;table&gt;
+	&lt;colgroup&gt;
+		&lt;col/&gt;
+	&lt;/colgroup&gt;
+{{#each boardList}}
+{{/each}}
+&lt;/table&gt;
+{{/if}}
+&lt;/script&gt;
+&lt;div data-bind="boardList" data-template-id="boardListTemplate"&gt;&lt;/div&gt;
+					</pre>
+					</div>
 				</div>
 			</div>
 			<div>
