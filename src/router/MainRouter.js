@@ -193,6 +193,27 @@ function replaceData(html, req)
 function render(req, res, folder, frame, path)
 {
 	var $ = getLayout(req, res, folder, frame, path);
+	
+	$("*[data-sfragment]").each(function()
+	{
+		var src = $(this).attr("data-sfragment");
+		$(this).removeAttr("data-sfragment");
+		
+		if(src.indexOf("/", 0) != 0)
+			src = "/" + src;
+		
+		var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
+		if(layout)
+		{
+			layout = replaceData(layout, req);
+			$(this).html(layout);
+			$(this).find("script[type='text/x-handlebars-template']").each(function()
+	 		{
+	 			$("head").append(this);
+	 		});
+		}
+	});
+	
 	if(!$)
 	{
 		$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));

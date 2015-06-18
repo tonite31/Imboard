@@ -5,7 +5,7 @@ var RoleDao = require(_path.src + "/dao/RoleDao.js");
 module.exports.board = function($, el, param, req, next)
 {
 	var template = this.getTemplate($, el);
-	BoardDao.getBoard(param.boardId, function(board)
+	BoardDao.getBoard(param.id, function(board)
 	{
 		$(el).html(template(board));
 		next();

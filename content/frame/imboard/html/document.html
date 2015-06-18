@@ -1,37 +1,3 @@
-<script id="boardListTemplate" type="text/x-handlebars-template">
-{{#if boardList}}
-<table class="dataTable">
-	<colgroup>
-		<col style="width: 20%;"/>
-		<col style="width: 30%;"/>
-		<col style="width: 30%;"/>
-		<col style="width: 10%;"/>
-		<col style="width: 10%;"/>
-	</colgroup>
-	<thead>
-		<tr>
-			<th>아이디</th>
-			<th>이름</th>
-			<th>설명</th>
-			<th>우선순위</th>
-			<th>사용여부</th>
-		</tr>
-	</thead>
-{{#each boardList}}
-	<tbody>
-		<tr>
-			<td>{{id}}</td>
-			<td>{{name}}</td>
-			<td>{{description}}</td>
-			<td>{{priority}}</td>
-			<td>{{useYn}}</td>
-		</tr>
-	</tbody>
-{{/each}}
-</table>
-{{/if}}
-</script>
-
 <div class="jumbotron">
 	<div class="container">
 		<h1>문서</h1>
@@ -50,35 +16,13 @@
 			</div>
 			<div>
 				<h3 id="doc1-2">1-2. Board 모듈</h3>
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<div data-bind="boardList" data-template-id="boardListTemplate" style="width: 30%;"></div>
-					</div>
-					<div class="panel-footer">
-					<pre>
-&lt;script id="boardListTemplate" type="text/x-handlebars-template"&gt;
-{{#if boardList}}
-&lt;table&gt;
-	&lt;colgroup&gt;
-		&lt;col/&gt;
-	&lt;/colgroup&gt;
-{{#each boardList}}
-{{/each}}
-&lt;/table&gt;
-{{/if}}
-&lt;/script&gt;
-&lt;div data-bind="boardList" data-template-id="boardListTemplate"&gt;&lt;/div&gt;
-					</pre>
-					</div>
-				</div>
+				<div data-sfragment="/document/module/boardList.html"></div>
+				<div data-sfragment="/document/module/board.html"></div>
 			</div>
 			<div>
 				<h3 id="doc1-3">1-3. Article 모듈</h3>
-				<p>게시글을 불러오는 모듈입니다. 단순하게 모든 게시글 목록을 불러오거나 페이징처리된 게시판 형태로 게시글 목록을 불러옵니다.</p>
-				<div class="panel panel-default">
-					<div class="panel-body"></div>
-					<div class="panel-footer"></div>
-				</div>
+				<div data-sfragment="/document/module/articleList.html"></div>
+				<div data-sfragment="/document/module/articleComponent.html"></div>
 			</div>
 			<div>
 				<h3 id="doc1-4">1-4. Comment 모듈</h3>

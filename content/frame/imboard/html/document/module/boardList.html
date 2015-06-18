@@ -1,0 +1,121 @@
+<script id="boardListTemplate" type="text/x-handlebars-template">
+{{#if boardList}}
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 20%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 10%;"/>
+		<col style="width: 10%;"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center">아이디</th>
+			<th class="center">이름</th>
+			<th class="center">설명</th>
+			<th class="center">우선순위</th>
+			<th class="center">사용여부</th>
+		</tr>
+	</thead>
+{{#each boardList}}
+	<tbody>
+		<tr>
+			<td>{{id}}</td>
+			<td>{{name}}</td>
+			<td>{{description}}</td>
+			<td class="center">{{priority}}</td>
+			<td class="center">{{useYn}}</td>
+		</tr>
+	</tbody>
+{{/each}}
+</table>
+{{/if}}
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		boardList
+	</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<div data-bind="boardList" data-template-id="boardListTemplate" style="height: 400px; overflow: auto;"></div>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 15%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 70%;"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th rowspan="10">boardList</th>
+				</tr>
+				<tr>
+					<th>id</th><td></td>
+				</tr>
+				<tr>
+					<th>name</th><td></td>
+				</tr>
+				<tr>
+					<th>priority</th><td></td>
+				</tr>
+				<tr>
+					<th>description</th><td></td>
+				</tr>
+				<tr>
+					<th>useYn</th><td></td>
+				</tr>
+				<tr>
+					<th>viewListLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>viewDetailLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>writeLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>writeCommentLevel</th><td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">코드</div>
+		<pre class="content-code">
+&lt;script id="boardListTemplate" type="text/x-handlebars-template"&gt;
+{{#if boardList}}
+&lt;table class="dataTable"&gt;
+	&lt;colgroup&gt;
+		&lt;col style="width: 20%;"/&gt;
+		&lt;col style="width: 30%;"/&gt;
+		&lt;col style="width: 30%;"/&gt;
+		&lt;col style="width: 10%;"/&gt;
+		&lt;col style="width: 10%;"/&gt;
+	&lt;/colgroup&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="center"&gt;아이디&lt;/th&gt;
+			&lt;th class="center"&gt;이름&lt;/th&gt;
+			&lt;th class="center"&gt;설명&lt;/th&gt;
+			&lt;th class="center"&gt;우선순위&lt;/th&gt;
+			&lt;th class="center"&gt;사용여부&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	&lt;tbody&gt;
+	{{#each boardList}}
+		&lt;tr&gt;
+			&lt;td&gt;{{id}}&lt;/td&gt;
+			&lt;td&gt;{{name}}&lt;/td&gt;
+			&lt;td&gt;{{description}}&lt;/td&gt;
+			&lt;td class="center"&gt;{{priority}}&lt;/td&gt;
+			&lt;td class="center"&gt;{{useYn}}&lt;/td&gt;
+		&lt;/tr&gt;
+	{{/each}}
+	&lt;/tbody&gt;
+&lt;/table&gt;
+{{/if}}
+&lt;/script&gt;
+
+&lt;div data-bind="boardList" data-template-id="boardListTemplate"&gt;&lt;/div&gt;
+		</pre>
+	</div>
+</div>

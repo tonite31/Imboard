@@ -1,0 +1,113 @@
+<script id="boardTemplate" type="text/x-handlebars-template">
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 20%;"/>
+		<col style="width: 80%;"/>
+	</colgroup>
+	<tbody>
+		<tr>
+			<th>아이디</th><td>{{id}}</td>
+		</tr>
+		<tr>
+			<th>이름</th><td>{{name}}</td>
+		</tr>
+		<tr>
+			<th>설명</th><td>{{description}}</td>
+		</tr>
+		<tr>
+			<th>우선순위</th><td>{{priority}}</td>
+		</tr>
+		<tr>
+			<th>사용여부</th><td>{{useYn}}</td>
+		</tr>
+	</tbody>
+</table>
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h4>board</h4>
+	</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<div data-bind="board" data-param='{"id" : "admin-1432011695459"}' data-template-id="boardTemplate"></div>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 80%;"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>id</th><td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 80%;"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>id</th><td></td>
+				</tr>
+				<tr>
+					<th>name</th><td></td>
+				</tr>
+				<tr>
+					<th>priority</th><td></td>
+				</tr>
+				<tr>
+					<th>description</th><td></td>
+				</tr>
+				<tr>
+					<th>useYn</th><td></td>
+				</tr>
+				<tr>
+					<th>viewListLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>viewDetailLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>writeLevel</th><td></td>
+				</tr>
+				<tr>
+					<th>writeCommentLevel</th><td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">코드</div>
+		<pre class="content-code">
+&lt;script id="boardTemplate" type="text/x-handlebars-template"&gt;
+&lt;table class="dataTable"&gt;
+	&lt;colgroup&gt;
+		&lt;col style="width: 20%;"/&gt;
+		&lt;col style="width: 80%;"/&gt;
+	&lt;/colgroup&gt;
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;th&gt;아이디&lt;/th&gt;&lt;td&gt;{{id}}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;th&gt;이름&lt;/th&gt;&lt;td&gt;{{name}}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;th&gt;설명&lt;/th&gt;&lt;td&gt;{{description}}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;th&gt;우선순위&lt;/th&gt;&lt;td&gt;{{priority}}&lt;/td&gt;
+		&lt;/tr&gt;
+		&lt;tr&gt;
+			&lt;th&gt;사용여부&lt;/th&gt;&lt;td&gt;{{useYn}}&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/script&gt;
+
+&lt;div data-bind="board" data-param='{"id" : "게시판아이디"}' data-template-id="boardTemplate"&gt;&lt;/div&gt;
+		</pre>
+	</div>
+</div>
