@@ -1,0 +1,130 @@
+<script id="resultFormTemplate" type="text/x-handlebars-template">
+<table class="dataTable">
+	<colgroup>
+		<col style="width:30%;"/>
+		<col style="width:70%;"/>
+	</colgroup>
+	<tbody>
+		<tr>
+			<th>id</th>
+			<td>{{id}}</td>
+		</tr>
+		<tr>
+			<th>name</th>
+			<td>{{name}}</td>
+		</tr>
+		<tr>
+			<th>gender</th>
+			<td>{{gender}}</td>
+		</tr>
+		<tr>
+			<th>hobby</th>
+			<td>{{hobby}}</td>
+		</tr>
+		<tr>
+			<th>description</th>
+			<td>{{description}}</td>
+		</tr>
+	</tbody>
+</table>
+</script>
+<script>
+$(document).ready(function()
+{
+	$("#testForm").compile(function(param)
+	{
+		param.hobby = param.hobby.join(", ");
+		
+		var html = $("#resultFormTemplate").html();
+		var template = Handlebars.compile(html);
+		$("#result").html(template(param)).show();
+	});
+});
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">articleList</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<div style="display: inline-block; width: 50%; vertical-align: top;">
+			<form id="testForm" data-component="form">
+				<p><input type="text" name="id" value="아이디"/></p>
+				<p><input type="text" name="name" value="이름"/></p>
+				<p>
+					<label><input type="radio" name="gender" value="male" checked="checked"/> 남</label>
+					<label><input type="radio" name="gender" value="female"/> 여</label>
+				</p>
+				<p>
+					<label><input type="checkbox" name="hobby" value="soccer" checked="checked"/> 축구</label>
+					<label><input type="checkbox" name="hobby" value="baseball"/> 야구</label>
+				</p>
+				<p>
+					<textarea name="description">설명</textarea>
+				</p>
+				<p>
+					<input type="submit" class="btn btn-default" value="제출"/>
+				</p>
+			</form>
+		</div>
+		<div style="display: inline-block; width: 45%; vertical-align: top;">
+			<strong>결과</strong><br/><br/>
+			<div id="result"></div>
+		</div>
+		<div class="content-header" style="clear:both;">코드</div>
+		<pre class="content-code">
+&lt;form id="testForm" data-component="form"&gt;
+	&lt;p&gt;&lt;input type="text" name="id" value="아이디"/&gt;&lt;/p&gt;
+	&lt;p&gt;&lt;input type="text" name="name" value="이름"/&gt;&lt;/p&gt;
+	&lt;p&gt;
+		&lt;label&gt;&lt;input type="radio" name="gender" value="male" checked="checked"/&gt; 남&lt;/label&gt;
+		&lt;label&gt;&lt;input type="radio" name="gender" value="female"/&gt; 여&lt;/label&gt;
+	&lt;/p&gt;
+	&lt;p&gt;
+		&lt;label&gt;&lt;input type="checkbox" name="hobby" value="soccer" checked="checked"/&gt; 축구&lt;/label&gt;
+		&lt;label&gt;&lt;input type="checkbox" name="hobby" value="baseball"/&gt; 야구&lt;/label&gt;
+	&lt;/p&gt;
+	&lt;p&gt;
+		&lt;textarea name="description"&gt;설명&lt;/textarea&gt;
+	&lt;/p&gt;
+	&lt;p&gt;
+		&lt;input type="submit" class="btn btn-default" value="제출"/&gt;
+	&lt;/p&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+$("#testForm").compile(function(param)
+{
+	console.log("파라미터", param);
+});
+&lt;/script&gt;
+		</pre>
+		<div class="content-header">API</div>
+		<table class="dataTable">
+			<tbody>
+				<tr>
+					<th>$(form).compile(callback)</th><td>form 엘리먼트의 submit 버튼이 클릭됐을때 callback이 호출되며 getData함수의 결과값을 인자로 넘겨줍니다.</td>
+				</tr>
+				<tr>
+					<th>$(form).getData()</th><td>form 엘리먼트 하위의 name속성 또는 data-name속성을 가지고 있는 엘리먼트의 특정값을 JSON형태로 return합니다.</td>
+				</tr>
+				<tr>
+					<th>$(form).setData(data)</th><td>JSON형태의 데이터를 인자로 받아들이며 key값과 일치하는 name속성 또는 data-name속성을 가진 엘리먼트에 value값을 세팅해줍니다.</td>
+				</tr>
+			</tbody>
+		</table>
+<!-- 		<div class="content-header">엘리먼트별 정책</div> -->
+<!-- 		<table class="dataTable"> -->
+<!-- 			<colgroup> -->
+<!-- 				<col style="width: 30%;"/> -->
+<!-- 				<col style="width: 20%;"/> -->
+<!-- 				<col style="width: 50%;"/> -->
+<!-- 			</colgroup> -->
+<!-- 			<tbody> -->
+<!-- 				<tr><th rowspan="2">&lt;input type="text"/&gt;</th><th>get</th><td>value 속성의 값을 가져옵니다.</td></tr> -->
+<!-- 				<tr><th>set</th><td>value속성에 값을 설정합니다.</td></tr> -->
+<!-- 				<tr><th rowspan="2">&lt;input type="radio"/&gt;</th><th>get</th><td>선택된 라디오 엘리먼트의 value 속성의 값을 가져옵니다.</td></tr> -->
+<!-- 				<tr><th>set</th><td>일치하는 value속성을 가진 라디오 엘리먼트를 선택된 상태로 설정합니다.</td></tr> -->
+<!-- 			</tbody> -->
+<!-- 		</table> -->
+	</div>
+</div>

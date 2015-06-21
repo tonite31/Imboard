@@ -46,7 +46,30 @@
 	padding-left: 5px;	
 }
 
+.content-header:FIRST-CHILD
+{
+	margin-top: 10px;
+}
+
 .content-code
 {
 	background-color: #fefefe;
+}
+
+form
+{
+	font-size: 12px;
+}
+
+form label
+{
+	margin:0 3px;
+	font-size: 12px;
+	font-weight: normal;
+}
+
+input[type='text'], textarea
+{
+	padding: 5px;
+	border: 1px solid #dfdfdf;
 }

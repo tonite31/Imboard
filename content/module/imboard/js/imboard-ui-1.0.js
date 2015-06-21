@@ -118,12 +118,18 @@
     	}, time);
     };
     
-    $.fn.getParam = function()
+    $.fn.getData = function()
     {
-    	if(this.get(0).getParam)
-    		return this.get(0).getParam();
+    	if(this.get(0).getData)
+    		return this.get(0).getData();
     	else
     		return null;
+    };
+    
+    $.fn.setData = function(data)
+    {
+    	if(this.get(0).setData)
+    		this.get(0).setData(data);
     };
 }(jQuery));
 
@@ -174,7 +180,7 @@
     			context._submit = submit[0];
     		}
     		
-    		context.getParam = function()
+    		context.getData = function()
     		{
     			var validation = true;
     			var data = {};
@@ -209,6 +215,72 @@
     			
     			return data;
     		};
+    		
+    		context.setData = function(data)
+    		{
+    			for(var key in data)
+    			{
+    				$(context).find("*[name='" + key + "']").each(function()
+    				{
+    					context.setValue.call(this, data[key]);
+    				});
+    				
+    				$(context).find("*[data-name='" + key + "']").each(function()
+    				{
+    					context.setValue.call(this, data[key]);
+    				});
+    			};
+    		};
+    		
+    		context.setValue = function(data)
+    		{
+    			if(this.nodeName == "INPUT" && this.type == "radio" && this.value == data[key])
+				{
+					this.checked = true;
+				}
+				else if(this.nodeName == "INPUT" && this.type == "checkbox")
+				{
+					var array = data;
+					for(var i=0; i<array.length; i++)
+					{
+						if(array[i] == this.value)
+						{
+							this.checked = true;
+							break;
+						}
+					}
+				}
+				else if(this.nodeName == "INPUT" || this.nodeName == "TEXTAREA")
+				{
+					$(this).val(data);
+				}
+				else if(this.nodeName == "IMG")
+				{
+					$(this).attr("src", data);
+				}
+				else if(this.nodeName == "SELECT")
+				{
+					if(this.multiple)
+					{
+						var array = data;
+						for(var i=0; i<array.length; i++)
+						{
+							$(this).find("option[value='" + array[i] + "']").attr("checked", "checked");
+						}
+					}
+					else
+					{
+						if(data[0])
+							$(this).val(data[0]);
+						else
+							$(this).val(data);
+					}
+				}
+				else
+				{
+					$(this).text(data);
+				}
+    		}
     		
     		context.getValue = function(key)
     		{
@@ -293,7 +365,7 @@
     		{
     			$(context).submit(function(e)
 	    		{
-    				var data = context.getParam();
+    				var data = context.getData();
 	    			data.__roleType = context._roleType ? context._roleType : "submit";
 	    			var callback = param[0];
 	        		if(callback)

@@ -9,13 +9,13 @@ var CommentVo = function(param)
 	this.bad = undefined;
 	this.writerId = undefined;
 	this.writerName = undefined;
+	this.writerDisplayId = undefined;
 	this.groupId = undefined;
 	this.parentSeq = undefined;
 	this.parentWriterId = undefined;
 	this.parentWriterName = undefined;
+	this.parentWriterDisplayId = undefined;
 	this.status = undefined;
-	this.latitude = undefined;
-	this.longitude = undefined;
 	
 	this.registerDateType = undefined;
 	

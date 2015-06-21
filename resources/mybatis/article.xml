@@ -13,7 +13,7 @@
         <result column="BAD" property="bad" />
         <result column="WRITER_ID" property="writerId" />
         <result column="WRITER_NAME" property="writerName" />
-        <result column="DISPLAY_ID" property="displayId" />
+        <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
         <result column="PROFILE_IMG_URL" property="profileImgUrl" />
         <result column="GROUP_ID" property="groupId" />
         <result column="PARENT_ARTICLE_WRITER_ID" property="parentArticleWriterId" />
@@ -74,8 +74,8 @@
 			        <if test="#{likeDisplayId}">
 			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeDisplayId}, '%')
 			        </if>
-			        <if test="#{displayId}">
-			        	AND B.DISPLAY_ID = #{displayId}
+			        <if test="#{writerDisplayId}">
+			        	AND B.DISPLAY_ID = #{writerDisplayId}
 			        </if>
 			        <if test="#{registerDate}">
 			            AND DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') = #{registerDate} 
@@ -104,6 +104,7 @@
         	A.BOARD_ID,
         	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
         	A.SEQ,
+        	A.GROUP_ID,
         	A.SUBJECT,
         	<choose>
         	    <when test="#{withContent} == 'true'">
@@ -118,9 +119,8 @@
         	A.GOOD,
         	A.BAD,
         	A.WRITER_ID,
-        	A.GROUP_ID,
         	A.WRITER_NAME,
-        	B.DISPLAY_ID AS DISPLAY_ID,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
         	A.STATUS,
         	A.THUMBNAIL_URL,
@@ -197,8 +197,14 @@
 	        <if test="#{writerId}">
 	            AND WRITER_ID = #{writerId}
 	        </if>
+	        <if test="#{likeWriterId}">
+	            AND WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
+	        </if>
 	        <if test="#{writerName}">
 	            AND WRITER_NAME = #{writerName}
+	        </if>
+	        <if test="#{likeWriterName}">
+	            AND WRITER_NAME = #{likeWriterName}
 	        </if>
 	        <if test="#{tag}">
 	            AND TAG LIKE CONCAT('%', #{tag}, '%')
@@ -206,11 +212,11 @@
 	        <if test="#{readStatus}">
 	        	AND C.STATUS = #{readStatus}
 	        </if>
-	        <if test="#{likeDisplayId}">
-	        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeDisplayId}, '%')
+	        <if test="#{likeWriterDisplayId}">
+	        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeWriterDisplayId}, '%')
 	        </if>
-	        <if test="#{displayId}">
-	        	AND B.DISPLAY_ID = #{displayId}
+	        <if test="#{writerDisplayId}">
+	        	AND B.DISPLAY_ID = #{writerDisplayId}
 	        </if>
 	        <if test="#{registerDate}">
 	            AND DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') = #{registerDate} 
@@ -241,7 +247,7 @@
         	GOOD,
         	BAD,
         	A.WRITER_ID,
-        	B.DISPLAY_ID AS DISPLAY_ID,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	GROUP_ID,
         	A.WRITER_NAME,
         	STATUS,
@@ -268,14 +274,26 @@
 	        <if test="#{content}">
 	            AND CONTENT LIKE CONCAT('%',#{content},'%')
 	        </if>
-	        <if test="#{writerId}">
-	            AND WRITER_ID = #{writerId}
+	        <if test="#{likeWriterId}">
+	            AND WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
 	        </if>
 	        <if test="#{writerName}">
 	            AND WRITER_NAME = #{writerName}
 	        </if>
+	        <if test="#{likeWriterName}">
+	            AND WRITER_NAME = #{likeWriterName}
+	        </if>
 	        <if test="#{tag}">
-	            AND TAG LIKE CONCAT('%',#{tag},'%')
+	            AND TAG LIKE CONCAT('%', #{tag}, '%')
+	        </if>
+	        <if test="#{readStatus}">
+	        	AND C.STATUS = #{readStatus}
+	        </if>
+	        <if test="#{likeWriterDisplayId}">
+	        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeWriterDisplayId}, '%')
+	        </if>
+	        <if test="#{writerDisplayId}">
+	        	AND B.DISPLAY_ID = #{writerDisplayId}
 	        </if>
 	        <if test="#{isNotice}">
 	        	AND IS_NOTICE = #{isNotice}

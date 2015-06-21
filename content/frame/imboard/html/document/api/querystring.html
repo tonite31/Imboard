@@ -1,0 +1,17 @@
+<div class="panel panel-default">
+	<div class="panel-heading">$.query</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<p>URL : http://localhost:3000?id=user&amp;name=username</p>
+		<pre>
+$(document).ready(function()
+{
+	var id = $.query.id;
+	var name = $.query.name;
+	
+	console.log("id : ", id);
+	console.log("name : ", name);
+});
+		</pre>
+	</div>
+</div>

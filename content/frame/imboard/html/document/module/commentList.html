@@ -1,30 +1,27 @@
-<script id="articleListTemplate" type="text/x-handlebars-template">
-{{#if articleList}}
+<script id="commentListTemplate" type="text/x-handlebars-template">
+{{#if commentList}}
 <table class="dataTable">
 	<colgroup>
 		<col style="width: 10%;"/>
+		<col style="width: 20%;"/>
 		<col style="width: 40%;"/>
 		<col style="width: 20%;"/>
-		<col style="width: 20%;"/>
-		<col style="width: 10%;"/>
 	</colgroup>
 	<thead>
 		<tr>
 			<th class="center">번호</th>
-			<th class="center">제목</th>
 			<th class="center">작성자</th>
+			<th class="center">내용</th>
 			<th class="center">작성날짜</th>
-			<th class="center">조회수</th>
 		</tr>
 	</thead>
-{{#each articleList}}
+{{#each commentList}}
 	<tbody>
 		<tr>
 			<td class="center">{{seq}}</td>
-			<td>{{subject}}</td>
 			<td>{{writerName}}</td>
+			<td>{{content}}</td>
 			<td class="center">{{registerDate}}</td>
-			<td class="center">{{hit}}</td>
 		</tr>
 	</tbody>
 {{/each}}
@@ -33,10 +30,10 @@
 </script>
 
 <div class="panel panel-default">
-	<div class="panel-heading">articleList</div>
+	<div class="panel-heading">commentList</div>
 	<div class="panel-body">
 		<div class="content-header">예제</div>
-		<div data-bind="articleList" data-param='{"boardId" : "Alprensia-1434019788591"}' data-template-id="articleListTemplate"></div>
+		<div data-bind="commentList" data-param='{"boardId" : "admin-1434074840710", "articleSeq" : "0"}' data-template-id="commentListTemplate"></div>
 		<div class="content-header">파라미터</div>
 		<table class="dataTable">
 			<colgroup>
@@ -45,25 +42,13 @@
 				<col style="width: 60%;"/>
 			</colgroup>
 			<tbody>
-				<tr>
-					<th colspan="2">boardId <span class="label label-primary">필수</span></th><td></td>
-				</tr>
-				<tr><th rowspan="16">searchData</th><th>subject</th><td></td></tr>
-				<tr><th>content</th><td></td></tr>
-				<tr><th>writerId</th><td></td></tr>
-				<tr><th>writerName</th><td></td></tr>
-				<tr><th>tag</th><td></td></tr>
-				<tr><th>readStatus</th><td></td></tr>
-				<tr><th>likeDisplayId</th><td></td></tr>
-				<tr><th>displayId</th><td></td></tr>
-				<tr><th>registerDate</th><td></td></tr>
-				<tr><th>thumbnailUrl</th><td></td></tr>
-				<tr><th>readStatus</th><td></td></tr>
+				<tr><th colspan="2">boardId <span class="label label-primary">필수</span></th><td></td></tr>
+				<tr><th colspan="2">articleSeq <span class="label label-primary">필수</span></th><td></td></tr>
+				<tr><th rowspan="5">searchData</th><th>content</th><td></td></tr>
 				<tr><th>useOrderByGroupId</th><td></td></tr>
 				<tr><th>orderByGroupId</th><td></td></tr>
 				<tr><th>useOrderBySeq</th><td></td></tr>
 				<tr><th>orderBySeq</th><td></td></tr>
-				<tr><th>withContent</th><td></td></tr>
 			</tbody>
 		</table>
 		<div class="content-header">데이터</div>
@@ -74,60 +59,52 @@
 				<col style="width: 70%;"/>
 			</colgroup>
 			<tbody>
-				<tr><th rowspan="23">articleList</th></tr>
+				<tr><th rowspan="23">commentList</th></tr>
 				<tr><th>boardId</th><td></td></tr>
 				<tr><th>boardName</th><td></td></tr>
+				<tr><th>articleSeq</th><td></td></tr>
+				<tr><th>groupId</th><td></td></tr>
 				<tr><th>seq</th><td></td></tr>
-				<tr><th>subject</th><td></td></tr>
 				<tr><th>content</th><td></td></tr>
 				<tr><th>registerDate</th><td></td></tr>
-				<tr><th>hit</th><td></td></tr>
 				<tr><th>good</th><td></td></tr>
 				<tr><th>bad</th><td></td></tr>
 				<tr><th>writerId</th><td></td></tr>
 				<tr><th>writerName</th><td></td></tr>
-				<tr><th>displayId</th><td></td></tr>
-				<tr><th>profileImgUrl</th><td></td></tr>
-				<tr><th>groupId</th><td></td></tr>
-				<tr><th>parentArticleWriterId</th><td></td></tr>
+				<tr><th>writerDisplayId</th><td></td></tr>
+				<tr><th>parentWriterId</th><td></td></tr>
+				<tr><th>parentWriterName</th><td></td></tr>
+				<tr><th>parentWriterDisplayId</th><td></td></tr>
+				<tr><th>parentSeq</th><td></td></tr>
 				<tr><th>status</th><td></td></tr>
-				<tr><th>thumbnailUrl</th><td></td></tr>
-				<tr><th>tag</th><td></td></tr>
-				<tr><th>commentCount</th><td></td></tr>
-				<tr><th>password</th><td></td></tr>
-				<tr><th>isNotice</th><td></td></tr>
-				<tr><th>readStatus</th><td></td></tr>
 			</tbody>
 		</table>
 		<div class="content-header">코드</div>
 		<pre class="content-code">
-&lt;script id="articleListTemplate" type="text/x-handlebars-template"&gt;
-{{#if articleList}}
+&lt;script id="commentListTemplate" type="text/x-handlebars-template"&gt;
+{{#if commentList}}
 &lt;table class="dataTable"&gt;
 	&lt;colgroup&gt;
 		&lt;col style="width: 10%;"/&gt;
+		&lt;col style="width: 20%;"/&gt;
 		&lt;col style="width: 40%;"/&gt;
 		&lt;col style="width: 20%;"/&gt;
-		&lt;col style="width: 20%;"/&gt;
-		&lt;col style="width: 10%;"/&gt;
 	&lt;/colgroup&gt;
 	&lt;thead&gt;
 		&lt;tr&gt;
 			&lt;th class="center"&gt;번호&lt;/th&gt;
-			&lt;th class="center"&gt;제목&lt;/th&gt;
 			&lt;th class="center"&gt;작성자&lt;/th&gt;
+			&lt;th class="center"&gt;내용&lt;/th&gt;
 			&lt;th class="center"&gt;작성날짜&lt;/th&gt;
-			&lt;th class="center"&gt;조회수&lt;/th&gt;
 		&lt;/tr&gt;
 	&lt;/thead&gt;
-	{{#each articleList}}
+	{{#each commentList}}
 	&lt;tbody&gt;
 		&lt;tr&gt;
 			&lt;td class="center"&gt;{{seq}}&lt;/td&gt;
-			&lt;td&gt;{{subject}}&lt;/td&gt;
 			&lt;td&gt;{{writerName}}&lt;/td&gt;
+			&lt;td&gt;{{content}}&lt;/td&gt;
 			&lt;td class="center"&gt;{{registerDate}}&lt;/td&gt;
-			&lt;td class="center"&gt;{{hit}}&lt;/td&gt;
 		&lt;/tr&gt;
 	&lt;/tbody&gt;
 	{{/each}}
@@ -135,7 +112,7 @@
 {{/if}}
 &lt;/script&gt;
 
-&lt;div data-bind="articleList" data-param='{"boardId" : "게시판아이디"}' data-template-id="articleListTemplate"&gt;&lt;/div&gt;
+&lt;div data-bind="commentList" data-param='{"boardId" : "게시판아이디", "articleSeq" : "게시글번호"}' data-template-id="commentListTemplate"&gt;&lt;/div&gt;
 		</pre>
 	</div>
 </div>

@@ -11,8 +11,7 @@ var ArticleVo = function(param)
 	this.bad = undefined;
 	this.writerId = undefined;
 	this.writerName = undefined;
-	this.displayId = undefined;
-	this.likeDisplayId = undefined;
+	this.writerDisplayId = undefined;
 	this.profileImgUrl = undefined;
 	this.groupId = undefined;
 	this.parentSeq = undefined;
@@ -42,6 +41,10 @@ var ArticleVo = function(param)
 	this.withContent = undefined;
 	this.orderByGroupId = undefined;
 	this.orderBySeq = undefined;
+	
+	this.likeWriterDisplayId = undefined;
+	this.likeWriterId = undefined;
+	this.likeWriterName = undefined;
 	
 //	this.typeHandler = {
 //		pageIndex : {type : "function", func : Delegator.create(this, function(pageIndex)

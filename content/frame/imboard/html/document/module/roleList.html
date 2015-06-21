@@ -1,0 +1,88 @@
+<script id="roleListTemplate" type="text/x-handlebars-template">
+{{#if roleList}}
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 10%;"/>
+		<col style="width: 50%;"/>
+		<col style="width: 20%;"/>
+		<col style="width: 20%;"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center">레벨</th>
+			<th class="center">이름</th>
+			<th class="center">포인트</th>
+			<th class="center">편집가능여부</th>
+		</tr>
+	</thead>
+	{{#each roleList}}
+	<tbody>
+		<tr>
+			<td class="center">{{level}}</td>
+			<td>{{name}}</td>
+			<td>{{point}}</td>
+			<td>{{editable}}</td>
+		</tr>
+	</tbody>
+	{{/each}}
+</table>
+{{/if}}
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">roleList</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<div data-bind="roleList" data-template-id="roleListTemplate"></div>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 15%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 70%;"/>
+			</colgroup>
+			<tbody>
+				<tr><th rowspan="9">roleList</th></tr>
+				<tr><th>level</th><td></td></tr>
+				<tr><th>name</th><td></td></tr>
+				<tr><th>point</th><td></td></tr>
+				<tr><th>editable</th><td></td></tr>
+			</tbody>
+		</table>
+		<div class="content-header">코드</div>
+		<pre class="content-code">
+&lt;script id="roleListTemplate" type="text/x-handlebars-template"&gt;
+{{#if roleList}}
+&lt;table class="dataTable"&gt;
+	&lt;colgroup&gt;
+		&lt;col style="width: 10%;"/&gt;
+		&lt;col style="width: 50%;"/&gt;
+		&lt;col style="width: 20%;"/&gt;
+		&lt;col style="width: 20%;"/&gt;
+	&lt;/colgroup&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="center"&gt;레벨&lt;/th&gt;
+			&lt;th class="center"&gt;이름&lt;/th&gt;
+			&lt;th class="center"&gt;포인트&lt;/th&gt;
+			&lt;th class="center"&gt;편집가능여부&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	{{#each roleList}}
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td class="center"&gt;{{level}}&lt;/td&gt;
+			&lt;td&gt;{{name}}&lt;/td&gt;
+			&lt;td&gt;{{point}}&lt;/td&gt;
+			&lt;td&gt;{{editable}}&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+	{{/each}}
+&lt;/table&gt;
+{{/if}}
+&lt;/script&gt;
+
+&lt;div data-bind="roleList" data-template-id="roleListTemplate"&gt;&lt;/div&gt;
+		</pre>
+	</div>
+</div>

@@ -1,0 +1,114 @@
+<script id="menuListTemplate" type="text/x-handlebars-template">
+{{#if menuList}}
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 10%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 15%;"/>
+		<col style="width: 25%;"/>
+		<col style="width: 10%;"/>
+		<col style="width: 10%;"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center">아이디</th>
+			<th class="center">이름</th>
+			<th class="center">유형</th>
+			<th class="center">파라미터</th>
+			<th class="center">우선순위</th>
+			<th class="center">뷰레벨</th>
+		</tr>
+	</thead>
+{{#each menuList}}
+	<tbody>
+		<tr>
+			<td>{{id}}</td>
+			<td>{{name}}</td>
+			<td>{{type}}</td>
+			<td>{{parameter}}</td>
+			<td class="center">{{priority}}</td>
+			<td class="center">{{viewLevel}}</td>
+		</tr>
+	</tbody>
+{{/each}}
+</table>
+{{/if}}
+</script>
+
+<div class="panel panel-default">
+	<div class="panel-heading">menuList</div>
+	<div class="panel-body">
+		<div class="content-header">예제</div>
+		<div data-bind="menuList" data-param='{"parentMenuId" : ""}' data-template-id="menuListTemplate"></div>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 80%;"/>
+			</colgroup>
+			<tbody>
+				<tr><th>parentMenuId</th><td></td></tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 15%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 70%;"/>
+			</colgroup>
+			<tbody>
+				<tr><th rowspan="9">menuList</th></tr>
+				<tr><th>id</th><td></td></tr>
+				<tr><th>name</th><td></td></tr>
+				<tr><th>type</th><td></td></tr>
+				<tr><th>parameter</th><td></td></tr>
+				<tr><th>priority</th><td></td></tr>
+				<tr><th>parentMenuId</th><td></td></tr>
+				<tr><th>viewLevel</th><td></td></tr>
+				<tr><th>childMenuCount</th><td></td></tr>
+			</tbody>
+		</table>
+		<div class="content-header">코드</div>
+		<pre class="content-code">
+&lt;script id="menuListTemplate" type="text/x-handlebars-template"&gt;
+{{#if menuList}}
+&lt;table class="dataTable"&gt;
+	&lt;colgroup&gt;
+		&lt;col style="width: 10%;"/&gt;
+		&lt;col style="width: 30%;"/&gt;
+		&lt;col style="width: 15%;"/&gt;
+		&lt;col style="width: 25%;"/&gt;
+		&lt;col style="width: 10%;"/&gt;
+		&lt;col style="width: 10%;"/&gt;
+	&lt;/colgroup&gt;
+	&lt;thead&gt;
+		&lt;tr&gt;
+			&lt;th class="center"&gt;아이디&lt;/th&gt;
+			&lt;th class="center"&gt;이름&lt;/th&gt;
+			&lt;th class="center"&gt;유형&lt;/th&gt;
+			&lt;th class="center"&gt;파라미터&lt;/th&gt;
+			&lt;th class="center"&gt;우선순위&lt;/th&gt;
+			&lt;th class="center"&gt;뷰레벨&lt;/th&gt;
+		&lt;/tr&gt;
+	&lt;/thead&gt;
+	{{#each menuList}}
+	&lt;tbody&gt;
+		&lt;tr&gt;
+			&lt;td&gt;{{id}}&lt;/td&gt;
+			&lt;td&gt;{{name}}&lt;/td&gt;
+			&lt;td&gt;{{type}}&lt;/td&gt;
+			&lt;td&gt;{{parameter}}&lt;/td&gt;
+			&lt;td class="center"&gt;{{priority}}&lt;/td&gt;
+			&lt;td class="center"&gt;{{viewLevel}}&lt;/td&gt;
+		&lt;/tr&gt;
+	&lt;/tbody&gt;
+	{{/each}}
+&lt;/table&gt;
+{{/if}}
+&lt;/script&gt;
+
+&lt;div data-bind="menuList" data-param='{"boardId" : "게시판아이디", "articleSeq" : "게시글번호"}' data-template-id="menuListTemplate"&gt;&lt;/div&gt;
+		</pre>
+	</div>
+</div>

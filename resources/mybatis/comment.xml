@@ -3,6 +3,7 @@
 <mapper namespace="comment">
     <resultMap type="CommentVo" id="commentResult">
         <result column="BOARD_ID" property="boardId" />
+        <result column="BOARD_NAME" property="boardName" />
         <result column="ARTICLE_SEQ" property="articleSeq" />
         <result column="SEQ" property="seq" />
         <result column="CONTENT" property="content" />
@@ -11,10 +12,11 @@
         <result column="BAD" property="bad" />
         <result column="WRITER_ID" property="writerId" />
         <result column="WRITER_NAME" property="writerName" />
-        <result column="DISPLAY_ID" property="displayId" />
-        <result column="GROUP_ID" property="groupId" />
+        <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
         <result column="PARENT_WRITER_ID" property="parentWriterId" />
         <result column="PARENT_WRITER_NAME" property="parentWriterName" />
+        <result column="PARENT_WRITER_DISPLAY_ID" property="parentWriterDisplayId" />
+        <result column="GROUP_ID" property="groupId" />
         <result column="PARENT_SEQ" property="parentSeq" />
         <result column="STATUS" property="status" />
     </resultMap>
@@ -39,10 +41,28 @@
         		BOARD_ID = #{boardId}
         	AND ARTICLE_SEQ = #{articleSeq}
         	<if test="#{content}">
-            AND CONTENT LIKE CONCAT('%',#{content},'%')
+            	AND CONTENT LIKE CONCAT('%',#{content},'%')
+        	</if>
+        	<if test="#{writerId}">
+        		AND A.WRITER_ID = #{writerId}
+        	</if>
+        	<if test="#{likeWriterId}">
+        		AND A.WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
+        	</if>
+        	<if test="#{writerName}">
+        		AND A.WRITER_NAME = #{writerName}
+        	</if>
+        	<if test="#{likeWriterName}">
+        		AND A.WRITER_NAME LIKE CONCAT('%',#{likeWriterName},'%')
+        	</if>
+        	<if test="#{writerDisplayId}">
+        		AND B.DISPLAY_ID = #{writerDisplayId}
+        	</if>
+        	<if test="#{likeWriterDisplayId}">
+        		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
+        	GROUP_ID  <if test="#{useOrderByGroupId}">, A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
      	<if test="startIndex">
         	<if test="endIndex">
         		LIMIT #{startIndex}, #{endIndex}
@@ -71,8 +91,8 @@
         	</choose>
         	A.GOOD,
         	A.BAD,
-        	WRITER_ID,
-        	B.DISPLAY_ID AS DISPLAY_ID,
+        	A.WRITER_ID,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	CASE
         		WHEN B.NAME IS NULL THEN A.WRITER_NAME
         		ELSE B.NAME
@@ -82,6 +102,7 @@
         		WHEN C.NAME IS NULL THEN A.PARENT_WRITER_NAME
         		ELSE C.NAME
         	END AS PARENT_WRITER_NAME,
+        	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS
@@ -92,10 +113,28 @@
         		A.BOARD_ID = #{boardId}
         	AND A.ARTICLE_SEQ = #{articleSeq}
         	<if test="#{content}">
-            AND CONTENT LIKE CONCAT('%',#{content},'%')
+            	AND CONTENT LIKE CONCAT('%',#{content},'%')
+        	</if>
+        	<if test="#{writerId}">
+        		AND A.WRITER_ID = #{writerId}
+        	</if>
+        	<if test="#{likeWriterId}">
+        		AND A.WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
+        	</if>
+        	<if test="#{writerName}">
+        		AND A.WRITER_NAME = #{writerName}
+        	</if>
+        	<if test="#{likeWriterName}">
+        		AND A.WRITER_NAME LIKE CONCAT('%',#{likeWriterName},'%')
+        	</if>
+        	<if test="#{writerDisplayId}">
+        		AND B.DISPLAY_ID = #{writerDisplayId}
+        	</if>
+        	<if test="#{likeWriterDisplayId}">
+        		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
+        	A.GROUP_ID <if test="#{useOrderByGroupId}">, A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
      	<if test="#{startIndex} and #{endIndex}">
        		LIMIT #{startIndex}, #{endIndex}
         </if>
@@ -122,16 +161,24 @@
         	</choose>
         	A.GOOD,
         	A.BAD,
-        	WRITER_ID,
-        	WRITER_NAME,
-        	B.DISPLAY_ID AS DISPLAY_ID,
+        	A.WRITER_ID,
+        	CASE
+        		WHEN B.NAME IS NULL THEN A.WRITER_NAME
+        		ELSE B.NAME
+        	END AS WRITER_NAME,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	A.PARENT_WRITER_ID,
-        	A.PARENT_WRITER_NAME,
+        	CASE
+        		WHEN C.NAME IS NULL THEN A.PARENT_WRITER_NAME
+        		ELSE C.NAME
+        	END AS PARENT_WRITER_NAME,
+        	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS
         FROM
         	IMB_COMMENT AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
+        	LEFT OUTER JOIN IMB_USER C ON A.PARENT_WRITER_ID = C.ID
         WHERE
         		A.BOARD_ID = #{boardId}
         	AND A.ARTICLE_SEQ = #{articleSeq}

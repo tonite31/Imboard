@@ -194,10 +194,10 @@ function render(req, res, folder, frame, path)
 {
 	var $ = getLayout(req, res, folder, frame, path);
 	
-	$("*[data-sfragment]").each(function()
+	$("*[data-html]").each(function()
 	{
-		var src = $(this).attr("data-sfragment");
-		$(this).removeAttr("data-sfragment");
+		var src = $(this).attr("data-html");
+		$(this).removeAttr("data-html");
 		
 		if(src.indexOf("/", 0) != 0)
 			src = "/" + src;
