@@ -1,0 +1,12 @@
+<h3 id="doc4-1">4-1. 치환변수</h3>
+<p>치환변수를 사용하면 서버의 데이터를 간편하게 화면에 조합할 수 있습니다. 제공되는 치환변수는 path, query, user, lan이며 html파일에 ##{path.key} 형태로 입력합니다. 문자 그대로 사용하려면 #을 하나 더 붙인 ###{path.key} 형태로 입력합니다.</p>
+<table class="dataTable">
+	<tbody>
+		<tr><th>##{path.root}</th><td>프레임의 루트경로입니다. 프레임의 이름이 sample이라면 치환되는 값은 <strong>/content/frame/sample</strong> 입니다.</td>	</tr>
+		<tr><th>##{path.module}</th><td>프레임의 공통 모듈경로입니다. 치환되는 값은 <strong>/content/module</strong> 입니다.</td></tr>
+		<tr><th>##{path.lib}</th><td>프레임의 공통 라이브러리경로입니다. 치환되는 값은 <strong>/content/lib</strong> 입니다.</td></tr>
+		<tr><th>##{query.xxx}</th><td>xxx키에 해당하는 querystring값으로 치환됩니다.</td></tr>
+		<tr><th>##{user.xxx}</th><td>로그인한 사용자의 정보중 xxx키에 해당하는 값으로 치환됩니다.</td></tr>
+		<tr><th>##{lan.xxx}</th><td>Client의 언어에 따라 languages.json에 입력된 xxx키에 해당하는 값으로 치환됩니다.</td></tr>
+	</tbody>
+</table>	

@@ -1,3 +1,13 @@
+h4
+{
+	margin-top: 20px;
+}
+
+.panel-body
+{
+	box-shadow: none;
+}
+
 .doc > div
 {
 	padding: 10px 0;

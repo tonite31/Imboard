@@ -1,71 +1,20 @@
 <div class="jumbotron">
 	<div class="container">
 		<h1>문서</h1>
-		<p>임보드에서 빌트인으로 제공하는 각종 모듈과 컴포넌트, API 가이드문서 입니다.</p>
+		<p>임보드의 프레임을 개발하는데 도움을 주는 가이드 문서 입니다.</p>
 	</div>
 </div>
 
 <div class="container">
 	<div class="col-xs-9" style="padding:0;">
+		<div class="doc" data-html="/document/overview.html"></div>
+		<div class="doc" data-html="/document/frame.html"></div>
+		<div class="doc" data-html="/document/layout.html"></div>
 		<div class="doc">
-			<h2>1. 개요</h2>
-			<p>임보드는 웹페이지를 구성하는 프레임을 제작하는것부터 시작합니다. 프레임은 HTML, JS, CSS, 그리고 이미지등의 각종 멀티미디어 파일로 구성됩니다.</p>
-		</div>
-		<div class="doc">
-			<h2 id="doc1">1. 프레임</h2>
-			<div>
-				<h3>1-1. 프레임구조</h3>
-				<p>프레임은 반드시 아래와 같은 구조를 가지고 있어야 합니다. 프레임 이름 폴더 하위에 css, html, js폴더가 위치하고 html폴더 하위에는 반드시 index.html 파일이 있어야 하며 이 파일은 웹페이지의 첫번째 페이지가 됩니다.</p>
-				<ul>
-					<li>
-						<span>프레임이름</span>
-						<ul>
-							<li><span>css</span></li>
-							<li>
-								<span>html</span>
-								<ul>
-									<li><span>index.html</span></li>
-								</ul>
-							</li>
-							<li><span>js</span></li>
-						</ul>
-					</li>
-				</ul>
-			</div>
-			<div>
-				<h3>1-2. 화면변수</h3>
-			</div>
-		</div>
-		<div class="doc">
-			<h2 id="doc1">1. data-bind 모듈</h2>
-			<div>
-				<h3 id="doc1-1">1-1. 개요</h3>
-				<p>data-bind 모듈은 HTML 태그에 data-bind, data-param, data-template-id 속성을 지정해서 사용할 수 있습니다.</p>
-				<p>불러온 데이터는 <a href="http://handlebarsjs.com/" target="_blank">Handlebars</a> 문법으로 화면에 조합할 수 있습니다.</p>
-				<p><strong>&lt;div data-bind="모듈명" data-param='{"key" : "value"}' data-template-id="핸들바 템플릿 아이디"&gt;&lt;/div&gt;</strong></p>
-			</div>
-			<div>
-				<h3 id="doc1-2">1-2. Board 모듈</h3>
-				<div data-html="/document/module/boardList.html"></div>
-				<div data-html="/document/module/board.html"></div>
-			</div>
-			<div>
-				<h3 id="doc1-3">1-3. Article 모듈</h3>
-				<div data-html="/document/module/articleList.html"></div>
-				<div data-html="/document/module/articleComponent.html"></div>
-			</div>
-			<div>
-				<h3 id="doc1-4">1-4. Comment 모듈</h3>
-				<div data-html="/document/module/commentList.html"></div>
-			</div>
-			<div>
-				<h3 id="doc1-5">1-5. Menu 모듈</h3>
-				<div data-html="/document/module/menuList.html"></div>
-			</div>
-			<div>
-				<h3 id="doc1-8">1-6. User 모듈</h3>
-				<div data-html="/document/module/userList.html"></div>
-			</div>
+			<h2>4. 마크업문법</h2>
+			<p>간단한 마크업문법을 활용하면 서버로부터 데이터를 불러와서 화면에 조합할 수 있습니다.</p>
+			<div data-html="/document/variable.html"></div>
+			<div data-html="/document/databind.html"></div>
 		</div>
 		<div class="doc">
 			<h2 id="doc2">2. UI컴포넌트</h2>
@@ -120,18 +69,27 @@
 	</div>
 	<div class="col-xs-3">
 		<ul>	
+			<li><a href="#doc1">1. 개요</a></li>
 			<li>
-				<a href="#doc1">1. UI컴포넌트</a>
+				<a href="#doc2">2. 프레임</a>
 				<ul>
-					<li><a href="#doc1-1">1-1. 개요</a></li>
-					<li><a href="#doc1-2">1-2. 페이지전환</a></li>
+					<li><a href="#doc2-1">2-1. 프레임구조</a></li>
+					<li><a href="#doc2-2">2-2. index.html</a></li>
 				</ul>
 			</li>
 			<li>
-				<a href="#doc2">2. 데이터바인드 모듈</a>
+				<a href="#doc3">3. 레이아웃</a>
+				<ul>
+					<li><a href="#doc3-1">3-1. 전체페이지</a></li>
+					<li><a href="#doc3-2">3-2. 조각페이지</a></li>
+				</ul>
 			</li>
 			<li>
-				<a href="#doc3">3. 서버요청 API</a>
+				<a href="#doc4">4. 마크업문법</a>
+				<ul>
+					<li><a href="#doc4-1">4-1. 치환변수</a></li>
+					<li><a href="#doc4-2">4-2. data-bind</a></li>
+				</ul>
 			</li>
 		</ul>
 	</div>

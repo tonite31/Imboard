@@ -114,7 +114,7 @@ module.exports.main =
 
 function replaceData(html, req)
 {
-	var matchs = html.match(/\#{lan.[^}]*}/gi);
+	var matchs = html.match(/[^]?#{lan.[^}]*}/gi);
 	
 	var cc = "ko-KR";
 	try
@@ -133,32 +133,53 @@ function replaceData(html, req)
 		{
 			for(var i=0; i<matchs.length; i++)
 			{
-				var key = matchs[i].replace("#{lan.", "").replace("}", "");
+				var m = matchs[i].substring(1);
+				if(matchs[i][0] == "#")
+				{
+					html = html.replace(matchs[i], m);
+					continue;
+				}
+				
+				var key = m.replace("#{lan.", "").replace("}", "");
 				if(_languages.hasOwnProperty(key))
-					html = html.replace(matchs[i], _languages[key][cc]);
+					html = html.replace(m, _languages[key][cc]);
 			}
 		}
 		
-		matchs = html.match(/\#{query.[^}]*}/gi);
+		matchs = html.match(/[^]?#{query.[^}]*}/gi);
 		if(matchs != null)
 		{
 			for(var i=0; i<matchs.length; i++)
 			{
-				var key = matchs[i].replace("#{query.", "").replace("}", "");
+				var m = matchs[i].substring(1);
+				if(matchs[i][0] == "#")
+				{
+					html = html.replace(matchs[i], m);
+					continue;
+				}
+				
+				var key = m.replace("#{query.", "").replace("}", "");
 				var value = req.query[key];
 				if(value == "" || value == null)
 					value = "";
 				
-				html = html.replace(matchs[i], value);
+				html = html.replace(m, value);
 			}
 		}
 		
-		matchs = html.match(/\#{user.[^}]*}/gi);
+		matchs = html.match(/[^]?#{user.[^}]*}/gi);
 		if(matchs != null)
 		{
 			for(var i=0; i<matchs.length; i++)
 			{
-				var key = matchs[i].replace("#{user.", "").replace("}", "");
+				var m = matchs[i].substring(1);
+				if(matchs[i][0] == "#")
+				{
+					html = html.replace(matchs[i], m);
+					continue;
+				}
+				
+				var key = m.replace("#{user.", "").replace("}", "");
 				var value = "";
 				if(req.session && req.session.user)
 					value = req.session.user[key];
@@ -166,23 +187,30 @@ function replaceData(html, req)
 				if(value == null)
 					value = "";
 				
-				html = html.replace(matchs[i], value);
+				html = html.replace(m, value);
 			}
 		}
 		
-		matchs = html.match(/\#{path.[^}]*}/gi);
+		matchs = html.match(/[^]?#{path.[^}]*}/gi);
 		if(matchs != null)
 		{
 			var frameData = {root : "/content/frame/" + _config.frame, module : "/content/module", lib : "/content/lib"};
 			for(var i=0; i<matchs.length; i++)
 			{
-				var key = matchs[i].replace("#{path.", "").replace("}", "");
+				var m = matchs[i].substring(1);
+				if(matchs[i][0] == "#")
+				{
+					html = html.replace(matchs[i], m);
+					continue;
+				}
+				
+				var key = m.replace("#{path.", "").replace("}", "");
 				var value = frameData[key];
 				
 				if(value == null)
 					value = "";
 				
-				html = html.replace(matchs[i], value);
+				html = html.replace(m, value);
 			}
 		}
 	}
@@ -193,40 +221,49 @@ function replaceData(html, req)
 function render(req, res, folder, frame, path)
 {
 	var $ = getLayout(req, res, folder, frame, path);
-	
-	$("*[data-html]").each(function()
+	if($)
 	{
-		var src = $(this).attr("data-html");
-		$(this).removeAttr("data-html");
-		
-		if(src.indexOf("/", 0) != 0)
-			src = "/" + src;
-		
-		var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
-		if(layout)
-		{
-			layout = replaceData(layout, req);
-			$(this).html(layout);
-			$(this).find("script[type='text/x-handlebars-template']").each(function()
-	 		{
-	 			$("head").append(this);
-	 		});
-		}
-	});
-	
-	if(!$)
-	{
-		$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
-		$("h1").text("잘못된경로입니다");
-		Render.render(req, res, $.html());
-	}
-	else
-	{
+		bindInnerHtml(req, frame, $, "body");
+
 		DataBindModule.databind($, "body", req, function(html)
 		{
 			Render.render(req, res, html);
 		});
 	}
+	else
+	{
+		$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
+		$("h1").text("잘못된경로입니다");
+		Render.render(req, res, $.html());
+	}
+}
+
+function bindInnerHtml(req, frame, $, target)
+{
+	$(target).find("*[data-html]").each(function()
+	{
+		var src = $(this).attr("data-html");
+		$(this).removeAttr("data-html");
+		
+		if(src)
+		{
+			if(src.indexOf("/", 0) != 0)
+				src = "/" + src;
+			
+			var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
+			if(layout)
+			{
+				layout = replaceData(layout, req);
+				$(this).html(layout);
+				$(this).find("script[type='text/x-handlebars-template']").each(function()
+		 		{
+		 			$("head").append(this);
+		 		});
+			}
+			
+			bindInnerHtml(req, frame, $, this);
+		}
+	});
 }
 
 function getLayout(req, res, folder, frame, path)
@@ -238,22 +275,27 @@ function getLayout(req, res, folder, frame, path)
 		path = "/index.html";
 	
 	var layout = Render.getData(_path.content + "/" + folder + "/" + frame + "/html" + path);
-	path = path.substring(0, path.lastIndexOf("/"));
+	if(layout)
+	{
+		path = path.substring(0, path.lastIndexOf("/"));
+		
+		if(layout != null && layout != "")
+		{
+			layout = replaceData(layout, req);
+			
+			$ = cheerio.load(layout);
+			
+			bindPiece(req, folder, frame, path, $, "body");
+			
+		 	return $;
+		}
+		else
+		{
+			return null;
+		}
+	}
 	
-	if(layout != null && layout != "")
-	{
-		layout = replaceData(layout, req);
-		
-		$ = cheerio.load(layout);
-		
-		bindPiece(req, folder, frame, path, $, "body");
-		
-	 	return $;
-	}
-	else
-	{
-		return null;
-	}
+	return null;
 }
 
 function bindPiece(req, folder, frame, path, $, el)
@@ -265,7 +307,12 @@ function bindPiece(req, folder, frame, path, $, el)
 		
 		if(req.query && req.query.hasOwnProperty(key))
 		{
-			var pieceData = Render.getData(global._path.content + "/" + folder + "/" + frame + "/html" + path + "/" + req.query[key] + ".html");
+			var fileName = req.query[key];
+			var match = fileName.match(/[^]*.html$/gi);
+			if(!match)
+				fileName += ".html";
+				
+			var pieceData = Render.getData(global._path.content + "/" + folder + "/" + frame + "/html" + path + "/" + fileName);
 	 		if(pieceData)
 	 		{
 	 			pieceData = replaceData(pieceData, req);
