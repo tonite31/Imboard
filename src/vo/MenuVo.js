@@ -8,6 +8,7 @@ var MenuVo = function(param)
 	this.parentMenuId = null;
 	this.viewLevel = null;
 	this.childMenuCount = null;
+	this.creator = null;
 	
 	ParameterBinder.bind(this, param);
 };

@@ -42,13 +42,14 @@ $(document).ready(function()
 });
 </script>
 
+<h3 id="doc5-2">5-2. form</h3>
+<p>form 컴포넌트는 form태그에 data-component="form" 속성을 지정해서 사용합니다.</p>
 <div class="panel panel-default">
-	<div class="panel-heading">articleList</div>
 	<div class="panel-body">
 		<div class="content-header">예제</div>
 		<div style="display: inline-block; width: 50%; vertical-align: top;">
 			<form id="testForm" data-component="form">
-				<p><input type="text" name="id" value="아이디"/></p>
+				<p><input type="text" name="id" value="아이디" required="required"/></p>
 				<p><input type="text" name="name" value="이름"/></p>
 				<p>
 					<label><input type="radio" name="gender" value="male" checked="checked"/> 남</label>

@@ -11,6 +11,7 @@
         <result column="VIEW_DETAIL_LEVEL" property="viewDetailLevel"></result>
         <result column="WRITE_LEVEL" property="writeLevel"></result>
         <result column="WRITE_COMMENT_LEVEL" property="writeCommentLevel"></result>
+        <result column="CREATOR" property="creator"></result>
     </resultMap>
     
     <select id="getBoardList" resultMap="boardResult">
@@ -23,7 +24,8 @@
         	B.VIEW_LIST_LEVEL,
         	B.VIEW_DETAIL_LEVEL,
         	B.WRITE_LEVEL,
-        	B.WRITE_COMMENT_LEVEL
+        	B.WRITE_COMMENT_LEVEL,
+        	A.CREATOR
         FROM
         	IMB_BOARD A
         	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
@@ -40,7 +42,8 @@
         	B.VIEW_LIST_LEVEL,
         	B.VIEW_DETAIL_LEVEL,
         	B.WRITE_LEVEL,
-        	B.WRITE_COMMENT_LEVEL
+        	B.WRITE_COMMENT_LEVEL,
+        	A.CREATOR
         FROM
         	IMB_BOARD A
         	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
@@ -68,14 +71,15 @@
     
     <insert id="insertBoard" parameterType="BoardVo">
         INSERT IMB_BOARD
-        	(ID, NAME, PRIORITY, DESCRIPTION, USE_YN)
+        	(ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR)
         VALUES
         	(
         		#{id},
         		#{name},
         		#{priority},
         		#{description},
-        		#{useYn}
+        		#{useYn},
+        		#{creator}
         	)
     </insert>
     

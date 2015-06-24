@@ -43,6 +43,9 @@ module.exports.insertMenu =
 				menuVo = new MenuVo(req.body);
 				if(menuVo.id != menuVo.parentMenuId)
 				{
+					if(req.session.user)
+						menuVo.creator = req.session.user.id;
+					
 					menuDao.insertMenu(menuVo, function(response)
 					{
 						res.end(JSON.stringify({code : _code.SUCCESS}));
@@ -67,10 +70,22 @@ module.exports.updateMenu =
 	path : '/menu/updateMenu.do',
 	callback : function(req, res)
 	{
-		var menuVo = new MenuVo(req.body);
-		menuDao.updateMenu(menuVo, function(response)
+		var menuVo = new MenuVo();
+		menuVo.id = req.body.id;
+		menuDao.getMenu(menuVo, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			{
+				menuVo = new MenuVo(req.body);
+				menuDao.updateMenu(menuVo, function(response)
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				});
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
+			}
 		});
 	}
 };
@@ -82,9 +97,22 @@ module.exports.deleteMenu =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		menuDao.deleteMenu(param.id, function(response)
+		var menuVo = new MenuVo();
+		menuVo.id = param.id;
+		
+		menuDao.getMenu(menuVo, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			{
+				menuDao.deleteMenu(param.id, function(response)
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				});
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
+			}
 		});
 	}
 };

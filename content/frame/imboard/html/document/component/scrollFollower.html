@@ -1,0 +1,32 @@
+<h3 id="doc5-3">5-3. scrollFollower</h3>
+<p>스크롤이 되었을때 스크롤을 따라서 움직이는 엘리먼트를 만들어주는 컴포넌트입니다.</p>
+<div class="panel panel-default">
+	<div class="panel panel-body">
+		<div class="content-header">코드</div>
+		<pre class="content-code">&lt;ul data-component="scrollFollower" id="scrollFollower"&gt;
+	&lt;li&gt;메뉴1&lt;/li&gt;
+	&lt;li&gt;메뉴2&lt;/li&gt;
+	&lt;li&gt;메뉴3&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;script&gt;
+$(document).ready(function()
+{
+	$("#scrollFollower").compile({direction : "vertical", top: 20});
+});
+&lt;/script&gt;</pre>
+
+		<div class="content-header">Options</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 80%;"/>
+			</colgroup>
+			<tbody>
+				<tr><th>direction</th><td>"vertical" or "horizontal"<br/>스크롤의 방향을 결정합니다. 기본값은 "vertical" 입니다.</td></tr>
+				<tr><th>top</th><td>number<br/>top으로부터 떨어질 px값입니다. direction이 "vertical" 일때만 동작합니다. 기본값은 10입니다.</td></tr>
+				<tr><th>left</th><td>number<br/>left로부터 떨어질 px값입니다. direction이 "horizontal" 일때만 동작합니다.</td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>

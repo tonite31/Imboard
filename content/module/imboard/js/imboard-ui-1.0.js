@@ -1,20 +1,3 @@
-(function()
-{
-	$.query = {};
-	var split = location.href.split("?");
-	if(split && split.length == 2)
-	{
-		split = split[1].split("&");
-		for(var i=0; i<split.length; i++)
-		{
-			var keyValue = split[i].split("=");
-			if(keyValue[1].indexOf("#") != -1)
-				keyValue[1] = keyValue[1].split("#")[0];
-			$.query[keyValue[0]] = decodeURIComponent(keyValue[1]);
-		}
-	}
-})();
-
 (function($) {
 	$.fn.templating = function(templateId, data)
 	{
@@ -182,7 +165,6 @@
     		
     		context.getData = function()
     		{
-    			var validation = true;
     			var data = {};
     			$(context).find("*[name]").each(function()
     			{
@@ -328,12 +310,61 @@
 				}
     		};
     		
+    		context.makeValidationMessage = function()
+    		{
+    			var message = $(this).attr("data-validation-message");
+				if(!message)
+					message = this.validationMessage;
+				
+    			var rect = this.getBoundingClientRect();
+				
+				var pos = {left : this.offsetLeft, top : this.offsetTop};
+				
+				var parent = this.offsetParent;
+				while(parent)
+				{
+					pos.left += parent.offsetLeft;
+					pos.top += parent.offsetTop;
+					
+					parent = parent.offsetParent;
+				}
+				
+				var div = document.createElement("div");
+				div.className = "imboard-ui-validation"
+				div.style.left = pos.left + 20 + "px";
+				div.style.top = pos.top + rect.height + 5 + "px";
+				
+				var arrow = document.createElement("span");
+				arrow.className = "arrow";
+				
+				var arrowBorder = document.createElement("span");
+				arrowBorder.className = "arrowBorder";
+				
+				var span = document.createElement("span");
+				span.className = "validation-message";
+				span.innerText = message;
+				
+				div.appendChild(arrowBorder);
+				div.appendChild(arrow);
+				div.appendChild(span);
+				
+				document.body.appendChild(div);
+    		};
+    		
     		context.validation = function()
     		{
     			var check = true;
     			$(context).find("*[name]").each(function()
     			{
-					check = check && this.checkValidity();
+    				var result = this.checkValidity();
+    				console.log(this, result);
+    				if(!result)
+    				{
+    					context.makeValidationMessage.call(this);
+    					this.focus();
+    				}
+    				
+					check = check && result;
     			});
     			
     			return check;
@@ -363,30 +394,72 @@
     		
     		if(context.nodeName == "FORM")
     		{
+    			var novalidate = $(context).attr("novalidate");
+				context.novalidate = novalidate ? true : false;
+				if(!novalidate)
+					$(context).attr("novalidate", "novalidate");
+    			
     			$(context).submit(function(e)
 	    		{
-    				var data = context.getData();
-	    			data.__roleType = context._roleType ? context._roleType : "submit";
-	    			var callback = param[0];
-	        		if(callback)
-	        		{
-	        			try
-	        			{
-	        				callback.call(context._context, data);
-	        			}
-	        			catch(err)
-	        			{
-	        				console.error(err.stack);
-	        			}
-	        			finally
-	        			{
-	        				e.preventDefault();
-	            			e.stopPropagation();
-	            			return false;
-	        			}
-	        		}
+    				try
+    				{
+	    				if(context.novalidate || context.validation())
+	    				{
+	    					var data = context.getData();
+	    	    			data.__roleType = context._roleType ? context._roleType : "submit";
+	    	    			var callback = param[0];
+	    	        		if(callback)
+	    	        		{
+    	        				callback.call(context._context, data);
+    	        			}
+    	        		}
+    				}
+    				catch(err)
+        			{
+        				console.error(err.stack);
+        			}
+        			finally
+        			{
+        				e.preventDefault();
+            			e.stopPropagation();
+            			return false;
+        			}
 	    		});
     		}
+    	};
+    	
+    	this.scrollFollower = function(context, param)
+    	{
+    		var options = param[0];
+			if(!options || !options.direction)
+				options = {top : 10, direction : "vertical"};
+				
+			var rect = $(context).getRect();
+			$(window).on("scroll", function()
+			{
+				if(options.direction == "vertical")
+				{
+					if(rect.top - options.top <= $(window).scrollTop())
+					{
+						$(context).css("position", "fixed").css("top", options.top + "px").css("left", rect.left + "px");
+					}
+					else
+					{
+						$(context).css("position", "").css("top", "").css("left", "");
+					}
+				}
+				else if(options.direction = "horizontal")
+				{
+					if(rect.left - options.left <= $(window).scrollLeft())
+					{
+						$(context).css("position", "fixed").css("top", rect.top + "px").css("left", options.left + "px");
+					}
+					else
+					{
+						$(context).css("position", "").css("top", "").css("left", "");
+					}
+				}
+			});
     	};
     }).call(component);
     

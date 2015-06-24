@@ -12,63 +12,15 @@
 		<div class="doc" data-html="/document/layout.html"></div>
 		<div class="doc">
 			<h2>4. 마크업문법</h2>
-			<p>간단한 마크업문법을 활용하면 서버로부터 데이터를 불러와서 화면에 조합할 수 있습니다.</p>
+			<p>미리 정의된 치환변수를 사용하거나 HTML 엘리먼트에 data-bind속성을 지정하면 간편하게 서버로부터 데이터를 불러와서 화면에 조합할 수 있습니다.</p>
 			<div data-html="/document/variable.html"></div>
 			<div data-html="/document/databind.html"></div>
 		</div>
-		<div class="doc">
-			<h2 id="doc2">2. UI컴포넌트</h2>
-			<div>
-				<h3 id="doc2-1">2-1. 개요</h3>
-				<p>UI컴포넌트를 사용하기 위해서는 반드시 <strong>/content/module/imboard/js/imboard-ui-1.0.js</strong> 자바스크립트 파일이 html에 import되어있어야 합니다.</p>
-			</div>
-			<div>
-				<h3 id="doc2-2">2-2. form</h3>
-				<div data-html="document/component/form.html"></div>
-			</div>
-		</div>
-		<div class="doc">
-			<h2 id="doc1">2. API</h2>
-			<div>
-				<h3 id="doc2-1">2-1. 개요</h3>
-				<p>API는 서버로 요청을 보내고 응답을 받는 함수들과 각종 데이터를 제어할 수 있는 객체로 구성됩니다. 반드시 와 <strong>/content/module/imboard/js/imboard-api-1.0.js</strong> 자바스크립트 파일을 HTML파일에 import해야 사용할 수 있습니다.</p>
-			</div>
-			<div>
-				<h3 id="doc2-2">2-2. Query</h3>
-				<p>URL파라미터를 key-value 형식으로 가져옵니다.</p>
-				<div data-html="/document/api/querystring.html"></div>
-			</div>
-			<div>
-				<h3 id="doc2-3">2-3. Form</h3>
-				<p>폼 submit이 발생했을때 폼 내부의 name 또는 data-name속성을 가지고 있는 엘리먼트의 값을 파라미터로 모아주고 HTML5 validation을 수행합니다.</p>
-			</div>
-			<div>
-				<h3 id="doc2-4">2-4. 페이지전환</h3>
-				<p>페이지의 일부를 전환하거나 페이지 전체를 다른 페이지로 전환합니다.</p>
-				<div class="panel panel-default">
-					<div class="panel-body">
-						URL파라미터에 piece라는 키로 할당된 값에 해당하는 html파일을 아래와 같이 data-fragment속성이 지정된 태그의 innerHTML로 보여줍니다. 
-					</div>
-					<div class="panel-footer">
-						&lt;div data-fragment="piece"&gt;&lt;/div&gt;
-					</div>
-				</div>
-				<div class="panel panel-default">
-					<div class="panel-body">
-						아래와 같이 .page로 끝나는 URL이 입력된 경우 해당경로에 위치한 html파일로 페이지 전체를 전환합니다. 예제 URL의 경우 /html/test/test.html파일.
-					</div>
-					<div class="panel-footer">
-						http://localhost:3000/test/test.page
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="doc">
-			<h2 id="doc3">3. 서버요청 API</h2>
-		</div>
+		<div class="doc" data-html="/document/uicomponent.html"></div>
+		<div class="doc" data-html="/document/api.html"></div>
 	</div>
 	<div class="col-xs-3">
-		<ul>	
+		<ul id="contentList" data-component="scrollFollower">	
 			<li><a href="#doc1">1. 개요</a></li>
 			<li>
 				<a href="#doc2">2. 프레임</a>
@@ -88,7 +40,32 @@
 				<a href="#doc4">4. 마크업문법</a>
 				<ul>
 					<li><a href="#doc4-1">4-1. 치환변수</a></li>
-					<li><a href="#doc4-2">4-2. data-bind</a></li>
+					<li>
+						<a href="#doc4-2">4-2. data-bind</a>
+						<ul>
+							<li><a href="#doc4-2-1">4-2-1. 개요</a></li>
+							<li><a href="#doc4-2-2">4-2-2. Board 모듈</a></li>
+							<li><a href="#doc4-2-3">4-2-3. Article 모듈</a></li>
+							<li><a href="#doc4-2-4">4-2-4. Comment 모듈</a></li>
+							<li><a href="#doc4-2-5">4-2-5. Menu 모듈</a></li>
+							<li><a href="#doc4-2-6">4-2-6. User 모듈</a></li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+			<li>
+				<a href="#doc5">5. UI컴포넌트</a>
+				<ul>
+					<li><a href="#doc5-1">5-1. 개요</a></li>
+					<li><a href="#doc5-2">5-2. form</a></li>
+					<li><a href="#doc5-3">5-3. scrollFollower</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#doc5">6. API</a>
+				<ul>
+					<li><a href="#doc6-1">6-1. 개요</a></li>
+					<li><a href="#doc6-2">6-2. Query</a></li>
 				</ul>
 			</li>
 		</ul>

@@ -55,6 +55,9 @@ module.exports.insertBoard =
 		if(boardVo.priority == null || boardVo.priority == "")
 			boardVo.priority = 0;
 		
+		if(req.session.user)
+			boardVo.creator = req.session.user.id;
+		
 		boardDao.insertBoard(boardVo, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
@@ -72,10 +75,19 @@ module.exports.updateBoard =
 		if(boardVo.priority == null || boardVo.priority == "")
 			boardVo.priority = 0;
 		
-		//권한레벨이 0보다 작거나 글쓰기 권한이 있는 유저만 업데이트를 할 수 있음
-		boardDao.updateBoard(boardVo, function(response)
+		boardDao.getBoard(boardVo.id, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			{
+				boardDao.updateBoard(boardVo, function(response)
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				});
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
+			}
 		});
 	}
 };
@@ -87,9 +99,19 @@ module.exports.deleteBoard =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		boardDao.deleteBoard(param.id, function(response)
+		boardDao.getBoard(param.id, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			{
+				boardDao.deleteBoard(param.id, function(response)
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				});
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
+			}
 		});
 	}
 };

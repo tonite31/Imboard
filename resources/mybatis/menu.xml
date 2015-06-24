@@ -10,6 +10,7 @@
         <result column="PARENT_MENU_ID" property="parentMenuId" />
         <result column="VIEW_LEVEL" property="viewLevel"/>
         <result column="CHILD_MENU_COUNT" property="childMenuCount"/>
+        <result column="CREATOR" property="creator"/>
     </resultMap>
     
     <select id="getMenuList" parameterType="string" resultMap="menuResult">
@@ -21,7 +22,8 @@
         	PRIORITY,
         	PARENT_MENU_ID,
         	VIEW_LEVEL,
-        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT,
+        	CREATOR
         FROM
         	IMB_MENU A
         WHERE
@@ -42,7 +44,8 @@
         	PRIORITY,
         	PARENT_MENU_ID,
         	VIEW_LEVEL,
-        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT,
+        	CREATOR
         FROM
         	IMB_MENU A
         WHERE
@@ -62,6 +65,9 @@
         	<if test="#{parentMenuId}">
         		AND PARENT_MENU_ID = #{parentMenuId}
         	</if>
+        	<if test="#{creator}">
+        		AND CREATOR = #{creator}
+        	</if>
     </select>
     
     <select id="getMenuByName" parameterType="MenuVo" resultMap="menuResult">
@@ -73,16 +79,17 @@
         	PRIORITY,
         	PARENT_MENU_ID,
         	VIEW_LEVEL,
-        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT,
+        	CREATOR,
         FROM
         	IMB_MENU A
         WHERE
-        	ID = #{name}
+        	NAME = #{name}
     </select>
     
     <insert id="insertMenu" parameterType="MenuVo">
         INSERT IMB_MENU
-        	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL)
+        	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL, CREATOR)
         VALUES
         	(
         		#{id},
@@ -91,7 +98,8 @@
         		#{parameter},
         		#{priority},
         		#{parentMenuId},
-        		#{viewLevel}
+        		#{viewLevel},
+        		#{creator}
         	)
     </insert>
     

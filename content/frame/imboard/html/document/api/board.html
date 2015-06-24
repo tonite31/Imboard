@@ -1,0 +1,45 @@
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.board.getBoardList</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>var result = $.api.board.getBoardList();
+if(result.code == 1000)
+	console.log(result.data);
+else
+	console.error(result);</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width:30%;"/>
+				<col style="width:70%;"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th></th><td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width:15%;"/>
+				<col style="width:20%;"/>
+				<col style="width:65%;"/>
+			</colgroup>
+			<tbody>
+				<tr><th colspan="2">code</th><td></td></tr>
+				<tr><th rowspan="10" class="center">data</th><th>id</th><td></td></tr>
+				<tr><th>name</th><td></td></tr>
+				<tr><th>priority</th><td></td></tr>
+				<tr><th>description</th><td></td></tr>
+				<tr><th>useYn</th><td></td></tr>
+				<tr><th>viewListLevel</th><td></td></tr>
+				<tr><th>viewDetailLevel</th><td></td></tr>
+				<tr><th>writeLevel</th><td></td></tr>
+				<tr><th>writeCommentLevel</th><td></td></tr>
+				<tr><th>creator</th><td></td></tr>
+				<tr><th colspan="2">message</th><td></td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>

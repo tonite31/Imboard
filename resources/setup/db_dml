@@ -2,9 +2,22 @@ INSERT INTO IMB_ROLE (LEVEL, NAME, POINT, EDITABLE) VALUES (-2, '임보드 마�
 INSERT INTO IMB_ROLE (LEVEL, NAME, POINT, EDITABLE) VALUES (-1, '임보드 관리자', -1, 'N');
 
 INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/settings', -1, 'Y', 'N');
-INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/auth/insertUrlAuth.do', -1, 'Y', 'N');
-INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/auth/updateUrlAuth.do', -1, 'Y', 'N');
-INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/auth/deleteUrlAuth.do', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/auth', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/Member/update', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/role/insertRole.do', -1, 'Y', 'N');
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/role/updateRole.do', -1, 'Y', 'N');
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/role/deleteRole.do', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/visitor', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/insertUser.do', -1, 'Y', 'N');
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/updateUser.do', -1, 'Y', 'N');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/initializeAdminAccount.do', -1, 'Y', 'N');
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/boardAuth/updateBoardAuth.do', -1, 'Y', 'N');
 
 INSERT INTO IMB_USER (ID, NAME, PASSWORD, LEVEL) VALUES ('admin', '관리자', 'a85321db684d26cad6274555c3bf98ab', -2);
 

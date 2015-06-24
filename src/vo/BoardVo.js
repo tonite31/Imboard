@@ -11,6 +11,8 @@ var BoardVo = function(param)
 	this.writeLevel = null;
 	this.writeCommentLevel = null;
 	
+	this.creator = null;
+	
 	ParameterBinder.bind(this, param);
 };
 
