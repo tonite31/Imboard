@@ -62,8 +62,14 @@
 			        <if test="#{writerId}">
 			            AND WRITER_ID = #{writerId}
 			        </if>
+			        <if test="#{likeWriterId}">
+			            AND WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
+			        </if>
 			        <if test="#{writerName}">
 			            AND WRITER_NAME = #{writerName}
+			        </if>
+			        <if test="#{likeWriterName}">
+			            AND WRITER_NAME = #{likeWriterName}
 			        </if>
 			        <if test="#{tag}">
 			            AND TAG LIKE CONCAT('%', #{tag}, '%')
@@ -71,8 +77,8 @@
 			        <if test="#{readStatus}">
 			        	AND C.STATUS = #{readStatus}
 			        </if>
-			        <if test="#{likeDisplayId}">
-			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeDisplayId}, '%')
+			        <if test="#{likeWriterDisplayId}">
+			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeWriterDisplayId}, '%')
 			        </if>
 			        <if test="#{writerDisplayId}">
 			        	AND B.DISPLAY_ID = #{writerDisplayId}
