@@ -28,27 +28,6 @@
 
 <script src="#{path.root}/js/index.js"></script>
 
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shCore.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shLegacy.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushBash.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCpp.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCSharp.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushCss.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushDelphi.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushDiff.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushGroovy.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushJava.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushJScript.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPhp.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPlain.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushPython.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushRuby.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushScala.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushSql.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushVb.js"></script>
-<script type="text/javascript" src="#{path.root}/lib/syntaxhighlighter_3.0.83/scripts/shBrushXml.js"></script>
-<link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shCore.css">
-<link type="text/css" rel="stylesheet" href="#{path.root}/lib/syntaxhighlighter_3.0.83/styles/shThemeDefault.css">
 </head>
 
 <body>
@@ -70,7 +49,6 @@
 				    <!-- Collect the nav links, forms, and other content for toggling -->
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="nav navbar-nav">
-							<li><a href="?fragment=development">개발가이드</a></li>
 						  	<li><a href="?fragment=document">문서</a></li>
 						  	<li><a href="#">커뮤니티</a></li>
 						</ul>
@@ -87,10 +65,23 @@
 		<div class="jumbotron">
 			<div class="container" style="position:relative;">
 				<h1>Imboard</h1>
-				<p>임보드는 쉽고 빠르게 웹페이지를 개발할 수 있는 nodejs기반 플랫폼입니다. 간편한 방법으로 레이아웃을 구성하고 데이터를 화면에 조합할 수 있습니다.</p>
-				<p>미리 만들어진 프레임을 적용하면 몇 분만에 웹페이지를 개설할수도 있습니다.</p>
+				<p>임보드는 쉽고 빠르게 웹페이지를 개발할 수 있는 nodejs기반 플랫폼입니다.</p>
+				<p>간편한 방법으로 웹페이지를 개발할 수 있고, 미리 만들어진 프레임을 적용하면 몇 분만에 웹페이지를 개설할수도 있습니다.</p>
 			</div>
 		</div>
+		<div class="container doc">
+			<h2>임보드에 대해서</h2>
+			<div class="feature">
+				<ul class="description">
+					<li>임보드는 HTML, JS, CSS만으로 웹페이지를 제작할 수 있는 nodejs 기반 설치형 플랫폼입니다.</li>
+					<li>간단한 블로그부터 게시판 위주의 커뮤니티, 개인 및 기업용 홈페이지 등 대부분의 웹페이지를 개발할 수 있습니다.</li>
+					<li>자신만의 웹페이지 프레임을 제작해서 다른사람들이 쓸 수 있도록 배포할 수 있습니다.</li>
+					<li>대부분의 서버기능이 준비되어 있지만 필요하다면 추가적으로 모듈을 개발, 배포할 수 있습니다.</li>
+					<li>관리자페이지에 접속하면 멤버, 게시판, 권한레벨, URL별 권한등의 데이터를 간편하게 관리할 수 있습니다.</li>
+				</ul>
+			</div>
+		</div>
+		<hr class="container"/>
 		<div class="container doc">
 			<h2>다운로드</h2>
 			<div class="feature">
@@ -102,31 +93,31 @@
 				<div class="right">
 					<p><a href="#" class="btn btn-outline black" style="width: 150px;">임보드 0.0.1.zip<br/>다운로드</a></p>
 					<p><a href="#" class="btn btn-outline black" style="width: 150px;">임보드 0.0.1.tar.gz<br/>다운로드</a></p>
+					</div>
+				</div>
+			</div>
+			<hr class="container"/>
+			<div class="container doc">
+				<h2>설치하기</h2>
+				<div class="feature">
+					<div>
+						<h3>사전준비</h3>
+						<p>1. 웹서버</p>
+						<p>임보드를 설치할 호스팅 서버 또는 개인 서버가 필요합니다.</p>
+						<p>2. nodejs &amp; MySQL</p>
+						<p>임보드는 nodejs기반 플랫폼이며 데이터베이스는 MySQL을 사용합니다. 최신버전의 <a href="https://nodejs.org" target="_blank">nodejs</a>와 <a href="http://dev.mysql.com/downloads/mysql/" target="_blank">MySQL</a>을 다운로드하여 설치해주시기 바랍니다.</p>
+						<p>3. 필요한 nodejs 모듈 설치</p>
+						<p>임보드의 루트 디렉토리에서 <strong>npm install</strong> 명령어를 수행합니다.</p>
+						<p>4. 설정파일 수정</p>
+						<p><strong>resources/properties/config.json</strong> 파일을 열어서 자신의 환경에 맞게 설정값을 입력합니다. frame과 jdbc 설정값은 필수적으로 입력해야합니다.</p>
+						<p>5. 임보드 어플리케이션 실행</p>
+						<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
+						<p>6. 웹페이지 접속</p>
+						<p>웹브라우저를 열어서 주소창에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
+					</div>
 				</div>
 			</div>
 		</div>
-		<hr class="container"/>
-		<div class="container doc">
-			<h2>설치하기</h2>
-			<div class="feature">
-				<div>
-					<h3>사전준비</h3>
-					<p>1. 웹서버</p>
-					<p>임보드를 설치할 호스팅 서버 또는 개인 서버가 필요합니다.</p>
-					<p>2. nodejs &amp; MySQL</p>
-					<p>임보드는 nodejs기반 플랫폼이며 데이터베이스는 MySQL을 사용합니다. 최신버전의 <a href="https://nodejs.org" target="_blank">nodejs</a>와 <a href="http://dev.mysql.com/downloads/mysql/" target="_blank">MySQL</a>을 다운로드하여 설치해주시기 바랍니다.</p>
-					<p>3. 필요한 nodejs 모듈 설치</p>
-					<p>임보드의 루트 디렉토리에서 <strong>npm install</strong> 명령어를 수행합니다.</p>
-					<p>4. 설정파일 수정</p>
-					<p><strong>resources/properties/config.json</strong> 파일을 열어서 자신의 환경에 맞게 설정값을 입력합니다. frame과 jdbc 설정값은 필수적으로 입력해야합니다.</p>
-					<p>5. 임보드 어플리케이션 실행</p>
-					<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
-					<p>6. 웹페이지 접속</p>
-					<p>웹브라우저를 열어서 주소창에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
-				</div>
-			</div>
-		</div>
-	</div>
 	<footer>
 		<p>Code licensed under <a rel="license" href="https://github.com/tonite31/imboard/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a rel="license" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a></p>
 		<p>Currently v0.0.2, <a href="https://github.com/tonite31/Imboard" target="_blank">GitHub</a>, <a href="#">Contact</a></p>

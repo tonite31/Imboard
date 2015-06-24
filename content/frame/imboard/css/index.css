@@ -170,3 +170,9 @@ footer p a
 {
 	margin:0 2.5px;
 }
+
+.description li
+{
+	font-size: 15px;
+	padding: 10px;
+}
