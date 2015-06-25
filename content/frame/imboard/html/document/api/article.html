@@ -716,7 +716,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<th>boardId</th>
+					<th>boardId <span class="label label-primary">필수</span></th>
 					<td class="center">String</td>
 					<td>게시판 아이디</td>
 				</tr>
@@ -764,6 +764,180 @@
 					<th>isNotice</th>
 					<td class="center">String(Y or N)</td>
 					<td>공지로 지정 여부</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.article.updateArticle</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.article.updateArticle({boardId : "test", seq : 0, subject : "편집한 제목", content : "편집한 내용");</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>boardId <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>게시판 아이디</td>
+				</tr>
+				<tr>
+					<th>seq <span class="label label-primary">필수</span></th>
+					<td class="center">Integer</td>
+					<td>게시글 번호</td>
+				</tr>
+				<tr>
+					<th>subject</th>
+					<td class="center">String</td>
+					<td>게시글 제목</td>
+				</tr>
+				<tr>
+					<th>content</th>
+					<td class="center">String</td>
+					<td>게시글 내용</td>
+				</tr>
+				<tr>
+					<th>groupId</th>
+					<td class="center">Integer</td>
+					<td>게시글 그룹 아이디</td>
+				</tr>
+				<tr>
+					<th>parentSeq</th>
+					<td class="center">Integer</td>
+					<td>상위 게시글 번호</td>
+				</tr>
+				<tr>
+					<th>thumbnailUrl</th>
+					<td class="center">String</td>
+					<td>썸네일 주소</td>
+				</tr>
+				<tr>
+					<th>tag</th>
+					<td class="center">String</td>
+					<td>태그</td>
+				</tr>
+				<tr>
+					<th>password</th>
+					<td class="center">String</td>
+					<td>게시글 비밀번호</td>
+				</tr>
+				<tr>
+					<th>isNotice</th>
+					<td class="center">String(Y or N)</td>
+					<td>공지로 지정 여부</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.article.deleteArticle</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.article.deleteArticle({boardId : "test", seq : 0, isRemove : "Y");</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>boardId <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>게시판 아이디</td>
+				</tr>
+				<tr>
+					<th>seq <span class="label label-primary">필수</span></th>
+					<td class="center">Integer</td>
+					<td>게시글 번호</td>
+				</tr>
+				<tr>
+					<th>subject</th>
+					<td class="center">String</td>
+					<td>게시글 제목</td>
+				</tr>
+				<tr>
+					<th>isRemove</th>
+					<td class="center">String(Y or N)</td>
+					<td>완전 삭제 여부, N일경우 status가 -1으로 설정됩니다.</td>
 				</tr>
 			</tbody>
 		</table>
