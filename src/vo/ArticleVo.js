@@ -27,8 +27,8 @@ var ArticleVo = function(param)
 	this.checkSigninUser = undefined;
 	this.signinUserId = undefined;
 	this.useSigninUser = undefined;
-	this.latitude = undefined;
-	this.longitude = undefined;
+	
+	this.existThumbnailUrl = undefined;
 	
 	this.useOrderByGroupId = undefined;
 	this.useOrderBySeq = undefined;

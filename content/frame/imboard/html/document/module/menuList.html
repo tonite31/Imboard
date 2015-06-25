@@ -43,11 +43,27 @@
 		<div class="content-header">파라미터</div>
 		<table class="dataTable">
 			<colgroup>
+				<col style="width: 10%;"/>
 				<col style="width: 20%;"/>
-				<col style="width: 80%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
 			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+					<th class="center">검색방법</th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr><th>parentMenuId</th><td></td></tr>
+				<tr>
+					<th colspan="2">parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위 메뉴 아이디</td>
+					<td class="center">=</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="content-header">데이터</div>
@@ -55,18 +71,65 @@
 			<colgroup>
 				<col style="width: 15%;"/>
 				<col style="width: 20%;"/>
-				<col style="width: 70%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 50%;"/>
 			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr><th rowspan="9">menuList</th></tr>
-				<tr><th>id</th><td></td></tr>
-				<tr><th>name</th><td></td></tr>
-				<tr><th>type</th><td></td></tr>
-				<tr><th>parameter</th><td></td></tr>
-				<tr><th>priority</th><td></td></tr>
-				<tr><th>parentMenuId</th><td></td></tr>
-				<tr><th>viewLevel</th><td></td></tr>
-				<tr><th>childMenuCount</th><td></td></tr>
+				<tr>
+					<th rowspan="10">menuList</th>
+				</tr>
+				<tr>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>메뉴 이름</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>메뉴 유형</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td class="center">Integer</td>
+					<td>우선순위</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위 메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>viewLevel</th>
+					<td class="center">Integer</td>
+					<td>메뉴 보기 권한레벨</td>
+				</tr>
+				<tr>
+					<th>childMenuCount</th>
+					<td class="center">Integer</td>
+					<td>하위 메뉴 갯수</td>
+				</tr>
+				<tr>
+					<th>creator</th>
+					<td class="center">String</td>
+					<td>메뉴 생성 사용자 아이디</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="content-header">코드</div>

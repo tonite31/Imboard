@@ -354,18 +354,24 @@
     		context.validation = function()
     		{
     			var check = true;
-    			$(context).find("*[name]").each(function()
+    			var inputList = $(context).find("*[name]");
+    			for(var i=0; i<inputList.length; i++)
     			{
-    				var result = this.checkValidity();
-    				console.log(this, result);
+    				var result = inputList[i].checkValidity();
     				if(!result)
     				{
-    					context.makeValidationMessage.call(this);
-    					this.focus();
+    					context.makeValidationMessage.call(inputList[i]);
+    					inputList[i].focus();
+    					$(inputList[i]).on("input", function(e)
+    					{
+    						$(".imboard-ui-validation").remove();
+    					});
+    					
+    					return false;
     				}
     				
 					check = check && result;
-    			});
+    			}
     			
     			return check;
     		};

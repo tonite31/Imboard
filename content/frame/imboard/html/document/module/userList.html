@@ -45,20 +45,70 @@
 			<colgroup>
 				<col style="width: 15%;"/>
 				<col style="width: 20%;"/>
-				<col style="width: 70%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 50%;"/>
 			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr><th rowspan="11">userList</th></tr>
-				<tr><th>id</th><td></td></tr>
-				<tr><th>name</th><td></td></tr>
-				<tr><th>displayId</th><td></td></tr>
-				<tr><th>provider</th><td></td></tr>
-				<tr><th>level</th><td></td></tr>
-				<tr><th>point</th><td></td></tr>
-				<tr><th>registerDate</th><td></td></tr>
-				<tr><th>lastAccessDate</th><td></td></tr>
-				<tr><th>profileImgUrl</th><td></td></tr>
-				<tr><th>userStatus</th><td></td></tr>
+				<tr>
+					<th rowspan="11">userList</th>
+				</tr>
+				<tr>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+				</tr>
+				<tr>
+					<th>provider</th>
+					<td class="center">String</td>
+					<td>가입경로</td>
+				</tr>
+				<tr>
+					<th>level</th>
+					<td class="center">Integer</td>
+					<td>레벨</td>
+				</tr>
+				<tr>
+					<th>point</th>
+					<td class="center">Integer</td>
+					<td>포인트</td>
+				</tr>
+				<tr>
+					<th>registerDate</th>
+					<td class="center">String</td>
+					<td>등록날짜</td>
+				</tr>
+				<tr>
+					<th>lastAccessDate</th>
+					<td class="center">String</td>
+					<td>마지막 접속 날짜</td>
+				</tr>
+				<tr>
+					<th>profileImgUrl</th>
+					<td class="center">String</td>
+					<td>프로필 이미지 주소</td>
+				</tr>
+				<tr>
+					<th>userStatus</th>
+					<td class="center">String (Y or N)</td>
+					<td>사용자 계정상태 (Y : 사용, N : 사용불가)</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="content-header">코드</div>

@@ -69,24 +69,27 @@
 			            AND WRITER_NAME = #{writerName}
 			        </if>
 			        <if test="#{likeWriterName}">
-			            AND WRITER_NAME = #{likeWriterName}
+			            AND WRITER_NAME LIKE CONCAT('%',#{likeWriterName},'%')
 			        </if>
 			        <if test="#{tag}">
 			            AND TAG LIKE CONCAT('%', #{tag}, '%')
 			        </if>
+			        <if test="#{status}">
+			        	AND A.STATUS = #{status}
+			        </if>
 			        <if test="#{readStatus}">
 			        	AND C.STATUS = #{readStatus}
-			        </if>
-			        <if test="#{likeWriterDisplayId}">
-			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeWriterDisplayId}, '%')
 			        </if>
 			        <if test="#{writerDisplayId}">
 			        	AND B.DISPLAY_ID = #{writerDisplayId}
 			        </if>
+			        <if test="#{likeWriterDisplayId}">
+			        	AND B.DISPLAY_ID LIKE CONCAT('%', #{likeWriterDisplayId}, '%')
+			        </if>
 			        <if test="#{registerDate}">
 			            AND DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') = #{registerDate} 
 			        </if>
-			        <if test="#{thumbnailUrl} == 'true'">
+			        <if test="#{existThumbnailUrl} == 'true'">
 						AND THUMBNAIL_URL IS NOT NULL    
 						AND THUMBNAIL_URL != ''        
 			        </if>
@@ -133,7 +136,7 @@
         	A.TAG,
         	A.IS_NOTICE,
         	(SELECT COUNT(SEQ) FROM IMB_COMMENT WHERE A.BOARD_ID = BOARD_ID AND A.SEQ = ARTICLE_SEQ) AS COMMENT_COUNT,
-        	A.PASSWORD,
+        	'' AS PASSWORD,
         	C.STATUS AS READ_STATUS
         FROM
         	IMB_ARTICLE AS A
@@ -210,10 +213,13 @@
 	            AND WRITER_NAME = #{writerName}
 	        </if>
 	        <if test="#{likeWriterName}">
-	            AND WRITER_NAME = #{likeWriterName}
+	            AND WRITER_NAME LIKE CONCAT('%',#{likeWriterName},'%')
 	        </if>
 	        <if test="#{tag}">
 	            AND TAG LIKE CONCAT('%', #{tag}, '%')
+	        </if>
+	        <if test="#{status}">
+	        	AND A.STATUS = #{status}
 	        </if>
 	        <if test="#{readStatus}">
 	        	AND C.STATUS = #{readStatus}
@@ -227,7 +233,7 @@
 	        <if test="#{registerDate}">
 	            AND DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') = #{registerDate} 
 	        </if>
-	        <if test="#{thumbnailUrl} == 'true'">
+	        <if test="#{existThumbnailUrl} == 'true'">
 				AND THUMBNAIL_URL IS NOT NULL     
 				AND THUMBNAIL_URL != ''       
 	        </if>
@@ -280,6 +286,9 @@
 	        <if test="#{content}">
 	            AND CONTENT LIKE CONCAT('%',#{content},'%')
 	        </if>
+	        <if test="#{writerId}">
+	            AND WRITER_ID = #{writerId}
+	        </if>
 	        <if test="#{likeWriterId}">
 	            AND WRITER_ID LIKE CONCAT('%',#{likeWriterId},'%')
 	        </if>
@@ -287,10 +296,13 @@
 	            AND WRITER_NAME = #{writerName}
 	        </if>
 	        <if test="#{likeWriterName}">
-	            AND WRITER_NAME = #{likeWriterName}
+	            AND WRITER_NAME LIKE CONCAT('%',#{likeWriterName},'%')
 	        </if>
 	        <if test="#{tag}">
 	            AND TAG LIKE CONCAT('%', #{tag}, '%')
+	        </if>
+	        <if test="#{status}">
+	        	AND A.STATUS = #{status}
 	        </if>
 	        <if test="#{readStatus}">
 	        	AND C.STATUS = #{readStatus}
@@ -307,7 +319,7 @@
 	        <if test="#{registerDate}">
 	            AND DATE_FORMAT(REGISTER_DATE, '%Y-%m-%d') = #{registerDate} 
 	        </if>
-	        <if test="#{thumbnailUrl} == 'true'">
+	        <if test="#{existThumbnailUrl} == 'true'">
 				AND THUMBNAIL_URL IS NOT NULL
 				AND THUMBNAIL_URL != ''       
 	        </if>

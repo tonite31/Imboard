@@ -37,18 +37,64 @@
 		<div class="content-header">파라미터</div>
 		<table class="dataTable">
 			<colgroup>
+				<col style="width: 10%;"/>
 				<col style="width: 20%;"/>
 				<col style="width: 20%;"/>
-				<col style="width: 60%;"/>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
 			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+					<th class="center">검색방법</th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr><th colspan="2">boardId <span class="label label-primary">필수</span></th><td></td></tr>
-				<tr><th colspan="2">articleSeq <span class="label label-primary">필수</span></th><td></td></tr>
-				<tr><th rowspan="5">searchData</th><th>content</th><td></td></tr>
-				<tr><th>useOrderByGroupId</th><td></td></tr>
-				<tr><th>orderByGroupId</th><td></td></tr>
-				<tr><th>useOrderBySeq</th><td></td></tr>
-				<tr><th>orderBySeq</th><td></td></tr>
+				<tr>
+					<th colspan="2">boardId <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>게시판 아이디</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th colspan="2">articleSeq <span class="label label-primary">필수</span></th>
+					<td class="center">Integer</td>
+					<td>게시글 번호</td>
+					<td class="center">String</td>
+				</tr>
+				<tr>
+					<th rowspan="5">searchData</th>
+					<th>content</th>
+					<td class="center">String</td>
+					<td>덧글 내용</td>
+					<td class="center">LIKE</td>
+				</tr>
+				<tr>
+					<th>useOrderByGroupId</th>
+					<td class="center">Boolean</td>
+					<td>그룹아이디 정렬방법 사용여부</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>orderByGroupId</th>
+					<td class="center">String (DESC or ASC)</td>
+					<td>그룹아이디 정렬방법</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>useOrderBySeq</th>
+					<td class="center">Boolean</td>
+					<td>덧글 번호 정렬방법 사용여부</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>orderBySeq</th>
+					<td class="center">String (DESC or ASC)</td>
+					<td>덧글 번호 정렬방법</td>
+					<td class="center">=</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="content-header">데이터</div>
@@ -56,27 +102,105 @@
 			<colgroup>
 				<col style="width: 15%;"/>
 				<col style="width: 20%;"/>
-				<col style="width: 70%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 50%;"/>
 			</colgroup>
+			<thead>
+				<tr>
+					<th colspan="2" class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
 			<tbody>
-				<tr><th rowspan="23">commentList</th></tr>
-				<tr><th>boardId</th><td></td></tr>
-				<tr><th>boardName</th><td></td></tr>
-				<tr><th>articleSeq</th><td></td></tr>
-				<tr><th>groupId</th><td></td></tr>
-				<tr><th>seq</th><td></td></tr>
-				<tr><th>content</th><td></td></tr>
-				<tr><th>registerDate</th><td></td></tr>
-				<tr><th>good</th><td></td></tr>
-				<tr><th>bad</th><td></td></tr>
-				<tr><th>writerId</th><td></td></tr>
-				<tr><th>writerName</th><td></td></tr>
-				<tr><th>writerDisplayId</th><td></td></tr>
-				<tr><th>parentWriterId</th><td></td></tr>
-				<tr><th>parentWriterName</th><td></td></tr>
-				<tr><th>parentWriterDisplayId</th><td></td></tr>
-				<tr><th>parentSeq</th><td></td></tr>
-				<tr><th>status</th><td></td></tr>
+				<tr>
+					<th rowspan="23">commentList</th>
+				</tr>
+				<tr>
+					<th>boardId</th>
+					<td class="center">String</td>
+					<td>게시판 아이디</td>
+				</tr>
+				<tr>
+					<th>boardName</th>
+					<td class="center">String</td>
+					<td>게시판 이름</td>
+				</tr>
+				<tr>
+					<th>articleSeq</th>
+					<td class="center">Integer</td>
+					<td>게시글 번호</td>
+				</tr>
+				<tr>
+					<th>groupId</th>
+					<td class="center">Integer</td>
+					<td>덧글 그룹 아이디</td>
+				</tr>
+				<tr>
+					<th>seq</th>
+					<td class="center">Integer</td>
+					<td>덧글 번호</td>
+				</tr>
+				<tr>
+					<th>content</th>
+					<td class="center">String</td>
+					<td>내용</td>
+				</tr>
+				<tr>
+					<th>registerDate</th>
+					<td class="center">String</td>
+					<td>작성날짜</td>
+				</tr>
+				<tr>
+					<th>good</th>
+					<td class="center">Integer</td>
+					<td>추천수</td>
+				</tr>
+				<tr>
+					<th>bad</th>
+					<td class="center">Integer</td>
+					<td>비추천수</td>
+				</tr>
+				<tr>
+					<th>writerId</th>
+					<td class="center">String</td>
+					<td>작성자 아이디</td>
+				</tr>
+				<tr>
+					<th>writerName</th>
+					<td class="center">String</td>
+					<td>작성자 이름</td>
+				</tr>
+				<tr>
+					<th>writerDisplayId</th>
+					<td class="center">String</td>
+					<td>작성자 별명</td>
+				</tr>
+				<tr>
+					<th>parentWriterId</th>
+					<td class="center">String</td>
+					<td>상위 덧글 작성자 아이디</td>
+				</tr>
+				<tr>
+					<th>parentWriterName</th>
+					<td class="center">String</td>
+					<td>상위 덧글 작성자 이름</td>
+				</tr>
+				<tr>
+					<th>parentWriterDisplayId</th>
+					<td class="center">String</td>
+					<td>상위 덧글 작성자 별명</td>
+				</tr>
+				<tr>
+					<th>parentSeq</th>
+					<td class="center">String</td>
+					<td>상위 덧글 번호</td>
+				</tr>
+				<tr>
+					<th>status</th>
+					<td class="center">Integer</td>
+					<td>덧글 상태</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="content-header">코드</div>

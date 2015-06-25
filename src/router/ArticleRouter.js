@@ -126,6 +126,8 @@ module.exports.getArticle =
 		    },
 		    function(response, cb)
 		    {
+		    	response.password = null;
+		    	
 		    	if(param.seq != null)
 		    	{
 		    		var userId = null;
@@ -187,6 +189,9 @@ module.exports.insertArticle =
 			
 			vo.seq = seq;
 			
+			if(!req.session.user || req.session.user.level >= 0)
+				vo.isNotice = null;
+			
 			ArticleDao.insertArticleWithSeq(vo, function(response)
 			{
 				res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
@@ -215,6 +220,9 @@ function updateArticle(req, res)
 				{
 					if(req.session.user.id == response.writerId || member.level < 0)
 					{
+						if(!req.session.user || req.session.user.level >= 0)
+							vo.isNotice = null;
+						
 						ArticleDao.updateArticle(vo, function(response)
 						{
 							if(response == 1)

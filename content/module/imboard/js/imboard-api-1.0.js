@@ -197,16 +197,6 @@
 	    });
 	};
 
-	$.api.article.searchArticle = function(data)
-	{
-	    return httpRequest({
-	       url: "/article/getArticle.do",
-	       type: 'post',
-	       data : data,
-	       async: false
-	    });
-	};
-
 	//boardId, subject, content, groupId, parentSeq, thumbnailUrl, tag, password, isNotice
 	$.api.article.insertArticle = function(data)
 	{
