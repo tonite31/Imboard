@@ -439,13 +439,15 @@
     		var options = param[0];
 			if(!options || !options.direction)
 				options = {top : 10, direction : "vertical"};
-				
+			
 			var rect = $(context).getRect();
+			var top = rect.top + $(window).scrollTop();
+			var left = rect.left + $(window).scrollLeft();
 			$(window).on("scroll", function()
 			{
 				if(options.direction == "vertical")
 				{
-					if(rect.top - options.top <= $(window).scrollTop())
+					if(top - options.top <= $(window).scrollTop())
 					{
 						$(context).css("position", "fixed").css("top", options.top + "px").css("left", rect.left + "px");
 					}
@@ -456,7 +458,7 @@
 				}
 				else if(options.direction = "horizontal")
 				{
-					if(rect.left - options.left <= $(window).scrollLeft())
+					if(left - options.left <= $(window).scrollLeft())
 					{
 						$(context).css("position", "fixed").css("top", rect.top + "px").css("left", options.left + "px");
 					}
