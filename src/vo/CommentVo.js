@@ -16,6 +16,7 @@ var CommentVo = function(param)
 	this.parentWriterName = undefined;
 	this.parentWriterDisplayId = undefined;
 	this.status = undefined;
+	this.profileImgUrl = undefined;
 	
 	this.registerDateType = undefined;
 	

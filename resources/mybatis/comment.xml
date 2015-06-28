@@ -13,6 +13,7 @@
         <result column="WRITER_ID" property="writerId" />
         <result column="WRITER_NAME" property="writerName" />
         <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
+        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
         <result column="PARENT_WRITER_ID" property="parentWriterId" />
         <result column="PARENT_WRITER_NAME" property="parentWriterName" />
         <result column="PARENT_WRITER_DISPLAY_ID" property="parentWriterDisplayId" />
@@ -92,7 +93,6 @@
         	A.GOOD,
         	A.BAD,
         	A.WRITER_ID,
-        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	CASE
         		WHEN B.NAME IS NULL THEN A.WRITER_NAME
         		ELSE B.NAME
@@ -102,7 +102,11 @@
         		WHEN C.NAME IS NULL THEN A.PARENT_WRITER_NAME
         		ELSE C.NAME
         	END AS PARENT_WRITER_NAME,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
+        	C.ID AS PARENT_WRITER_ID,
+        	C.NAME AS PARENT_WRITER_NAME,
         	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
+        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS
@@ -166,13 +170,16 @@
         		WHEN B.NAME IS NULL THEN A.WRITER_NAME
         		ELSE B.NAME
         	END AS WRITER_NAME,
-        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	A.PARENT_WRITER_ID,
         	CASE
         		WHEN C.NAME IS NULL THEN A.PARENT_WRITER_NAME
         		ELSE C.NAME
         	END AS PARENT_WRITER_NAME,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
+        	C.ID AS PARENT_WRITER_ID,
+        	C.NAME AS PARENT_WRITER_NAME,
         	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
+        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS

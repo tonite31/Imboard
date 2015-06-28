@@ -668,48 +668,4 @@
 		});
 	};
 
-	/**
-	 * $.api.member
-	 */
-	$.api.member = {};
-	$.api.member.getMemberList = function(data)
-	{
-		return httpRequest({
-		   url: "/Member/getMemberList.do",
-		   type: 'post',
-		   data : data,
-		   async: false
-		});
-	};
-
-	$.api.member.registerMember = function(data)
-	{
-		return httpRequest({
-		   url: "/Member/updateMember.do",
-		   type: 'post',
-		   data : data,
-		   async: false
-		});
-	};
-
-	$.api.member.updateMemberLevel = function(data)
-	{
-		return httpRequest({
-			url: "/Member/updateMemberLevel.do",
-			type: 'post',
-			data : data,
-			async: false
-		});
-	};
-
-//	$.api.member.updateAccessDate = function(data)
-//	{
-//		return httpRequest({
-//			url: "/Member/updateAccessDate.do",
-//			type: 'post',
-//			data : data,
-//			async: false
-//		});
-//	};
-
 }(jQuery));
