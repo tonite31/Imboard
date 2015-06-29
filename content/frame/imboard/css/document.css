@@ -83,3 +83,30 @@ h3
 {
 	margin-top: 30px;
 }
+
+
+#contentList li, #contentList ul
+{
+	list-style: none;
+}
+
+#contentList li
+{
+	padding-top: 2.5px;
+	padding-bottom: 2.5px;
+}
+
+#contentList ul
+{
+	padding-left: 20px;
+}
+
+#contentList li a
+{
+	color:#666;
+}
+
+#contentList li.selected
+{
+	color:#337ab7;
+}

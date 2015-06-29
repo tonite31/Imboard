@@ -50,10 +50,10 @@
         	IMB_MENU A
         WHERE
         	1 = 1
-        	<if test="#{id} != null">
+        	<if test="#{id}">
         		AND ID = #{id}
         	</if>
-        	<if test="#{name} != null">
+        	<if test="#{name}">
         		AND NAME = #{name}
         	</if>
         	<if test="#{type}">

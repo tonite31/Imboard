@@ -501,16 +501,6 @@
 	    });
 	};
 	
-	$.api.user.insertUser = function(data)
-	{
-		return httpRequest({
-	       url: "/user/insertUser.do",
-	       type: 'post',
-	       data : data,
-	       async: false
-	    });
-	};
-
 	$.api.user.updateUser = function(data)
 	{
 		return httpRequest({

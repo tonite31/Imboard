@@ -7,13 +7,13 @@
         <result column="NAME" property="name" />
         <result column="PASSWORD" property="password" />
         <result column="PROVIDER" property="provider" />
+        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
+        <result column="POINT" property="point" />
+        <result column="LEVEL" property="level" />
         <result column="USER_STATUS" property="userStatus" />
         <result column="DROP_OUT_DATE" property="dropOutDate" />
         <result column="REGISTER_DATE" property="registerDate" />
-        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
-        <result column="POINT" property="point" />
         <result column="LAST_ACCESS_DATE" property="lastAccessDate" />
-        <result column="LEVEL" property="level" />
     </resultMap>
     
     <select id="getUserList" parameterType="UserVo" resultMap="userResult">
@@ -52,18 +52,18 @@
 			A.PROFILE_IMG_URL,
 			A.POINT,
 			DATE_FORMAT(A.LAST_ACCESS_DATE, '%Y-%m-%d %H:%i:%s') AS LAST_ACCESS_DATE
-			<if test="#{id} != null">,if ( isnull(A.LEVEL), (SELECT LEVEL FROM (SELECT MIN(POINT), LEVEL FROM (SELECT (U.POINT - R.POINT) AS POINT, R.LEVEL FROM IMB_ROLE R, IMB_USER U WHERE U.ID = #{id} AND R.LEVEL > 0) LT WHERE POINT > 0) RE), A.LEVEL) AS LEVEL</if> 
+			<if test="#{id}">,if ( isnull(A.LEVEL), (SELECT LEVEL FROM (SELECT MIN(POINT), LEVEL FROM (SELECT (U.POINT - R.POINT) AS POINT, R.LEVEL FROM IMB_ROLE R, IMB_USER U WHERE U.ID = #{id} AND R.LEVEL > 0) LT WHERE POINT > 0) RE), A.LEVEL) AS LEVEL</if> 
         FROM
         	IMB_USER A
         WHERE
         		1=1
-       		<if test="#{id} != null">
+       		<if test="#{id}">
        			AND ID = #{id}
        		</if>
-       		<if test="#{displayId} != null">
+       		<if test="#{displayId}">
        			AND DISPLAY_ID = #{displayId}
        		</if>
-       		<if test="#{name} != null">
+       		<if test="#{name}">
        			AND NAME = #{name}
        		</if>
     </select>

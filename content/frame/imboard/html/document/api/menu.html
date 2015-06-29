@@ -1,0 +1,486 @@
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.menu.getMenuList</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>var result = $.api.menu.getMenuList({parentMenuId : "parentMenu"});
+if(result.code == 1000)
+	console.log(result.data);
+else
+	console.error(result);</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+					<th class="center">검색방법</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+					<td class="center">=</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 10%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center" colspan="3">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="3" class="center">code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th colspan="3" class="center">message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+				<tr>
+					<th rowspan="9" class="center">data</th>
+					<th rowspan="9" class="center">menuList</th>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>메뉴 이름</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>유형</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td class="center">Integer</td>
+					<td>우선순위</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>viewLevel</th>
+					<td class="center">Integer</td>
+					<td>메뉴보기 권한레벨</td>
+				</tr>
+				<tr>
+					<th>childMenuCount</th>
+					<td class="center">Integer</td>
+					<td>하위메뉴 갯수</td>
+				</tr>
+				<tr>
+					<th>creator</th>
+					<td class="center">String</td>
+					<td>메뉴를 생성한 사용자 아이디</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.menu.getMenu</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>var result = $.api.menu.getMenu({id : "test"});
+if(result.code == 1000)
+	console.log(result.data);
+else
+	console.error(result);</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+					<th class="center">검색방법</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>메뉴 이름</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>유형</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>creator</th>
+					<td class="center">String</td>
+					<td>메뉴를 생성한 사용자 아이디</td>
+					<td class="center">=</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 40%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center" colspan="2">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="2" class="center">code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th colspan="2" class="center">message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+				<tr>
+					<th rowspan="9" class="center">data</th>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>메뉴 이름</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>유형</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td class="center">Integer</td>
+					<td>우선순위</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>viewLevel</th>
+					<td class="center">Integer</td>
+					<td>메뉴보기 권한레벨</td>
+				</tr>
+				<tr>
+					<th>childMenuCount</th>
+					<td class="center">Integer</td>
+					<td>하위메뉴 갯수</td>
+				</tr>
+				<tr>
+					<th>creator</th>
+					<td class="center">String</td>
+					<td>메뉴를 생성한 사용자 아이디</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.menu.insertMenu</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.menu.insertMenu({id : "test", name : "테스트용 메뉴", type : 0, parameter : "?id=test", priority : 0, viewLevel : 10});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>메뉴 이름</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>유형</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td class="center">Integer</td>
+					<td>우선순위</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>viewLevel</th>
+					<td class="center">Integer</td>
+					<td>메뉴보기 권한레벨</td>
+				</tr>
+				<tr>
+					<th>creator</th>
+					<td class="center">String</td>
+					<td>메뉴를 생성한 사용자 아이디</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.menu.updateMenu</div>
+	<div class="panel panel-body">
+		<p style="margin-top:20px;">파라미터로 입력된 id에 해당하는 메뉴를 생성한 사용자이거나 관리자이상의 레벨을 가지고 있는 사용자만 정상적으로 수정할 수 있습니다.</p>
+		<div class="content-header">예제</div>
+		<pre>$.api.menu.updateMenu({id : "test", name : "테스트용 메뉴 수정", type : 1, priority : 0});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>게시판 아이디</td>
+				</tr>
+				<tr>
+					<th>type</th>
+					<td class="center">Integer</td>
+					<td>유형</td>
+				</tr>
+				<tr>
+					<th>parameter</th>
+					<td class="center">String</td>
+					<td>파라미터</td>
+				</tr>
+				<tr>
+					<th>priority</th>
+					<td class="center">Integer</td>
+					<td>우선순위</td>
+				</tr>
+				<tr>
+					<th>parentMenuId</th>
+					<td class="center">String</td>
+					<td>상위메뉴 아이디</td>
+				</tr>
+				<tr>
+					<th>viewLevel</th>
+					<td class="center">Integer</td>
+					<td>메뉴보기 권한레벨</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.menu.deleteMenu</div>
+	<div class="panel panel-body">
+		<p style="margin-top:20px;">파라미터로 입력된 id에 해당하는 메뉴를 생성한 사용자이거나 관리자이상의 레벨을 가지고 있는 사용자만 정상적으로 삭제할 수 있습니다.</p>
+		<div class="content-header">예제</div>
+		<pre>$.api.menu.deleteMenu({id : "test"});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>메뉴 아이디</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

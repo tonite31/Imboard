@@ -1,0 +1,443 @@
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.user.getUserList</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>var result = $.api.user.getUserList();</pre>
+		<div class="content-header">결과데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 10%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center" colspan="3">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="3" class="center">code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th colspan="3" class="center">message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+				<tr>
+					<th rowspan="10" class="center">data</th>
+					<th rowspan="10" class="center">userList</th>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+				</tr>
+				<tr>
+					<th>provider</th>
+					<td class="center">String</td>
+					<td>사용자정보 제공기관</td>
+				</tr>
+				<tr>
+					<th>profileImgUrl</th>
+					<td class="center">String</td>
+					<td>프로필 이미지 주소</td>
+				</tr>
+				<tr>
+					<th>point</th>
+					<td class="center">Integer</td>
+					<td>포인트</td>
+				</tr>
+				<tr>
+					<th>level</th>
+					<td class="center">Integer</td>
+					<td>레벨</td>
+				</tr>
+				<tr>
+					<th>userStatus</th>
+					<td class="center">String (Y or N)</td>
+					<td>계정상태 Y : 사용가능, N : 사용불가능</td>
+				</tr>
+				<tr>
+					<th>registerDate</th>
+					<td class="center">String</td>
+					<td>등록날짜</td>
+				</tr>
+				<tr>
+					<th>lastAccessDate</th>
+					<td class="center">String</td>
+					<td>마지막 접속일</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.user.getUser</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>var result = $.api.user.getUser({id : "test"});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 30%;"/>
+				<col style="width: 20%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+					<th class="center">검색방법</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+					<td class="center">=</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+					<td class="center">=</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">결과데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 40%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center" colspan="2">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="2" class="center">code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th colspan="2" class="center">message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+				<tr>
+					<th rowspan="10" class="center">data</th>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+				</tr>
+				<tr>
+					<th>provider</th>
+					<td class="center">String</td>
+					<td>사용자정보 제공기관</td>
+				</tr>
+				<tr>
+					<th>profileImgUrl</th>
+					<td class="center">String</td>
+					<td>프로필 이미지 주소</td>
+				</tr>
+				<tr>
+					<th>point</th>
+					<td class="center">Integer</td>
+					<td>포인트</td>
+				</tr>
+				<tr>
+					<th>level</th>
+					<td class="center">Integer</td>
+					<td>레벨</td>
+				</tr>
+				<tr>
+					<th>userStatus</th>
+					<td class="center">String (Y or N)</td>
+					<td>계정상태 Y : 사용가능, N : 사용불가능</td>
+				</tr>
+				<tr>
+					<th>registerDate</th>
+					<td class="center">String</td>
+					<td>등록날짜</td>
+				</tr>
+				<tr>
+					<th>lastAccessDate</th>
+					<td class="center">String</td>
+					<td>마지막 접속일</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.user.updateUser</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.user.updateUser({id : "test", name : "테스트용 사용자 수정", profileImgUrl : "http://localhost:3000/test.jpg"});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+				</tr>
+				<tr>
+					<th>profileImgUrl</th>
+					<td class="center">String</td>
+					<td>프로필 이미지 주소</td>
+				</tr>
+				<tr>
+					<th>level</th>
+					<td class="center">Integer</td>
+					<td>레벨</td>
+				</tr>
+				<tr>
+					<th>userStatus</th>
+					<td class="center">String (Y or N)</td>
+					<td>계정상태 Y : 사용가능, N : 사용불가능</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">결과데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.user.updateUserPassword</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.user.updateUserPassword({id : "test", password : "asdf"});</pre>
+		<div class="content-header">파라미터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>id <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>password <span class="label label-primary">필수</span></th>
+					<td class="center">String</td>
+					<td>비밀번호, 암호화 후 전송됩니다.</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="content-header">결과데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 60%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th>message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading">$.api.user.getSignedUser</div>
+	<div class="panel panel-body">
+		<div class="content-header">예제</div>
+		<pre>$.api.user.getSignedUser();</pre>
+		<div class="content-header">결과데이터</div>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 20%;"/>
+				<col style="width: 40%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th class="center" colspan="2">변수명</th>
+					<th class="center">변수타입</th>
+					<th class="center">설명</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th colspan="2" class="center">code</th>
+					<td class="center">Integer</td>
+					<td>통신결과코드</td>
+				</tr>
+				<tr>
+					<th colspan="2" class="center">message</th>
+					<td class="center">Integer</td>
+					<td>통신결과메시지</td>
+				</tr>
+				<tr>
+					<th rowspan="10" class="center">data</th>
+					<th>id</th>
+					<td class="center">String</td>
+					<td>사용자 아이디</td>
+				</tr>
+				<tr>
+					<th>displayId</th>
+					<td class="center">String</td>
+					<td>사용자 별명</td>
+				</tr>
+				<tr>
+					<th>name</th>
+					<td class="center">String</td>
+					<td>사용자 이름</td>
+				</tr>
+				<tr>
+					<th>provider</th>
+					<td class="center">String</td>
+					<td>사용자정보 제공기관</td>
+				</tr>
+				<tr>
+					<th>profileImgUrl</th>
+					<td class="center">String</td>
+					<td>프로필 이미지 주소</td>
+				</tr>
+				<tr>
+					<th>point</th>
+					<td class="center">Integer</td>
+					<td>포인트</td>
+				</tr>
+				<tr>
+					<th>level</th>
+					<td class="center">Integer</td>
+					<td>레벨</td>
+				</tr>
+				<tr>
+					<th>userStatus</th>
+					<td class="center">String (Y or N)</td>
+					<td>계정상태 Y : 사용가능, N : 사용불가능</td>
+				</tr>
+				<tr>
+					<th>registerDate</th>
+					<td class="center">String</td>
+					<td>등록날짜</td>
+				</tr>
+				<tr>
+					<th>lastAccessDate</th>
+					<td class="center">String</td>
+					<td>마지막 접속일</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
