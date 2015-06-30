@@ -4,7 +4,6 @@ $(document).ready(function()
 	$(window).on("scroll", function(e)
 	{
 		var top = $(this).scrollTop();
-		console.log(top);
 		
 		var minTarget = null;
 		$("#documentArea *[id^=doc]").each(function()
@@ -20,8 +19,6 @@ $(document).ready(function()
 			
 			$(this).removeClass("selected");
 		});
-		
-		console.log("머지 : ", minTarget);
 		
 		if(minTarget)
 			$(minTarget.element).addClass("selected");

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+
+<meta name="Title" content="블로그">
+<meta name="author" content="Alprensia"/>
+<meta name="reply-to" content="tonite32@gmail.com"/>
+<meta name="robots" content="INDEX, FOLLOW" />
+<meta name="description" content="임보드로 제작된 기본 블로그입니다"/>
+
+<title>블로그</title>
+
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/css/index.css" />
+
+<link rel="stylesheet" type="text/css" href="#{path.module}/imboard/css/imboard-ui.css" />
+
+<script src="#{path.lib}/jquery/jquery-1.10.2.js"></script>
+<script src="#{path.root}/lib/bootstrap/bootstrap.min.js"></script>
+<script src="#{path.lib}/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="#{path.module}/imboard/js/imboard-api.js"></script>
+<script src="#{path.module}/imboard/js/imboard-ui.js"></script>
+<script src="#{path.module}/imboard/js/handlebar-helper.js"></script>
+
+<!-- <script src="#{path.root}/js/index.js"></script> -->
+
+</head>
+
+<body>
+	<div class="container">
+		<div class="top">
+			<a class="btn btn-default">새 글 작성</a>
+		</div>
+		<div class="col-xs-4">
+			<div class="panel panel-primary">
+				<div class="panel-heading"><a class="penname">펜네임</a></div>
+				<div class="panel-body">
+					<div class="profileImg">
+						<img src="http://photo.jtbc.joins.com/news/2014/10/10/20141010142600323.jpg">
+					</div>
+			      	<div>
+			        	<h1 class="blogTitle">블로그 제목</h1>
+			        	<p class="blogDescription">블로그 설명</p>
+			      	</div>
+				</div>
+			</div>
+			<nav class="menuList">
+				<div class="list-group">
+					<a href="#" class="list-group-item active">Cras justo odio</a>
+					<a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+					<a href="#" class="list-group-item">Morbi leo risus</a>
+					<a href="#" class="list-group-item">Porta ac consectetur ac</a>
+					<a href="#" class="list-group-item">Vestibulum at eros</a>
+				</div>
+			</nav>
+		</div>
+		<div class="col-xs-8">
+			<div class="paper panel panel-default" style="position: relative;">
+				<div class="panel-heading">
+					<p class="paperInfo">
+						<span class="label label-default boardName">게시판</span>
+						<span>조회 1111</span>
+						<span>덧글 33</span>
+						<span>2015-07-01</span>
+					</p>
+				</div>
+				<div class="panel-body" style="position: relative;">
+					<a class="paperCorver" href="?piece=book&bookpiece=paper&username={{displayId}}&boardId={{boardId}}&seq={{seq}}"></a>
+					<h2 class="subject">{{subject}}</h2>
+					<article>
+						야야요요
+					</article>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
