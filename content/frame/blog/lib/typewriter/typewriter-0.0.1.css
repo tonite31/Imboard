@@ -1,0 +1,260 @@
+.tooltip
+{
+	font-size:10px;
+}
+
+.typewriter
+{
+	position: relative;
+}
+
+.tooltip-inner
+{
+	padding: 3px 5px;
+}
+
+.typewriter-controlPanel
+{
+	position: relative;
+	background-color: white;
+}
+
+.typewriter-controlGroup
+{
+	height: 40px;
+	display: inline-block;
+	margin:5px;
+	vertical-align: middle;
+}
+
+.typewriter-controlGroup > button
+{
+	padding:0;
+	border:0;
+	background-color: transparent;
+}
+
+.typewriter-controlGroup > button > span
+{
+	display:inline-block;
+	text-align: center;
+	cursor: pointer;
+	font-size:20px;
+	padding:0 10px;
+}
+
+.typewriter-controlGroup > button:HOVER
+{
+	color:black;
+}
+
+.typewriter-controlGroup > button:FOCUS, .typewriter-controlGroup > button:ACTIVE
+{
+	outline: 0;
+}
+
+.typewriter-controlGroup .typewriter-compdesc
+{
+	display:block;
+	font-size: 11px;
+	text-align: center;
+}
+
+.typewriter-vline
+{
+	display:inline-block;
+	width: 2px;
+	height: 30px;
+	background: #dfdfdf;
+	vertical-align: middle;
+}
+
+.typewriter-content
+{
+	min-height: 400px;
+	position: relative;
+}
+
+.typewriter-content > div
+{
+	position: relative;
+}
+
+.typewriter-content *[contenteditable='true']
+{
+	width: 100%;
+	outline:0;
+	border:0;
+	background: transparent;
+	resize: none;
+}
+
+.typewriter-content:FOCUS, .typewriter-content:ACTIVE,
+.typewriter-content input[type='text']:FOCUS, .typewriter-content input[type='text']:ACTIVE,
+.typewriter-content *[contenteditable='true']:FOCUS, .typewriter-content *[contenteditable='true']:ACTIVE
+{
+	outline:0;
+}
+
+.typewriter-content .typewriter-contentplaceholder
+{
+	opacity:0.3;
+}
+
+.typewriter-additional
+{
+}
+
+.typewriter-hiddenfile
+{
+	position:absolute; left:0; width:100%; top:0; height:100%; opacity:0; cursor:pointer;	
+}
+
+.typewriter-relative
+{
+	position: relative;
+}
+
+.typewriter-focus
+{
+	border: 2px solid green;
+}
+
+.typewriter-resizebar
+{
+	position: absolute;
+	display: inline-block;
+	z-index:10000;
+}
+
+.typewriter-prompt
+{
+	position: fixed;
+	left: 0;
+	top : 0;
+	right : 0;
+	bottom: 0;
+	z-index: 99999;
+	background-color: rgba(0, 0, 0, 0.1);
+	display: none;
+}
+
+.typewriter-prompt > div
+{
+	width: 200px;
+	text-align: center;
+	margin: 0 auto;
+	
+	border: 1px solid #c8c8c8;
+	border-radius:5px;
+	background-color: white;
+	
+	padding: 20px;
+}
+
+.typewriter-prompt > div
+{
+	width: 400px;
+}
+
+.typewriter-prompt > div > input
+{
+	width: 100%;
+	border: 1px solid #dedede;
+	border-radius: 5px;
+	padding: 5px 10px;
+	margin: 10px 0 5px 0;
+	z-index:999999;
+	position: relative;
+}
+
+.typewriter-prompt > div button
+{
+	margin: 0 5px;
+}
+
+.glyphicon-text-size.down
+{
+	-moz-transform: rotateY(180deg);
+	-webkit-transform: rotateY(180deg);
+	-o-transform: rotateY(180deg);
+	-ms-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+
+.typewriter-resizable
+{
+	position: absolute;
+}
+
+.typewriter-right-resizebar
+{
+	position: absolute;
+	top:0;
+	bottom:0;
+	right:0;
+	width: 5px;
+	
+	cursor: ew-resize;
+}
+
+.typewriter-bottom-resizebar
+{
+	position: absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	height: 5px;
+	
+	cursor: ns-resize;
+}
+
+.typewriter-progress
+{
+	position: fixed;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+
+	background-color: rgba(0, 0, 0, 0.2);
+	
+	text-align: center;
+	
+	display: none;
+	
+	z-index:99999;
+}
+
+.typewriter-progress > div
+{
+	display: inline-block;
+	width:0;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.typewriter-progress > span
+{
+	font-size: 70px;
+	top:30px;
+	
+	-webkit-animation: rotate 2s linear infinite;
+}
+
+@-webkit-keyframes rotate {
+  from{
+    -moz-transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	transform: rotate(0deg);
+  }
+  to{
+    -moz-transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-ms-transform: rotate(360deg);
+	transform: rotate(360deg);
+  }
+}

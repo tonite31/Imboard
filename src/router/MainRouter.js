@@ -23,6 +23,10 @@ module.exports.main =
 			{
 				render(req, res, "common", "settings", "/index.html");
 			}
+			else if(path.match(/^\/install\/?$/) != null)
+			{
+				render(req, res, "common", "install", "/index.html");
+			}
 			else if(path.match(/^\/signin\/?$/) != null)
 			{
 				if(req.session.user != null && req.session.user.id != null)

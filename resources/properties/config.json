@@ -23,13 +23,13 @@
 	"jdbc":
 	{
         "host"     : "54.64.10.181",
-        "user"     : "imboard",
-        "password" : "imboard",
-        "database" : "imboard",
+        "user"     : "imboardtest",
+        "password" : "imboardtest",
+        "database" : "imboardtest",
         "typeCast" : true,
         "multipleStatements": true
 	},
-	"encryptKey" : "imboard_encrypt_key",
+	"encryptKey" : "encryptKey",
 	"openAuth" :
 	{
 		"facebook" :
