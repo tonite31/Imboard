@@ -23,7 +23,7 @@
 	"jdbc":
 	{
         "host"     : "host",
-        "user"     : "username",
+        "user"     : "user",
         "password" : "password",
         "database" : "database",
         "typeCast" : true,
