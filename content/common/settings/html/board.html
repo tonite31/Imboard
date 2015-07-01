@@ -1,148 +1,89 @@
-<script id="settings-new-board-template" type="text/x-handlebars-template">
-<div class="col-xs-4">
-<form data-component="form" id="newForm">
-<div class="panel panel-primary">
-	<div class="panel-body" style="height: 415px;">
-		<p>
-			<label>게시판 아이디</label>
-			<input type="text" name="id" autofocus="autofocus" />
-		</p>
-		<p>	
-			<label>게시판 이름</label>
-			<input type="text" name="name"/>			
-		</p>
-		<p>	
-			<label>순서</label>
-			<input type="text" name="priority"/>
-		</p>
-		<p>
-			<label>글목록보기 레벨</label>
-			<select name="viewListLevel">
-			<option value="-9999" {{#equals viewListLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../viewListLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>글내용보기 레벨</label>
-			<select name="viewDetailLevel">
-			<option value="-9999" {{#equals viewDetailLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../viewDetailLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>글쓰기 레벨</label>
-			<select name="writeLevel">
-			<option value="-9999" {{#equals writeLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../writeLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>덧글쓰기 레벨</label>
-			<select name="writeCommentLevel">
-			<option value="-9999" {{#equals levelWriteCommentYn level}}selected="selected"{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../writeCommentLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>	
-			<label for="boardName">사용여부</label>
-			<input type="radio" name="useYn" value="Y" checked="checked"/> <span style="font-size:12px; margin-right:10px; margin-left:3px;">사용</span>
-			<input type="radio" name="useYn" value="N" /> <span style="margin-left:3px; font-size:12px;">사용안함</span>
-		</p>
-	</div>
-	<div class="panel-footer" style="text-align:right; position:relative; background-color: #337ab7;">
-		<span style="position:absolute; left:15px; color:red; font-size:12px; line-height:35px;" data-id="result"></span>
-		<input type="button" class="btn btn-default" data-role="submit" data-role-type="save" value="저장"/>
-		<input type="button" class="btn btn-default" data-role="submit" data-role-type="delete" value="삭제"/>
-	</div>
-</div>
-</form>
-</div>
-</script>
-
 <script id="settings-board-template" type="text/x-handlebars-template">
 {{#if boardList}}
 {{#each boardList}}
-<div class="col-xs-4">
+<div class="col-xs-6 col-sm-4">
 <form data-component="form">
 <div class="panel panel-default">
 	<div class="panel-body">
-		<p>
-			<label>게시판 아이디</label>
-			<span name="id">{{id}}</span>
-		</p>
-		<p>	
-			<label>게시판 이름</label>
-			<input type="text" name="name" value="{{name}}">			
-		</p>
-		<p>	
-			<label>순서</label>
-			<input type="text" name="priority" value="{{priority}}">			
-		</p>
-		<p>
-			<label>글목록보기 레벨</label>
-			<select name="viewListLevel">
-			<option value="-9999" {{#equals viewListLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../viewListLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>글내용보기 레벨</label>
-			<select name="viewDetailLevel">
-			<option value="-9999" {{#equals viewDetailLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../viewDetailLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>글쓰기 레벨</label>
-			<select name="writeLevel">
-			<option value="-9999" {{#equals writeLevel level}}selected{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../writeLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>
-			<label>덧글쓰기 레벨</label>
-			<select name="writeCommentLevel">
-			<option value="-9999" {{#equals levelWriteCommentYn level}}selected="selected"{{/equals}}>Everyone</option>
-			{{#if ../../roleList}}
-			{{#each ../../roleList}}
-				<option value="{{level}}" {{#equals level ../../writeCommentLevel}}selected="selected"{{/equals}}>{{name}}</option>
-			{{/each}}
-			{{/if}}
-			</select>
-		</p>
-		<p>	
-			<label for="boardName">사용여부</label>
-			<input type="radio" name="useYn" value="Y" {{#equals useYn "Y"}}checked="checked"{{/equals}}/> <span style="font-size:12px; margin-right:10px; margin-left:3px;">사용</span>
-			<input type="radio" name="useYn" value="N" {{#equals useYn "N"}}checked="checked"{{/equals}}/> <span style="margin-left:3px; font-size:12px;">사용안함</span>
-		</p>
+		<table class="dataTable">
+			<colgroup>
+				<col style="width: 30%;"/>
+				<col style="width: 70%;"/>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th>게시판 아이디</th>
+					<td style="height:50px;"><span>{{id}}</span><input type="hidden" name="id" value="{{id}}"/></td>
+				</tr>
+				<tr>
+					<th>게시판 이름</th>
+					<td><input type="text" name="name" value="{{name}}"></td>
+				</tr>
+				<tr>
+					<th>순서</th>
+					<td><input type="number" name="priority" value="{{priority}}"></td>
+				</tr>
+				<tr>
+					<th>글목록보기 레벨</th>
+					<td>
+						<select name="viewListLevel">
+							<option value="" {{#equals viewListLevel level}}selected{{/equals}}>Everyone</option>
+							{{#if ../../roleList}}
+							{{#each ../../roleList}}
+								<option value="{{level}}" {{#equals level ../../viewListLevel}}selected="selected"{{/equals}}>{{name}}</option>
+							{{/each}}
+							{{/if}}
+						</select>
+					</td>
+				</tr>
+				<p>
+					<th>글내용보기 레벨</th>
+					<td>
+						<select name="viewDetailLevel">
+						<option value="" {{#equals viewDetailLevel level}}selected{{/equals}}>Everyone</option>
+						{{#if ../../roleList}}
+						{{#each ../../roleList}}
+							<option value="{{level}}" {{#equals level ../../viewDetailLevel}}selected="selected"{{/equals}}>{{name}}</option>
+						{{/each}}
+						{{/if}}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>글쓰기 레벨</th>
+					<td>
+						<select name="writeLevel">
+						<option value="" {{#equals writeLevel level}}selected{{/equals}}>Everyone</option>
+						{{#if ../../roleList}}
+						{{#each ../../roleList}}
+							<option value="{{level}}" {{#equals level ../../writeLevel}}selected="selected"{{/equals}}>{{name}}</option>
+						{{/each}}
+						{{/if}}
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>덧글쓰기 레벨</th>
+					<td>
+						<select name="writeCommentLevel">
+						<option value="" {{#equals levelWriteCommentYn level}}selected="selected"{{/equals}}>Everyone</option>
+						{{#if ../../roleList}}
+						{{#each ../../roleList}}
+							<option value="{{level}}" {{#equals level ../../writeCommentLevel}}selected="selected"{{/equals}}>{{name}}</option>
+						{{/each}}
+						{{/if}}
+						</select>
+					</td>
+				</tr>
+				<tr>	
+					<th>사용여부</th>
+					<td>
+						<input type="radio" name="useYn" value="Y" {{#equals useYn "Y"}}checked="checked"{{/equals}}/> <span style="font-size:12px; margin-right:10px; margin-left:3px;">사용</span>
+						<input type="radio" name="useYn" value="N" {{#equals useYn "N"}}checked="checked"{{/equals}}/> <span style="margin-left:3px; font-size:12px;">사용안함</span>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 	<div class="panel-footer" style="text-align:right; position:relative;">
 		<span style="position:absolute; left:15px; color:red; font-size:12px; line-height:35px;" data-id="result"></span>
@@ -155,9 +96,10 @@
 {{/each}}
 {{/if}}
 </script>
+
 <div id="board">
-	<p style="text-align:right; margin-top: 30px; padding:0 5px;">
+	<div style="margin-bottom: 10px;">
 		<button type="button" class="btn btn-default" id="addBoardButton">게시판 추가</button>
-	</p>
-	<div class="colgroup" data-bind="boardList" data-template-id="settings-board-template" id="boardList"></div>
+	</div>		
+	<div class="row" data-bind="boardList" data-template-id="settings-board-template" id="boardList"></div>
 </div>

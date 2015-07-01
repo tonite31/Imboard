@@ -76,16 +76,6 @@ $(document).ready(function()
 	
 	$("#savePaper").on("click", function()
 	{
-		var signedUser = $.api.user.getSignedUser();
-		if(signedUser.code == 1000 && signedUser.data.id)
-		{
-			var result = $.api.menu.getMenu({id : signedUser.data.displayId});
-			if(result.code == 1000 && !result.data.id)
-			{
-				result = $.api.menu.insertMenu({id : signedUser.data.displayId, name : signedUser.data.displayId});
-			}
-		}
-	
 		var param = TypeWriter.instances.typewriter.getData();
 		param.subject = $("#subject").val();
 		param.tags = $("#tags").val();
@@ -120,15 +110,14 @@ $(document).ready(function()
 			}
 			
 			var boardName = tagList[0];
-			var result = $.api.menu.getMenu({name : boardName, parentMenuId : signedUser.data.displayId});
+			var result = $.api.menu.getBoard({name : boardName});
 			if(result.code == 1000)
 			{
 				var newBoardId = "";
 				if(!result.data || result.data.length == 0)
 				{
-					newBoardId = signedUser.data.displayId + "-" + new Date().getTime();
+					newBoardId = new Date().getTime();
 					$.api.board.insertBoard({id : newBoardId, name : boardName, useYn : 'Y'});
-					$.api.menu.insertMenu({id : newBoardId, name : boardName, parentMenuId : signedUser.data.displayId});
 				}
 				else
 				{

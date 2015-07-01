@@ -6,16 +6,51 @@
 
 <title>#{lan.signin}</title>
 
-<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-reset-1.0.css" />
-<link rel="stylesheet" type="text/css" href="/content/module/imboard/css/imboard-ui-1.0.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.module}/imboard/css/imboard-ui.css" />
 
-<script src="/content/lib/ckeditor/ckeditor.js"></script>
-<script src="/content/lib/jquery/jquery-1.10.2.js"></script>
-<script src="/content/lib/handlebars/handlebars-v1.3.0.js"></script>
+<script src="#{path.lib}/jquery/jquery-1.10.2.js"></script>
+<script src="#{path.lib}/handlebars/handlebars-v1.3.0.js"></script>
 
-<script src="/content/module/imboard/js/imboard-api-1.0.js"></script>
-<script src="/content/module/imboard/js/imboard-1.0.js"></script>
-<script src="/content/module/imboard/js/imboard-ui-1.0.js"></script>
+<script src="#{path.module}/imboard/js/imboard-api.js"></script>
+<script src="#{path.module}/imboard/js/imboard-ui.js"></script>
+<script src="#{path.module}/imboard/js/handlebar-helper.js"></script>
+
+<style>
+
+a, a:VISITED, a:ACTIVE, a:FOCUS{
+	color: #444;
+	text-decoration: none;
+}
+
+.btn { cursor: pointer; padding: 7px 10px; display: inline-block; border-radius:0; }
+.btn.default { border: 1px solid #ccc; background-color: white; }
+.btn.default:HOVER { background-color: #efefef; }
+
+.textinput
+{
+	border: 1px solid #dfdfdf;
+	padding: 10px;
+	background-color: white;
+}
+
+.textinput.default:ACTIVE, .textinput.default:FOCUS
+{
+	outline: 2px solid #797979;
+}
+
+.textinput[readonly='readonly']
+{
+	outline:0 !important;
+	background-color: #f7f7f7;
+}
+
+.textinput.default::-webkit-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }
+.textinput.default::-ms-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }
+</style>
 
 <script>
 $(document).ready(function()

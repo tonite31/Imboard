@@ -8,26 +8,43 @@ $(document).ready(function()
 			$("#roleBody").append(html);
 			$("#new-row input:first").focus();
 			
-			$("#save").on("click", function()
+			$("#new-row").compile(function(data)
 			{
-				var level = $("#level").val();
-				var name = $("#name").val();
-				var point = $("#point").val();
-				
-				var result = $.api.role.insertRole({level : level, name : name, point : point});
+				var result = $.api.role.insertRole(data);
 				if(result.code == -9996)
 				{
 					$("#description").text("이미 등록된 레벨입니다");
 				}
 				else if(result.code == 1000)
 				{
-					location.reload();
+					refresh();
 				}
 				else
 				{
 					$("#description").text(JSON.stringify(result));
 				}
 			});
+			
+//			$("#save").on("click", function()
+//			{
+//				var level = $("#level").val();
+//				var name = $("#name").val();
+//				var point = $("#point").val();
+//				
+//				var result = $.api.role.insertRole({level : level, name : name, point : point});
+//				if(result.code == -9996)
+//				{
+//					$("#description").text("이미 등록된 레벨입니다");
+//				}
+//				else if(result.code == 1000)
+//				{
+//					location.reload();
+//				}
+//				else
+//				{
+//					$("#description").text(JSON.stringify(result));
+//				}
+//			});
 			
 			$("#cancel").on("click", function()
 			{
@@ -36,6 +53,21 @@ $(document).ready(function()
 		}
 	});
 	
+	initForm();
+});
+
+function refresh()
+{
+	var result = $.api.role.getRoleList();
+	if(result.code == 1000)
+	{
+		$("#roleBody").templating("settings-role-list-template", {roleList : result.data});
+		initForm();
+	}
+}
+
+function initForm()
+{
 	$("tr[data-component='form']").compile(function(data)
 	{
 		if(data.__roleType == "save")
@@ -67,27 +99,7 @@ $(document).ready(function()
 				$("#description").text(JSON.stringify(result));
 			}
 		}
+		
+		refresh();
 	});
-	
-//	$("#roleBody button[data-id='save']").on("click", function()
-//	{
-//		var inputList = $(this).parent().parent().find("input");
-//		var level = inputList[0].value;
-//		var name = inputList[1].value;
-//		var point = inputList[2].value;
-//		
-//		var result = $.api.role.updateRole({level : level, name : name, point : point});
-//		if(result.code == -9995)
-//		{
-//			$("#description").text("저장이 실패했습니다");
-//		}
-//		else if(result.code == 1000)
-//		{
-//			$(this).parent().parent().flickering();
-//		}
-//		else
-//		{
-//			$("#description").text(JSON.stringify(result));
-//		}
-//	});
-});
+}

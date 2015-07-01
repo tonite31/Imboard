@@ -69,7 +69,10 @@ module.exports.getArticleList =
 		}
 		
 		if(req.session.user != null)
+		{
 			param.searchData.signinUserId = req.session.user.id;
+			param.searchData.signinUserLevel = req.session.user.level;
+		}
 		
 		ArticleDao.getArticleList(boardId, param.searchData, function(response)
 		{
@@ -93,6 +96,7 @@ module.exports.getArticle =
 				param.searchData = {};
 			
 			param.searchData.signinUserId = req.session.user.id;
+			param.searchData.signinUserLevel = req.session.user.level;
 		}
 		
 		_async.waterfall([
@@ -546,7 +550,7 @@ module.exports.uploadFileToAWS =
 		var folder = "anonymous";
 		if(req.session.user != null && req.session.user.id != null)
 		{
-			folder = _utils.encrypt(req.session.user.id, _aws.s3.encryptKey);
+			folder = _utils.encrypt(req.session.user.id, _config.encryptKey);
 		}
 		
 		var files = req.files;
@@ -661,7 +665,8 @@ function uploadFileToS3(param)
 	var callback = param.callback;
 	
 	var AWS = require('aws-sdk');
-	AWS.config.loadFromPath(_path.resources + "/properties/aws.json");
+	AWS.config.update({accessKeyId: _aws.accessKeyId, secretAccessKey: _aws.secretAccessKey});
+//	AWS.config.loadFromPath(_path.resources + "/properties/aws.json");
 	var s3 = new AWS.S3({endpoint:"http://s3.amazonaws.com"});
 	
 	try

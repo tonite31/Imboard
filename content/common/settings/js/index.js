@@ -1,12 +1,12 @@
 $(document).ready(function()
 {
-	if($.query.piece)
+	if($.query.fragment)
 	{
 		$(".tabs .tab").removeClass("selected");
-		$(".tabs .tab[href='?piece=" + $.query.piece + "']").addClass("selected");
+		$(".tabs .tab[href='?fragment=" + $.query.fragment + "']").addClass("selected");
 	}
 	else
 	{
-		location.href = "?piece=board";
+		location.href = "?fragment=board";
 	}
 });

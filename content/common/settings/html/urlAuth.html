@@ -4,7 +4,8 @@
 {{#notequals editable "N"}}
 <tr data-component="form">
 	<td>
-		<span name="url">{{url}}</span>
+		<span>{{url}}</span>
+		<input type="hidden" name="url" value="{{url}}"/>
 	</td>
 	<td class="center">
 		<select name="level">
@@ -22,7 +23,7 @@
 		</select>
 	</td>
 	<td class="center">
-		<button type="button" class="btn default" data-role="submit">삭제</button>
+		<button type="button" class="btn btn-default" data-role="submit">삭제</button>
 	</td>
 </tr>
 {{/notequals}}
@@ -30,11 +31,11 @@
 {{/if}}
 </script>
 
-<div style="width: 60%; margin:0 auto; position:relative;">
-	<p style="text-align:right; margin-top: 30px; margin-bottom:5px;">
-		<button type="button" class="btn default" id="addUrlAuth">권한추가</button>
-	</p>
-	<table class="datatable" id="table">
+<div>
+	<div style="margin-bottom: 10px;">
+		<button type="button" class="btn btn-default" id="addUrlAuth">권한추가</button>
+	</div>
+	<table class="dataTable" id="table">
 		<colgroup>
 			<col style="width: 50%;"/>
 			<col style="width: 20%;"/>
@@ -49,6 +50,6 @@
 				<th>삭제</th>
 			</tr>
 		</thead>
-		<tbody data-bind="urlAuthListWithRole" data-template-id="urlAuthTemplate"></tbody>
+		<tbody id="urlAuthBody" data-bind="urlAuthListWithRole" data-template-id="urlAuthTemplate"></tbody>
 	</table>
 </div>

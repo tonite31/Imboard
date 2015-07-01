@@ -20,7 +20,7 @@
         	URL
     </select>
     
-    <select id="getUrlAuth" parameterType="UrlAuthVo" resultMap="urlAuthResult">
+    <select id="matchUrlAuth" parameterType="UrlAuthVo" resultMap="urlAuthResult">
         SELECT
         	URL,
         	LEVEL,
@@ -32,6 +32,17 @@
        		<if test="#{useYn} != null">
        			AND USE_YN = #{useYn}
        		</if>
+    </select>
+    
+    <select id="getUrlAuth" parameterType="UrlAuthVo" resultMap="urlAuthResult">
+        SELECT
+        	URL,
+        	LEVEL,
+        	USE_YN
+        FROM
+        	IMB_URL_AUTH A
+        WHERE
+        	URL = #{url}
     </select>
     
     <insert id="insertUrlAuth" parameterType="UrlAuthVo">

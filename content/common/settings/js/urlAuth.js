@@ -17,10 +17,10 @@ $(document).ready(function()
 			}
 			
 			var html = "";
-			html += "<td><input type='text' name='url' class='textinput' placeholder='URL을 입력해주세요' style='width: 100%;'/></td>";
+			html += "<td><input type='text' name='url' class='textinput' placeholder='URL을 입력해주세요' style='width: 100%;' required='required'/></td>";
 			html += "<td class='center'><select name='level'>" + options + "</select></td>";
 			html += "<td class='center'><select name='useYn'><option value='Y'>Y</option><option value='N'>N</option></select></td>";
-			html += "<td class='center'><button type='button' class='btn default'>저장</button> <button type='button' class='btn default'>취소</button></td>";
+			html += "<td class='center'><button type='button' data-role='submit' data-role-type='save' class='btn btn-default'>저장</button> <button type='button' data-role='submit' data-role-type='cancel' class='btn btn-default'>취소</button></td>";
 
 			var tr = document.createElement("tr");
 			tr.innerHTML = html;
@@ -31,36 +31,27 @@ $(document).ready(function()
 			$("#table tbody").prepend(tr);
 
 			$(tr).find("input").focus();
-			$(tr).compile();
-			
-			var buttons = tr.querySelectorAll("button");
-			$(buttons[0]).on("click", function()
+			$(tr).compile(function(data)
 			{
-				var param = $(tr).getParam();
-				var result = $.api.urlAuth.insertUrlAuth(param);
-				if(result.code == 1000)
+				if(data.__roleType == "save")
 				{
-					$(tr).children("td:first-child").html("<span name='url'>" + param.url + "</span>");
-					$(tr).find("button:nth-child(2)").text("삭제");
-					tr.className = "";
-					$(this).remove();
+					var result = $.api.urlAuth.insertUrlAuth(data);
+					if(result.code == 1000)
+					{
+						location.reload();
+					}
+					else if(result.code == -9996)
+					{
+						var url = $(tr).find("input[name='url']");
+						url.attr("data-toggle", "tooltip").attr("data-placement", "bottom").attr("title", "중복된 URL 입니다");
+						url.tooltip();
+						$(tr).find("input").css("outline", "1px solid red").focus();
+					}
 				}
-				else if(result.code == -9996)
+				else
 				{
-					alert("중복된 URL입니다");
-					$(tr).find("input").css("outline", "1px solid red").focus();
+					$(tr).remove();
 				}
-			});
-			
-			$(buttons[1]).on("click", function()
-			{
-				if($(this).text() == "삭제")
-				{
-					var url = $(buttons[1].parentElement.parentElement).find("*[name='url']").text();
-					$.api.urlAuth.deleteUrlAuth({url : url});
-				}
-				
-				$(buttons[1].parentElement.parentElement).remove();
 			});
 		}
 	});

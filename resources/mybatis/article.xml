@@ -146,7 +146,7 @@
         WHERE
         		A.IS_NOTICE = 'Y'
         	AND (D.VIEW_LIST_LEVEL IS NULL OR D.VIEW_LIST_LEVEL &gt;= #{signinUserLevel})
-        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
         	<if test="#{boardId}">
 	        	AND A.BOARD_ID = #{boardId}
 	        </if>
@@ -160,6 +160,7 @@
 	        	A.BOARD_ID,
 	        	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
 	        	A.SEQ,
+	        	A.GROUP_ID,
 	        	A.SUBJECT,
 	        	<choose>
 	        	    <when test="#{withContent} == 'true'">
@@ -174,7 +175,6 @@
 	        	A.GOOD,
 	        	A.BAD,
 	        	A.WRITER_ID,
-	        	A.GROUP_ID,
 	        	A.WRITER_NAME,
 	        	B.DISPLAY_ID AS DISPLAY_ID,
 	        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
@@ -193,7 +193,7 @@
 	        WHERE
 	        		(IS_NOTICE IS NULL OR IS_NOTICE = 'N')
 	        	AND (D.VIEW_LIST_LEVEL IS NULL OR D.VIEW_LIST_LEVEL &gt;= #{signinUserLevel})
-	        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+	        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
 	        <if test="#{boardId}">
 	        	AND A.BOARD_ID = #{boardId}
 	        </if>
@@ -273,7 +273,7 @@
         	IMB_ARTICLE AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID LEFT OUTER JOIN IMB_BOARD_AUTH D ON D.BOARD_ID = A.BOARD_ID
         WHERE
         	(D.VIEW_DETAIL_LEVEL IS NULL OR D.VIEW_DETAIL_LEVEL &gt;= #{signinUserLevel})
-        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if>)
+        	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
         	<if test="#{boardId}">
         		AND A.BOARD_ID = #{boardId}
         	</if>

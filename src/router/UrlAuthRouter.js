@@ -59,7 +59,7 @@ module.exports.insertUrlAuth =
 		var param = req.body;
 		var vo = new UrlAuthVo(param);
 		
-		urlAuthDao.getUrlAuth(vo.url, null, function(response)
+		urlAuthDao.getUrlAuth(vo.url, function(response)
 		{
 			if(response != null && response.url != null)
 			{

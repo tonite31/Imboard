@@ -26,6 +26,7 @@ var ArticleVo = function(param)
 	this.readStatus = undefined;
 	this.checkSigninUser = undefined;
 	this.signinUserId = undefined;
+	this.signinUserLevel = undefined;
 	this.useSigninUser = undefined;
 	
 	this.existThumbnailUrl = undefined;

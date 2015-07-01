@@ -146,21 +146,24 @@
     {
     	this.form = function(context, param)
     	{
-    		var submit = $(context).find("input[type='submit']");
-    		if(submit.length <= 0)
+    		if(context.nodeName == "FORM")
     		{
-    			var input = document.createElement("input");
-    			input.type = "submit";
-    			input.style.position = "absolute";
-    			input.style.left = "-10000px";
-    			input.style.zIndex = "-1";
-    			
-    			context._submit = input;
-    			$(context).append(input);
-    		}
-    		else
-    		{
-    			context._submit = submit[0];
+    			var submit = $(context).find("input[type='submit']");
+        		if(submit.length <= 0)
+        		{
+        			var input = document.createElement("input");
+        			input.type = "submit";
+        			input.style.position = "absolute";
+        			input.style.left = "-10000px";
+        			input.style.zIndex = "-1";
+        			
+        			context._submit = input;
+        			$(context).append(input);
+        		}
+        		else
+        		{
+        			context._submit = submit[0];
+        		}
     		}
     		
     		context.getData = function()
@@ -362,7 +365,7 @@
     				{
     					context.makeValidationMessage.call(inputList[i]);
     					inputList[i].focus();
-    					$(inputList[i]).on("input", function(e)
+    					$(inputList[i]).on("input blur", function(e)
     					{
     						$(".imboard-ui-validation").remove();
     					});
@@ -384,16 +387,32 @@
     			{
     				$(submitButton[i]).on("click", function()
 					{
-    					var evt = document.createEvent('MouseEvents');
-    					evt.initEvent(
-    					   'click'      // event type
-    					   ,true      // can bubble?
-    					   ,true      // cancelable?
-    					);
+    					if(context.nodeName == "FORM")
+    					{
+    						var evt = document.createEvent('MouseEvents');
+        					evt.initEvent(
+        					   'click'      // event type
+        					   ,true      // can bubble?
+        					   ,true      // cancelable?
+        					);
 
-    					context._roleType = roleType
-    					context._context = this;
-    					context._submit.dispatchEvent(evt);
+        					context._roleType = roleType;
+        					context._context = this;
+        					context._submit.dispatchEvent(evt);
+    					}
+    					else
+    					{
+    						if(context.validation())
+    						{
+    							var data = context.getData();
+    	    	    			data.__roleType = roleType;
+    	    	    			var callback = param[0];
+    	    	        		if(callback)
+    	    	        		{
+        	        				callback.call(context._context, data);
+        	        			}
+    						}
+    					}
 					});
     			})($(submitButton[i]).attrr("data-role-type"));
     		}
@@ -405,18 +424,19 @@
 				if(!novalidate)
 					$(context).attr("novalidate", "novalidate");
     			
+				$(context).unbind();
     			$(context).submit(function(e)
 	    		{
     				try
     				{
-	    				if(context.novalidate || context.validation())
+	    				if(this.novalidate || this.validation())
 	    				{
-	    					var data = context.getData();
-	    	    			data.__roleType = context._roleType ? context._roleType : "submit";
+	    					var data = this.getData();
+	    	    			data.__roleType = this._roleType ? this._roleType : "submit";
 	    	    			var callback = param[0];
 	    	        		if(callback)
 	    	        		{
-    	        				callback.call(context._context, data);
+    	        				callback.call(this._context, data);
     	        			}
     	        		}
     				}

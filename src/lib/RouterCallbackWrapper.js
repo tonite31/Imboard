@@ -30,7 +30,7 @@ module.exports.create = function(func)
 			}
 			_log.info("=================================================\n");
 			
-			urlAuthDao.getUrlAuth(req.url, "Y", function(urlAuth)
+			urlAuthDao.matchUrlAuth(req.url, "Y", function(urlAuth)
 	    	{
 	    		if(urlAuth && urlAuth.length > 0)
 	    		{

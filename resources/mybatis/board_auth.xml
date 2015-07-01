@@ -39,10 +39,10 @@
         UPDATE
         	IMB_BOARD_AUTH
        	SET
-        	VIEW_LIST_LEVEL = #{viewListLevel},
-        	WRITE_LEVEL = #{writeLevel},
-        	VIEW_DETAIL_LEVEL = #{viewDetailLevel},
-        	WRITE_COMMENT_LEVEL = #{writeCommentLevel}
+        	VIEW_LIST_LEVEL = <choose><when test="#{viewListLevel}">#{viewListLevel}</when><otherwise>NULL</otherwise></choose>,
+        	WRITE_LEVEL = <choose><when test="#{writeLevel}">#{writeLevel}</when><otherwise>NULL</otherwise></choose>,
+        	VIEW_DETAIL_LEVEL = <choose><when test="#{viewDetailLevel}">#{viewDetailLevel}</when><otherwise>NULL</otherwise></choose>,
+        	WRITE_COMMENT_LEVEL = <choose><when test="#{writeCommentLevel}">#{writeCommentLevel}</when><otherwise>NULL</otherwise></choose>
         WHERE
        		BOARD_ID = #{boardId}
     </update>

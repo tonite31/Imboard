@@ -125,7 +125,7 @@ module.exports.signin =
 		userVo.id = param.id;
 		UserDao.getUser(userVo, function(result)
 		{
-			if(result != null && Utils.encrypt(param.password, _config.userPasswordEncryptKey) == result.password)
+			if(result != null && Utils.encrypt(param.password, _config.encryptKey) == result.password)
 			{
 				if(!req.session)
 					req.session = {};

@@ -23,13 +23,20 @@ UrlAuthDao.prototype.getUrlAuthList = function(callback)
 	this.sqlMapClient.selectsQuery("getUrlAuthList", {}, callback);
 };
 
-UrlAuthDao.prototype.getUrlAuth = function(url, useYn, callback)
+UrlAuthDao.prototype.matchUrlAuth = function(url, useYn, callback)
 {
 	var vo = new UrlAuthVo();
 	vo.url = url;
-	vo.useYn = useYn;
 	
-	this.sqlMapClient.selectsQuery("getUrlAuth", vo, callback);
+	this.sqlMapClient.selectsQuery("matchUrlAuth", vo, callback);
+};
+
+UrlAuthDao.prototype.getUrlAuth = function(url, callback)
+{
+	var vo = new UrlAuthVo();
+	vo.url = url;
+	
+	this.sqlMapClient.selectQuery("getUrlAuth", vo, callback);
 };
 
 UrlAuthDao.prototype.checkUrlAuth = function(url, level, boardId, useYn, callback)

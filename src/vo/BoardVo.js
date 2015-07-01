@@ -13,6 +13,8 @@ var BoardVo = function(param)
 	
 	this.creator = null;
 	
+	this.articleListCount = null;
+	
 	ParameterBinder.bind(this, param);
 };
 

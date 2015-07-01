@@ -30,12 +30,56 @@
 <!-- <script src="#{path.root}/js/index.js"></script> -->
 
 <script id="menuListTemplate" type="text/x-handlebars-template">
-{{#if menuList}}
-{{#each menuList}}
-{{#if articleCount}}
-<li class="list-group-item {{#equals id "#{query.boardId}"}}active{{/equals}}"><a href="?piece=book&username=#{query.username}&boardId={{id}}">{{name}}<span class="badge">{{articleCount}}</span></a></li>
-{{/if}}
+{{#if boardList}}
+{{#each boardList}}
+<li class="list-group-item {{#equals id "#{query.boardId}"}}active{{/equals}}"><a href="?boardId={{id}}">{{name}}<span class="badge">{{articleListCount}}</span></a></li>
 {{/each}}
+{{/if}}
+</script>
+
+<script id="paperListTemplate" type="text/x-handlebars-template">
+{{#if articleList}}
+{{#each articleList}}
+<div class="paper panel {{#equals status 1}}panel-primary{{else}}panel-default unpublished{{/equals}}" style="position: relative;">
+	<div class="panel-heading">
+		<span class="boardName">{{boardName}}</span>
+		<h3 class="subject">{{subject}}</h3>
+		<div class="boardInfo">
+			<span>조회 {{hit}}</span>
+			<span>추천 {{good}}</span>
+			<span>덧글 {{commentCount}}</span>
+			<span>{{shortDate registerDate}}</span>
+		</div>
+	</div>
+	<div class="panel-body" style="position: relative;">
+		<a class="corver" href="?fragment=paper&boardId={{boardId}}&seq={{seq}}"></a>
+		<article>
+			{{#if thumbnailUrl}}<figure class="thumbnailFigure">{{{thumbnailUrl}}}</figure>{{/if}}
+			<div>{{{textThumbnail content "</div>" 3}}}</div>
+		</article>
+	</div>
+</div>
+{{/each}}
+{{else}}
+<h2 style="text-align: center;">작성된 페이퍼가 없습니다</h2>
+{{/if}}
+</script>
+
+<script id="paperPaginationTemplate" type="text/x-handlebars-template">
+{{#if pageList}}
+<nav style='text-align:center;'>
+	<ul class="pagination">
+		{{#sign pageIndex ">" 1}}
+		<li><a href="?&pageIndex={{math pageIndex "-" 1}}" aria-label="Previous"><span aria-hidden="true">이전</span></a></li>
+		{{/sign}}
+		{{#each pageList}}
+		<li {{#equals ../pageIndex pageNumber}}class="active"{{/equals}}><a href="?pageIndex={{pageNumber}}">{{pageNumber}} {{#equals ../pageIndex pageNumber}}<span class="sr-only">(current)</span>{{/equals}}</a></li>
+		{{/each}}
+		{{#sign pageIndex "<" maxPage}}
+		<li><a href="?pageIndex={{math pageIndex "+" 1}}" aria-label="Next"><span aria-hidden="true">다음</span></a></li>
+		{{/sign}}
+	</ul>
+</nav>
 {{/if}}
 </script>
 
@@ -43,15 +87,20 @@
 
 <body>
 	<div class="container">
-		<div class="top">
-			<a class="btn btn-default" href="?fragment=write">새 글 작성</a>
+		<div class="top" data-bind="template">
+			{{#if \"#{user.id}\"}}
+			<a class="btn btn-default" href="?fragment=write">새 페이퍼 작성</a>
+			<a class="btn btn-default" href="/settings">Admin Dashboard</a>
+			{{else}}
+			<a class="btn btn-default" href="/signin">로그인</a>
+			{{/if}}
 		</div>
 		<div class="col-xs-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading"><a class="penname">펜네임</a></div>
+				<div class="panel-heading"><a class="penname" href="/">작성자 이름</a></div>
 				<div class="panel-body">
 					<div class="profileImg">
-						<img src="http://photo.jtbc.joins.com/news/2014/10/10/20141010142600323.jpg">
+						<img src="" alt="프로필 이미지">
 					</div>
 			      	<div>
 			        	<h1 class="blogTitle">블로그 제목</h1>
@@ -60,26 +109,13 @@
 				</div>
 			</div>
 			<nav class="menuList">
-				<ul class="list-group" id="list" data-bind="menuListWithArticleCount" data-template-id="menuListTemplate"></ul>
+				<ul class="list-group" id="list" data-bind="boardList" data-template-id="menuListTemplate" data-param='{"parentMenuId" : "root"}'></ul>
 			</nav>
 		</div>
 		<div class="col-xs-8" data-fragment="fragment">
-			<div class="paper panel panel-default" style="position: relative;">
-				<div class="panel-heading">
-					<p class="paperInfo">
-						<span class="label label-default boardName">게시판</span>
-						<span>조회 1111</span>
-						<span>덧글 33</span>
-						<span>2015-07-01</span>
-					</p>
-				</div>
-				<div class="panel-body" style="position: relative;">
-					<a class="paperCorver" href="?piece=book&bookpiece=paper&username={{displayId}}&boardId={{boardId}}&seq={{seq}}"></a>
-					<h2 class="subject">{{subject}}</h2>
-					<article>
-						야야요요
-					</article>
-				</div>
+			<div data-bind="articleComponent" data-param='{"boardId" : "#{query.boardId}", "cpp" : "5", "searchData" : {"withContent" : "true", "orderByGroupId" : "DESC", "orderBySeq" : "DESC"}}'>
+				<div data-parts="body" data-template-id="paperListTemplate" class="row"></div>
+				<div data-parts="pagination" data-template-id="paperPaginationTemplate" style="clear:both;"></div>
 			</div>
 		</div>
 	</div>

@@ -20,18 +20,10 @@ module.exports.updateBoardAuth =
 	path : '/boardAuth/updateBoardAuth.do',
 	callback : function(req, res)
 	{
+		console.log("머지 : ", req.body);
 		var boardAuthVo = new BoardAuthVo(req.body);
 		BoardAuthDao.getBoardAuth(boardAuthVo.boardId, function(response)
 		{
-			if(boardAuthVo.viewListLevel == null || boardAuthVo.viewListLevel == "")
-				boardAuthVo.viewListLevel = -9999;
-			if(boardAuthVo.viewDetailLevel == null || boardAuthVo.viewDetailLevel == "")
-				boardAuthVo.viewDetailLevel = -9999;
-			if(boardAuthVo.writeLevel == null || boardAuthVo.writeLevel == "")
-				boardAuthVo.writeLevel = -9999;
-			if(boardAuthVo.writeCommentLevel == null || boardAuthVo.writeCommentLevel == "")
-				boardAuthVo.writeCommentLevel = -9999;
-			
 			if(response)
 			{
 				BoardAuthDao.updateBoardAuth(boardAuthVo, function()

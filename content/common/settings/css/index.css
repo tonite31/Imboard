@@ -5,114 +5,71 @@ body
 	background-color: #fefefe;
 }
 
-*
-{
-	font-size:15px;
-}
-
-p
-{
-	padding:5px 0;
-}
-
-p label
-{
-	display: inline-block;
-	text-align: right;
-	padding: 0 20px;
-}
-
-p input
-{
-	padding: 5px;
-	box-sizing: border-box;
-}
-
-.tab-content
-{
-	padding: 5px;
-}
-
-.tabs
-{
-	background-color: white;
-}
-
-.tabs .tab.selected
-{
-	border-bottom: 2px solid #fefefe;
-	background-color: #fefefe
-}
-
-.tabs
-{
-	text-align: center;
-}
-
-.tabs .tab
-{
-	font-size:13px;
-}
-
-.datatable
+.dataTable
 {
 	width: 100%;
+	
 	background-color: white;
+}
+
+.dataTable th
+{
+	padding: 10px;
+	font-size: 13px;
 	border: 1px solid #dfdfdf;
-	border-spacing:0px;
 }
 
-.datatable thead th
-{
-	text-align: center;
-	font-weight: bold;
-	padding: 10px;
-	border-bottom: 1px solid #dfdfdf;
-	border-left: 1px solid #dfdfdf;
-}
-
-.datatable thead th:FIRST-CHILD {
-	border-left:0;
-}
-
-.datatable tbody td
+.dataTable td
 {
 	padding: 10px;
-	border-left: 1px solid #dfdfdf;
-	border-top: 1px dashed #dfdfdf;
+	font-size: 13px;
+	border: 1px solid #dfdfdf;
 }
 
-.datatable tbody .new td
-{
-	background-color: #EAF6FF;
-}
-
-.datatable tbody tr td:FIRST-CHILD
-{
-	padding-left: 15px;
-}
-
-.datatable tbody td.left
+.dataTable .left
 {
 	text-align: left;
 }
 
-.datatable tbody td.center
+.dataTable .center
 {
 	text-align: center;
 }
 
-.datatable tbody td.right
+.dataTable .right
 {
 	text-align: right;
 }
 
-.datatable tbody td:FIRST-CHILD
+.dataTable input[type='text'], input[type='number']
 {
-	border-left:0;
+	padding: 5px;
 }
 
-.datatable tbody tr:FIRST-CHILD td
+.panel-primary .panel-footer
 {
-	border-top:0;	
+	background-color: #337ab7;
 }
+
+.textinput
+{
+	border: 1px solid #dfdfdf;
+	padding: 10px;
+	background-color: white;
+}
+
+.textinput.default:ACTIVE, .textinput.default:FOCUS
+{
+	outline: 2px solid #797979;
+}
+
+.textinput[readonly='readonly']
+{
+	outline:0 !important;
+	background-color: #f7f7f7;
+}
+
+.textinput.default::-webkit-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }
+.textinput.default::-ms-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }

@@ -38,20 +38,34 @@ $(document).ready(function()
 </script>
 </head>
 <body>
-	<div id="container" style="margin:0 auto; width: 400px; text-align: center;">
-		<h2>당신은 누구십니까?</h2>
-		<form data-component="form" id="form">
+	<div class="user-profile">
+		<h2 style="margin:40px 0;">당신의 정보를 입력해주세요</h2>
+		<form data-component="form" id="userProfileForm">
+			<p style="height: 35px;">
+				<a class="profileImgButton"><span class="glyphicon glyphicon-picture"></span> <span>업로드</span><input type="file" class="hiddenFile" id="hiddenFile" style="display:inline;"/></a>
+				<a class="profileImgButton" id="linkUrlImg"><span class="glyphicon glyphicon-link"></span> <span>URL</span></a>
+				<input type="text" id="urlInput" class="linkUrl" placeholder="url을 입력해주세요"/>
+			</p>
+			<div class="profileImageContainer" data-bind="signedUser">
+			{{#if user.profileImgUrl}}
+				<img src="{{user.profileImgUrl}}" style="width: 100%;"/>
+			{{else}}
+				<div class="verticalBar"></div>
+				<span>프로필 이미지를 등록해주세요</span>
+			{{/if}}
+			</div>
+			<hr/>
 			<p>
-				<input type="hidden" name="id" value="#{user.id}"/>
+				<input type="hidden" name="id" value="#{user.id}" id="userId"/>
 				<input type="hidden" name="provider" value="#{user.provider}"/>
-				<input type="text" name="displayId" class="textinput default" style="font-size:15px; width: 250px;" placeholder="아이디" required="required" pattern="[a-z0-9]{20}" autofocus="autofocus"/>
-				<input type="text" name="name" class="textinput default" style="font-size:15px; width: 250px;" placeholder="이름 혹은 별명" required="required"/>
+				<input type="text" name="displayId" class="textinput" style="font-size:15px; width: 250px;" placeholder="필명" value="#{user.displayId}" required="required" autofocus="autofocus"/>
+				<label id="displayIdResult" style="display:none; color:red;">중복된 필명입니다.</label>
 			</p>
 			<p>
-				<textarea name="description" class="textinput default" style="font-size:15px; width: 250px; height: 150px;" placeholder="설명"></textarea>
+				<textarea name="name" class="textinput" style="font-size:15px; width: 250px; height: 150px;" placeholder="당신을 자유롭게 소개해주세요">#{user.name}</textarea>
 			</p>
 			<p>
-				<input type="submit" class="btn default" style="font-size:15px;" value="저장"/>
+				<input type="submit" class="btn btn-default" style="font-size:15px;" value="저장"/>
 			</p>
 		</form>
 	</div>

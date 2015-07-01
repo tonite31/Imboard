@@ -1,11 +1,11 @@
 <script id="settings-new-role-template" type="text/x-handlebars-template">
-<tr id="new-row" style="background-color:#efefef;">
-	<td><input type="number" id="level" style="width:100%;" class="textinput"/></td>
-	<td><input type="text" id="name" style="width:100%;" class="textinput"/></td>
-	<td><input type="number" id="point" style="width:100%;" class="textinput" pattern="\d*"/></td>
+<tr data-component="form" id="new-row" style="background-color:#efefef;">
+	<td><input type="number" name="level" style="width:100%;" class="textinput" required="required"/></td>
+	<td><input type="text" name="name" style="width:100%;" class="textinput"/></td>
+	<td><input type="number" name="point" style="width:100%;" class="textinput" required="required"/></td>
 	<td class="center">
-		<button type="button" class="btn default" id="save">저장</button>
-		<button type="button" class="btn default" id="cancel">취소</button>
+		<button type="button" class="btn btn-default" data-role="submit" id="save">저장</button>
+		<button type="button" class="btn btn-default" id="cancel">취소</button>
 	</td>
 </tr>
 </script>
@@ -19,8 +19,8 @@
 	<td><input type="text" name="name" value="{{name}}" style="width:100%;" class="textinput"/></td>
 	<td><input type="number" name="point" value="{{point}}" style="width:100%;" class="textinput"/></td>
 	<td class="center">
-		<button type="button" class="btn default" data-role="submit" data-role-type="save">저장</button>
-		<button type="button" class="btn default" data-role="submit" data-role-type="delete">삭제</button>
+		<button type="button" class="btn btn-default" data-role="submit" data-role-type="save">저장</button>
+		<button type="button" class="btn btn-default" data-role="submit" data-role-type="delete">삭제</button>
 	</td>
 </tr>
 {{/equals}}
@@ -30,11 +30,11 @@
 {{/if}}
 </script>
 
-<div id="role" style="width:60%; margin:0 auto;">
-	<p style="text-align:right; margin-top: 30px; margin-bottom:5px;">
-		<button type="button" class="btn default" id="add-level-button">레벨 추가</button>
-	</p>
-	<table class="datatable">
+<div id="role">
+	<div style="margin-bottom: 10px;">
+		<button type="button" class="btn btn-default" id="add-level-button">레벨 추가</button>
+	</div>
+	<table class="dataTable">
 		<colgroup>
 			<col style="width: 25%;"/>
 			<col style="width: 35%;"/>

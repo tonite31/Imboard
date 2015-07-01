@@ -12,6 +12,7 @@
         <result column="WRITE_LEVEL" property="writeLevel"></result>
         <result column="WRITE_COMMENT_LEVEL" property="writeCommentLevel"></result>
         <result column="CREATOR" property="creator"></result>
+        <result column="ARTICLE_LIST_COUNT" property="articleListCount"></result>
     </resultMap>
     
     <select id="getBoardList" resultMap="boardResult">
@@ -25,7 +26,8 @@
         	B.VIEW_DETAIL_LEVEL,
         	B.WRITE_LEVEL,
         	B.WRITE_COMMENT_LEVEL,
-        	A.CREATOR
+        	A.CREATOR,
+        	(SELECT COUNT(SEQ) FROM IMB_ARTICLE WHERE BOARD_ID = A.ID) AS ARTICLE_LIST_COUNT
         FROM
         	IMB_BOARD A
         	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
@@ -43,10 +45,12 @@
         	B.VIEW_DETAIL_LEVEL,
         	B.WRITE_LEVEL,
         	B.WRITE_COMMENT_LEVEL,
-        	A.CREATOR
+        	A.CREATOR,
+        	COUNT(C.SEQ) AS ARTICLE_LIST_COUNT
         FROM
         	IMB_BOARD A
         	LEFT OUTER JOIN IMB_BOARD_AUTH B ON A.ID = B.BOARD_ID
+        	LEFT OUTER JOIN IMB_ARTICLE C ON C.BOARD_ID = A.ID
         WHERE
         	A.ID = #{id}
     </select>
