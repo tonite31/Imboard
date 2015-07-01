@@ -13,7 +13,7 @@
         <result column="WRITER_ID" property="writerId" />
         <result column="WRITER_NAME" property="writerName" />
         <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
-        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
+        <result column="WRITER_PROFILE_IMG_URL" property="writerProfileImgUrl" />
         <result column="PARENT_WRITER_ID" property="parentWriterId" />
         <result column="PARENT_WRITER_NAME" property="parentWriterName" />
         <result column="PARENT_WRITER_DISPLAY_ID" property="parentWriterDisplayId" />
@@ -106,7 +106,7 @@
         	C.ID AS PARENT_WRITER_ID,
         	C.NAME AS PARENT_WRITER_NAME,
         	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
-        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+        	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS
@@ -179,7 +179,7 @@
         	C.ID AS PARENT_WRITER_ID,
         	C.NAME AS PARENT_WRITER_NAME,
         	C.DISPLAY_ID AS PARENT_WRITER_DISPLAY_ID,
-        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+        	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
         	A.STATUS

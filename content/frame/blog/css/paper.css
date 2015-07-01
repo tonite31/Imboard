@@ -1,0 +1,169 @@
+.panel-default .panel-heading
+{
+	background: #fff;
+	border-bottom: 1px solid #dfdfdf;
+	margin:0 15px;
+	padding:0 0 10px 0;
+}
+
+.panel-default .panel-heading h3
+{
+	margin-bottom:0;
+}
+
+.publish, .publish .panel-default, .publish .panel-heading, .publish .panel-footer
+{
+}
+
+.paperFunction
+{
+	position: absolute;
+	right: 10px;
+	bottom: 5px;
+}
+
+.paperFunction small
+{
+	position: relative;
+	top: -1px;
+	font-size:12px;
+	color:#999;
+	margin-right: 10px;
+}
+
+.commentContainer
+{
+	padding: 0 10px;
+	margin-top: 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 5px;
+}
+
+.commentWrapper
+{
+	padding: 5px;
+	padding-top: 30px;
+	margin-bottom: 20px;
+	position: relative;
+	
+	border-top: 1px solid #dfdfdf;
+}
+
+.commentWrapper:FIRST-CHILD
+{
+	border-top:0;
+}
+
+.commentWrapper.childComment
+{
+	padding-left: 30px;
+	border-top: 0;
+	margin-top:-20px;
+	padding-top:0;
+}
+
+.commentWriterWrapper
+{
+	display:inline-block;
+	padding: 15px 0;
+}
+
+.commentWriterWrapper img
+{
+	border-radius: 5px;
+	width: 35px;
+	height: 35px;
+}
+
+.commentWriterWrapper .comment-cell
+{
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.commentWriterInfo
+{
+	padding-left:10px;
+	vertical-align: middle;
+}
+
+.commentWriterInfo .commentWriter
+{
+	font-size: 14px;
+	font-weight: 400;
+	color: #337ab7;
+	display:block;
+}
+
+.commentWriterInfo .date
+{
+	display:block;
+	color: rgba(125, 125, 125, 0.5);
+	font-weight: normal;
+	font-size: 12px;
+}
+
+.commentContent
+{
+	font-size: 14px;
+	line-height: 1.45;
+	color: #676767;
+	padding: 10px;
+}
+
+.commentContent[contenteditable]:ACTIVE, .commentContent[contenteditable]:FOCUS {
+	outline:0;
+}
+
+.commentContent[contenteditable]
+{
+	padding: 15px;
+}
+
+.commentContent span
+{
+	padding: 10px;
+	border: 1px solid #dfdfdf;
+	border-radius: 5px;
+}
+
+#commentLabel
+{
+	color: #555; font-size: 13px; padding-left: 10px; cursor: text;
+}
+
+.form-control, .input-group-addon
+{
+	border-color: #dfdfdf;
+}
+
+.commentFunction
+{
+	position: absolute;
+	right:0;
+	bottom: -10px;
+}
+
+.paperContentFunction a
+{
+	display: block;
+	margin-bottom: 5px;
+}
+
+
+#paperContainer
+{
+	box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #ddd;
+}
+
+#paperContainer .panel-heading
+{
+	margin:0;
+}
+
+#paperContainer .panel-footer
+{
+	background: white;
+	padding-left: 0;
+	padding-right: 0;
+}

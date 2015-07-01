@@ -6,6 +6,10 @@ $(document).ready(function()
 		{
 			if(data.password == data.passwordConfirm)
 			{
+				var profileImgUrl = $("#profileImg").attr("src");
+				if(profileImgUrl)
+					data.profileImgUrl = profileImgUrl;
+				
 				var result1 = $.api.user.updateUser(data);
 				var result2 = {code:1000};
 				if(data.password != "")
@@ -65,7 +69,7 @@ $(document).ready(function()
 					result = result.data;
 					for(var i=0; i<result.length; i++)
 					{
-						$(".profileImageContainer").html("<img src='" + result[i].replace("gif", "png") + "' style='width: 100%;'/>");
+						$(".profileImageContainer").html("<img id='profileImg' src='" + result[i].replace("gif", "png") + "' style='width: 100%;'/>");
 					}
 				}
 			},

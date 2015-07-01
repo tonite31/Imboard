@@ -1,0 +1,87 @@
+<script id="paperTemplate" type="text/x-handlebars-template">
+	<div class="panel panel-default {{#equals status 1}}publish{{/equals}}" style="padding: 15px;">
+		<div class="panel-heading" style="position: relative; height:80px;">
+			<h3>{{subject}}</h3>
+			<p class="paperFunction">
+				<small>{{registerDate}}</small>
+				{{#equals status 0}}<small>미발행된 페이퍼입니다.</small>{{/equals}}
+				{{#equals writerId "#{user.id}"}}
+					{{#equals status 0}}<span id="publishPaper" data-board-id="{{boardId}}" data-seq="{{seq}}" class="glyphicon glyphicon-share share" title="발행"></span>{{/equals}}
+					<a href="?piece=book&bookpiece=write&boardId={{boardId}}&seq={{seq}}&username=#{user.displayId}"><span class="glyphicon glyphicon-pencil edit" title="편집"></span></a>
+					<span id="deletePaper" class="glyphicon glyphicon-trash delete" title="삭제"></span>
+					<span id="deleteConfirm" data-board-id="{{boardId}}" data-seq="{{seq}}" style="display:none;" class="delete" style="font-size:12px;">삭제</span>
+				{{/equals}}
+			</p>
+		</div>
+		<div class="panel-body">
+			<article>
+				<div>{{{content}}}</div>
+			</article>
+		</div>
+		<div class="panel-footer">
+			<div class="tag">
+				{{{split " " tag "<a href='#' class='label label-primary' style='margin-right: 5px; font-size:12px;'>${value}</a>"}}}
+			</div>
+		</div>
+	</div>
+</script>
+
+<script id="paperCommentListTemplate" type="text/x-handlebars-template">
+{{#if commentList}}
+<div class="commentContainer">
+{{#each commentList}}
+<div class="commentWrapper{{#if parentSeq}} childComment{{/if}}" data-group-id="{{groupId}}" data-seq="{{seq}}">
+	<div class="commentWriterWrapper">
+		<div class="comment-cell">
+			{{#if writerName}}
+				<img src="{{writerProfileImgUrl}}"/>
+			{{else}}
+				<span class="glyphicon glyphicon-user unknownUser"></span>
+			{{/if}}
+		</div>
+		<div class="comment-cell commentWriterInfo">
+			{{#if writerName}}<a href="#" class="commentWriter">{{writerName}}</a>{{else}}<span class="commentWriter">익명사용자</span>{{/if}}
+			<span class="date">{{registerDate}}</span>
+		</div>
+		<div class="comment-cell commentContent">
+			<span>{{content}}</span>
+		</div>
+	</div>
+	<p class="commentFunction">
+		<span class="glyphicon glyphicon-share-alt reply"></span>
+		{{#equals writerId "#{user.id}"}}
+			<span class="glyphicon glyphicon-trash delete"></span>
+		{{/equals}}
+	</p>
+</div>
+{{/each}}
+</div>
+{{/if}}
+</script>
+
+<script id="replyTemplate" type="text/x-handlebars-template">
+<div id="replyArea">
+<form data-component="form" style="width: 90%;">
+	<div class="input-group">
+  		<textarea class="form-control" name="content" style="height: 50px;" placeholder="당신의 생각을 남겨주세요" required="required"></textarea>
+  		<span class="input-group-addon" data-role="submit" style="cursor: pointer;">입력</span>
+	</div>
+</form>
+</div>
+</script>
+
+<div style="position: relative; padding-bottom: 20px;" data-bind="signedUser">
+	<div id="paperContainer" data-bind="article" data-param='{"boardId" : "#{query.boardId}", "seq" : "#{query.seq}"}' data-template-id="paperTemplate"></div>
+	<form data-component="form" id="commentForm">
+		<div class="input-group">
+		  	<textarea class="form-control" name="content" style="height: 100px;" placeholder="당신의 생각을 남겨주세요" required="required"></textarea>
+		  	<span class="input-group-addon" data-role="submit" style="cursor: pointer;">입력</span>
+		</div>
+	</form>
+	<div id="commentContainer" data-bind="commentList" data-param='{"boardId" : "#{query.boardId}", "articleSeq" : "#{query.seq}", "searchData" : {"orderByGroupId" : "DESC"}}' data-template-id="paperCommentListTemplate"></div>
+	<div style="position: absolute; top:0; right: -100px; width:90px;" class="paperContentFunction">
+		<a href="#" class="btn btn-default">처음으로</a>
+		<a href="#commentContainer" class="btn btn-default">덧글보기</a>
+		<a href="?piece=book&username=#{query.username}&boardId=#{query.boardId}" class="btn btn-default">목록보기</a>
+	</div>
+</div>

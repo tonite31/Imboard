@@ -14,7 +14,7 @@
         <result column="WRITER_ID" property="writerId" />
         <result column="WRITER_NAME" property="writerName" />
         <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
-        <result column="PROFILE_IMG_URL" property="profileImgUrl" />
+        <result column="WRITER_PROFILE_IMG_URL" property="writerProfileImgUrl" />
         <result column="GROUP_ID" property="groupId" />
         <result column="PARENT_ARTICLE_WRITER_ID" property="parentArticleWriterId" />
         <result column="STATUS" property="status" />
@@ -130,7 +130,7 @@
         	A.WRITER_ID,
         	A.WRITER_NAME,
         	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
-        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+        	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	A.STATUS,
         	A.THUMBNAIL_URL,
         	A.TAG,
@@ -177,7 +177,7 @@
 	        	A.WRITER_ID,
 	        	A.WRITER_NAME,
 	        	B.DISPLAY_ID AS DISPLAY_ID,
-	        	B.PROFILE_IMG_URL AS PROFILE_IMG_URL,
+	        	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
 	        	A.STATUS,
 	        	A.THUMBNAIL_URL,
 	        	A.TAG,
@@ -259,9 +259,10 @@
         	GOOD,
         	BAD,
         	A.WRITER_ID,
-        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
-        	GROUP_ID,
         	A.WRITER_NAME,
+        	B.DISPLAY_ID AS DISPLAY_ID,
+        	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
+        	GROUP_ID,
         	STATUS,
         	THUMBNAIL_URL,
         	TAG,

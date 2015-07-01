@@ -99,8 +99,8 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading"><a class="penname" href="/">작성자 이름</a></div>
 				<div class="panel-body">
-					<div class="profileImg">
-						<img src="" alt="프로필 이미지">
+					<div class="profileImg" data-bind="getUser" data-param='{"id" : "admin"}'>
+						<img src="{{user.profileImgUrl}}" alt="프로필 이미지">
 					</div>
 			      	<div>
 			        	<h1 class="blogTitle">블로그 제목</h1>
