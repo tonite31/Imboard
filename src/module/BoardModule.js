@@ -14,8 +14,15 @@ module.exports.board = function($, el, param, req, next)
 
 module.exports.boardList = function($, el, param, req, next)
 {
+	var vo = new BoardVo();
+	if(req.session.user != null)
+	{
+		vo.signinUserId = req.session.user.id;
+		vo.signinUserLevel = req.session.user.level;
+	}
+	
 	var template = this.getTemplate($, el);
-	BoardDao.getBoardList(function(boardList)
+	BoardDao.getBoardList(vo, function(boardList)
 	{
 		RoleDao.getRoleList(function(roleList)
 		{

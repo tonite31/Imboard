@@ -27,7 +27,9 @@ module.exports.getArticleListCount =
 		{
 			if(!param.searchData)
 				param.searchData = {};
+			
 			param.searchData.signinUserId = req.session.user.id;
+			param.searchData.signinUserLevel = req.session.user.level;
 		}
 		
 		ArticleDao.getArticleListCount(boardId, param.searchData, function(response)

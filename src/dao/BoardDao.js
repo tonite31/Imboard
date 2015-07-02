@@ -19,9 +19,9 @@ BoardDao.getInstance = function(){
 	return this.instance;
 }
 
-BoardDao.prototype.getBoardList = function(callback)
+BoardDao.prototype.getBoardList = function(boardVo, callback)
 {
-	this.sqlMapClient.selectsQuery("getBoardList", {}, callback);
+	this.sqlMapClient.selectsQuery("getBoardList", boardVo, callback);
 };
 
 BoardDao.prototype.getBoardListWithAuth = function(callback)
