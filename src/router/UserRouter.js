@@ -92,7 +92,7 @@ module.exports.updateUserPassword =
 	callback : function(req, res)
 	{
 		var userVo = new UserVo(req.body);
-		UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, _config.userPasswordEncryptKey), function(response)
+		UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, _config.encryptKey), function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
 		});

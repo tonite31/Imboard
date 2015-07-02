@@ -70,14 +70,15 @@
     
     <insert id="insertUser" parameterType="UserVo">
         INSERT INTO IMB_USER
-        	(ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL)
+        	(ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL, LEVEL)
         VALUES
         	(
         		#{id},
         		#{displayId},
         		#{provider},
         		#{name},
-        		#{profileImgUrl}
+        		#{profileImgUrl},
+        		#{level}
         	)
     </insert>
     

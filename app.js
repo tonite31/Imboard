@@ -2,6 +2,7 @@ global.useConsole = true;
 
 global._path =
 {
+	home : __dirname,
 	content : __dirname + "/content",
 	src : __dirname + "/src",
 	resources : __dirname + "/resources",

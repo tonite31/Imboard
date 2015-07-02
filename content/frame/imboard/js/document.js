@@ -5,6 +5,8 @@ $(document).ready(function()
 	{
 		var top = $(this).scrollTop();
 		
+		$("#contentList li.selected").removeClass("selected");
+		
 		var minTarget = null;
 		$("#documentArea *[id^=doc]").each(function()
 		{
@@ -16,11 +18,12 @@ $(document).ready(function()
 					minTarget = {distance : rect.top, element : this};
 				}
 			}
-			
-			$(this).removeClass("selected");
 		});
 		
 		if(minTarget)
-			$(minTarget.element).addClass("selected");
+		{
+			console.log($("#contentList li a[href='#" + $(minTarget.element).attr("id") + "']").parent());
+			$("#contentList li a[href='#" + $(minTarget.element).attr("id") + "']").parent().addClass("selected");
+		}
 	});
 });

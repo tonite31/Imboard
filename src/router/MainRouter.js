@@ -1,5 +1,6 @@
 var fs = require('fs');
 
+var install = require(_path.home + "/install.js");
 var cheerio = require('cheerio');
 var VisitorDao = require(_path.src + "/dao/VisitorDao.js");
 var DataBindModule = require(_path.lib + "/DataBindModule.js");
@@ -25,7 +26,10 @@ module.exports.main =
 			}
 			else if(path.match(/^\/install\/?$/) != null)
 			{
-				render(req, res, "common", "install", "/index.html");
+				install(function(){
+					res.redirect(global._host + "/");
+				});
+//				render(req, res, "common", "install", "/index.html");
 			}
 			else if(path.match(/^\/signin\/?$/) != null)
 			{

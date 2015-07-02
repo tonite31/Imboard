@@ -92,8 +92,8 @@ h3
 
 #contentList li
 {
-	padding-top: 2.5px;
-	padding-bottom: 2.5px;
+	margin:5px 0;
+	padding-left: 10px;
 }
 
 #contentList ul
@@ -107,6 +107,11 @@ h3
 }
 
 #contentList li.selected
+{
+	border-left: 2px solid #337ab7;	
+}
+
+#contentList li.selected a
 {
 	color:#337ab7;
 }
