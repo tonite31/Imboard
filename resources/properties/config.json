@@ -1,5 +1,5 @@
 {
-	"frame" : "blog",
+	"frame" : "imboard",
 	"server" :
 	{
 	    "port" : 3000,
@@ -22,10 +22,10 @@
 	},
 	"jdbc":
 	{
-        "host"     : "host",
-        "user"     : "user",
-        "password" : "password",
-        "database" : "database",
+        "host"     : "54.64.10.181",
+        "user"     : "imboardtest",
+        "password" : "imboardtest",
+        "database" : "imboardtest",
         "typeCast" : true,
         "multipleStatements": true
 	},

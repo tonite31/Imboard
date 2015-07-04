@@ -1,31 +1,83 @@
-var UserDao = require(_path.src + "/dao/UserDao.js");
-var UserVo = require(_path.src + '/vo/UserVo.js');
-var Utils = require(_path.src + '/lib/Utils.js');
+var fs = require("fs");
 
-module.exports = function(callback)
+global._config = require(__dirname + '/resources/properties/config');
+
+var mysql      = require('mysql');
+var connection = mysql.createConnection({
+	host     : _config.jdbc.host,
+	user     : _config.jdbc.user,
+	password : _config.jdbc.password,
+	database : _config.jdbc.database
+});
+
+var QueryExecutor = function(queryList, connection)
 {
-	var vo = new UserVo();
-	vo.id = "admin";
-	
-	UserDao.getUser(vo, function(response)
+	this.queryList = queryList;
+	this.connection = connection;
+};
+
+QueryExecutor.prototype.setQueryList = function(queryList)
+{
+	this.queryList = queryList;
+};
+
+QueryExecutor.prototype.executeQuery = function(callback)
+{
+	var that = this;
+	if(this.queryList.length > 0)
 	{
-		if(!response)
+		var query = this.queryList.shift();
+		if(query)
 		{
-			vo.displayId = "마스터";
-			vo.name = "마스터";
-			vo.level = -2;
-			UserDao.insertUser(vo, function()
+			console.log(query);
+			connection.query(query, function(err, result)
 			{
-				UserDao.updateUserPassword("admin", Utils.encrypt("admin", _config.encryptKey), function(response)
-				{
-					if(callback)
-						callback();
-				});
+				if(err)
+					console.error(err);
+
+				that.executeQuery();
 			});
 		}
 		else
 		{
-			callback();
+			that.executeQuery();
 		}
-	});
+	}
+	else
+	{
+		if(callback)
+			callback();
+	}
 };
+
+connection.connect(function(err)
+{
+	if(err)
+	{
+		console.error(err);
+		return;
+	}
+	
+	var result = fs.readFileSync(__dirname + '/resources/setup/db_ddl');
+	var split = result.toString().split(";");
+
+	var qe = new QueryExecutor(split, connection);
+	qe.executeQuery(split, function()
+	{
+		result = fs.readFileSync(__dirname + '/resources/setup/db_dml');
+		split = result.toString().split(";");
+
+		qe.setQueryList(split);
+		qe.executeQuery(function()
+		{
+			try
+			{
+				process.exit(1);
+			}
+			catch(err)
+			{
+				console.error(err);
+			}
+		});
+	});
+});
