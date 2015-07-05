@@ -29,18 +29,17 @@ QueryExecutor.prototype.executeQuery = function(callback)
 		var query = this.queryList.shift();
 		if(query)
 		{
-			console.log(query);
 			connection.query(query, function(err, result)
 			{
 				if(err)
 					console.error(err);
 
-				that.executeQuery();
+				that.executeQuery(callback);
 			});
 		}
 		else
 		{
-			that.executeQuery();
+			that.executeQuery(callback);
 		}
 	}
 	else
@@ -61,18 +60,22 @@ connection.connect(function(err)
 	var result = fs.readFileSync(__dirname + '/resources/setup/db_ddl');
 	var split = result.toString().split(";");
 
+	console.log(" -- 테이블 생성");
 	var qe = new QueryExecutor(split, connection);
-	qe.executeQuery(split, function()
+	qe.executeQuery(function()
 	{
 		result = fs.readFileSync(__dirname + '/resources/setup/db_dml');
 		split = result.toString().split(";");
 
+		console.log(" -- 초기데이터 입력");
 		qe.setQueryList(split);
 		qe.executeQuery(function()
 		{
 			try
 			{
-				process.exit(1);
+				console.log(" -- 설치완료");
+				connection.end();
+				process.exit();
 			}
 			catch(err)
 			{
