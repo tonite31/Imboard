@@ -1,3 +1,5 @@
+var randomstring = require("randomstring");
+
 var UserDao = require(_path.src + "/dao/UserDao.js");
 var UserVo = require(_path.src + "/vo/UserVo.js");
 
@@ -86,19 +88,23 @@ module.exports.loginSuccessCallback =
 				var vo = new UserVo();
 				vo.id = user.id;
 				vo.provider = user.provider;
+				vo.encryptKey = randomstring.generate(10);
 				
 				UserDao.insertUser(vo, function(response)
 				{
+					req.session.user = vo;
 					res.redirect(_config.registeredUserRedirectUrl ? _config.registeredUserRedirectUrl : (req.session.signReferer ? req.session.signReferer : "/"));
 				});
 			}
 			else
 			{
-				req.session.user = result;
-				
-				UserDao.updateLastAccessDate(result.id);
-
-				res.redirect(req.session.signReferer ? req.session.signReferer : "/");
+				UserDao.getEncryptKey(result.id, function(encryptKey)
+				{
+					req.session.user = result;
+					req.session.user.encryptKey = encryptKey;
+					UserDao.updateLastAccessDate(result.id);
+					res.redirect(req.session.signReferer ? req.session.signReferer : "/");
+				})
 			}
 		});
 	}
@@ -125,22 +131,26 @@ module.exports.signin =
 		userVo.id = param.id;
 		UserDao.getUser(userVo, function(result)
 		{
-			if(result != null && Utils.encrypt(param.password, _config.encryptKey) == result.password)
+			UserDao.getEncryptKey(userVo.id, function(encryptKey)
 			{
-				if(!req.session)
-					req.session = {};
-				
-				result.password = null;
-				req.session.user = result;
-				
-				UserDao.updateLastAccessDate(result.id);
-				
-				res.end(JSON.stringify({code : _code.SUCCESS, data : req.session.signReferer ? req.session.signReferer : "/"}));
-			}
-			else
-			{
-				res.end(JSON.stringify({code : _code.ERROR}));
-			}
+				if(result != null && Utils.encrypt(param.password, encryptKey) == result.password)
+				{
+					if(!req.session)
+						req.session = {};
+					
+					result.password = null;
+					req.session.user = result;
+					req.session.user.encryptKey = encryptKey;
+					
+					UserDao.updateLastAccessDate(result.id);
+					
+					res.end(JSON.stringify({code : _code.SUCCESS, data : req.session.signReferer ? req.session.signReferer : "/"}));
+				}
+				else
+				{
+					res.end(JSON.stringify({code : _code.ERROR}));
+				}
+			});
 		});
 	}
 };

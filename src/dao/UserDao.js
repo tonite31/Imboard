@@ -36,6 +36,11 @@ UserDao.prototype.getUserWithInfo = function(userId, callback)
 	this.sqlMapClient.selectQuery("getUserWithInfo", vo, callback);
 };
 
+UserDao.prototype.getEncryptKey = function(id, callback)
+{
+	this.sqlMapClient.selectQuery("getEncryptKey", id, callback);
+};
+
 UserDao.prototype.insertUser = function(userVo, callback)
 {
 	this.sqlMapClient.insertQuery("insertUser", userVo, callback);

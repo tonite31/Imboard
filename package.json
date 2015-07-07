@@ -30,6 +30,7 @@
     "passport-google-oauth": "^0.1.5",
     "passport-twitter": "^1.0.2",
     "querystring": "^0.2.0",
+    "randomstring": "^1.0.7",
     "serve-favicon": "^2.1.6",
     "winston": "^0.7.3"
   },

@@ -15,5 +15,3 @@ INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/insertUse
 
 INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/initializeAdminAccount.do', -1, 'Y', 'N');
 INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/boardAuth/updateBoardAuth.do', -1, 'Y', 'N');
-
-INSERT INTO IMB_USER (ID, NAME, PASSWORD, LEVEL) VALUES ('admin', '마스터', '8aeadc900c11147a3bec0ccbe5c529b1', -2);

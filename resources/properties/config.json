@@ -29,7 +29,6 @@
         "typeCast" : true,
         "multipleStatements": true
 	},
-	"encryptKey" : "encryptKey",
 	"openAuth" :
 	{
 		"facebook" :

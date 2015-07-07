@@ -7,6 +7,7 @@ var UserVo = function(param)
 	this.profileImgUrl = null;
 	this.password = null;
 	this.gender = null;
+	this.encryptKey = null;
 	this.userStatus = null;
 	this.dropOutDate = null;
 	

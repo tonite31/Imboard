@@ -1,6 +1,9 @@
+var randomstring = require("randomstring");
+
 var fs = require("fs");
 
 global._config = require(__dirname + '/resources/properties/config');
+var Utils = require(__dirname + "/src/lib/Utils.js");
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
@@ -73,9 +76,17 @@ connection.connect(function(err)
 		{
 			try
 			{
-				console.log(" -- 설치완료");
-				connection.end();
-				process.exit();
+				var encryptKey = randomstring.generate(10);
+				var adminAccountQuery = "INSERT INTO IMB_USER (ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL, LEVEL, PASSWORD, ENCRYPT_KEY) VALUES ('admin', 'admin', 'default', 'admin', '', -2, '" + Utils.encrypt("admin", encryptKey) + "', '" + encryptKey + "')";
+				connection.query(adminAccountQuery, function(err, result)
+				{
+					if(err)
+						console.error(err);
+
+					console.log(" -- 설치완료");
+					connection.end();
+					process.exit();
+				});
 			}
 			catch(err)
 			{

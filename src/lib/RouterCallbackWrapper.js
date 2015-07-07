@@ -60,7 +60,7 @@ module.exports.create = function(func)
 	    					}
 	    					else
 	    					{
-	    						Render.render(req, res, Render.getData(global._path.content + "/common/accessDenied.html"));
+	    						render(req, res, "common", "core", "/accessDenied.html");
 	    					}
 	    				}
 	    				else

@@ -1,0 +1,33 @@
+
+a, a:VISITED, a:ACTIVE, a:FOCUS{
+	color: #444;
+	text-decoration: none;
+}
+
+.textinput
+{
+	border: 1px solid #dfdfdf;
+	padding: 10px;
+	background-color: white;
+}
+
+.textinput.default:ACTIVE, .textinput.default:FOCUS
+{
+	outline: 2px solid #797979;
+}
+
+.textinput[readonly='readonly']
+{
+	outline:0 !important;
+	background-color: #f7f7f7;
+}
+
+.textinput.default::-webkit-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }
+.textinput.default::-ms-input-placeholder { color:#aaa; }
+.textinput.default::-moz-placeholder { color:#aaa; }
+
+.btn
+{
+	border-radius:0;
+}

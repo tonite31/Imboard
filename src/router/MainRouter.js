@@ -1,6 +1,5 @@
 var fs = require('fs');
 
-var install = require(_path.home + "/install.js");
 var cheerio = require('cheerio');
 var VisitorDao = require(_path.src + "/dao/VisitorDao.js");
 var DataBindModule = require(_path.lib + "/DataBindModule.js");
@@ -24,20 +23,15 @@ module.exports.main =
 			{
 				render(req, res, "common", "settings", "/index.html");
 			}
-			else if(path.match(/^\/install\/?$/) != null)
-			{
-				install(function(){
-					res.redirect(global._host + "/");
-				});
-//				render(req, res, "common", "install", "/index.html");
-			}
 			else if(path.match(/^\/signin\/?$/) != null)
 			{
 				if(req.session.user != null && req.session.user.id != null)
 				{
-					var html = Render.getData(global._path.content + "/common/signed.html");
-					html = replaceData(html, req);
-					Render.render(req, res, html);
+					render(req, res, "common", "core", "/signed.html");
+//					
+//					var html = Render.getData(global._path.content + "/common/signed.html");
+//					html = replaceData(html, req);
+//					Render.render(req, res, html);
 				}
 				else
 				{
@@ -47,28 +41,21 @@ module.exports.main =
 					if(req.session.signReferer == null)
 						req.session.signReferer = req.headers.referer;
 					
-					var html = Render.getData(global._path.content + "/common/signin.html");
-					html = replaceData(html, req);
-					Render.render(req, res, html);
+					render(req, res, "common", "core", "/signin.html");
+					
+//					var html = Render.getData(global._path.content + "/common/signin.html");
+//					html = replaceData(html, req);
+//					Render.render(req, res, html);
 				}
 			}
-			else if(path.match(/^\/profile\/?$/) != null)
-			{
-				if(req.session.signReferer == null)
-					req.session.signReferer = req.headers.referer;
-				
-				var html = Render.getData(global._path.content + "/common/profile.html");
-				html = replaceData(html, req);
-				Render.render(req, res, html);
-			}
-			else if(path.match(/^\/redirect\/?$/) != null)
-			{
-				res.redirect(req.session.signReferer ? req.session.signReferer : "/");
-			}
-			else if(path.match(/^\/signup\/?$/) != null)
-			{
-				var html = Render.getData(global._path.content + "/common/signup.html");
-				html = replaceData(html, req);
+//			else if(path.match(/^\/redirect\/?$/) != null)
+//			{
+//				res.redirect(req.session.signReferer ? req.session.signReferer : "/");
+//			}
+//			else if(path.match(/^\/signup\/?$/) != null)
+//			{
+//				var html = Render.getData(global._path.content + "/common/signup.html");
+//				html = replaceData(html, req);
 //
 //				if(req.query.piece != null && req.query.piece == "setPassword")
 //				{
@@ -85,9 +72,9 @@ module.exports.main =
 //						html = $.html();
 //					}
 //				}
-				
-				Render.render(req, res, html);
-			}
+//				
+//				Render.render(req, res, html);
+//			}
 			else if(path.match(/^\/favicon.ico\/?$/) != null)
 			{
 				next();
@@ -112,10 +99,7 @@ module.exports.main =
 		catch(err)
 		{
 			_log.error(err.stack);
-			$ = cheerio.load(Render.getData(global._path.content + "/common/500.html"));
-			$("#error").html(err.stack.replace(/\n/gi, "<br/>"));
-			
-			Render.render(req, res, $.html());
+			render(req, res, "common", "core", "/500.html");
 		}
 	}
 };
@@ -240,9 +224,7 @@ function render(req, res, folder, frame, path)
 	}
 	else
 	{
-		$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
-		$("h1").text("잘못된경로입니다");
-		Render.render(req, res, $.html());
+		render(req, res, "common", "core", "/404.html");
 	}
 }
 
@@ -338,8 +320,7 @@ function bindPiece(req, folder, frame, path, $, el)
 	 		}
 	 		else
 	 		{
-	 			$(this).html(Render.getData(global._path.content + "/common/404.html"));
- 				$(this).find("h1").text("페이지 조각을 찾을 수 없습니다");
+	 			render(req, res, "common", "core", "/noFragment.html");
 	 		}
 		}
 		

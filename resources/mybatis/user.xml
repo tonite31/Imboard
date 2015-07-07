@@ -68,9 +68,18 @@
        		</if>
     </select>
     
+    <select id="getEncryptKey" parameterType="String" resultType="String">
+    	SELECT
+    		ENCRYPT_KEY
+    	FROM
+    		IMB_USER
+    	WHERE
+    		ID = #{id}
+    </select>
+    
     <insert id="insertUser" parameterType="UserVo">
         INSERT INTO IMB_USER
-        	(ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL, LEVEL)
+        	(ID, DISPLAY_ID, PROVIDER, NAME, PROFILE_IMG_URL, LEVEL, ENCRYPT_KEY)
         VALUES
         	(
         		#{id},
@@ -78,7 +87,8 @@
         		#{provider},
         		#{name},
         		#{profileImgUrl},
-        		#{level}
+        		#{level},
+        		#{encryptKey}
         	)
     </insert>
     
