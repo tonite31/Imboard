@@ -463,7 +463,8 @@
 			var rect = $(context).getRect();
 			var top = rect.top + $(window).scrollTop();
 			var left = rect.left + $(window).scrollLeft();
-			$(window).on("scroll", function()
+			
+			var setPosition = function()
 			{
 				if(options.direction == "vertical")
 				{
@@ -487,7 +488,10 @@
 						$(context).css("position", "").css("top", "").css("left", "");
 					}
 				}
-			});
+			};
+			
+			$(window).on("scroll", setPosition);
+			setPosition();
     	};
     }).call(component);
     

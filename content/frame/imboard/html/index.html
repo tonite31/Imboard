@@ -107,16 +107,30 @@
 					<p>임보드를 설치할 호스팅 서버 또는 개인 서버가 필요합니다.</p>
 					<p>2. nodejs &amp; MySQL</p>
 					<p>임보드는 nodejs기반 플랫폼이며 데이터베이스는 MySQL을 사용합니다. 최신버전의 <a href="https://nodejs.org" target="_blank">nodejs</a>와 <a href="http://dev.mysql.com/downloads/mysql/" target="_blank">MySQL</a>을 다운로드하여 설치해주시기 바랍니다.</p>
-					<p>3. 데이터베이스 테이블생성 및 초기데이터 입력</p>
-					<p>설치한 MySQL에 접속한 뒤, database를 생성하고 <strong>resources/setup/db_ddl</strong> 파일에 입력되어있는 CREATE TABLE 쿼리를 수행합니다. 그 후 <strong>resources/setup/db_dml</strong> 파일에 입력되어있는 모든 INSERT 쿼리를 수행합니다. </p>
-					<p>4. 필요한 nodejs 모듈 설치</p>
+					<br/><br/>
+					<h3>다운로드 및 설치</h3>
+					<p>1. 임보드 다운로드</p>
+					<p>홈페이지에서 임보드를 다운로드 하거나 커맨드라인에서 npm install imboard를 입력해서 설치합니다.</p>
+					<p>2. 필요한 nodejs 모듈 설치</p>
 					<p>임보드의 루트 디렉토리에서 <strong>npm install</strong> 명령어를 수행합니다.</p>
-					<p>5. 설정파일 수정</p>
-					<p><strong>resources/properties/config.json</strong> 파일을 열어서 자신의 환경에 맞게 설정값을 입력합니다. frame과 jdbc 설정값은 필수적으로 입력해야합니다.</p>
-					<p>6. 임보드 어플리케이션 실행</p>
+					<p>3. 데이터베이스 및 사용자 생성</p>
+					<p>설치한 MySQL에 접속한 뒤, 사용자와 데이터베이스를 생성합니다.</p>
+					<p>4. 초기데이터입력</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node install.js</strong> 명령어를 수행합니다. 5번에서 생성한 데이터베이스와 사용자 정보를 입력하면 초기데이터가 입력되고 임보드 설치작업이 끝납니다.</p>
+				</div>
+			</div>
+			<br/><br/>
+			<h2>임보드 어플리케이션 실행하기</h2>
+			<div class="feature">
+				<div>
+					<p>1. frame 설정</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node cf.js</strong> 명령어를 수행합니다. 그 후 설정할 프레임 이름을 입력합니다. 아무것도 입력하지 않으면 초기값인 blog가 입력됩니다.</p>
+					<p>2. 임보드 어플리케이션 실행</p>
 					<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
-					<p>7. 웹페이지 접속</p>
-					<p>웹브라우저를 열어서 주소창에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
+					<p>3. 웹페이지 접속</p>
+					<p>웹브라우저를 열어서 주소입력부분에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
+					<p>4. 관리자페이지 접속</p>
+					<p>웹브라우저의 주소입력부분에 <strong>http://localhost:3000/settings</strong> 를 입력합니다. 관리자 계정으로 로그인하면 관리자페이지로 접속할 수 있습니다. 초기 관리자 계정은 admin/admin입니다.</p>
 				</div>
 			</div>
 		</div>
