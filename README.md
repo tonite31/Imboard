@@ -20,7 +20,7 @@
 </ul>
 
 <h2 id="quickStart">Quick Start</h2>
-<p>임보드를 다운로드, 설치 할 수 있는 몇 가지 방법을 제공합니다.</p>
+<p>임보드를 다운로드 할 수 있는 몇 가지 방법을 제공합니다.</p>
 <ul>
 	<li><p><a>최신버전 다운로드</a></p></li>
 	<li><p>Clone the repository : <code>git clone https://github.com/tonite31/Imboard.git</code></p></li>
