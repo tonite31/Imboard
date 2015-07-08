@@ -69,19 +69,6 @@
 				<p>간편한 방법으로 웹페이지를 개발할 수 있고, 미리 만들어진 프레임을 적용하면 몇 분만에 웹페이지를 개설할수도 있습니다.</p>
 			</div>
 		</div>
-<!-- 		<div class="container doc"> -->
-<!-- 			<h2>임보드에 대해서</h2> -->
-<!-- 			<div class="feature"> -->
-<!-- 				<ul class="description"> -->
-<!-- 					<li>임보드는 HTML, JS, CSS만으로 웹페이지를 제작할 수 있는 nodejs 기반 설치형 플랫폼입니다.</li> -->
-<!-- 					<li>간단한 블로그부터 게시판 위주의 커뮤니티, 개인 및 기업용 홈페이지 등 대부분의 웹페이지를 개발할 수 있습니다.</li> -->
-<!-- 					<li>자신만의 웹페이지 프레임을 제작해서 다른사람들이 쓸 수 있도록 배포할 수 있습니다.</li> -->
-<!-- 					<li>대부분의 서버기능이 준비되어 있지만 필요하다면 추가적으로 모듈을 개발, 배포할 수 있습니다.</li> -->
-<!-- 					<li>관리자페이지에 접속하면 멤버, 게시판, 권한레벨, URL별 권한등의 데이터를 간편하게 관리할 수 있습니다.</li> -->
-<!-- 				</ul> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<hr class="container"/> -->
 		<div class="container doc">
 			<h2>다운로드</h2>
 			<div class="feature">
@@ -115,8 +102,10 @@
 					<p>임보드의 루트 디렉토리에서 <strong>npm install</strong> 명령어를 수행합니다.</p>
 					<p>3. 데이터베이스 및 사용자 생성</p>
 					<p>설치한 MySQL에 접속한 뒤, 사용자와 데이터베이스를 생성합니다.</p>
-					<p>4. 초기데이터입력</p>
-					<p>임보드의 루트 디렉토리에서 <strong>node install.js</strong> 명령어를 수행합니다. 5번에서 생성한 데이터베이스와 사용자 정보를 입력하면 초기데이터가 입력되고 임보드 설치작업이 끝납니다.</p>
+					<p>4. 데이터베이스 접속정보 설정</p>
+					<p><strong>/resources/properties/config.json</strong> 파일을 열어서 jdbc부분에 데이터베이스 접속정보를 입력합니다.</p>
+					<p>5. 초기데이터입력</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node install.js</strong> 명령어를 수행합니다. 4번에서 설정한 데이터베이스로 초기데이터가 입력되고 임보드 설치작업이 끝납니다.</p>
 				</div>
 			</div>
 			<br/><br/>
@@ -124,7 +113,7 @@
 			<div class="feature">
 				<div>
 					<p>1. frame 설정</p>
-					<p>임보드의 루트 디렉토리에서 <strong>node cf.js</strong> 명령어를 수행합니다. 그 후 설정할 프레임 이름을 입력합니다. 아무것도 입력하지 않으면 초기값인 blog가 입력됩니다.</p>
+					<p><strong>/resources/properties/config.json</strong> 파일을 열어서 frame부분에 설정할 프레임 이름을 입력합니다. 프레임 이름은 <strong>/content/frame/</strong> 디렉토리 하위의 폴더 이름입니다. 기본은 blog입니다.</p>
 					<p>2. 임보드 어플리케이션 실행</p>
 					<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
 					<p>3. 웹페이지 접속</p>

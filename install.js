@@ -2,15 +2,15 @@ var randomstring = require("randomstring");
 
 var fs = require("fs");
 
-global._config = require(__dirname + '/resources/properties/config');
+var config = require(__dirname + '/resources/properties/config');
 var Utils = require(__dirname + "/src/lib/Utils.js");
 
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-	host     : _config.jdbc.host,
-	user     : _config.jdbc.user,
-	password : _config.jdbc.password,
-	database : _config.jdbc.database
+	host     : config.jdbc.host,
+	user     : config.jdbc.user,
+	password : config.jdbc.password,
+	database : config.jdbc.database
 });
 
 var QueryExecutor = function(queryList, connection)
@@ -63,14 +63,12 @@ connection.connect(function(err)
 	var result = fs.readFileSync(__dirname + '/resources/setup/db_ddl');
 	var split = result.toString().split(";");
 
-	console.log(" -- 테이블 생성");
 	var qe = new QueryExecutor(split, connection);
 	qe.executeQuery(function()
 	{
 		result = fs.readFileSync(__dirname + '/resources/setup/db_dml');
 		split = result.toString().split(";");
 
-		console.log(" -- 초기데이터 입력");
 		qe.setQueryList(split);
 		qe.executeQuery(function()
 		{
@@ -83,7 +81,7 @@ connection.connect(function(err)
 					if(err)
 						console.error(err);
 
-					console.log(" -- 설치완료");
+					console.log("Install complete!");
 					connection.end();
 					process.exit();
 				});
