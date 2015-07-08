@@ -1,5 +1,4 @@
-{
-    "frame": "imboard",
+    "frame": "blog",
     "server": {
         "port": 3000,
         "host": "http://localhost:3000"

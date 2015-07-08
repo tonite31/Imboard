@@ -4,7 +4,8 @@
 
 ### OS X ###
 .DS_Store
+
+### imboard ###
 /node_modules/
 /logs/
-
-config.json
+.log
