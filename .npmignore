@@ -6,6 +6,6 @@ docs/
 examples/
 support/
 test/
-logs/
-node_modules/
+/logs/
+/node_modules/
 .log
