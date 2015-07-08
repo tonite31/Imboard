@@ -1,6 +1,6 @@
 var winston = require('winston');
 
-module.exports = function(filename, useConsole, level, colorize) {
+module.exports = function(filename, level, colorize) {
 	
 	var log =
 	{
@@ -8,13 +8,14 @@ module.exports = function(filename, useConsole, level, colorize) {
 		{
 			'levels':
 			{
-			  'detail': 0,
-			  'trace': 1,
-			  'debug': 2,
-			  'enter': 3,
-			  'info': 4,
-			  'warn': 5,
-			  'error': 6
+				'deploy': -1,
+				'detail': 0,
+				'trace': 1,
+				'debug': 2,
+				'enter': 3,
+				'info': 4,
+				'warn': 5,
+				'error': 6
 			}
 		},
 		'colors':
@@ -32,7 +33,7 @@ module.exports = function(filename, useConsole, level, colorize) {
 	var console = new (winston.transports.Console)({'level' : level, 'colorize': colorize});
 	var file = new (winston.transports.File)({level : level, json : false, filename : filename});
 
-	if(useConsole)
+	if(level >= 0)
 		logger = new (winston.Logger)({'transports': [console, file]});
 	else
 		logger = new (winston.Logger)({"transports" : [file]});

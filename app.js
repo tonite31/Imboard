@@ -1,5 +1,3 @@
-global.useConsole = true;
-
 global._path =
 {
 	home : __dirname,
@@ -48,8 +46,8 @@ if(!fs.existsSync(_path.log))
  * global 객체 생성
  */
 global.pool = mysql.createPool(_config.jdbc);
-global._log = new Logger(_path.log + "/debug.log", useConsole, _config.log.level, _config.log.colorize);
-global._loge = new Logger(_path.log + "/exception.log", useConsole, _config.log.level, _config.log.colorize);
+global._log = new Logger(_path.log + "/debug.log", _config.log.level, _config.log.colorize);
+global._loge = new Logger(_path.log + "/exception.log", _config.log.level, _config.log.colorize);
 global._mybatis = new mybatis.Principal();
 global.sqlMapConfig = _mybatis.processe(_path.src + "/handler/Typehandler", _path.src + "/vo/");
 global.ParameterBinder = require(_path.lib + "/ParameterBinder.js");
@@ -61,6 +59,7 @@ global._utils = require(_path.lib + "/Utils.js");
 /**
  * 서버에 백그라운드로 올렸을때 오류 나는거때문에 콘솔 오버라이드
  */
+global.useConsole = _config.log.level < 0 ? false : true;
 if(!global.useConsole)
 {
 	console = {};
