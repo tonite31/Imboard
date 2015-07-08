@@ -34,7 +34,7 @@ QueryExecutor.prototype.executeQuery = function(callback)
 		{
 			connection.query(query, function(err, result)
 			{
-				if(err)
+				if(err && query.indexOf("DROP") != -1)
 					console.error(err);
 
 				that.executeQuery(callback);
@@ -56,6 +56,7 @@ connection.connect(function(err)
 {
 	if(err)
 	{
+		console.error("connect fail to database");
 		console.error(err);
 		return;
 	}
