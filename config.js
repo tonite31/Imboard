@@ -89,7 +89,29 @@ configMenu.addMenu("frame", function(callback)
 		}
 		
 		var name = result['frame name : '];
-		config.frame = name;
+		config.frame = name ? name : "blog";
+		
+		if(callback)
+			callback();
+	});
+});
+
+configMenu.addMenu("server", function(callback)
+{
+	prompt.start();
+	prompt.message = "";
+	prompt.delimiter = "";
+	
+	prompt.get(['port : ', 'host : '], function(err, result)
+	{
+		if(err)
+		{
+			console.error(err);
+			return;
+		}
+		
+		config.server.port = result['port : '];
+		config.server.host = result['host : '];
 		
 		if(callback)
 			callback();

@@ -104,7 +104,7 @@
 					<p>3. 데이터베이스 및 사용자 생성</p>
 					<p>설치한 MySQL에 접속한 뒤, 사용자와 데이터베이스를 생성합니다.</p>
 					<p>4. 데이터베이스 접속정보 설정</p>
-					<p><strong>/resources/properties/config.json</strong> 파일을 열어서 jdbc부분에 데이터베이스 접속정보를 입력합니다.</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node config.js</strong> 명령어를 수행합니다.<br/>jdbc 메뉴를 선택한 후 host, username, password, database 정보를 차례대로 입력하고 q메뉴를 선택해서 설정을 빠져나옵니다.</p>
 					<p>5. 초기데이터입력</p>
 					<p>임보드의 루트 디렉토리에서 <strong>node install.js</strong> 명령어를 수행합니다. 4번에서 설정한 데이터베이스로 초기데이터가 입력되고 임보드 설치작업이 끝납니다.</p>
 				</div>
@@ -114,13 +114,15 @@
 			<div class="feature">
 				<div>
 					<p>1. frame 설정</p>
-					<p><strong>/resources/properties/config.json</strong> 파일을 열어서 frame부분에 설정할 프레임 이름을 입력합니다. 프레임 이름은 <strong>/content/frame/</strong> 디렉토리 하위의 폴더 이름입니다. 기본은 blog입니다.</p>
-					<p>2. 임보드 어플리케이션 실행</p>
+					<p>임보드의 루트 디렉토리에서 <strong>node config.js</strong> 명령어를 수행합니다.<br/>frame 메뉴를 선택한 후 설정할 프레임 이름을 입력합니다.<br/>프레임 이름은 <strong>/content/frame/</strong> 디렉토리 하위의 폴더 이름이며 기본값은 blog입니다.</p>
+					<p>2. server 설정</p>
+					<p>1번에 이어서 server 메뉴를 선택한 후 port와 host정보를 차례로 입력합니다. host정보는 임보드 어플리케이션으로 접속할 웹 URL입니다. ex)port=3000, host=http://localhost:3000 또는 port=80, host=http://localhsot</p>
+					<p>3. 임보드 어플리케이션 실행</p>
 					<p>임보드의 루트 디렉토리에서 <strong>node app.js</strong> 명령어를 수행합니다.</p>
-					<p>3. 웹페이지 접속</p>
-					<p>웹브라우저를 열어서 주소입력부분에 <strong>http://localhost:3000/</strong> 을 입력합니다.</p>
-					<p>4. 관리자페이지 접속</p>
-					<p>웹브라우저의 주소입력부분에 <strong>http://localhost:3000/settings</strong> 를 입력합니다. 관리자 계정으로 로그인하면 관리자페이지로 접속할 수 있습니다. 초기 관리자 계정은 admin/admin입니다.</p>
+					<p>4. 웹페이지 접속</p>
+					<p>웹브라우저를 열어서 주소입력부분에 2번에서 입력했던 host를 입력합니다. ex) <strong>http://localhost:3000/</strong></p>
+					<p>5. 관리자페이지 접속</p>
+					<p>웹브라우저의 주소입력부분에 <strong>http://localhost:3000/settings</strong> 를 입력합니다. 관리자 계정으로 로그인하면 관리자페이지로 접속할 수 있습니다.<br/>초기 관리자 계정은 admin/admin입니다.</p>
 				</div>
 			</div>
 		</div>

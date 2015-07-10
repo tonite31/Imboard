@@ -508,7 +508,7 @@ module.exports.uploadFile =
 		var folder = "anonymous";
 		if(req.session.user != null && req.session.user.id != null)
 		{
-			folder = _utils.encrypt(req.session.user.id, _config.encryptKey);
+			folder = req.session.user.id;
 		}
 		
 		var files = req.files;
@@ -529,8 +529,58 @@ module.exports.uploadFile =
 		}
 		finally
 		{
-			uploadLocal(files, keyList, path, folder, pathList, function()
+			var forEach = require('async-foreach').forEach;
+			forEach(keyList, function(key, index)
 			{
+				var done = this.async();
+				
+				var file = files[key];
+				var filepath = file.path;
+				var filename = file.originalFilename;
+				
+				if(filepath.lastIndexOf(".gif") == filepath.length-4)
+				{
+					easyimg.convert({src : filepath + "[0]", dst : filepath.replace(".gif", ".png"), quality:100}).then(function()
+					{
+						try
+						{
+							var data = fs.readFileSync(filepath.replace(".gif", ".png"));
+							
+							fs.writeFileSync(rootPath + filename.replace(".gif", ".png"), data);
+							
+							var data = fs.readFileSync(filepath);
+							fs.writeFileSync(rootPath + filename, data);
+							
+							pathList.push("/resources/" + folder + "/" + filename);
+						}
+						catch(err)
+						{
+							_log.error(err.stack);
+						}
+						finally
+						{
+							done();
+						}
+					});
+				}
+				else
+				{
+					try
+					{
+						var data = fs.readFileSync(filepath);
+						fs.writeFileSync(path + filename, data);
+						pathList.push("/resources/" + folder + "/" + filename);
+					}
+					catch(err)
+					{
+						_log.error(err.stack);
+					}
+					finally
+					{
+						done();
+					}
+				}
+			}, function(){
 				res.end(JSON.stringify({code : 1000, data : pathList, message : "SUCCESS"}));
 			});
 		}
@@ -546,7 +596,7 @@ module.exports.uploadFileToAWS =
 	{
 		var param = req.body;
 		
-		var bucketName = _aws.s3.bucketName;
+		var bucketName = param.bucketName ? param.bucketName : _aws.s3.bucketName;
 		var resourcesUrl = _aws.s3.resourcesUrl;
 		
 		var folder = "anonymous";
@@ -560,8 +610,63 @@ module.exports.uploadFileToAWS =
 		for(var key in files)
 			keyList.push(key);
 		var pathList = [];
-		uploadAws(files, keyList, folder, pathList, function()
+		
+		var forEach = require('async-foreach').forEach;
+		forEach(keyList, function(key, index)
 		{
+			var done = this.async();
+			
+			var file = files[key];
+			var path = file.path;
+			
+			var param = {};
+			param.filePath = file.path.replace(".gif", ".png");
+			param.fileName = file.originalFilename.replace(".gif", ".png");
+			param.folder = folder;
+			param.bucketName = bucketName;
+			
+			if(path.lastIndexOf(".gif") == path.length -4)
+			{
+				param.callback = function(path)
+				{
+					if(path != null)
+					{
+						uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
+						{
+							if(path != null)
+								pathList.push(path);
+							
+							done();
+						}});
+					}
+					else
+					{
+						done();
+					}
+				};
+				
+				easyimg.convert({src : path + "[0]", dst : path.replace(".gif", ".png"), quality:100}).then(function()
+				{
+					uploadFileToS3(param);
+				},
+				function()
+				{
+					done();
+				});
+			}
+			else
+			{
+				param.callback = function(path)
+				{
+					if(path != null)
+						pathList.push(path);
+					
+					done();
+				};
+				
+				uploadFileToS3(param);
+			}
+		}, function(){
 			res.end(JSON.stringify({code : 1000, data : pathList, message : "SUCCESS"}));
 		});
 	}
@@ -612,52 +717,52 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 	}
 }
 
-function uploadAws(files, keyList, folder, pathList, successCallback)
-{
-	if(keyList.length == 0)
-	{
-		successCallback();
-		return;
-	}
-	
-	var file = files[keyList.pop()];
-	var path = file.path;
-	if(path.lastIndexOf(".gif") == path.length -4)
-	{
-		easyimg.convert({src : path + "[0]", dst : path.replace(".gif", ".png"), quality:100}).then(function()
-		{
-			uploadFileToS3({filePath : file.path.replace(".gif", ".png"), fileName : file.originalFilename.replace(".gif", ".png"), folder : folder, callback : function(path)
-			{
-				if(path != null)
-				{
-					uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
-					{
-						if(path != null)
-							pathList.push(path);
-						
-						uploadAws(files, keyList, folder, pathList, successCallback);
-					}});
-				}
-				else
-				{
-					uploadAws(files, keyList, folder, pathList, successCallback);
-				}
-			}});
-		}, function(){
-			uploadAws(files, keyList, folder, pathList, successCallback);
-		});
-	}
-	else
-	{
-		uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
-		{
-			if(path != null)
-				pathList.push(path);
-			
-			uploadAws(files, keyList, folder, pathList, successCallback);
-		}});
-	}
-}
+//function uploadAws(files, keyList, folder, pathList, successCallback)
+//{
+//	if(keyList.length == 0)
+//	{
+//		successCallback();
+//		return;
+//	}
+//	
+//	var file = files[keyList.pop()];
+//	var path = file.path;
+//	if(path.lastIndexOf(".gif") == path.length -4)
+//	{
+//		easyimg.convert({src : path + "[0]", dst : path.replace(".gif", ".png"), quality:100}).then(function()
+//		{
+//			uploadFileToS3({filePath : file.path.replace(".gif", ".png"), fileName : file.originalFilename.replace(".gif", ".png"), folder : folder, callback : function(path)
+//			{
+//				if(path != null)
+//				{
+//					uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
+//					{
+//						if(path != null)
+//							pathList.push(path);
+//						
+//						uploadAws(files, keyList, folder, pathList, successCallback);
+//					}});
+//				}
+//				else
+//				{
+//					uploadAws(files, keyList, folder, pathList, successCallback);
+//				}
+//			}});
+//		}, function(){
+//			uploadAws(files, keyList, folder, pathList, successCallback);
+//		});
+//	}
+//	else
+//	{
+//		uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
+//		{
+//			if(path != null)
+//				pathList.push(path);
+//			
+//			uploadAws(files, keyList, folder, pathList, successCallback);
+//		}});
+//	}
+//}
 
 function uploadFileToS3(param)
 {
@@ -683,7 +788,7 @@ function uploadFileToS3(param)
 			else
 			{
 				var params = {
-					Bucket: _aws.s3.bucketName,
+					Bucket: param.bucketName,
 					Key : folder + "/" + fileName,
 					ACL : "public-read",
 					Body : data
