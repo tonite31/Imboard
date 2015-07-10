@@ -20,7 +20,7 @@ global._multipart = require('connect-multiparty');
 global._languages = require(__dirname + '/resources/properties/languages');
 global._config = require(__dirname + '/resources/properties/config');
 global._aws = _config.aws;
-global._openAuth = _config.openAuth;
+global._OAuth = _config.OAuth;
 global._code = _config.code;
 
 global._port = _config.server.port;

@@ -4,8 +4,8 @@ module.exports.google = google;
 
 function facebook(app)
 {
-	var FACEBOOK_APP_ID = _openAuth.facebook.appId;
-	var FACEBOOK_APP_SECRET = _openAuth.facebook.secret;
+	var FACEBOOK_APP_ID = _OAuth.facebook.appId;
+	var FACEBOOK_APP_SECRET = _OAuth.facebook.secret;
 	var FACEBOOK_APP_CALLBACK = global._baseUrl + '/auth/facebook/callback';
 	
 	var passport = require('passport');
@@ -44,8 +44,8 @@ function facebook(app)
 
 function twitter(app)
 {
-	var TWITTER_APP_ID = _openAuth.twitter.appId;
-	var TWITTER_APP_SECRET = _openAuth.twitter.secret;
+	var TWITTER_APP_ID = _OAuth.twitter.appId;
+	var TWITTER_APP_SECRET = _OAuth.twitter.secret;
 	var TWITTER_APP_CALLBACK = global._baseUrl + '/auth/twitter/callback';
 	
 	var passport = require('passport');
@@ -82,8 +82,8 @@ function twitter(app)
 
 function google(app)
 {
-	var GOOGLE_APP_ID = _openAuth.google.appId;
-	var GOOGLE_APP_SECRET = _openAuth.google.secret;
+	var GOOGLE_APP_ID = _OAuth.google.appId;
+	var GOOGLE_APP_SECRET = _OAuth.google.secret;
 	var GOOGLE_APP_CALLBACK = global._baseUrl + '/auth/google/callback';
 	
 	var passport = require('passport');
