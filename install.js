@@ -52,6 +52,16 @@ QueryExecutor.prototype.executeQuery = function(callback)
 	}
 };
 
+try
+{
+	var userdata = fs.readDirSync(__dirname + "/userdata");
+}
+catch(err)
+{
+	fs.mkdirSync(__dirname + "/userdata", 0777);
+	console.log("ggg");
+}
+
 connection.connect(function(err)
 {
 	if(err)
