@@ -12,7 +12,9 @@ module.exports.main =
 	{
 		try
 		{
-			if("http://" + req.headers.host != global._host)
+			var re = new RegExp(("http://" + req.headers.host), 'gi');
+			var match = _host.match(re);
+			if(match == null)
 			{
 				res.redirect(global._host + req.url);
 				return;

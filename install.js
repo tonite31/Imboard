@@ -34,7 +34,7 @@ QueryExecutor.prototype.executeQuery = function(callback)
 		{
 			connection.query(query, function(err, result)
 			{
-				if(err && query.indexOf("DROP") != -1)
+				if(err && query.indexOf("DROP") == -1)
 					console.error(err);
 
 				that.executeQuery(callback);
@@ -54,12 +54,11 @@ QueryExecutor.prototype.executeQuery = function(callback)
 
 try
 {
-	var userdata = fs.readDirSync(__dirname + "/userdata");
+	var userdata = fs.readdirSync(__dirname + "/userdata");
 }
 catch(err)
 {
 	fs.mkdirSync(__dirname + "/userdata", 0777);
-	console.log("ggg");
 }
 
 connection.connect(function(err)

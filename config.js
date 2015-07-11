@@ -145,7 +145,7 @@ configMenu.addMenu("jdbc", function(callback)
 	prompt.message = "";
 	prompt.delimiter = "";
 	
-	prompt.get(['host : ', 'username : ', 'password : ', 'database : '], function(err, result)
+	prompt.get(['host     : ', 'username : ', 'password : ', 'database : '], function(err, result)
 	{
 		if(err)
 		{
@@ -153,8 +153,8 @@ configMenu.addMenu("jdbc", function(callback)
 			return;
 		}
 		
-		config.jdbc.host = result['host : '];
-		config.jdbc.user = result['username : '];
+		config.jdbc.host 	 = result['host     : '];
+		config.jdbc.user 	 = result['username : '];
 		config.jdbc.password = result['password : '];
 		config.jdbc.database = result['database : '];
 		
@@ -172,7 +172,5 @@ configMenu.showMenu(loop, function()
 			console.error(err);
 			return;
 		}
-		
-		console.log(result);
 	});
 });

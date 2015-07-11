@@ -83,11 +83,22 @@
 {{/if}}
 </script>
 
+<script id="userInfoTemplate" type="text/x-handlebars-template">
+{{#if user.profileImgUrl}}
+	<img src="{{user.profileImgUrl}}">
+{{else}}
+	<div style="width: 100%; height:300px; border: 1px solid #dfdfdf; text-align:center;">
+		<div style="width:0; height:100%; vertical-align:middle; display:inline-block;"></div>
+		<span>프로필 이미지가 없습니다</span>
+	</div>
+{{/if}}
+</script>
+
 </head>
 
 <body>
 	<div class="container">
-		<div class="top" data-bind="template">
+		<div class="top" data-bind="template" style="border-bottom: 1px solid #dfdfdf; padding-bottom: 10px;">
 			{{#if \"#{user.id}\"}}
 			<a class="btn btn-default" href="?fragment=write">새 페이퍼 작성</a>
 			<a class="btn btn-default" href="/settings">Admin Dashboard</a>
@@ -99,9 +110,7 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading"><a class="penname" href="/">작성자 이름</a></div>
 				<div class="panel-body">
-					<div class="profileImg" data-bind="getUser" data-param='{"id" : "admin"}'>
-						<img src="{{user.profileImgUrl}}" alt="프로필 이미지">
-					</div>
+					<div class="profileImg" data-bind="getUser" data-param='{"id" : "admin"}' data-template-id="userInfoTemplate"></div>
 			      	<div>
 			        	<h1 class="blogTitle">블로그 제목</h1>
 			        	<p class="blogDescription">블로그 설명</p>
