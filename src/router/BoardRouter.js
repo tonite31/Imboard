@@ -77,7 +77,7 @@ module.exports.updateBoard =
 		
 		boardDao.getBoard(boardVo.id, function(response)
 		{
-			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			if(!response.creator || (req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id)))
 			{
 				boardDao.updateBoard(boardVo, function(response)
 				{
@@ -101,7 +101,7 @@ module.exports.deleteBoard =
 		var param = req.body;
 		boardDao.getBoard(param.id, function(response)
 		{
-			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			if(!response.creator || (req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id)))
 			{
 				boardDao.deleteBoard(param.id, function(response)
 				{

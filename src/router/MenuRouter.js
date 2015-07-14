@@ -74,7 +74,7 @@ module.exports.updateMenu =
 		menuVo.id = req.body.id;
 		menuDao.getMenu(menuVo, function(response)
 		{
-			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			if(!response.creator || (req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id)))
 			{
 				menuVo = new MenuVo(req.body);
 				menuDao.updateMenu(menuVo, function(response)
@@ -102,7 +102,7 @@ module.exports.deleteMenu =
 		
 		menuDao.getMenu(menuVo, function(response)
 		{
-			if(req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id))
+			if(!response.creator || (req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id)))
 			{
 				menuDao.deleteMenu(param.id, function(response)
 				{
