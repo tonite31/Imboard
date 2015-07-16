@@ -275,12 +275,8 @@
         WHERE
         	(D.VIEW_DETAIL_LEVEL IS NULL OR D.VIEW_DETAIL_LEVEL &gt;= #{signinUserLevel})
         	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
-        	<if test="#{boardId}">
-        		AND A.BOARD_ID = #{boardId}
-        	</if>
-        	<if test="#{seq}">
-        	    AND SEQ = #{seq}
-        	</if>
+       		AND A.BOARD_ID = #{boardId}
+       	    AND SEQ = #{seq}
         	<if test="#{subject}">
 	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
 	        </if>

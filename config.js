@@ -45,6 +45,19 @@ Menu.prototype.showMenu = function(loop, quitCallback)
 				quitCallback();
 			return;
 		}
+		else if(isNaN(menu))
+		{
+			console.log();
+			console.log("selected menu is invalid");
+			console.log("-----------------------------------------");
+			
+			if(loop)
+			{
+				that.showMenu(loop, quitCallback);
+			}
+			
+			return;
+		}
 		
 		var callback = that.menuList[menu-1].callback;
 		if(callback)
@@ -55,7 +68,6 @@ Menu.prototype.showMenu = function(loop, quitCallback)
 				{
 					console.log();
 					console.log("-----------------------------------------");
-					console.log();
 					that.showMenu(loop, quitCallback);
 				});
 			}

@@ -20,6 +20,9 @@ module.exports.main =
 				return;
 			}
 			
+			if(!req.session)
+				req.session = {};			
+			
 			var path = req.path.replace(".page", ".html");
 			if(path.match(/^\/settings\/?$/) != null)
 			{
@@ -30,59 +33,20 @@ module.exports.main =
 				if(req.session.user != null && req.session.user.id != null)
 				{
 					render(req, res, "common", "core", "/signed.html");
-//					
-//					var html = Render.getData(global._path.content + "/common/signed.html");
-//					html = replaceData(html, req);
-//					Render.render(req, res, html);
 				}
 				else
 				{
-					if(!req.session)
-						req.session = {};
-					
-					if(req.session.signReferer == null)
-						req.session.signReferer = req.headers.referer;
-					
 					render(req, res, "common", "core", "/signin.html");
-					
-//					var html = Render.getData(global._path.content + "/common/signin.html");
-//					html = replaceData(html, req);
-//					Render.render(req, res, html);
 				}
 			}
-//			else if(path.match(/^\/redirect\/?$/) != null)
-//			{
-//				res.redirect(req.session.signReferer ? req.session.signReferer : "/");
-//			}
-//			else if(path.match(/^\/signup\/?$/) != null)
-//			{
-//				var html = Render.getData(global._path.content + "/common/signup.html");
-//				html = replaceData(html, req);
-//
-//				if(req.query.piece != null && req.query.piece == "setPassword")
-//				{
-//					if(req.session.signupKey == req.query.key)
-//					{
-//						$ = cheerio.load(html);
-//						$("*[data-fragment]").html(Render.getData(_path.content + "/common/signup2.html"));
-//						html = $.html();
-//					}
-//					else
-//					{
-//						$ = cheerio.load(Render.getData(global._path.content + "/common/404.html"));
-//						$("h1").text("잘못된경로로 접속하셨습니다");
-//						html = $.html();
-//					}
-//				}
-//				
-//				Render.render(req, res, html);
-//			}
 			else if(path.match(/^\/favicon.ico\/?$/) != null)
 			{
 				next();
 			}
 			else
 			{
+				req.session.lastUrl = req.url;
+				
 				//분석
 				var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
 				var userAgent = req.headers['user-agent'];
@@ -123,89 +87,118 @@ function replaceData(html, req)
 	}
 	finally
 	{
-		if(matchs != null)
+		try
 		{
-			for(var i=0; i<matchs.length; i++)
+			if(matchs != null)
 			{
-				var m = matchs[i].substring(1);
-				if(matchs[i][0] == "#")
+				for(var i=0; i<matchs.length; i++)
 				{
-					html = html.replace(matchs[i], m);
-					continue;
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
+					
+					var key = m.replace("#{lan.", "").replace("}", "");
+					if(_languages.hasOwnProperty(key))
+						html = html.replace(m, _languages[key][cc]);
+				}
+			}
+			
+			matchs = html.match(/[^]?#{query}/gi);
+			if(matchs)
+			{
+				var query = "";
+				for(var key in req.query)
+				{
+					query += (query ? "&" : "?") + key + "=" + req.query[key];
 				}
 				
-				var key = m.replace("#{lan.", "").replace("}", "");
-				if(_languages.hasOwnProperty(key))
-					html = html.replace(m, _languages[key][cc]);
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], "#{query}");
+						continue;
+					}
+					
+					html = html.replace(m, query);
+				}
+			}
+				
+			matchs = html.match(/[^]?#{query\.[^}]*}/gi);
+			if(matchs != null)
+			{
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
+					
+					var key = m.replace("#{query.", "").replace("}", "");
+					var value = req.query[key];
+					if(value == "" || value == null)
+						value = "";
+					
+					html = html.replace(m, value);
+				}
+			}
+			
+			matchs = html.match(/[^]?#{user\.[^}]*}/gi);
+			if(matchs != null)
+			{
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
+					
+					var key = m.replace("#{user.", "").replace("}", "");
+					var value = "";
+					if(req.session && req.session.user)
+						value = req.session.user[key];
+					
+					if(value == null)
+						value = "";
+					
+					html = html.replace(m, value);
+				}
+			}
+			
+			matchs = html.match(/[^]?#{path\.[^}]*}/gi);
+			if(matchs != null)
+			{
+				var frameData = {root : "/content/frame/" + _config.frame, module : "/content/module", lib : "/content/lib"};
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
+					
+					var key = m.replace("#{path.", "").replace("}", "");
+					var value = frameData[key];
+					
+					if(value == null)
+						value = "";
+					
+					html = html.replace(m, value);
+				}
 			}
 		}
-		
-		matchs = html.match(/[^]?#{query.[^}]*}/gi);
-		if(matchs != null)
+		catch(err)
 		{
-			for(var i=0; i<matchs.length; i++)
-			{
-				var m = matchs[i].substring(1);
-				if(matchs[i][0] == "#")
-				{
-					html = html.replace(matchs[i], m);
-					continue;
-				}
-				
-				var key = m.replace("#{query.", "").replace("}", "");
-				var value = req.query[key];
-				if(value == "" || value == null)
-					value = "";
-				
-				html = html.replace(m, value);
-			}
-		}
-		
-		matchs = html.match(/[^]?#{user.[^}]*}/gi);
-		if(matchs != null)
-		{
-			for(var i=0; i<matchs.length; i++)
-			{
-				var m = matchs[i].substring(1);
-				if(matchs[i][0] == "#")
-				{
-					html = html.replace(matchs[i], m);
-					continue;
-				}
-				
-				var key = m.replace("#{user.", "").replace("}", "");
-				var value = "";
-				if(req.session && req.session.user)
-					value = req.session.user[key];
-				
-				if(value == null)
-					value = "";
-				
-				html = html.replace(m, value);
-			}
-		}
-		
-		matchs = html.match(/[^]?#{path.[^}]*}/gi);
-		if(matchs != null)
-		{
-			var frameData = {root : "/content/frame/" + _config.frame, module : "/content/module", lib : "/content/lib"};
-			for(var i=0; i<matchs.length; i++)
-			{
-				var m = matchs[i].substring(1);
-				if(matchs[i][0] == "#")
-				{
-					html = html.replace(matchs[i], m);
-					continue;
-				}
-				
-				var key = m.replace("#{path.", "").replace("}", "");
-				var value = frameData[key];
-				
-				if(value == null)
-					value = "";
-				
-				html = html.replace(m, value);
-			}
+			_log.error(err.stack);
 		}
 	}
 	
