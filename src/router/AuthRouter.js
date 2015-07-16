@@ -103,7 +103,7 @@ module.exports.loginSuccessCallback =
 					req.session.user = result;
 					req.session.user.encryptKey = encryptKey;
 					UserDao.updateLastAccessDate(result.id);
-					res.redirect(req.session.signReferer ? req.session.signReferer : "/");
+					res.redirect(req.session.lastUrl ? req.session.lastUrl : "/");
 				})
 			}
 		});
@@ -144,7 +144,7 @@ module.exports.signin =
 					
 					UserDao.updateLastAccessDate(result.id);
 					
-					res.end(JSON.stringify({code : _code.SUCCESS, data : req.session.signReferer ? req.session.signReferer : "/"}));
+					res.end(JSON.stringify({code : _code.SUCCESS, data : req.session.lastUrl ? req.session.lastUrl : "/"}));
 				}
 				else
 				{
