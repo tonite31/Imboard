@@ -270,7 +270,7 @@ function getLayout(req, res, folder, frame, path)
 			
 			$ = cheerio.load(layout);
 			
-			bindPiece(req, folder, frame, path, $, "body");
+			bindPiece(req, res, folder, frame, path, $, "body");
 			
 		 	return $;
 		}
@@ -283,7 +283,7 @@ function getLayout(req, res, folder, frame, path)
 	return null;
 }
 
-function bindPiece(req, folder, frame, path, $, el)
+function bindPiece(req, res, folder, frame, path, $, el)
 {
 	$(el).find("*[data-fragment]").each(function()
 	{
@@ -319,6 +319,6 @@ function bindPiece(req, folder, frame, path, $, el)
 	 		}
 		}
 		
-		bindPiece(req, folder, frame, path, $, this);
+		bindPiece(req, res, folder, frame, path, $, this);
 	});
 }
