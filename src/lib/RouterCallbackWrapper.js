@@ -45,7 +45,7 @@ module.exports.create = function(func)
 	    					if(!req.session)
 	    						req.session = {};
 
-	    					req.session.signReferer = req.url;
+	    					req.session.lastUrl = req.url;
 	    					res.redirect("/signin");
 		    	 			return;
 	    				}
