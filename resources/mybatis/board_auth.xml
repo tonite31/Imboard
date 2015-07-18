@@ -24,14 +24,20 @@
     
     <insert id="insertBoardAuth" parameterType="BoardAuthVo">
         INSERT IMB_BOARD_AUTH
-        	(BOARD_ID, VIEW_LIST_LEVEL, VIEW_DETAIL_LEVEL, WRITE_LEVEL, WRITE_COMMENT_LEVEL)
+        	(
+        		BOARD_ID
+        		<if test="#{viewListLevel}">, VIEW_LIST_LEVEL</if>
+        		<if test="#{viewDetailLevel">, VIEW_DETAIL_LEVEL</if>
+        		<if test="#{writeLevel}">, WRITE_LEVEL</if>
+        		<if test="#{writeCommentLevel}">, WRITE_COMMENT_LEVEL</if>
+        	)
         VALUES
         	(
-        		#{boardId},
-        		#{viewListLevel},
-        		#{viewDetailLevel},
-        		#{writeLevel},
-        		#{writeCommentLevel}
+        		#{boardId}
+        		<if test="#{viewListLevel}">, #{viewListLevel}</if>
+        		<if test="#{viewDetailLevel">, #{viewDetailLevel}</if>
+        		<if test="#{writeLevel}">, #{writeLevel}</if>
+        		<if test="#{writeCommentLevel}">, #{writeCommentLevel}</if>
         	)
     </insert>
     
