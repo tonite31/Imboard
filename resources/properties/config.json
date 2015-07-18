@@ -1,5 +1,5 @@
 {
-    "frame": "imboard",
+    "frame": "blog",
     "server": {
         "port": 3000,
         "host": "http://localhost:3000"
@@ -18,10 +18,10 @@
         "DATA_NOT_FOUND": "-9994"
     },
     "jdbc": {
-        "host": "localhost",
-        "user": "imboard",
-        "password": "imboard",
-        "database": "imboard",
+        "host": "host",
+        "user": "user",
+        "password": "password",
+        "database": "database",
         "typeCast": true,
         "multipleStatements": true
     },
