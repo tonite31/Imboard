@@ -41,7 +41,7 @@ ArticleDao.prototype.getArticleListCount = function(boardId, searchData, callbac
 		vo.orderByGroupId = "DESC";
 	else
 		vo.orderByGroupId = vo.orderByGroupId.toUpperCase();
-	
+
 	this.sqlMapClient.selectQuery("getArticleListCount", vo, callback);
 };
 

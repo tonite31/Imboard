@@ -47,26 +47,6 @@ var ArticleVo = function(param)
 	this.likeWriterId = undefined;
 	this.likeWriterName = undefined;
 	
-//	this.typeHandler = {
-//		pageIndex : {type : "function", func : Delegator.create(this, function(pageIndex)
-//		{
-//			if(pageIndex && pageIndex.count && pageIndex.page)
-//			{
-//				try
-//				{
-//					this.startIndex = parseInt(pageIndex.count) * (parseInt(pageIndex.page) -1);
-//					this.endIndex = parseInt(pageIndex.count);
-//				}
-//				catch(err)
-//				{
-//					console.error(err);
-//					this.startIndex = null;
-//					this.endIndex = null;
-//				}
-//			}
-//		})}
-//	};
-	
 	ParameterBinder.bind(this, param);
 };
 

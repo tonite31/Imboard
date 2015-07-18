@@ -23,14 +23,19 @@ module.exports.getArticleListCount =
 		
 		var boardId = param.boardId;
 		
+		if(!param.searchData)
+			param.searchData = {};
+		
 		if(req.session.user != null)
 		{
-			if(!param.searchData)
-				param.searchData = {};
-			
 			param.searchData.signinUserId = req.session.user.id;
 			param.searchData.signinUserLevel = req.session.user.level;
 		}
+		
+		if(param.searchData.startIndex)
+			param.searchData.startIndex = parseInt(param.searchData.startIndex);
+		if(param.searchData.endIndex)
+			param.searchData.endIndex = parseInt(param.searchData.endIndex);
 		
 		ArticleDao.getArticleListCount(boardId, param.searchData, function(response)
 		{
@@ -69,6 +74,11 @@ module.exports.getArticleList =
 			param.searchData.startIndex = null;
 			param.searchData.endIndex = null;
 		}
+		
+		if(param.searchData.startIndex)
+			param.searchData.startIndex = parseInt(param.searchData.startIndex);
+		if(param.searchData.endIndex)
+			param.searchData.endIndex = parseInt(param.searchData.endIndex);
 		
 		if(req.session.user != null)
 		{
