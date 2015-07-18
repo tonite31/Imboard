@@ -1,2 +1,5 @@
 - 0.1.4
 1. #{query} 치환변수 추가
+2. articleComponent 모듈 게시글이 0개라도 초기 페이지는 1로 보여지게 수정
+3. $.api.board.getBoardList 오류 수정
+4. 관리자페이지 게시판관리 화면 오류 수정
