@@ -10,7 +10,14 @@ module.exports.getBoardList =
 	path : '/board/getBoardList.do',
 	callback : function(req, res)
 	{
-		boardDao.getBoardList(function(response)
+		var vo = new BoardVo();
+		if(req.session.user != null)
+		{
+			vo.signinUserId = req.session.user.id;
+			vo.signinUserLevel = req.session.user.level;
+		}
+		
+		boardDao.getBoardList(vo, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
 		});
