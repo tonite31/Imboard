@@ -82,19 +82,17 @@ module.exports.articleComponent = function($, el, param, req, next)
 				
 				ArticleDao.getArticleListCount(data.boardId, data.searchData, function(totalCount)
 				{
-					var maxPage = 0;
-//					if(totalCount > 10)
-//						maxPage = (Math.ceil(totalCount / 10) * 10) / cpp;
-//					else
-						maxPage = Math.ceil(totalCount / cpp);
+					var maxPage = Math.ceil(totalCount / cpp);
+					maxPage = maxPage == 0 ? 1 : maxPage;
+						
 					
 					var startPage = Math.ceil(pageIndex / pgc);
 					startPage = startPage + (startPage - 1) * (pgc - 1);
 					
-					var pageData = [];
+					var pageList = [];
 					for(var i=startPage; i<startPage + pgc && i <= maxPage; i++)
 					{
-						pageData.push({pageNumber : i, href : "?piece=" + req.query.piece + "&boardId=" + data.boardId + "&pageIndex=" + i});
+						pageList.push({pageNumber : i, href : "?piece=" + req.query.piece + "&boardId=" + data.boardId + "&pageIndex=" + i});
 					}
 					
 					$(el).find("*[data-parts='pagination']").each(function()
@@ -102,7 +100,7 @@ module.exports.articleComponent = function($, el, param, req, next)
 						$(this).removeAttr("data-parts");
 						
 						var template = that.getTemplate($, this);
-						$(this).html(template({pageList : pageData, pageIndex : parseInt(pageIndex), maxPage : maxPage}));
+						$(this).html(template({pageList : pageList, pageIndex : parseInt(pageIndex), maxPage : maxPage}));
 					});
 					
 					cb();
