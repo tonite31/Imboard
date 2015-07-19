@@ -1,3 +1,8 @@
+- 0.1.5
+1. 초기 url권한 수정
+2. config.js server설정시 host의 마지막 / 제거
+3. 로그인 후 redirect부분 수정
+
 - 0.1.4
 1. #{query} 치환변수 추가
 2. articleComponent 모듈 게시글이 0개라도 초기 페이지는 1로 보여지게 수정

@@ -82,9 +82,9 @@ module.exports.loginSuccessCallback =
 		userVo.id = user.id;
     	UserDao.getUser(userVo, function(result)
 		{
+    		_log.error("뭐야 : ", result);
 			if(!result)
 			{
-//				res.redirect("/profile");
 				var vo = new UserVo();
 				vo.id = user.id;
 				vo.provider = user.provider;
@@ -93,7 +93,7 @@ module.exports.loginSuccessCallback =
 				UserDao.insertUser(vo, function(response)
 				{
 					req.session.user = vo;
-					res.redirect(_config.registeredUserRedirectUrl ? _config.registeredUserRedirectUrl : (req.session.signReferer ? req.session.signReferer : "/"));
+					res.redirect(req.session.lastUrl ? req.session.lastUrl : "/");
 				});
 			}
 			else
@@ -103,6 +103,7 @@ module.exports.loginSuccessCallback =
 					req.session.user = result;
 					req.session.user.encryptKey = encryptKey;
 					UserDao.updateLastAccessDate(result.id);
+					
 					res.redirect(req.session.lastUrl ? req.session.lastUrl : "/");
 				})
 			}

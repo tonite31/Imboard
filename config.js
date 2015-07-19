@@ -122,8 +122,12 @@ configMenu.addMenu("server", function(callback)
 			return;
 		}
 		
+		var host = result['host : '];
+		if(host[host.length-1] == "/")
+			host = host.substring(0, host.length-1);
+		
 		config.server.port = result['port : '];
-		config.server.host = result['host : '];
+		config.server.host = host;
 		
 		if(callback)
 			callback();
