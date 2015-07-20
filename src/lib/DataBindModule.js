@@ -23,15 +23,39 @@ DataBindModule.prototype.getTemplate = function($, el)
 	{
 		var templateId = $(el).attr('data-template-id');
 		if(templateId)
-			html = $("#" + templateId).html();
+		{
+			var template = $("#" + templateId);
+			html = template.html();
+			
+			if(template.attr("data-precompile") == "true")
+			{
+				//프리컴파일형식으로 만들어두자?
+			}	
+			else
+			{
+				template.remove();
+			}
+		}
 		else
+		{
+			if($(el).attr("data-precompile") == "true")
+			{
+				
+			}
+			
 			html = $(el).html().replace(/\\&quot;/gi, "\"");
+		}
 		
 		$(el).removeAttr("data-template-id");
 		
 		if(!html)
-		{
 			html = "<p class='databind-error'>Empty template!</p>";
+		
+		var matchs = html.match(/{{[^}]*}}/gi);
+		for(var i=0; i<matchs.length; i++)
+		{
+			var replaceString = matchs[i].replace(/&quot;/gi, "\"");
+			html = html.replace(matchs[i], replaceString);
 		}
 	}
 	catch(err)
