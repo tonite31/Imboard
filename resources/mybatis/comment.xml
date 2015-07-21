@@ -138,7 +138,7 @@
         		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	A.GROUP_ID <if test="#{useOrderByGroupId}">, A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
+        	A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
      	<if test="#{startIndex} and #{endIndex}">
        		LIMIT #{startIndex}, #{endIndex}
         </if>
