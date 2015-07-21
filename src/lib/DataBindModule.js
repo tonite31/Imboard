@@ -1,6 +1,6 @@
 var fs = require('fs');
 var Handlebars = require("handlebars");
-var HandlebarHelper = require(_path.content + "/module/imboard/js/handlebar-helper.js");
+var HandlebarHelper = require(_path.content + "/module/imboard/js/handlebars-helper.js");
 
 var DataBindModule = function()
 {
