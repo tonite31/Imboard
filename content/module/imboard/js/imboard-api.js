@@ -359,7 +359,7 @@
 	    });
 	};
 
-	$.api.comment.writeComment = function(data)
+	$.api.comment.insertComment = function(data)
 	{
 	    return httpRequest({
 	       url: "/comment/insertComment.do",

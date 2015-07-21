@@ -1,7 +1,7 @@
 {
   "name": "imboard",
-  "version": "0.1.4",
-  "description": "",
+  "version": "0.1.6",
+  "description": "Most convenient platform for webpage development.",
   "repository": {
     "type": "git",
     "url": "https://github.com/tonite31/imboard.git"
@@ -37,8 +37,8 @@
     "winston": "^0.7.3"
   },
   "devDependencies": {},
-  "author": "",
-  "homepage": "",
+  "author": "Alprensia",
+  "homepage": "http://imboard.io",
   "license": [
     {
       "type": "MIT",
