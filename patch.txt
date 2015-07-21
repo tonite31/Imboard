@@ -1,8 +1,13 @@
+- 0.1.7
+1. DataBindModule js오류 수정
+2. .js, .css파일은 로그인 후 redirect Url로 설정안되게 수정
+3. common파일에 변경된 handlebars-helper.js 적용
+
 - 0.1.6
 1. data-bind 모듈 innerHTML 템플릿의 핸들바 문법에서 " 그냥 사용할 수 있도록 수정
 2. data-bind template script일경우 pre-compile=true가 아니면 무조건 한 번 템플리팅 하고 삭제처리. 추후 프리컴파일형태로...
 3. handlebar-helper.js 파일명이 handlebars-helper.js 로 변경되었습니다.
-4. $.api.comment.getCommentListCount와 $.api.comment.getCommentList 호출시 groupId와 seq의 정렬방법이 asc가 기본값으로 변경되었습니다. groupId와 seq는 반드시 정렬방법에 포함되었음.
+4. $.api.comment.getCommentListCount와 $.api.comment.getCommentList함수의 groupId, seq의 정렬방법이 asc가 기본값으로 변경되었습니다. groupId와 seq는 반드시 정렬방법에 포함되었음.
 5. $.api.comment.writeComment 함수가 $.api.comment.insertComment로 이름이 변경되었습니다.
 
 - 0.1.5

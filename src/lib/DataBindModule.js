@@ -52,10 +52,13 @@ DataBindModule.prototype.getTemplate = function($, el)
 			html = "<p class='databind-error'>Empty template!</p>";
 		
 		var matchs = html.match(/{{[^}]*}}/gi);
-		for(var i=0; i<matchs.length; i++)
+		if(matchs)
 		{
-			var replaceString = matchs[i].replace(/&quot;/gi, "\"");
-			html = html.replace(matchs[i], replaceString);
+			for(var i=0; i<matchs.length; i++)
+			{
+				var replaceString = matchs[i].replace(/&quot;/gi, "\"");
+				html = html.replace(matchs[i], replaceString);
+			}
 		}
 	}
 	catch(err)

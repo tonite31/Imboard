@@ -45,6 +45,12 @@ module.exports.main =
 			}
 			else
 			{
+				if(req.url.match(/[^\.]*.js/) != null || req.url.match(/[^\.]*.css/) != null)
+				{
+					next();
+					return;
+				}
+				
 				req.session.lastUrl = req.url;
 				
 				//분석
