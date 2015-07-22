@@ -8,5 +8,25 @@
 	{
 		"ko-KR" : "회원등록",
 		"en-US" : "Sign up"
+	},
+	"gettingstarted" :
+	{
+		"ko-KR" : "시작하기",
+		"en-US" : "GettingStarted"
+	},
+	"document" :
+	{
+		"ko-KR" : "문서",
+		"en-US" : "Document"
+	},
+	"patchnote" :
+	{
+		"ko-KR" : "패치노트",
+		"en-US" : "Patchnote"
+	},
+	"community" :
+	{
+		"ko-KR" : "커뮤니티",
+		"en-US" : "Community"
 	}
 }

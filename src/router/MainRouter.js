@@ -83,9 +83,16 @@ function replaceData(html, req)
 	var cc = "ko-KR";
 	try
 	{
-		cc = req.headers["accept-language"].split(",")[0];
-		var split = cc.split("-");
-		cc = split[0] + "-" + split[1].toUpperCase();
+		if(req.query.locale)
+		{
+			cc = req.query.locale;
+		}
+		else
+		{
+			cc = req.headers["accept-language"].split(",")[0];
+			var split = cc.split("-");
+			cc = split[0] + "-" + split[1].toUpperCase();
+		}
 	}
 	catch(err)
 	{

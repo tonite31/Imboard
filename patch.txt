@@ -2,6 +2,8 @@
 1. DataBindModule js오류 수정
 2. .js, .css파일은 로그인 후 redirect Url로 설정안되게 수정
 3. common파일에 변경된 handlebars-helper.js 적용
+4. data-bind locale 모듈이 추가되었습니다. 문장을 국제화하는경우에 사용하면 효율적입니다. 사용법은 문서를 참조하세요.
+4. 국제화기능 - querystring에 locale값이 들어있으면 해당 값을 우선시하여 locale을 설정합니다. #{lan}치환변수 및 data-bind locale모듈에 적용됩니다.
 
 - 0.1.6
 1. data-bind 모듈 innerHTML 템플릿의 핸들바 문법에서 " 그냥 사용할 수 있도록 수정
