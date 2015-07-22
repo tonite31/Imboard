@@ -7,7 +7,7 @@ module.exports.template = function($, el, param, req, next)
 
 module.exports.locale = function($, el, param, req, next)
 {
-	var cc = "ko-KR";
+	var cc = "default";
 	if(req.query.locale)
 	{
 		cc = req.query.locale

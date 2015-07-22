@@ -1,32 +1,57 @@
 {
+	"korean" :
+	{
+		"ko-KR" : "한국어",
+		"default" : "Korean"
+	},
+	"english" :
+	{
+		"ko-KR" : "영어",
+		"default" : "English"
+	},
 	"signin" :
 	{
 		"ko-KR" : "로그인",
-		"en-US" : "Sign in"
+		"default" : "Sign in"
+	},
+	"signout" :
+	{
+		"ko-KR" : "로그아웃",
+		"default" : "Sign out"
 	},
 	"signup" :
 	{
 		"ko-KR" : "회원등록",
-		"en-US" : "Sign up"
+		"default" : "Sign up"
 	},
 	"gettingstarted" :
 	{
 		"ko-KR" : "시작하기",
-		"en-US" : "GettingStarted"
+		"default" : "GettingStarted"
 	},
 	"document" :
 	{
 		"ko-KR" : "문서",
-		"en-US" : "Document"
+		"default" : "Document"
 	},
 	"patchnote" :
 	{
 		"ko-KR" : "패치노트",
-		"en-US" : "Patchnote"
+		"default" : "Patchnote"
 	},
 	"community" :
 	{
 		"ko-KR" : "커뮤니티",
-		"en-US" : "Community"
+		"default" : "Community"
+	},
+	"download" :
+	{
+		"ko-KR" : "다운로드",
+		"default" : "Download"
+	},
+	"installation" :
+	{
+		"ko-KR" : "설치하기",
+		"default" : "Installation"
 	}
 }
