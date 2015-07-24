@@ -78,8 +78,6 @@ module.exports.main =
 
 function replaceData(html, req)
 {
-	var matchs = html.match(/[^]?#{lan.[^}]*}/gi);
-	
 	var cc = "default";
 	try
 	{
@@ -100,8 +98,11 @@ function replaceData(html, req)
 	}
 	finally
 	{
+		html = localize(cc, html);
+		
 		try
 		{
+			var matchs = html.match(/[^]?#{lan.[^}]*}/gi);
 			if(matchs != null)
 			{
 				for(var i=0; i<matchs.length; i++)
@@ -116,6 +117,22 @@ function replaceData(html, req)
 					var key = m.replace("#{lan.", "").replace("}", "");
 					if(_languages.hasOwnProperty(key))
 						html = html.replace(m, (_languages[key][cc] ? _languages[key][cc] : _languages[key]["default"]));
+				}
+			}
+			
+			matchs = html.match(/[^]?#{locale[^}]*}/gi);
+			if(matchs != null)
+			{
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
+
+					html = html.replace(m, cc);
 				}
 			}
 			
@@ -224,6 +241,7 @@ function render(req, res, folder, frame, path)
 	if($)
 	{
 		bindInnerHtml(req, frame, $, "body");
+		bindReplaceHtml(req, frame, $, "body");
 
 		DataBindModule.databind($, "body", req, function(html)
 		{
@@ -260,6 +278,37 @@ function bindInnerHtml(req, frame, $, target)
 			}
 			
 			bindInnerHtml(req, frame, $, this);
+		}
+	});
+}
+
+function bindReplaceHtml(req, frame, $, target)
+{
+	$(target).find("*[data-replace-html]").each(function()
+	{
+		var src = $(this).attr("data-replace-html");
+		$(this).removeAttr("data-replace-html");
+		
+		if(src)
+		{
+			if(src.indexOf("/", 0) != 0)
+				src = "/" + src;
+			
+			var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
+			if(layout)
+			{
+				layout = replaceData(layout, req);
+				$(layout).insertBefore(this);
+				
+				$(layout).find("script[type='text/x-handlebars-template']").each(function()
+		 		{
+		 			$("head").append(this);
+		 		});
+
+				$(this).remove();
+			}
+			
+			bindReplaceHtml(req, frame, $, this);
 		}
 	});
 }
@@ -334,4 +383,35 @@ function bindPiece(req, res, folder, frame, path, $, el)
 		
 		bindPiece(req, res, folder, frame, path, $, this);
 	});
+}
+
+function localize(locale, html)
+{
+	do
+	{
+		var startIndex = html.indexOf("{{#localize", 0);
+		var endIndex = html.indexOf("{{/localize}}", startIndex);
+		
+		if(startIndex != -1 && endIndex != -1)
+		{
+			var area = html.substring(startIndex, endIndex + 13);
+			
+			var token = "default";
+			var match = area.match('{{"' + locale + '"}}');
+			if(match && match.length > 0)
+				token = locale;
+			
+			var tokenLength = ('{{"' + token + '"}}').length;
+			var start = area.indexOf('{{"' + token + '"}}', 0);
+			var end = area.indexOf("{{", start + tokenLength);
+			if(start != -1 && end != -1)
+			{
+				var text = area.substring(start + tokenLength, end);
+				html = html.replace(area, text.trim());
+			}
+		}
+		
+	}while(startIndex != -1 && endIndex != -1)
+
+	return html;
 }

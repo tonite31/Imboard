@@ -88,7 +88,7 @@ DataBindModule.prototype.getParameters = function($, el)
 	catch(err)
 	{
 		_log.error(err.stack);
-		$(el).html("<span> 파라미터 <strong>" + value + "</strong> 파싱중 오류가 발생했습니다.</span><br/><br/><pre>" + err.stack + "</pre>");
+		$(el).html("<span> ParseException : <strong>" + value + "</strong> </span><br/><br/><pre>" + err.stack + "</pre>");
 		param = null;
 	}
 	
@@ -122,13 +122,27 @@ DataBindModule.prototype.compile = function($, list, req, callback, index)
 				}
 				else
 				{
-					that.modules[name].call(that, $, el, param, req, function() // 정상적인 파라미터를 얻은경우 모듈 호출.
+					try
 					{
-						that.databind($, el, req, function() //script로 템플릿이 작성된경우는 위에서 검출이 안된다. 따라서 data-bind 후 템플릿이 실제로 innerHTML로 만들어졌을 때 data-bind가 또 있는지 체크하고 수행함
+						that.modules[name].call(that, $, el, param, req, function() // 정상적인 파라미터를 얻은경우 모듈 호출.
+						{
+							that.databind($, el, req, function() //script로 템플릿이 작성된경우는 위에서 검출이 안된다. 따라서 data-bind 후 템플릿이 실제로 innerHTML로 만들어졌을 때 data-bind가 또 있는지 체크하고 수행함
+							{
+								that.compile($, list, req, callback, index+1); //끝나면 다음 시블링 data-bind로 넘어감.
+							});
+						});
+					}
+					catch(err)
+					{
+						//모듈 호출시 오류 발생하는경우
+						_log.error(err.stack);
+						
+						//다음으로 넘어감
+						that.databind($, el, req, function()
 						{
 							that.compile($, list, req, callback, index+1); //끝나면 다음 시블링 data-bind로 넘어감.
 						});
-					});
+					}
 				}
 			}
 			else
