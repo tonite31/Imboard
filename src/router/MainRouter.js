@@ -119,6 +119,22 @@ function replaceData(html, req)
 				}
 			}
 			
+			matchs = html.match(/[^]?#{locale}/gi);
+			if(matchs)
+			{
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], "#{locale}");
+						continue;
+					}
+					
+					html = html.replace(m, cc);
+				}
+			}
+			
 			matchs = html.match(/[^]?#{query}/gi);
 			if(matchs)
 			{
