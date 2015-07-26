@@ -24,6 +24,11 @@
 		"ko-KR" : "회원등록",
 		"default" : "Sign up"
 	},
+	"admin" :
+	{
+		"ko-KR" : "관리자 대쉬보드",
+		"default" : "Admin dashboard"
+	},
 	"gettingstarted" :
 	{
 		"ko-KR" : "시작하기",
