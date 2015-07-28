@@ -17,8 +17,8 @@ global._path =
 };
 	
 global._multipart = require('connect-multiparty');
-global._languages = require(__dirname + '/resources/properties/languages');
 global._config = require(__dirname + '/resources/properties/config');
+global._localize = require(__dirname + '/content/frame/' + _config.frame + '/properties/localize');
 global._aws = _config.aws;
 global._OAuth = _config.OAuth;
 global._code = _config.code;

@@ -115,8 +115,8 @@ function replaceData(html, req)
 					}
 					
 					var key = m.replace("#{lan.", "").replace("}", "");
-					if(_languages.hasOwnProperty(key))
-						html = html.replace(m, (_languages[key][cc] ? _languages[key][cc] : _languages[key]["default"]));
+					if(_localize.hasOwnProperty(key))
+						html = html.replace(m, (_localize[key][cc] ? _localize[key][cc] : _localize[key]["default"]));
 				}
 			}
 			
