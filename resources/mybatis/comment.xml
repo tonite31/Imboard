@@ -63,7 +63,9 @@
         		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	GROUP_ID  <if test="#{useOrderByGroupId}">, A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if></if> <if test="#{useOrderBySeq}">, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if></if>
+        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
+       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+       		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
      	<if test="startIndex">
         	<if test="endIndex">
         		LIMIT #{startIndex}, #{endIndex}
@@ -138,7 +140,9 @@
         		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	A.GROUP_ID <if test="#{orderByGroupId} == 'DESC'">DESC</if>, A.SEQ <if test="#{orderBySeq} == 'DESC'">DESC</if>
+        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
+       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+       		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
      	<if test="#{startIndex} and #{endIndex}">
        		LIMIT #{startIndex}, #{endIndex}
         </if>

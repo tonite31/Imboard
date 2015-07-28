@@ -18,16 +18,16 @@ var CommentVo = function(param)
 	this.status = undefined;
 	this.writerProfileImgUrl = undefined;
 	
-	this.registerDateType = undefined;
-	
 	//searchData
 	this.pageIndex = undefined;
 	this.startIndex = undefined;
 	this.endIndex = undefined;
 	this.registerDateType = undefined;
 	this.withContent = undefined;
+	
 	this.orderByGroupId = undefined;
 	this.orderBySeq = undefined;
+	this.orderByRegisterDate = undefined;
 	
 	ParameterBinder.bind(this, param);
 };
