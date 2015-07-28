@@ -31,17 +31,17 @@ var ArticleVo = function(param)
 	
 	this.existThumbnailUrl = undefined;
 	
-	this.useOrderByGroupId = undefined;
-	this.useOrderBySeq = undefined;
-	
 	//searchData
 	this.pageIndex = undefined;
 	this.startIndex = undefined;
 	this.endIndex = undefined;
 	this.registerDateType = undefined;
 	this.withContent = undefined;
-	this.orderByGroupId = undefined;
+	
 	this.orderBySeq = undefined;
+	this.orderByIsNotice = undefined;
+	this.orderByRegisterDate = undefined;
+	this.orderByGroupId = undefined;
 	
 	this.likeWriterDisplayId = undefined;
 	this.likeWriterId = undefined;

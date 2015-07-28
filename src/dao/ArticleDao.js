@@ -34,13 +34,21 @@ ArticleDao.prototype.getArticleListCount = function(boardId, searchData, callbac
 	if(searchData)
 		ParameterBinder.bind(vo, searchData);
 	
-	vo.useOrderByGroupId = vo.useOrderByGroupId == "N" ? null : "Y";
-	vo.useOrderBySeq = vo.useOrderBySeq == "N" ? null : "Y";
+	var orderByGroupId = vo.orderByGroupId;
+	if(orderByGroupId && (orderByGroupId.toUpperCase() == "DESC" || orderByGroupId.toUpperCase() == "ASC"))
+		vo.orderByGroupId = orderByGroupId.toUpperCase();
 	
-	if(!vo.orderByGroupId)
-		vo.orderByGroupId = "DESC";
-	else
-		vo.orderByGroupId = vo.orderByGroupId.toUpperCase();
+	var orderBySeq = vo.orderBySeq;
+	if(orderBySeq && (orderBySeq.toUpperCase() == "DESC" || orderBySeq.toUpperCase() == "ASC"))
+		vo.orderBySeq = orderBySeq.toUpperCase();
+	
+	var orderByIsNotice = vo.orderByIsNotice;
+	if(orderByIsNotice && (orderByIsNotice.toUpperCase() == "DESC" || orderByIsNotice.toUpperCase() == "ASC"))
+		vo.orderByIsNotice = orderByIsNotice.toUpperCase();
+	
+	var orderByRegisterDate = vo.orderByRegisterDate;
+	if(orderByRegisterDate && (orderByRegisterDate.toUpperCase() == "DESC" || orderByRegisterDate.toUpperCase() == "ASC"))
+		vo.orderByRegisterDate = orderByRegisterDate.toUpperCase();
 
 	this.sqlMapClient.selectQuery("getArticleListCount", vo, callback);
 };
@@ -53,16 +61,24 @@ ArticleDao.prototype.getArticleList = function(boardId, searchData, callback)
 	if(searchData)
 		ParameterBinder.bind(vo, searchData);
 	
-	vo.useOrderByGroupId = vo.useOrderByGroupId == "N" ? null : "Y";
-	vo.useOrderBySeq = vo.useOrderBySeq == "N" ? null : "Y";
-	
 	if(!vo.registerDateType)
 		vo.registerDateType = "short";
 	
-	if(!vo.orderByGroupId)
-		vo.orderByGroupId = "DESC";
-	else
-		vo.orderByGroupId = vo.orderByGroupId.toUpperCase();
+	var orderByGroupId = vo.orderByGroupId;
+	if(orderByGroupId && (orderByGroupId.toUpperCase() == "DESC" || orderByGroupId.toUpperCase() == "ASC"))
+		vo.orderByGroupId = orderByGroupId.toUpperCase();
+	
+	var orderBySeq = vo.orderBySeq;
+	if(orderBySeq && (orderBySeq.toUpperCase() == "DESC" || orderBySeq.toUpperCase() == "ASC"))
+		vo.orderBySeq = orderBySeq.toUpperCase();
+	
+	var orderByIsNotice = vo.orderByIsNotice;
+	if(orderByIsNotice && (orderByIsNotice.toUpperCase() == "DESC" || orderByIsNotice.toUpperCase() == "ASC"))
+		vo.orderByIsNotice = orderByIsNotice.toUpperCase();
+	
+	var orderByRegisterDate = vo.orderByRegisterDate;
+	if(orderByRegisterDate && (orderByRegisterDate.toUpperCase() == "DESC" || orderByRegisterDate.toUpperCase() == "ASC"))
+		vo.orderByRegisterDate = orderByRegisterDate.toUpperCase();
 	
 	this.sqlMapClient.selectsQuery("getArticleList", vo, callback);
 };

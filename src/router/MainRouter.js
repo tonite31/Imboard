@@ -413,17 +413,24 @@ function localize(locale, html)
 			var area = html.substring(startIndex, endIndex + 13);
 			
 			var token = "default";
-			var match = area.match('{{"' + locale + '"}}');
+			var match = area.match('@{' + locale + '}');
 			if(match && match.length > 0)
 				token = locale;
 			
-			var tokenLength = ('{{"' + token + '"}}').length;
-			var start = area.indexOf('{{"' + token + '"}}', 0);
-			var end = area.indexOf("{{", start + tokenLength);
+			var tokenLength = ('@{' + token + '}').length;
+			var start = area.indexOf('@{' + token + '}', 0);
+			var end = area.indexOf("@{", start + tokenLength);
+			if(end == -1)
+				end = area.indexOf("{{/localize}}", start + tokenLength);
+
 			if(start != -1 && end != -1)
 			{
 				var text = area.substring(start + tokenLength, end);
 				html = html.replace(area, text.trim());
+			}
+			else
+			{
+				html = html.replace(area, "");
 			}
 		}
 		

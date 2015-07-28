@@ -239,7 +239,7 @@ module.exports.article = function($, el, param, req, next)
 				}
 				else
 				{
-					$(el).html("<p class='databind-error'>비공개이거나 볼 수 있는 권한이 없습니다.</p>");
+					$(el).html("<p class='databind-error'>Access denied.</p>");
 					next();
 				}
 			});
