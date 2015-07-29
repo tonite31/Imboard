@@ -18,7 +18,6 @@ global._path =
 	
 global._multipart = require('connect-multiparty');
 global._config = require(__dirname + '/resources/properties/config');
-global._localize = require(__dirname + '/content/frame/' + _config.frame + '/properties/localize');
 global._aws = _config.aws;
 global._OAuth = _config.OAuth;
 global._code = _config.code;
@@ -27,6 +26,15 @@ global._port = _config.server.port;
 global._host = _config.server.host;
 global._baseUrl = _host;
 global._modules = {};
+
+try
+{
+	global._localize = require(__dirname + '/content/frame/' + _config.frame + '/properties/localize');
+}
+catch(err)
+{
+	global._localize = {};
+}
 
 /**
  * 
