@@ -459,6 +459,8 @@
     		var options = param[0];
 			if(!options || !options.direction)
 				options = {top : 10, direction : "vertical"};
+			else if(options.direction == "horizontal" && !options.left)
+				options.left = 10;
 			
 			var rect = $(context).getRect();
 			var top = rect.top + $(window).scrollTop();
