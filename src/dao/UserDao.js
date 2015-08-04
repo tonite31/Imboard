@@ -65,6 +65,11 @@ UserDao.prototype.updateUserPassword = function(id, password, callback)
 	this.sqlMapClient.updateQuery("updateUserPassword", vo, callback);
 };
 
+UserDao.prototype.dropOut = function(userId, callback)
+{
+	this.sqlMapClient.deleteQuery("dropOut", userId, callback);
+};
+
 UserDao.prototype.deleteUser = function(userId, callback)
 {
 	this.sqlMapClient.deleteQuery("deleteUser", userId, callback);

@@ -122,20 +122,38 @@ ArticleDao.prototype.updateHit = function(boardId, seq, callback)
 	this.sqlMapClient.updateQuery("updateHit", vo, callback);
 };
 
-ArticleDao.prototype.updateGood = function(boardId, seq, callback)
+ArticleDao.prototype.updateGood = function(boardId, seq, good, callback)
 {
 	var vo = new ArticleVo();
 	vo.boardId = boardId;
 	vo.seq = seq;
+	if(isNaN(good))
+	{
+		vo.good = null;
+	}
+	else
+	{
+		vo.good = new Number(good);
+		vo.good = vo.good >= 0 ? "+ " + vo.good : vo.good;
+	}
 	
 	this.sqlMapClient.updateQuery("updateGood", vo, callback);
 };
 
-ArticleDao.prototype.updateBad = function(boardId, seq, callback)
+ArticleDao.prototype.updateBad = function(boardId, seq, bad, callback)
 {
 	var vo = new ArticleVo();
 	vo.boardId = boardId;
 	vo.seq = seq;
+	if(isNaN(bad))
+	{
+		vo.bad = null;
+	}
+	else
+	{
+		vo.bad = new Number(bad);
+		vo.bad = vo.bad >= 0 ? "+ " + vo.bad : vo.bad;
+	}
 	
 	this.sqlMapClient.updateQuery("updateBad", vo, callback);
 };
