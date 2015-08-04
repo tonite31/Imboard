@@ -250,7 +250,7 @@
 	};
 
 	//boardId, seq, status
-	$.api.article.updateStatus = function(data)
+	$.api.article.updateArticleStatus = function(data)
 	{
 		return httpRequest({
 		   url: "/article/updateStatus.do",
@@ -258,16 +258,6 @@
 		   data : data,
 		   async: false
 		});
-	};
-
-	$.api.article.replyArticle = function(data)
-	{
-	    return httpRequest({
-	       url: "/article/insertArticle.do",
-	       type: 'post',
-	       data : data,
-	       async: false
-	    });
 	};
 
 	//boardId, seq, isRemove(option, "Y", "N")
@@ -509,6 +499,16 @@
 	       data : data,
 	       async: false
 	    });
+	};
+	
+	$.api.user.dropOut = function(data)
+	{
+		return httpRequest({
+			url: "/user/dropOut.do",
+			type: 'post',
+			data : data,
+			async: false
+		});
 	};
 
 	$.api.user.updateUserPassword = function(data)
