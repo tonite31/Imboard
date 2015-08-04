@@ -363,7 +363,7 @@ module.exports.updateGood =
 	{
 		var param = req.body;
 		
-		ArticleDao.updateGood(param.boardId, param.seq, function(response)
+		ArticleDao.updateGood(param.boardId, param.seq, param.good, function(response)
 		{
 			if(response == 1)
 				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
@@ -381,7 +381,7 @@ module.exports.updateBad =
 	{
 		var param = req.body;
 		
-		ArticleDao.updateBad(param.boardId, param.seq, function(response)
+		ArticleDao.updateBad(param.boardId, param.seq, param.bad, function(response)
 		{
 			if(response == 1)
 				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
@@ -577,6 +577,7 @@ module.exports.uploadFile =
 				{
 					try
 					{
+						_log.error("허아ㅏㅂ : ", filename);
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
 						pathList.push("/resources/" + folder + "/" + filename);

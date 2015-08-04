@@ -92,27 +92,39 @@ module.exports.updateUserPassword =
 	callback : function(req, res)
 	{
 		var userVo = new UserVo(req.body);
-		UserDao.getEncryptKey(userVo.id, function(encryptKey)
+		if(req.session && req.session.user.id == userVo.id)
 		{
-			UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, encryptKey), function(response)
+			UserDao.getEncryptKey(userVo.id, function(encryptKey)
 			{
-				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				UserDao.getUser(userVo, function(response)
+				{
+					if(response && Utils.encrypt(userVo.oldPassword, encryptKey) == response.password)
+					{
+						UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, encryptKey), function(response)
+						{
+							res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+						});
+					}
+				});
 			});
-		});
+		}
 	}
 };
 
-module.exports.deleteUser =
+module.exports.dropOut =
 {
 	type : 'post',
-	path : '/user/deleteUser.do',
+	path : '/user/dropOut.do',
 	callback : function(req, res)
 	{
 		var param = req.body;
-		UserDao.deleteUser(param.id, function(response)
+		if(req.session && req.session.user.id == param.id)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-		});
+			UserDao.dropOut(param.id, function(response)
+			{
+				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			});
+		}
 	}
 };
 
