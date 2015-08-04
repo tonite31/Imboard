@@ -414,7 +414,14 @@
     
     <update id="updateGood" parameterType="ArticleVo">
         UPDATE IMB_ARTICLE SET
-        	GOOD = GOOD + 1
+        	<choose>
+        		<when test="#{good}">
+        			GOOD = GOOD ${good}
+        		</when>
+        		<otherwise>
+        			GOOD = GOOD + 1
+        		</otherwise>
+        	</choose>
         WHERE
         		BOARD_ID = #{boardId}
         	AND SEQ = #{seq}
@@ -422,7 +429,14 @@
     
     <update id="updateBad" parameterType="ArticleVo">
         UPDATE IMB_ARTICLE SET
-        	BAD = BAD + 1
+        	<choose>
+        		<when test="#{bad}">
+        			BAD = BAD ${bad}
+        		</when>
+        		<otherwise>
+        			BAD = BAD + 1
+        		</otherwise>
+        	</choose>
         WHERE
         		BOARD_ID = #{boardId}
         	AND SEQ = #{seq}

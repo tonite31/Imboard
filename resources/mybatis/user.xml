@@ -127,7 +127,17 @@
     		ID = #{id}
     </update>
     
-    <delete id="deleteUser" parameterType="UserVo">
+    <update id="dropOut" parameterType="String">
+    	UPDATE
+    		IMB_USER
+    	SET
+    		DROP_OUT_DATE = date_add(now(), interval +7 day),
+    		USER_STATUS = -1
+    	WHERE
+    		ID = #{id}
+    </update>
+    
+    <delete id="deleteUser" parameterType="String">
         DELETE FROM
         	IMB_USER
         WHERE
