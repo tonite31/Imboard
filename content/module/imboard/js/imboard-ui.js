@@ -495,6 +495,24 @@
 			$(window).on("scroll", setPosition);
 			setPosition();
     	};
+    	
+    	this.imageUploader = function(context, param)
+    	{
+    		context.style.position = "relative";
+    		
+    		var input = document.createElement("input");
+    		input.type = "file";
+    		input.style.position = "absolute";
+    		input.style.left = "0";
+    		input.style.right = "0";
+    		input.style.top = "0";
+    		input.style.bottom = "0";
+    		input.style.opacity = "0";
+    		
+    		input.onchange = param[0];
+    		
+    		context.appendChild(input);
+    	};
     }).call(component);
     
     (function()
