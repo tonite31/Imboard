@@ -434,7 +434,34 @@ function localize(locale, html)
 			}
 		}
 		
-	}while(startIndex != -1 && endIndex != -1)
+	}while(startIndex != -1 && endIndex != -1);
+	
+	var matchs = html.match(/{{##localize}}/gi);
+	if(matchs != null)
+	{
+		for(var i=0; i<matchs.length; i++)
+		{
+			html = html.replace(matchs[i], "{{#localize}}");
+		}
+	}
+	
+	matchs = html.match(/{{\/\/localize}}/gi);
+	if(matchs != null)
+	{
+		for(var i=0; i<matchs.length; i++)
+		{
+			html = html.replace(matchs[i], "{{\/localize}}");
+		}
+	}
+	
+	matchs = html.match(/@#{[^}]*}/gi);
+	if(matchs != null)
+	{
+		for(var i=0; i<matchs.length; i++)
+		{
+			html = html.replace(matchs[i], matchs[i].replace("@#", "@"));
+		}
+	}
 
 	return html;
 }
