@@ -1,3 +1,7 @@
+- 0.1.9
+1. $.api.article.updateGood, $.api.article.updateBad 함수에 good, bad 파라미터가 각각 추가되었습니다. 각 파라미터는 정수값이며 입력한 정수값으로 good, bad값이 연산되어 저장됩니다.
+2. {{#localize}} ~ {{/localize}} 문법을 문자 그대로 사용할 수 있는 문법이 추가되었습니다. {{##localize}} @#{ko-KR} @#{default} {{//localize}} 와 같이 사용하면 문자 그대로 치환됩니다.
+
 - 0.1.7
 1. DataBindModule js오류 수정
 2. .js, .css파일은 로그인 후 redirect Url로 설정안되게 수정
