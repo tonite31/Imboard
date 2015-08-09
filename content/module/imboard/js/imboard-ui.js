@@ -496,7 +496,7 @@
 			setPosition();
     	};
     	
-    	this.imageUploader = function(context, param)
+    	this.fileUploader = function(context, param)
     	{
     		context.style.position = "relative";
     		
