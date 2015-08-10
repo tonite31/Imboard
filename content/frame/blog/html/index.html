@@ -29,7 +29,7 @@
 
 <!-- <script src="#{path.root}/js/index.js"></script> -->
 
-<script id="menuListTemplate" type="text/x-handlebars-template">
+<script id="boardListTemplate" type="text/x-handlebars-template">
 {{#if boardList}}
 {{#each boardList}}
 <li class="list-group-item {{#equals id "#{query.boardId}"}}active{{/equals}}"><a href="?boardId={{id}}">{{name}}<span class="badge">{{articleListCount}}</span></a></li>
@@ -99,7 +99,7 @@
 <body>
 	<div class="container">
 		<div class="top" data-bind="template" style="border-bottom: 1px solid #dfdfdf; padding-bottom: 10px;">
-			{{#if \"#{user.id}\"}}
+			{{#if "#{user.id}"}}
 			<a class="btn btn-default" href="?fragment=write">새 페이퍼 작성</a>
 			<a class="btn btn-default" href="/settings">Admin Dashboard</a>
 			{{else}}
@@ -118,7 +118,7 @@
 				</div>
 			</div>
 			<nav class="menuList">
-				<ul class="list-group" id="list" data-bind="boardList" data-template-id="menuListTemplate" data-param='{"parentMenuId" : "root"}'></ul>
+				<ul class="list-group" id="list" data-bind="boardList" data-template-id="boardListTemplate"></ul>
 			</nav>
 		</div>
 		<div class="col-xs-8" data-fragment="fragment">

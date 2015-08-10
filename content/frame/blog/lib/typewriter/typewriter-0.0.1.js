@@ -2,280 +2,631 @@ TypeWriter = {};
 
 (function($t)
 {
-	$t.template  = '<div class="typewriter">';
-	$t.template += '<div class="typewriter-controlPanel">';
-	$t.template += '	<div style="text-align: center;">';
-	$t.template += '		<div class="typewriter-controlGroup">';
-	$t.template += '            <button type="button" data-toggle="tooltip" data-placement="bottom" title="ALT + (1-9)" data-controller="textSize">';
-	$t.template += '                <span class="glyphicon glyphicon-text-size"></span>';
-	$t.template += '                <span class="typewriter-compdesc">글자크기 조절</span>';
-	$t.template += '            </button>';
-	$t.template += '			<button type="button" data-toggle="tooltip" data-placement="bottom" title="ALT + B" data-controller="fontBold">';
-	$t.template += '				<span class="glyphicon glyphicon-bold"></span>';
-	$t.template += '				<span class="typewriter-compdesc">굵게</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" data-toggle="tooltip" data-placement="bottom" title="ALT + I" data-controller="fontItalic">';
-	$t.template += '				<span class="glyphicon glyphicon-italic"></span>';
-	$t.template += '				<span class="typewriter-compdesc">기울임</span>';
-	$t.template += '			</button>';
-	$t.template += '		</div>';
-	$t.template += '		<div class="typewriter-vline"></div>';
-	$t.template += '		<div class="typewriter-controlGroup">';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + L" data-controller="alignLeft">';
-	$t.template += '				<span class="glyphicon glyphicon-align-left"></span>';
-	$t.template += '				<span class="typewriter-compdesc">왼쪽정렬</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + C" data-controller="alignCenter">';
-	$t.template += '				<span class="glyphicon glyphicon-align-center"></span>';
-	$t.template += '				<span class="typewriter-compdesc">가운데정렬</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + R" data-controller="alignRight">';
-	$t.template += '				<span class="glyphicon glyphicon-align-right"></span>';
-	$t.template += '				<span class="typewriter-compdesc">오른쪽정렬</span>';
-	$t.template += '			</button>';
-	$t.template += '		</div>';
-	$t.template += '		<div class="typewriter-vline"></div>';
-	$t.template += '		<div class="typewriter-controlGroup">';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + P" data-controller="image" data-style="width:100%;">';
-	$t.template += '				<span class="glyphicon glyphicon-picture"></span>';
-	$t.template += '				<span class="typewriter-compdesc">이미지</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + V" data-controller="video" data-style="width:100%;">';
-	$t.template += '				<span class="glyphicon glyphicon-film"></span>';
-	$t.template += '				<span class="typewriter-compdesc">동영상</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + F" data-controller="file">';
-	$t.template += '				<span class="glyphicon glyphicon-floppy-disk"></span>';
-	$t.template += '				<span class="typewriter-compdesc">파일</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + Y" data-controller="youtube">';
-	$t.template += '				<span class="glyphicon glyphicon-expand"></span>';
-	$t.template += '				<span class="typewriter-compdesc">유투브</span>';
-	$t.template += '			</button>';
-	$t.template += '			<button type="button" tabindex="-1" data-toggle="tooltip" data-placement="bottom" title="ALT + K" data-controller="link">';
-	$t.template += '				<span class="glyphicon glyphicon-link"></span>';
-	$t.template += '				<span class="typewriter-compdesc">링크</span>';
-	$t.template += '			</button>';
-	$t.template += '		</div>';
-	$t.template += '	</div>';
-	$t.template += '	<hr/>';
-	$t.template += '</div>';
-	$t.template += '<article class="typewriter-content" contenteditable="true" tabindex="2">';
-	$t.template += '	<div class="typewriter-contentplaceholder">내용을 입력하세요...</div>';
-	$t.template += '</article>';
-	$t.template += '<div class="typewriter-progress"><div></div><span class="glyphicon glyphicon-repeat"></span></div>';
-	$t.template += '</div>';
+	$t.keys =
+	{
+		backspace : 8,
+		tab : 9,
+		enter : 13,
+		shift : 16,
+		ctrl : 17,
+		alt : 18,
+		esc : 27,
+		left : 37,
+		up : 38,
+		right : 39,
+		down : 40,
+		0 : 48,
+		1 : 49,
+		2 : 50,
+		3 : 51,
+		4 : 52,
+		5 : 53,
+		6 : 54,
+		7 : 55,
+		8 : 56,
+		9 : 57,
+		a : 65,
+		b : 66,
+		c : 67,
+		d : 68,
+		e : 69,
+		f : 70,
+		g : 71,
+		h : 72,
+		i : 73,
+		j : 74,
+		k : 75,
+		l : 76,
+		m : 77,
+		n : 78,
+		o : 79,
+		p : 80,
+		q : 81,
+		r : 82,
+		s : 83,
+		t : 84,
+		u : 85,
+		v : 86,
+		w : 87,
+		x : 88,
+		y : 89,
+		z : 90
+	};
+	
+	$t.setCaretPosition = function(node, index)
+	{
+		var range = document.createRange();
+		var sel = window.getSelection();
+		range.setStart(node, index);
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
+	};
+	
+	$t.clearSpan = function(divParent)
+	{
+		$(divParent).find("span").filter(function(){
+			return !$(this).text();
+		}).remove();
+		
+		for(var i=1; i<divParent.children.length; i++)
+		{
+			var prev = divParent.children[i-1];
+			var current = divParent.children[i];
+			
+			var isEquals = false;
+			if(prev.style.length == current.style.length)
+			{
+				for(var j=0; j<prev.style.length; j++)
+				{
+					if(prev.style[prev.style[j]] != current.style[prev.style[j]])
+					{
+						isEquals = false;
+						break;
+					}
+					else
+					{
+						isEquals = true;
+					}
+				}
+			}
+			
+			if(isEquals)
+			{
+				var position = -1;
+				if(prev.hasCaret)
+					position = prev.hasCaret;
+				else if(current.hasCaret)
+					position = prev.innerText.length + current.hasCaret;
+				
+				prev.innerText += current.innerText;
+				current.parentElement.removeChild(current);
+
+				if(position > -1)
+					$t.setCaretPosition(prev.firstChild, position);
+				
+				i--;
+			}
+		}
+		
+		$(divParent).find("span").each(function(){this.hasCaret = null;});
+	};
+	
+	$t.makeSpan = function(target, remainText, selectedText, style, isEnd)
+	{
+		if(target.parentElement.nodeName == "SPAN")
+		{
+			//분리
+			if(!style.value)
+			{
+				if(target.parentElement.style.length > 1)
+				{
+					var span = document.createElement("span");
+					span.style.cssText = target.parentElement.style.cssText;
+					span.style[style.key] = style.value;
+					span.innerText = selectedText;
+					
+					if(!isEnd)
+					{
+						var next = target.parentElement.nextSibling;
+						if(next)
+							target.parentElement.parentElement.insertBefore(span, next);
+						else
+							target.parentElement.parentElement.appendChild(span);
+						
+						target.parentElement.innerText = remainText;	
+					}
+					else
+					{
+						target.parentElement.parentElement.insertBefore(span, target.parentElement);
+						target.parentElement.innerText = remainText;
+						
+						$t.setCaretPosition(span.firstChild, span.firstChild.length);
+						span.hasCaret = span.firstChild.length;
+					}
+				}
+				else
+				{
+					if(!isEnd)
+					{
+						var next = target.parentElement.nextSibling;
+						if(next)
+							target.parentElement.parentElement.insertBefore(document.createTextNode(selectedText), next);
+						else
+							target.parentElement.parentElement.appendChild(document.createTextNode(selectedText));
+						
+						target.parentElement.innerText = remainText;
+					}
+					else
+					{
+						var node = document.createTextNode(selectedText);
+						target.parentElement.parentElement.insertBefore(node, target.parentElement);
+						target.parentElement.innerText = remainText;
+						
+						$t.setCaretPosition(node, node.length);
+					}
+				}
+			}
+			else
+			{
+				var span = document.createElement("span");
+				span.style.cssText = target.parentElement.style.cssText;
+				span.style[style.key] = style.value;
+				span.innerText = selectedText;
+				
+				if(!isEnd)
+				{
+					var next = target.parentElement.nextSibling;
+					if(next)
+						target.parentElement.parentElement.insertBefore(span, next);
+					else
+						target.parentElement.parentElement.appendChild(span);
+					
+					target.parentElement.innerText = remainText;
+				}
+				else
+				{
+					target.parentElement.parentElement.insertBefore(span, target.parentElement);
+					target.parentElement.innerText = remainText;
+					
+					$t.setCaretPosition(span.firstChild, span.firstChild.length);
+					span.hasCaret = span.firstChild.length;
+				}
+			}
+		}
+		else
+		{
+			var span = document.createElement("span");
+			span.style[style.key] = style.value;
+			span.innerText = selectedText;
+			
+			var node = null;
+			
+			if(!style.value)
+				node = document.createTextNode(selectedText);
+			else
+				node = span;
+			
+			if(!isEnd)
+			{
+				var next = target.nextSibling;
+				if(next)
+					target.parentElement.insertBefore(node, next);
+				else
+					target.parentElement.appendChild(node);
+				
+				target.parentElement.insertBefore(document.createTextNode(remainText), node);
+				
+				target.parentElement.removeChild(target);
+			}
+			else
+			{
+				var remainNode = document.createTextNode(remainText);
+				target.parentElement.insertBefore(node, target);
+				target.parentElement.insertBefore(remainNode, target);
+				target.parentElement.removeChild(target);
+				
+				if(node == span)
+				{
+					$t.setCaretPosition(node.firstChild, node.firstChild.length);
+					node.hasCaret = node.firstChild.length;
+				}
+				else
+				{
+					$t.setCaretPosition(node, node.length);
+				}
+			}
+		}
+	};
+	
+	$t.setStyle = function(range, sc, ec, list, key, value)
+	{
+		var isStyled = true;
+		for(var i=0; i<list.length; i++)
+		{
+			if(list[i].nodeName == "#text" && list[i].parentElement.nodeName == "SPAN")
+			{
+				isStyled = isStyled && (list[i].parentElement.style[key] == value);
+			}
+			else if(list[i].nodeName == "SPAN")
+			{
+				isStyled = isStyled && (list[i].style[key] == value);
+			}
+			else
+			{
+				isStyled = false;
+				break;
+			}
+		}
+		
+		for(var i=0; i<list.length; i++)
+		{
+			if(list[i] == sc)
+			{
+				$t.makeSpan(sc, sc.nodeValue.substring(0, range.startOffset), sc.nodeValue.substring(range.startOffset), {key : key, value : (isStyled ? "" : value)}, false);
+			}
+			else if(list[i] == ec)
+			{
+				$t.makeSpan(ec, ec.nodeValue.substring(range.endOffset), ec.nodeValue.substring(0, range.endOffset), {key : key, value : (isStyled ? "" : value)}, true);
+			}
+			else
+			{
+				if(list[i].nodeName == "SPAN")
+				{
+					if(isStyled)
+					{
+						if(list[i].style.length > 1)
+							list[i].style.fontWeight = "";
+						else
+							list[i].parentElement.replaceChild(document.createTextNode(list[i].innerText), list[i]);
+					}
+					else
+					{
+						list[i].style[key] = value;
+					}
+				}
+				else
+				{
+					if(!isStyled)
+					{
+						var span = document.createElement("span");
+						span.style[key] = value;
+						span.innerText = list[i].innerText ? list[i].innerText : list[i].nodeValue;
+						
+						list[i].parentElement.replaceChild(span, list[i]);
+					}
+				}
+			}
+		}
+	};
+	
+	$t.applyStyle = function(editor, key, value)
+	{
+		if(window.getSelection)
+		{
+			var selection = window.getSelection();
+			var text = selection.toString();
+			if(selection.rangeCount > 0)
+			{
+				var range = selection.getRangeAt(0);
+				
+				var ancestor = range.commonAncestorContainer; 
+				var sc = range.startContainer;
+				var ec = range.endContainer;
+				
+				//가장 먼저 sc ~ ec를 뽑아낸다.
+				
+				if($(editor).has(sc).length <= 0 || $(editor).has(ec).length <= 0)
+				{
+					return;
+				}
+				
+				if(ancestor != editor && (ancestor.nodeName == "DIV" || ancestor.nodeName == "#text"))
+				{
+					var div = ancestor;
+					while(div && div.nodeName != "DIV" && div != editor)
+						div = div.parentElement;
+					
+					//한줄인경우
+					if(sc == ec)
+					{
+						//같은경우
+						var before = sc.nodeValue.substring(0, range.startOffset);
+						var after = sc.nodeValue.substring(range.endOffset);
+						
+						if(sc.parentElement.nodeName == "SPAN") // SPAN 하위에 있는경우
+						{
+							var span = document.createElement("span");
+							span.style.cssText = sc.parentElement.style.cssText;
+							span.innerText = before;
+							
+							sc.parentElement.parentElement.insertBefore(span, sc.parentElement);
+							
+							if(sc.parentElement.style[key] == value)
+							{
+								if(sc.parentElement.style.length > 1)
+								{
+									span = document.createElement("span");
+									span.style.cssText = sc.parentElement.style.cssText;
+									span.style[key] = "";
+									span.innerText = text;
+									
+									sc.parentElement.parentElement.insertBefore(span, sc.parentElement);
+								}
+								else
+								{
+									sc.parentElement.parentElement.insertBefore(document.createTextNode(text), sc.parentElement);
+								}
+							}
+							else
+							{
+								span = document.createElement("span");
+								span.style.cssText = sc.parentElement.style.cssText;
+								span.style[key] = value;
+								span.innerText = text;
+								
+								sc.parentElement.parentElement.insertBefore(span, sc.parentElement);
+							}
+							
+							span = document.createElement("span");
+							span.style.cssText = sc.parentElement.style.cssText;
+							span.innerText = after;
+							
+							sc.parentElement.parentElement.insertBefore(span, sc.parentElement);
+							
+							sc.parentElement.parentElement.removeChild(sc.parentElement);
+						}
+						else
+						{
+							sc.parentElement.insertBefore(document.createTextNode(before), sc);
+							
+							var span = document.createElement("span");
+							span.style[key] = value;
+							span.innerText = text;
+							
+							sc.parentElement.insertBefore(span, sc);
+							
+							sc.parentElement.insertBefore(document.createTextNode(after), sc);
+							
+							sc.parentElement.removeChild(sc);
+						}
+					}
+					else
+					{
+						var list = [sc];
+						
+						if(sc != ec)
+						{
+							var target = sc.parentElement != editor ? sc.parentElement.nextSibling : sc.nextSibling;
+							while(target && target != ec && target != ec.parentElement)
+							{
+								list.push(target);
+								target = target.nextSibilng;
+							}
+							
+							list.push(ec);
+						}
+
+						$t.setStyle(range, sc, ec, list, key, value);
+					}
+
+					$t.clearSpan(div);
+				}
+				else
+				{
+					//여러줄인경우
+					//sc와 ec는 그대로 하면 될거같고
+					//중간것들을 찾아야 한다.
+					var list = [sc];
+				
+					//sc의 parentElement가 div인 경우.. sc가 #text인경우
+					
+					var target = sc.parentElement.nodeName == "SPAN" ? sc.parentElement.nextSibling : sc.nextSibling;
+					//sc가 div하위의 마지막 text인경우 next가 안나온다.
+					if(!target)
+					{
+						if(sc.parentElement.nodeName == "SPAN")
+							target = sc.parentElement.parentElement.nextSibling;
+						else
+							target = sc.parentElement.nextSibilng;
+						
+						if(target)
+							target = target.childNodes[0];
+					}
+					
+					while(target != ec && target != ec.parentElement)
+					{
+						if(target)
+						{
+							if(target.nodeName == "DIV")
+								target = target.childNodes[0];
+							list.push(target);
+							
+							if(target.nextSibling)
+							{
+								target = target.nextSibling;
+								if(target.nodeName == "DIV")
+									target = target.childNodes[0];
+							}
+							else
+							{
+								target = target.parentElement.nextSibling;
+								if(target.childNodes)
+									target = target.childNodes[0];
+							}
+						}
+					}
+					
+					list.push(ec);
+					
+					$t.setStyle(range, sc, ec, list, key, value);
+					
+					for(var i=0; i<list.length; i++)
+					{
+						var div = list[i].parentElement;
+						while(div && div.nodeName != "DIV")
+							div = div.parentElement;
+						
+						if(div)
+						{
+							$t.clearSpan(div);
+						}
+					}
+				}
+			}
+		}
+		else if (document.selection && document.selection.type != "Control")
+		{
+	        var text = document.selection.createRange().text;
+	        console.log("하이텍스트 : ", text);
+	    }
+	};
+	
+	$t.getSelectedDiv = function(range, editor)
+	{
+		var ancestor = range.commonAncestorContainer; 
+		var sc = range.startContainer;
+		var ec = range.endContainer;
+		
+		if(ancestor != editor && (ancestor.nodeName == "DIV" || ancestor.nodeName == "#text"))
+		{
+			if(sc == ec)
+			{
+				if(sc.parentElement == editor || sc.parentElement.parentElement == editor)
+				{
+					if(sc.parentElement.nodeName == "SPAN")
+					{
+						
+					}
+				}
+			}
+			else
+			{
+				var list = [sc];
+				
+				if(sc != ec)
+				{
+					var target = sc.parentElement != editor ? sc.parentElement.nextSibling : sc.nextSibling;
+					while(target && target != ec && target != ec.parentElement)
+					{
+						list.push(target);
+						target = target.nextSibilng;
+					}
+					
+					list.push(ec);
+				}
+			}
+		}
+		else
+		{
+			var target = sc.parentElement.nodeName == "SPAN" ? sc.parentElement.nextSibling : sc.nextSibling;
+			//sc가 div하위의 마지막 text인경우 next가 안나온다.
+			if(!target)
+			{
+				if(sc.parentElement.nodeName == "SPAN")
+					target = sc.parentElement.parentElement.nextSibling;
+				else
+					target = sc.parentElement.nextSibilng;
+				
+				if(target)
+					target = target.childNodes[0];
+			}
+			
+			while(target != ec && target != ec.parentElement)
+			{
+				if(target)
+				{
+					if(target.nodeName == "DIV")
+						target = target.childNodes[0];
+					list.push(target);
+					
+					if(target.nextSibling)
+					{
+						target = target.nextSibling;
+						if(target.nodeName == "DIV")
+							target = target.childNodes[0];
+					}
+					else
+					{
+						target = target.parentElement.nextSibling;
+						if(target.childNodes)
+							target = target.childNodes[0];
+					}
+				}
+			}
+			
+			list.push(ec);
+		}
+	};
 	
 	$t.controller = {};
-	$t.controller["fontBold"] = $t.controller["fontItalic"] = function(instance)
+	$t.controller["fontWeight"] = function(editor)
 	{
-		var type = $(this).attr("data-controller");
 		$(this).on("click", function()
 		{
-			var node = instance.getSelectedNode();
-//			if(node != null)
-//				node = [node];
-//			
-//			var sel = window.getSelection();
-//			if(sel.rangeCount > 0)
-//			{
-//				node = [];
-//				var originText = sel.baseNode.nodeValue;
-//				var range = sel.getRangeAt(0);
-//				
-//				var startContainer = range.startContainer;
-//				var endContainer = range.endContainer;
-//				
-//				if(startContainer == endContainer)
-//				{
-//					//selection이 한줄인경우
-//					var startIndex = sel.baseOffset;
-//					var endIndex = sel.focusOffset;
-//					if(startIndex > endIndex)
-//					{
-//						var t = endIndex;
-//						endIndex = startIndex;
-//						startIndex = t;
-//					}
-//					
-//					var selectedText = originText.substring(startIndex, endIndex);
-//					if(originText == selectedText)
-//					{
-//						node = [sel.baseNode];
-//					}
-//					else
-//					{
-//						var s = originText.substring(0, startIndex);
-//						var e = originText.substring(endIndex);
-//						
-//						node = sel.baseNode.parentElement;
-//						if(node.className == "typewriter-content")
-//						{
-//							s = "<div>" + s;
-//							e = e + "</div>";
-//						}
-//						
-//						node.innerHTML = s + "<span>" + selectedText + "</span>" + e;
-//
-//						node = [node.querySelector("span")];
-//					}
-//				}
-//				else
-//				{
-//					var makeSpan = function(node, value, offset, dir)
-//					{
-//						var originText = value;
-//						var selectedText = dir ? originText.substring(offset) : originText.substring(0, offset);
-//						var s = dir ? originText.substring(0, offset) : originText.substring(offset);
-//						var span = "<span>" + selectedText + "</span>";
-//						
-//						var parent = node.parentElement;
-//						if(parent.className == "typewriter-content")
-//						{
-//							parent.removeChild(parent.firstChild);
-//							var div = document.createElement("div");
-//							div.innerHTML = dir ? s + span : span + s;
-//							parent.insertBefore(div, parent.children[0]);
-//						}
-//						else
-//						{
-//							var parent = node.parentElement;
-//							parent.innerHTML = dir ? s + span : span + s;
-//						}
-//					};
-//					
-//					var getSelectedNode = function(sel, dir)
-//					{
-//						var firstNode = dir ? sel.focusNode.parentElement : sel.baseNode.parentElement;
-//						makeSpan(sel.baseNode, sel.baseNode.nodeValue, sel.baseOffset, dir);
-//						makeSpan(sel.focusNode, sel.focusNode.nodeValue, sel.focusOffset, dir);
-//						
-//						var nodeList = [firstNode];
-//						
-//						var next = firstNode.previousElementSibling;
-//						
-//						while(next)
-//						{
-////							if(next == sel.focusNode.parentElement) // 마지막 노드
-////							{
-////								selectedText = dir ? sel.focusNode.nodeValue.substring(0, sel.focusOffset) : sel.focusNode.nodeValue.substring(sel.focusOffset);
-////								
-////								if(sel.focusNode.parentElement.innerText == selectedText)
-////								{
-////									nodeList.push(next);
-////								}
-////								else
-////								{
-////									var span = "<span>" + selectedText + "</span>";
-////									var parent = sel.focusNode.parentElement;
-////									parent.innerHTML = dir ? span + sel.focusNode.nodeValue.substring(sel.focusOffset) : sel.focusNode.nodeValue.substring(sel.focusOffset) + span;
-////									nodeList.push(parent.querySelector("span"));
-////								}
-////								console.log("마지막 선택된 텍스트 : ", selectedText);
-////								break;
-////							}
-////							else
-////							{
-////								nodeList.push(next);
-////								console.log("중간 텍스트 : ", next.innerText);
-////							}
-//							
-//							next = next.previousElementSibling;
-//						}
-//						
-//						return nodeList;
-//					};
-//					//base가 시작이고 focus가 커서가 있는 노드임
-//					if(sel.baseNode == startContainer)
-//					{
-//						//위에서 아래로 블럭지정
-//						node = getSelectedNode(sel, true);
-//					}
-//					else if(sel.focusNode == startContainer)
-//					{
-//						//아래서 위로 블럭지정
-//						node = getSelectedNode(sel, false);
-//					}
-//				}
-//			}
-//			
-//			if(node && node.length > 0)
-//			{
-//				for(var i=0; i<node.length; i++)
-//				{
-//					if(node[i].className == "typewriter-contentplaceholder")
-//						continue;
-//					
-//					if(node[i].className == "typewriter-content")
-//					{
-//						var text = node[i].firstChild.textContent;
-//						node[i].innerHTML = "<div>" + text + "</div>";
-//						node[i] = node[i].firstChild;
-//					}
-//					
-//					if(type == "fontBold")
-//					{
-//						if(node[i].style.fontWeight)
-//							node[i].style.fontWeight = "";
-//						else
-//							node[i].style.fontWeight = "bold";
-//					}
-//					else if(type == "fontItalic")
-//					{
-//						if(node[i].style.fontStyle)
-//							node[i].style.fontStyle = "";
-//						else
-//							node[i].style.fontStyle = "italic";
-//					}
-//					
-//					if(node[i].firstChild.nodeType == 3)
-//						instance.setCaretPosition(node[i].firstChild, node[i].firstChild.length);
-//					else
-//						node[i].focus();
-//				}
-//			}
+			var key = "font-weight";
+			var value = "bold";
+			
+			$t.applyStyle(editor, key, value);
 		});
 	};
 	
-	$t.controller["alignLeft"] = $t.controller["alignCenter"] = $t.controller["alignRight"] = function(instance)
+	$t.controller["fontItalic"] = function(editor)
 	{
-		var el = instance.target;
-		var options = instance.options;
-		var type = $(this).attr("data-controller");
-		
 		$(this).on("click", function()
 		{
-			var node = instance.getFocusedElement();
+			var key = "font-style";
+			var value = "italic";
 			
-			if(node)
+			$t.applyStyle(editor, key, value);
+		});
+	};
+	
+	$t.controller["textUnderline"] = function(editor)
+	{
+		$(this).on("click", function()
+		{
+			var key = "text-decoration";
+			var value = "underline";
+			
+			$t.applyStyle(editor, key, value);
+		});
+	};
+	
+ 	[{id : "h1", name : "H1", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h2", name : "H2", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h3", name : "H3", hotkey : [$t.keys.alt, $t.keys.h]}],
+ 	[{id : "imageUpload", className : "glyphicon glyphicon-picture", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.i]}, {id : "fileUpload", className : "glyphicon glyphicon-paperclip", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.f]}, {id : "youtubeUpload", name : "Youtube", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.y]}]
+	
+	$t.controller["alignLeft"] = function(editor)
+	{
+ 		if(window.getSelection)
+		{
+			var selection = window.getSelection();
+			if(selection.rangeCount > 0)
 			{
-				if(node.className == "typewriter-contentplaceholder")
-					return;
+				var range = selection.getRangeAt(0);
 				
-				if(node.className == "typewriter-content")
+				var ancestor = range.commonAncestorContainer; 
+				var sc = range.startContainer;
+				var ec = range.endContainer;
+				
+				//가장 먼저 sc ~ ec를 뽑아낸다.
+				
+				if($(editor).has(sc).length <= 0 || $(editor).has(ec).length <= 0)
 				{
-					var text = node.firstChild.textContent;
-					node.innerHTML = "<div>" + text + "</div>";
-					node = node.firstChild;
+					return;
 				}
 				
-				if(type == "alignLeft")
-					node.style.textAlign = "left";
-				else if(type == "alignCenter")
-					node.style.textAlign = "center";
-				else if(type == "alignRight")
-					node.style.textAlign = "right";
 				
-				if(node.firstChild.nodeType == 3)
-					instance.setCaretPosition(node.firstChild, node.firstChild.length);
-				else
-					node.focus();
-				
-				console.log("흠 : ", node.children[0].refreshResizable);
-				if(node.children[0].refreshResizable)
-					node.children[0].refreshResizable();
 			}
-		});
+		}
+	};
+	
+	$t.controller["alignCenter"] = function(editor)
+	{
+	};
+	
+	$t.controller["alignRight"] = function(editor)
+	{
 	};
 	
 	$t.controller["image"] = $t.controller["video"] = $t.controller["file"] = function(instance)
@@ -293,6 +644,7 @@ TypeWriter = {};
 		var file = document.createElement("input");
 		file.type = "file";
 		file.className = "typewriter-hiddenfile";
+		file.setAttribute("tabindex", "-1");
 		$(this).append(file);
 
 		$(this)._on("click", function()
@@ -394,19 +746,104 @@ TypeWriter = {};
 		});
 	};
 	
+	$t.getEditor = function(option)
+	{
+		if(!option)
+			option = {};
+		
+		var editor = {};
+		editor.typewriter = document.createElement("div");
+		editor.typewriter.className = "typewriter";
+		
+		editor.controlPanel = document.createElement("div");
+		editor.controlPanel.className = "typewriter-controlPanel";
+		
+		editor.contentArticle = document.createElement("div");
+		editor.contentArticle.className = "typewriter-content";
+		editor.contentArticle.setAttribute("contenteditable", "true");
+		editor.contentArticle.innerHTML = "가나<span style='font-weight:bold;text-decoration:underline;'>다라마</span>바사<div>아자차카</div><div>타파하</div>";
+		
+		editor.typewriterProgress = document.createElement("div");
+		editor.typewriterProgress.className = "typewriter-progress";
+		
+		editor.typewriter.appendChild(editor.controlPanel);
+		editor.typewriter.appendChild(editor.contentArticle);
+		editor.typewriter.appendChild(editor.typewriterProgress);
+		
+		if(!option.controller)
+		{
+			option.controller =
+			[
+			 	[{id : "fontWeight", name : "B", hotkey : [$t.keys.alt, $t.keys.b]}, {id : "fontItalic", name : "I", hotkey : [$t.keys.alt, $t.keys.i]}, {id : "textUnderline", name : "U", hotkey : [$t.keys.alt, $t.keys.u]}],
+			 	[{id : "alignLeft", className : "glyphicon glyphicon-align-left", hotkey : [$t.keys.alt, $t.keys.l]}, {id : "alignCenter", className : "glyphicon glyphicon-align-center", hotkey : [$t.keys.alt, $t.keys.c]}, {id : "alignRight", className : "glyphicon glyphicon-align-right", hotkey : [$t.keys.alt, $t.keys.r]}],
+			 	[{id : "h1", name : "H1", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h2", name : "H2", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h3", name : "H3", hotkey : [$t.keys.alt, $t.keys.h]}],
+			 	[{id : "imageUpload", className : "glyphicon glyphicon-picture", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.i]}, {id : "fileUpload", className : "glyphicon glyphicon-paperclip", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.f]}, {id : "youtubeUpload", name : "Youtube", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.y]}]
+			];
+		}
+		
+		for(var i=0; i<option.controller.length; i++)
+		{
+			var groupPanel = document.createElement("div");
+			groupPanel.className = "typewriter-controlGroup";
+			
+			var group = option.controller[i];
+			for(var j=0; j<group.length; j++)
+			{
+				var hotkey = "";
+				if(group[j].hotkey)
+				{
+					for(var k=0; k<group[j].hotkey.length; k++)
+					{
+						if(k > 0)
+							hotkey += " + ";
+						if(group[j].hotkey[k] == 18)
+							hotkey += "ALT";
+						else if(group[j].hotkey[k] == 17)
+							hotkey += "CTRL";
+						else
+							hotkey += String.fromCharCode(group[j].hotkey[k]);
+					}
+				}
+				
+				var button = document.createElement("button");
+				button.type = "button";
+				button.setAttribute("title", hotkey);
+				button.setAttribute("tabindex", "-1");
+				
+				button.innerHTML = "<span class='" + (group[j].className ? group[j].className : "") + "'>" + (group[j].name ? group[j].name : "") + "</span>";
+				
+				groupPanel.appendChild(button);
+				
+				if($t.controller[group[j].id])
+					$t.controller[group[j].id].call(button, editor.contentArticle);
+			}
+			
+			editor.controlPanel.appendChild(groupPanel);
+		}
+		
+		return editor;
+	};
+	
 	$t.instances = {};
 	$t.compile = function(options)
 	{
-		var selector = options.selector;
-		
-		var target = document.querySelector(selector);
-		if(target)
+		if(typeof options == "object")
 		{
-			$t.instances[target.id] = new instance(target, options);
+			var selector = options.selector;
+			
+			var target = document.querySelector(selector);
+			if(target)
+			{
+				$t.instances[target.id] = new instance(target, options);
+			}
+			else
+			{
+				console.error(selector + " is not found");
+			}
 		}
 		else
 		{
-			console.error(selector + " is not found");
+			console.error("options is not an object");
 		}
 	};
 	
@@ -417,79 +854,6 @@ TypeWriter = {};
 		this.keyState = {};
 		
 		this.init();
-	};
-	
-	instance.prototype.getSelectedNode = function()
-	{
-		var sel = window.getSelection();
-		if(sel.rangeCount > 0)
-		{
-			node = [];
-			var originText = sel.baseNode.nodeValue;
-			var range = sel.getRangeAt(0);
-
-			var startContainer = range.startContainer;
-			var endContainer = range.endContainer;
-			var ancestor = range.commonAncestorContainer; // typewriter-content가 나오는경우는 여러줄. div 또는 text가 나오는경우는 한줄이다.
-			//div 또는 text가 나온경우 한줄인데...
-			if(ancestor.nodeName == "#text")
-			{
-				var value = startContainer.data;
-				var selectedValue = value.substring(range.startOffset, range.endOffset);
-				var parent = startContainer.parentElement;
-				if(parent.className == "typewriter-content")
-				{
-					$(parent).prepend("<div>" + value.substring(0, range.startOffset) + "<span style='font-weight:bold;'>" + selectedValue + "</span>" + value.substring(range.endOffset) + "</div>");
-					parent.removeChild(startContainer);
-				}
-				else
-				{
-					//div인 경우
-					parent.innerHTML = value.substring(0, range.startOffset) + "<span style='font-weight:bold;'>" + selectedValue + "</span>" + value.substring(range.endOffset);
-				}
-			}
-			else if(ancestor.localName == "div")
-			{
-				//text와 span이 섞여있는경우
-				var childNodes = ancestor.childNodes;
-				for(var i=0; i<childNodes.length; i++)
-				{
-					if(childNodes[i] == startContainer || childNodes[i] == startContainer.parentElement)
-					{
-						console.log("시작 : ", childNodes[i]);
-					}
-					else if(childNodes[i] == endContainer || childNodes[i] == endContainer.parentElement)
-					{
-						console.log("끝 : ", childNodes[i]);
-						break;
-					}
-				}
-			}
-			
-//			if(startContainer == endContainer || startContainer.nextElementSibling == endContainer.parentElement || startContainer.parentElement == endContainer.previousElement || startContainer.parentElement.nextElementSibling == endContainer.parentElement)
-//			{
-//				if(range.startOffset == range.endOffset)
-//				{
-//					//블럭지정이 안된경우
-//					console.log("노블럭");
-//				}
-//				else
-//				{
-//					var value = startContainer.data;
-//					var selectedValue = value.substring(range.startOffset, range.endOffset);
-//					var parent = startContainer.parentElement;
-//					if(parent.className == "typewriter-content")
-//					{
-//						$(parent).prepend("<div>" + value.substring(0, range.startOffset) + "<span style='font-weight:bold;'>" + selectedValue + "</span>" + value.substring(range.endOffset) + "</div>");
-//						parent.removeChild(startContainer);
-//					}
-//				}
-//			}
-//			else
-//				console.log("여러줄");
-			
-			console.log(range);
-		}
 	};
 	
 	instance.prototype.uploadFile = function(el, options, target, files)
@@ -599,131 +963,103 @@ TypeWriter = {};
 			console.error("upload function is undefiend");
 	};
 	
-	instance.prototype.getFocusedElement = function()
-	{
-		var node = document.getSelection().anchorNode;
-		if(node != null)
-		{
-			if(node.nodeType == 3)
-				node = node.parentElement;
-			
-			if($(node).parents(".typewriter-content").length > 0)
-				return node;
-		}
-		
-		node = $(this.target).find(".typewriter-content > div:last").get(0);
-		if(!node)
-		{
-			node = document.createElement("div");
-			$(this.target).find(".typewriter-content").append(node);
-		}
-		
-		return node;
-	};
-	
-	instance.prototype.setCaretPosition = function(node, index)
-	{
-		if(node)
-		{
-			var range = document.createRange();
-			var sel = window.getSelection();
-			range.setStart(node, index);
-			range.collapse(true);
-			sel.removeAllRanges();
-			sel.addRange(range);
-		}
-	};
-	
 	instance.prototype.init = function()
 	{
 		var that = this;
-		this.target.innerHTML = $t.template;
+		this.editor = $t.getEditor();
+		this.target.innerHTML = "";
+		this.target.appendChild(this.editor.typewriter);
 		
-		$(this.target).find('[data-toggle="tooltip"]').tooltip();
-		this.compile();
-		
-		if(this.options.data)
-			$(this.target).find(".typewriter-content").html(this.options.data);
-		
-		$(this.target).find(".typewriter-content").get(0).onkeydown = function(e)
-		{
-			$(this).children(".typewriter-contentplaceholder").remove();
-			this.onkeydown = null;
-		};
-		
-		$(this.target).find(".typewriter-content").on('dragover', function(e)
-		{
-			e.stopPropagation();
-		    e.preventDefault();
-		    e.originalEvent.dataTransfer.dropEffect = 'copy';
-		});
-		
-		$(this.target).find(".typewriter-content").on('drop', function(e)
-		{
-			e.stopPropagation();
-		    e.preventDefault();
-		    
-		    var el = that.target;
-			var options = that.options;
-			var target = $(el).find(".typewriter-content");
-		    
-		    var items = e.originalEvent.dataTransfer.items;
-		    if(items && items.length > 0)
-		    {
-		    	var item = items[0];
-				var div = document.createElement("div");
-				
-				var img = document.createElement("img");
-				img.src = url;
-				img.setAttribute("style", "width:100%;");
-
-				div.appendChild(img);
-				if(div)
-				{
-					div.appendChild(document.createTextNode(""));
-
-					var node = document.getSelection().anchorNode;
-					if(node)
-					{
-						if(node.nodeType == 3)
-						{
-							var parent = node.parentNode.className == "typewriter-content" ? node : node.parentNode;
-							var next = parent.nextElementSibling;
-							if(next)
-								parent.parentElement.insertBefore(div, next);
-							else
-								parent.parentElement.appendChild(div);
-						}
-						else
-						{
-							$(target).append(div);
-						}
-					}
-					else
-					{
-						$(target).append(div);
-					}
-					
-					that.setResizeController(div.children[0]);
-					that.setCaretPosition(div.childNodes[1], 0);
-				}
-		    }
-		    
-		    var files = e.originalEvent.dataTransfer.files; // FileList object.
-
-		    if(files && files.length > 0)
-		    {
-				that.uploadFile(el, options, target, files);
-		    }
-			
-			return false;
-		});
-		
-		$(this.target).find(".typewriter-content").on('paste', function(e)
-		{
-			console.log(e);
-		});
-		
+//		$(window).one("blur", function()
+//		{
+//			$(that.target).find('[data-toggle="tooltip"]').tooltip("hide");
+//		});
+//		
+//		$(this.target).find('[data-toggle="tooltip"]').tooltip();
+//		this.compile();
+//		
+//		if(this.options.data)
+//			$(this.target).find(".typewriter-content").html(this.options.data);
+//		
+//		$(this.target).find(".typewriter-content").get(0).onkeydown = function(e)
+//		{
+//			$(this).children(".typewriter-contentplaceholder").remove();
+//			this.onkeydown = null;
+//		};
+//		
+//		$(this.target).find(".typewriter-content").on('dragover', function(e)
+//		{
+//			e.stopPropagation();
+//		    e.preventDefault();
+//		    e.originalEvent.dataTransfer.dropEffect = 'copy';
+//		});
+//		
+//		$(this.target).find(".typewriter-content").on('drop', function(e)
+//		{
+//			e.stopPropagation();
+//		    e.preventDefault();
+//		    
+//		    var el = that.target;
+//			var options = that.options;
+//			var target = $(el).find(".typewriter-content");
+//		    
+//		    var items = e.originalEvent.dataTransfer.items;
+//		    if(items && items.length > 0)
+//		    {
+//		    	var item = items[0];
+//				var div = document.createElement("div");
+//				
+//				var img = document.createElement("img");
+//				img.src = url;
+//				img.setAttribute("style", "width:100%;");
+//
+//				div.appendChild(img);
+//				if(div)
+//				{
+//					div.appendChild(document.createTextNode(""));
+//
+//					var node = document.getSelection().anchorNode;
+//					if(node)
+//					{
+//						if(node.nodeType == 3)
+//						{
+//							var parent = node.parentNode.className == "typewriter-content" ? node : node.parentNode;
+//							var next = parent.nextElementSibling;
+//							if(next)
+//								parent.parentElement.insertBefore(div, next);
+//							else
+//								parent.parentElement.appendChild(div);
+//						}
+//						else
+//						{
+//							$(target).append(div);
+//						}
+//					}
+//					else
+//					{
+//						$(target).append(div);
+//					}
+//					
+//					that.setResizeController(div.children[0]);
+//					that.setCaretPosition(div.childNodes[1], 0);
+//				}
+//		    }
+//		    
+//		    var files = e.originalEvent.dataTransfer.files; // FileList object.
+//
+//		    if(files && files.length > 0)
+//		    {
+//				that.uploadFile(el, options, target, files);
+//		    }
+//			
+//			return false;
+//		});
+//		
+//		$(this.target).find(".typewriter-content").on('paste', function(e)
+//		{
+//			console.log(e);
+//		});
+//		
 //		$(this.target).find(".typewriter-content").on("click", function(e)
 //		{
 //			$(this).find(".typewriter-focus").removeAttr("class");
@@ -735,170 +1071,171 @@ TypeWriter = {};
 //			if(target != null)
 //				that.setResizeController(target);
 //		});
-		
-		$(this.target).find(".typewriter-content").on("keydown", function(e)
-		{
-			if(e.keyCode == 17)
-			{
-				that.keyState.ctrlPressed = true;
-			}
-			else if(e.keyCode == 16)
-			{
-				that.keyState.shiftPressed = true;
-			}
-			else if(e.keyCode == 18)
-			{
-				$(that.target).find('[data-toggle="tooltip"]').tooltip("show");
-				that.keyState.altPressed = true;
-			}
-			else if(e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
-			{
-				$(this).find(".typewriter-focus").removeAttr("class");
-				$(this).find(".typewriter-resizebar").remove();
-				$(this).find(".typewriter-relative").removeClass("typewriter-relative");
-				$(that.target).find('[data-toggle="tooltip"]').tooltip("hide");
-			}
-			else if(e.keyCode == 188 || e.keyCode == 190)
-			{
-				if(that.keyState.altPressed)
-					e.preventDefault();
-			}
-			else
-			{
-				if(that.keyState.altPressed)
-				{
-					e.preventDefault();
-				}
-			}
-		});
-		
-		$(this.target).find(".typewriter-content").on("keyup", function(e)
-		{
-			if(e.keyCode == 17)
-			{
-				that.keyState.ctrlPressed = false;
-			}
-			else if(e.keyCode == 16)
-			{
-				that.keyState.shiftPressed = false;
-			}
-			else if(e.keyCode == 18)
-			{
-				that.keyState.altPressed = false;
-				$("body").find('[data-toggle="tooltip"]').tooltip("hide");
-				e.preventDefault();
-			}
-			else if(e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
-			{
-				var node = that.getFocusedElement();
-				var img = $(node).find("img").get(0);
-				if(img)
-					that.setResizeController(img);
-			}
-			else if(e.keyCode == 188 || e.keyCode == 190) // < >
-			{
-				if(that.keyState.altPressed)
-				{
-					var offset = -1;
-					if(e.keyCode == 190)
-						offset = 1;
-					
-					var node = that.getFocusedElement();
-					var img = $(node).find("img").get(0);
-					if(img)
-					{
-						var width = img.style.width;
-						if(!width)
-							width = getComputedStyle(img).width;
-						
-						var postfix = "";
-						if(width.indexOf("%") != -1)
-						{
-							width = new Number(width.replace("%", ""));
-							postfix = "%";
-						}
-						else if(width.indexOf("px") != -1)
-						{
-							width = new Number(width.replace("px", ""));
-							postfix = "px";
-						}
-						
-						if(that.keyState.ctrlPressed)
-							width += offset;
-						else
-							width += offset * 10;
-						
-						img.style.width = width + postfix;
-						
-						var rect = img.getBoundingClientRect();
-						img.resizeBar.right.style.left = rect.width + "px";
-						img.resizeBar.right.style.height = rect.height + "px";
-						
-						$(img.resizeBar.right).tooltip("show");
-					}
-					
-					e.preventDefault();
-				}
-			}
-			else
-			{
-				if(that.keyState.altPressed)
-				{
-					if(e.keyCode == 66)
-					{
-						$("button[data-controller='fontBold']:first").click();
-					}
-					else if(e.keyCode == 73)
-					{
-						$("button[data-controller='fontItalic']:first").click();
-					}
-					else if(e.keyCode == 76)
-					{
-						$("button[data-controller='alignLeft']:first").click();
-					}
-					else if(e.keyCode == 67)
-					{
-						$("button[data-controller='alignCenter']:first").click();
-					}
-					else if(e.keyCode == 82)
-					{
-						$("button[data-controller='alignRight']:first").click();
-					}
-					else if(e.keyCode == 80)
-					{
-						$("button[data-controller='image']:first")._emit("click");
-						that.keyState.altPressed = false;
-						$('[data-toggle="tooltip"]').tooltip("hide");
-					}
-					else if(e.keyCode == 86)
-					{
-						$("button[data-controller='video']:first")._emit("click");
-						that.keyState.altPressed = false;
-						$('[data-toggle="tooltip"]').tooltip("hide");
-					}
-					else if(e.keyCode == 70)
-					{
-						$("button[data-controller='file']:first")._emit("click");
-						that.keyState.altPressed = false;
-						$('[data-toggle="tooltip"]').tooltip("hide");
-					}
-					else if(e.keyCode == 89)
-					{
-						$("button[data-controller='youtube']:first").click();
-						that.keyState.altPressed = false;
-						$('[data-toggle="tooltip"]').tooltip("hide");
-					}
-					else if(e.keyCode == 75)
-					{
-						$("button[data-controller='link']:first").click();
-						that.keyState.altPressed = false;
-						$('[data-toggle="tooltip"]').tooltip("hide");
-					}
-
-					e.preventDefault();
-				}
-			}
-		});
+//		
+//		$(this.target).find(".typewriter-content").on("keydown", function(e)
+//		{
+//			if(e.keyCode == 17)
+//			{
+//				that.keyState.ctrlPressed = true;
+//			}
+//			else if(e.keyCode == 16)
+//			{
+//				that.keyState.shiftPressed = true;
+//			}
+//			else if(e.keyCode == 18)
+//			{
+//				if(!that.keyState.altPressed)
+//					$(that.target).find('[data-toggle="tooltip"]').tooltip("show");
+//				that.keyState.altPressed = true;
+//			}
+//			else if(e.keyCode == 8 || e.keyCode == 13 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
+//			{
+//				$(this).find(".typewriter-focus").removeAttr("class");
+//				$(this).find(".typewriter-resizebar").remove();
+//				$(this).find(".typewriter-relative").removeClass("typewriter-relative");
+//				$(that.target).find('[data-toggle="tooltip"]').tooltip("hide");
+//			}
+//			else if(e.keyCode == 188 || e.keyCode == 190)
+//			{
+//				if(that.keyState.altPressed)
+//					e.preventDefault();
+//			}
+//			else
+//			{
+//				if(that.keyState.altPressed)
+//				{
+//					e.preventDefault();
+//				}
+//			}
+//		});
+//		
+//		$(this.target).find(".typewriter-content").on("keyup", function(e)
+//		{
+//			if(e.keyCode == 17)
+//			{
+//				that.keyState.ctrlPressed = false;
+//			}
+//			else if(e.keyCode == 16)
+//			{
+//				that.keyState.shiftPressed = false;
+//			}
+//			else if(e.keyCode == 18)
+//			{
+//				that.keyState.altPressed = false;
+//				$("body").find('[data-toggle="tooltip"]').tooltip("hide");
+//				e.preventDefault();
+//			}
+//			else if(e.keyCode == 8 || e.keyCode == 37 || e.keyCode == 38 || e.keyCode == 39 || e.keyCode == 40)
+//			{
+//				var node = that.getFocusedElement();
+//				var img = $(node).find("img").get(0);
+//				if(img)
+//					that.setResizeController(img);
+//			}
+//			else if(e.keyCode == 188 || e.keyCode == 190) // < >
+//			{
+//				if(that.keyState.altPressed)
+//				{
+//					var offset = -1;
+//					if(e.keyCode == 190)
+//						offset = 1;
+//					
+//					var node = that.getFocusedElement();
+//					var img = $(node).find("img").get(0);
+//					if(img)
+//					{
+//						var width = img.style.width;
+//						if(!width)
+//							width = getComputedStyle(img).width;
+//						
+//						var postfix = "";
+//						if(width.indexOf("%") != -1)
+//						{
+//							width = new Number(width.replace("%", ""));
+//							postfix = "%";
+//						}
+//						else if(width.indexOf("px") != -1)
+//						{
+//							width = new Number(width.replace("px", ""));
+//							postfix = "px";
+//						}
+//						
+//						if(that.keyState.ctrlPressed)
+//							width += offset;
+//						else
+//							width += offset * 10;
+//						
+//						img.style.width = width + postfix;
+//						
+//						var rect = img.getBoundingClientRect();
+//						img.resizeBar.right.style.left = rect.width + "px";
+//						img.resizeBar.right.style.height = rect.height + "px";
+//						
+//						$(img.resizeBar.right).tooltip("show");
+//					}
+//					
+//					e.preventDefault();
+//				}
+//			}
+//			else
+//			{
+//				if(that.keyState.altPressed)
+//				{
+//					if(e.keyCode == 66)
+//					{
+//						$("button[data-controller='fontBold']:first").click();
+//					}
+//					else if(e.keyCode == 73)
+//					{
+//						$("button[data-controller='fontItalic']:first").click();
+//					}
+//					else if(e.keyCode == 76)
+//					{
+//						$("button[data-controller='alignLeft']:first").click();
+//					}
+//					else if(e.keyCode == 67)
+//					{
+//						$("button[data-controller='alignCenter']:first").click();
+//					}
+//					else if(e.keyCode == 82)
+//					{
+//						$("button[data-controller='alignRight']:first").click();
+//					}
+//					else if(e.keyCode == 80)
+//					{
+//						$("button[data-controller='image']:first")._emit("click");
+//						that.keyState.altPressed = false;
+//						$('[data-toggle="tooltip"]').tooltip("hide");
+//					}
+//					else if(e.keyCode == 86)
+//					{
+//						$("button[data-controller='video']:first")._emit("click");
+//						that.keyState.altPressed = false;
+//						$('[data-toggle="tooltip"]').tooltip("hide");
+//					}
+//					else if(e.keyCode == 70)
+//					{
+//						$("button[data-controller='file']:first")._emit("click");
+//						that.keyState.altPressed = false;
+//						$('[data-toggle="tooltip"]').tooltip("hide");
+//					}
+//					else if(e.keyCode == 89)
+//					{
+//						$("button[data-controller='youtube']:first").click();
+//						that.keyState.altPressed = false;
+//						$('[data-toggle="tooltip"]').tooltip("hide");
+//					}
+//					else if(e.keyCode == 75)
+//					{
+//						$("button[data-controller='link']:first").click();
+//						that.keyState.altPressed = false;
+//						$('[data-toggle="tooltip"]').tooltip("hide");
+//					}
+//
+//					e.preventDefault();
+//				}
+//			}
+//		});
 	};
 	
 	instance.prototype.setResizeController = function(node)
@@ -968,105 +1305,6 @@ TypeWriter = {};
 		{
 			this.resizable.style.left = this.offsetLeft + "px";
 		};
-		
-//		$(this.target).find(".typewriter-focus").removeAttr("class");
-//		$(this.target).find(".typewriter-resizebar").remove();
-//		$(this.target).find(".typewriter-relative").removeClass("typewriter-relative");
-//		
-//		var that = this;
-//		function setResizebar()
-//		{
-//			if(node.resizeBar && node.resizeBar.right)
-//			{
-//				if(node.resizeBar.right.parentElement)
-//					node.resizeBar.right.parentElement.removeChild(node.resizeBar.right);
-//				
-//				node.resizeBar = null;
-//			}
-//			
-//			node.resizeBar = {right : document.createElement("div")};
-//			node.resizeBar.right.className = "typewriter-resizebar";
-//			
-//			var rect = node.getBoundingClientRect();
-//			node.resizeBar.right.style.left =  rect.width - 4 + "px";
-//			node.resizeBar.right.style.top = "0";
-//			node.resizeBar.right.style.width = "5px";
-//			node.resizeBar.right.style.height = rect.height + "px";
-//			node.resizeBar.right.style.cursor = "ew-resize";
-//			node.resizeBar.right.setAttribute("data-toggle", "tooltip");
-//			node.resizeBar.right.setAttribute("data-placement", "left");
-//			node.resizeBar.right.setAttribute("data-title", "ALT + < or >");
-//			node.resizeBar.right.setAttribute("contenteditable", "false");
-//			
-//			node.resizeBar.right.onmousedown = function(e)
-//			{
-//				node.corver = document.createElement("div");
-//				node.corver.className = "typewriter-corver";
-//				node.corver.style.left = node.offsetLeft + "px";
-//				node.corver.style.width = rect.width + "px";
-//				node.corver.style.top = node.offsetTop + "px";
-//				node.corver.style.height = rect.height + "px";
-//				
-//				$(node.parentElement).append(node.corver);
-//				
-//				node.resizeBar.right.prevX = e.pageX;
-//				document.onmousemove = function(e)
-//				{
-//					//마우스의 x좌표에서 rect.left 를 하면 width가 나온다.
-//					var dx = (e.pageX - rect.left);
-////					var dx = (e.pageX - node.resizeBar.right.prevX) / 10;
-//					var width = node.style.width;
-//					if(!width)
-//						width = getComputedStyle(node).width;
-//					
-//					var height = (dx * rect.height) / rect.width;
-//
-//					node.style.width = dx + "px";
-//					node.style.height = height + "px";
-//					node.corver.style.width = dx + "px";
-//					node.corver.style.height = height + "px";
-//					
-//					node.resizeBar.right.style.left = rect.width + "px";
-//					node.resizeBar.right.style.height = rect.height + "px";
-//					
-//					$(node.resizeBar.right).tooltip("hide");
-//				};
-//				
-//				document.onmouseup = function(e)
-//				{
-//					if(node.corver.parentElement)
-//						node.corver.parentElement.removeChild(node.corver);
-//					
-//					document.onmousemove = null;
-//					document.onmouseup = null;
-//				};
-//			};
-//			
-//			node.parentElement.className = "typewriter-relative";
-//			$(node.parentElement).append(node.resizeBar.right);
-//			
-//			$(node.resizeBar.right).tooltip();
-//		};
-//		
-//		$(node).on("click", function(e)
-//		{
-//			$(this).find(".typewriter-focus").removeAttr("class");
-//			$(this).find(".typewriter-resizebar").remove();
-//			$(this).find(".typewriter-relative").removeAttr("class");
-//			that.setResizeController(this);
-//			
-//			that.setCaretPosition(this.nextElementSibling, 0);
-//			
-//			e.stopPropagation();
-//		});
-//		
-//		$(node).attr("class", "typewriter-focus typewriter-image");
-//		setResizebar();
-//		
-//		$(node).on("load", function()
-//		{
-//			setResizebar();
-//		});
 	};
 	
 	instance.prototype.setData = function(data)
@@ -1076,9 +1314,6 @@ TypeWriter = {};
 	
 	instance.prototype.getData = function()
 	{
-//		$(this.target).find(".typewriter-contentplaceholder").remove();
-//		$(this.target).find(".typewriter-resizable").remove();
-		
 		var clone = $(this.target).find(".typewriter-content").clone(true);
 		
 		clone.find(".typewriter-contentplaceholder").remove();

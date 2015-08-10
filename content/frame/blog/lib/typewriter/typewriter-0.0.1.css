@@ -17,14 +17,21 @@
 {
 	position: relative;
 	background-color: white;
+	text-align: center;
 }
 
 .typewriter-controlGroup
 {
-	height: 40px;
 	display: inline-block;
-	margin:5px;
 	vertical-align: middle;
+	border-left: 1px solid #ccc;
+	padding: 0 10px;
+	margin:5px 0;
+}
+
+.typewriter-controlGroup:FIRST-CHILD
+{
+	border:0;
 }
 
 .typewriter-controlGroup > button
@@ -39,25 +46,24 @@
 	display:inline-block;
 	text-align: center;
 	cursor: pointer;
-	font-size:20px;
+	font-size: 15px;
+	font-weight: 500;
 	padding:0 10px;
+	color:#666;
 }
 
 .typewriter-controlGroup > button:HOVER
 {
-	color:black;
+}
+
+.typewriter-controlGroup > button:HOVER > span
+{
+	color: #337ab7;
 }
 
 .typewriter-controlGroup > button:FOCUS, .typewriter-controlGroup > button:ACTIVE
 {
 	outline: 0;
-}
-
-.typewriter-controlGroup .typewriter-compdesc
-{
-	display:block;
-	font-size: 11px;
-	text-align: center;
 }
 
 .typewriter-vline
@@ -73,6 +79,8 @@
 {
 	min-height: 400px;
 	position: relative;
+	border: 1px solid #dfdfdf;
+	padding: 5px;
 }
 
 .typewriter-content > div
