@@ -519,15 +519,12 @@ TypeWriter = {};
 					target = sc.parentElement.nextSibilng;
 			}
 			
-			while(target != ec && target != ec.parentElement)
+			while(target && target != ec && target != ec.parentElement)
 			{
-				if(target)
-				{
-					if(target.nodeName == "DIV")
-						list.push(target);
-					
-					target = target.nextSibling;
-				}
+				if(target.nodeName == "DIV")
+					list.push(target);
+				
+				target = target.nextSibling;
 			}
 			
 			if(ec.parentElement.nodeName == "SPAN")
@@ -573,10 +570,9 @@ TypeWriter = {};
 		});
 	};
 	
-	$t.controller["alignLeft"] = function(editor)
+	$t.controller.align = function(editor, type)
 	{
-		console.log("호이");
- 		if(window.getSelection)
+		if(window.getSelection)
 		{
 			var selection = window.getSelection();
 			if(selection.rangeCount > 0)
@@ -595,17 +591,50 @@ TypeWriter = {};
 				}
 				
 				var div = $t.getSelectedDiv(range, editor);
-				console.log("디브디브 : ", div);
+				
+				if(div)
+				{
+					for(var i=0; i<div.length; i++)
+					{
+						if(div[i] == editor)
+						{
+							var firstDiv = document.createElement("div");
+							var childNodes = div[i].childNodes; 
+							for(var j=0; j<childNodes.length; j++)
+							{
+								if(childNodes[j].nodeName == "DIV")
+									break;
+								else
+									firstDiv.appendChild(childNodes[j--]);
+							}
+							
+							firstDiv.style.textAlign = type;
+							
+							$(editor).prepend(firstDiv);
+						}
+						else
+						{
+							div[i].style.textAlign = type;
+						}
+					}
+				}
 			}
 		}
 	};
 	
+	$t.controller["alignLeft"] = function(editor)
+	{
+ 		$t.controller.align(editor, "left");
+	};
+	
 	$t.controller["alignCenter"] = function(editor)
 	{
+		$t.controller.align(editor, "center");
 	};
 	
 	$t.controller["alignRight"] = function(editor)
 	{
+		$t.controller.align(editor, "right");
 	};
 	
 	$t.controller["image"] = $t.controller["video"] = $t.controller["file"] = function(instance)
