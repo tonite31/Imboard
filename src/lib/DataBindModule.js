@@ -8,6 +8,26 @@ var DataBindModule = function()
 		throw Error('this DataBindModule cannot be instanciated');
 	
 	this.modules = {};
+	
+	this.loadCustomHelper();
+};
+
+DataBindModule.prototype.loadCustomHelper = function()
+{
+	var path = _path.content + "/frame/" + _config.frame + "/properties/handlebars/";
+	
+	try
+	{
+		var result = fs.readdirSync(path);
+		for(var i=0; i<result.length; i++)
+		{
+			require(path + result[i]);
+		}
+	}
+	catch(err)
+	{
+		_log.error(err.stack);
+	}
 };
 
 DataBindModule.prototype.databind = function($, el, req, callback)
@@ -60,13 +80,15 @@ DataBindModule.prototype.getTemplate = function($, el)
 				html = html.replace(matchs[i], replaceString);
 			}
 		}
+
+		return Handlebars.compile(html);
 	}
 	catch(err)
 	{
 		_log.error(err.stack);
 	}
 	
-	return Handlebars.compile(html);
+	return null;
 };
 
 DataBindModule.prototype.getParameters = function($, el)

@@ -51,7 +51,6 @@ var https = require("https");
 
 var Logger  = require(_path.lib + "/Logger");
 var ModuleScanner = require(_path.lib + "/ModuleScanner");
-var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
 var fs = require('fs');
 if(!fs.existsSync(_path.log))
@@ -70,6 +69,8 @@ global.Delegator = require(_path.lib + "/Delegator.js");
 global.Render = require(_path.lib + "/Render.js");
 global._async = require('async');
 global._utils = require(_path.lib + "/Utils.js");
+
+var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
 /**
  * 서버에 백그라운드로 올렸을때 오류 나는거때문에 콘솔 오버라이드
