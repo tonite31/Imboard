@@ -490,35 +490,25 @@ TypeWriter = {};
 		
 		if(ancestor != editor && (ancestor.nodeName == "DIV" || ancestor.nodeName == "#text"))
 		{
-			if(sc == ec)
-			{
-				if(sc.parentElement == editor || sc.parentElement.parentElement == editor)
-				{
-					if(sc.parentElement.nodeName == "SPAN")
-					{
-						
-					}
-				}
-			}
+			//한줄 선택한경우
+			if(sc.parentElement.nodeName == "SPAN")
+				return [sc.parentElement.parentElement];
 			else
-			{
-				var list = [sc];
-				
-				if(sc != ec)
-				{
-					var target = sc.parentElement != editor ? sc.parentElement.nextSibling : sc.nextSibling;
-					while(target && target != ec && target != ec.parentElement)
-					{
-						list.push(target);
-						target = target.nextSibilng;
-					}
-					
-					list.push(ec);
-				}
-			}
+				return [sc.parentElement];
 		}
 		else
 		{
+			//여러줄 선택한경우
+			
+			var list = [];
+			
+			var target = sc;
+			
+			if(target.parentElement.nodeName == "SPAN")
+				list.push(target.parentElement.parentElement);
+			else
+				list.push(target.parentElement);
+			
 			var target = sc.parentElement.nodeName == "SPAN" ? sc.parentElement.nextSibling : sc.nextSibling;
 			//sc가 div하위의 마지막 text인경우 next가 안나온다.
 			if(!target)
@@ -527,9 +517,6 @@ TypeWriter = {};
 					target = sc.parentElement.parentElement.nextSibling;
 				else
 					target = sc.parentElement.nextSibilng;
-				
-				if(target)
-					target = target.childNodes[0];
 			}
 			
 			while(target != ec && target != ec.parentElement)
@@ -537,25 +524,18 @@ TypeWriter = {};
 				if(target)
 				{
 					if(target.nodeName == "DIV")
-						target = target.childNodes[0];
-					list.push(target);
+						list.push(target);
 					
-					if(target.nextSibling)
-					{
-						target = target.nextSibling;
-						if(target.nodeName == "DIV")
-							target = target.childNodes[0];
-					}
-					else
-					{
-						target = target.parentElement.nextSibling;
-						if(target.childNodes)
-							target = target.childNodes[0];
-					}
+					target = target.nextSibling;
 				}
 			}
 			
-			list.push(ec);
+			if(ec.parentElement.nodeName == "SPAN")
+				list.push(ec.parentElement.parentElement);
+			else
+				list.push(ec.parentElement);
+			
+			return list;
 		}
 	};
 	
@@ -593,11 +573,9 @@ TypeWriter = {};
 		});
 	};
 	
- 	[{id : "h1", name : "H1", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h2", name : "H2", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h3", name : "H3", hotkey : [$t.keys.alt, $t.keys.h]}],
- 	[{id : "imageUpload", className : "glyphicon glyphicon-picture", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.i]}, {id : "fileUpload", className : "glyphicon glyphicon-paperclip", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.f]}, {id : "youtubeUpload", name : "Youtube", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.y]}]
-	
 	$t.controller["alignLeft"] = function(editor)
 	{
+		console.log("호이");
  		if(window.getSelection)
 		{
 			var selection = window.getSelection();
@@ -616,7 +594,8 @@ TypeWriter = {};
 					return;
 				}
 				
-				
+				var div = $t.getSelectedDiv(range, editor);
+				console.log("디브디브 : ", div);
 			}
 		}
 	};
@@ -746,7 +725,7 @@ TypeWriter = {};
 		});
 	};
 	
-	$t.getEditor = function(option)
+	$t.generateEditor = function(option)
 	{
 		if(!option)
 			option = {};
@@ -809,13 +788,23 @@ TypeWriter = {};
 				button.type = "button";
 				button.setAttribute("title", hotkey);
 				button.setAttribute("tabindex", "-1");
+				button.setAttribute("data-toggle", "tooltip");
+				button.setAttribute("data-placement", "bottom");
 				
 				button.innerHTML = "<span class='" + (group[j].className ? group[j].className : "") + "'>" + (group[j].name ? group[j].name : "") + "</span>";
 				
 				groupPanel.appendChild(button);
 				
 				if($t.controller[group[j].id])
-					$t.controller[group[j].id].call(button, editor.contentArticle);
+				{
+					(function(id)
+					{
+						$(button).on("click", function()
+						{
+							$t.controller[id].call(button, editor.contentArticle);
+						});
+					})(group[j].id);
+				}
 			}
 			
 			editor.controlPanel.appendChild(groupPanel);
@@ -966,7 +955,7 @@ TypeWriter = {};
 	instance.prototype.init = function()
 	{
 		var that = this;
-		this.editor = $t.getEditor();
+		this.editor = $t.generateEditor();
 		this.target.innerHTML = "";
 		this.target.appendChild(this.editor.typewriter);
 		

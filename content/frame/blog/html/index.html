@@ -99,12 +99,8 @@
 <body>
 	<div class="container">
 		<div class="top" data-bind="template" style="border-bottom: 1px solid #dfdfdf; padding-bottom: 10px;">
-			{{#if "#{user.id}"}}
 			<a class="btn btn-default" href="?fragment=write">새 페이퍼 작성</a>
 			<a class="btn btn-default" href="/settings">Admin Dashboard</a>
-			{{else}}
-			<a class="btn btn-default" href="/signin">로그인</a>
-			{{/if}}
 		</div>
 		<div class="col-xs-4">
 			<div class="panel panel-primary">
