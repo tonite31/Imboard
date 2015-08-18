@@ -26,7 +26,7 @@ DataBindModule.prototype.loadCustomHelper = function()
 	}
 	catch(err)
 	{
-		_log.error(err.stack);
+//		_log.error(err.stack);
 	}
 };
 

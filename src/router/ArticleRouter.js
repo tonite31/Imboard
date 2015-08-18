@@ -193,7 +193,7 @@ module.exports.insertArticle =
 		var param = req.body;
 		
 		var vo = new ArticleVo(param);
-		if(vo.writerId == null && req.session.user != null)
+		if(!vo.writerId && req.session.user != null)
 			vo.writerId = req.session.user.id;
 		
 		ArticleDao.getNextSeq(vo.boardId, function(seq)
@@ -207,7 +207,7 @@ module.exports.insertArticle =
 			
 			if(!req.session.user || req.session.user.level >= 0)
 				vo.isNotice = null;
-			
+
 			ArticleDao.insertArticleWithSeq(vo, function(response)
 			{
 				res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
@@ -228,7 +228,17 @@ function updateArticle(req, res)
 	{
 		if(response)
 		{
-			if(req.session && req.session.user)
+			if(!response.writerId)
+			{
+				ArticleDao.updateArticle(vo, function(response)
+				{
+					if(response == 1)
+						res.end(JSON.stringify({code : _code.SUCCESS, data : {seq : param.seq}, msg : "SUCCESS"}));
+					else
+						res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+				});
+			}
+			else if(req.session && req.session.user)
 			{
 				var userVo = new UserVo();
 				userVo.id = req.session.user.id;
@@ -427,7 +437,27 @@ module.exports.deleteArticle =
 		{
 			if(response)
 			{
-				if(req.session && req.session.user)
+				if(!response.writerId)
+				{
+					ArticleDao.deleteArticle(param.boardId, param.seq, param.isRemove, function(response)
+					{
+						if(response == 1)
+						{
+							CommentDao.deleteCommentByArticle(param.boardId, param.seq, function(response)
+							{
+								if(response >= 0)
+									res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+								else
+									res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+							});
+						}
+						else
+						{
+							res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+						}
+					});
+				}
+				else if(req.session && req.session.user)
 				{
 					var userVo = new UserVo();
 					userVo.id = req.session.user.id;

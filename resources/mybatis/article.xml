@@ -338,15 +338,18 @@
         		#{subject},
         		#{content},
         		#{writerId},
-        		(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),
+        		<choose>
+        			<when test="#{writerId}">(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</when>
+        			<otherwise>#{writerName},</otherwise>
+        		</choose>
         		<choose>
         		    <when test="#{groupId}">
-        		        #{groupId}
+        		        #{groupId},
         		    </when>
         		    <otherwise>
 		       			#{seq},
         		    </otherwise>
-        		</choose>,
+        		</choose>
         		#{parentSeq},
         		#{thumbnailUrl},
         		#{tag},
@@ -365,15 +368,18 @@
         		#{subject},
         		#{content},
         		#{writerId},
-        		(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),
         		<choose>
-        		    <when test="groupId">
-        		        #{groupId}
+        			<when test="#{writerId}">(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</when>
+        			<otherwise>#{writerName},</otherwise>
+        		</choose>
+        		<choose>
+        		    <when test="#{groupId}">
+        		        #{groupId},
         		    </when>
         		    <otherwise>
-		       			#{seq}
+		       			#{seq},
         		    </otherwise>
-        		</choose>,
+        		</choose>
         		#{parentSeq},
         		#{thumbnailUrl},
         		#{tag},
