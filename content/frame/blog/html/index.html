@@ -98,18 +98,20 @@
 
 <body>
 	<div class="container">
-		<div class="top" data-bind="template" style="border-bottom: 1px solid #dfdfdf; padding-bottom: 10px;">
+		<div class="top" data-bind="signedUser" style="border-bottom: 1px solid #dfdfdf; padding-bottom: 10px;">
+			{{#sign user.level "lt" 0}}
 			<a class="btn btn-default" href="?fragment=write">새 페이퍼 작성</a>
 			<a class="btn btn-default" href="/settings">Admin Dashboard</a>
+			{{else}}
+			<a href="/signin" class="btn btn-default">로그인</a>
+			{{/sign}}
 		</div>
 		<div class="col-xs-4">
 			<div class="panel panel-primary">
-				<div class="panel-heading"><a class="penname" href="/">작성자 이름</a></div>
+				<div class="panel-heading"><a class="penname" href="/">#{user.displayId}</a></div>
 				<div class="panel-body">
 					<div class="profileImg" data-bind="getUser" data-param='{"id" : "admin"}' data-template-id="userInfoTemplate"></div>
 			      	<div>
-			        	<h1 class="blogTitle">블로그 제목</h1>
-			        	<p class="blogDescription">블로그 설명</p>
 			      	</div>
 				</div>
 			</div>

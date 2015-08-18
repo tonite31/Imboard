@@ -26,10 +26,28 @@ module.exports.main =
 			var path = req.path.replace(".page", ".html");
 			if(path.match(/^\/settings\/?$/) != null)
 			{
+				try
+				{
+					 global._localize2 = require(_path.content + '/common/settings/properties/localize');
+				}
+				catch(err)
+				{
+					
+				}
+				
 				render(req, res, "common", "settings", "/index.html");
 			}
 			else if(path.match(/^\/signin\/?$/) != null)
 			{
+				try
+				{
+					 global._localize2 = require(_path.content + '/common/core/properties/localize');
+				}
+				catch(err)
+				{
+					_log.error(err.stack);
+				}
+				
 				if(req.session.user != null && req.session.user.id != null)
 				{
 					render(req, res, "common", "core", "/signed.html");
@@ -76,7 +94,7 @@ module.exports.main =
 	}
 };
 
-function replaceData(html, req)
+function replaceData(html, req, frame)
 {
 	var cc = "default";
 	try
@@ -115,8 +133,21 @@ function replaceData(html, req)
 					}
 					
 					var key = m.replace("#{lan.", "").replace("}", "");
-					if(_localize.hasOwnProperty(key))
-						html = html.replace(m, (_localize[key][cc] ? _localize[key][cc] : _localize[key]["default"]));
+					if(frame == "core")
+					{
+						if(_localizeCore.hasOwnProperty(key))
+							html = html.replace(m, (_localizeCore[key][cc] ? _localizeCore[key][cc] : _localizeCore[key]["default"]));
+					}
+					else if(frame == "settings")
+					{
+						if(_localizeSettings.hasOwnProperty(key))
+							html = html.replace(m, (_localizeSettings[key][cc] ? _localizeSettings[key][cc] : _localizeSettings[key]["default"]));
+					}
+					else
+					{
+						if(_localize.hasOwnProperty(key))
+							html = html.replace(m, (_localize[key][cc] ? _localize[key][cc] : _localize[key]["default"]));
+					}
 				}
 			}
 			
@@ -285,7 +316,7 @@ function bindInnerHtml(req, frame, $, target)
 			var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
 			if(layout)
 			{
-				layout = replaceData(layout, req);
+				layout = replaceData(layout, req, frame);
 				$(this).html(layout);
 				$(this).find("script[type='text/x-handlebars-template']").each(function()
 		 		{
@@ -313,7 +344,7 @@ function bindReplaceHtml(req, frame, $, target)
 			var layout = Render.getData(_path.content + "/frame/" + frame + "/html" + src);
 			if(layout)
 			{
-				layout = replaceData(layout, req);
+				layout = replaceData(layout, req, frame);
 				$(layout).insertBefore(this);
 				
 				$(layout).find("script[type='text/x-handlebars-template']").each(function()
@@ -344,7 +375,7 @@ function getLayout(req, res, folder, frame, path)
 		
 		if(layout != null && layout != "")
 		{
-			layout = replaceData(layout, req);
+			layout = replaceData(layout, req, frame);
 			
 			$ = cheerio.load(layout);
 			
@@ -378,7 +409,7 @@ function bindPiece(req, res, folder, frame, path, $, el)
 			var pieceData = Render.getData(global._path.content + "/" + folder + "/" + frame + "/html" + path + "/" + fileName);
 	 		if(pieceData)
 	 		{
-	 			pieceData = replaceData(pieceData, req);
+	 			pieceData = replaceData(pieceData, req, frame);
 	 			
 	 			if(fs.existsSync(global._path.content + "/" + folder + "/" + frame + "/js" + path + "/" + req.query[key] + ".js"))
 		 			$("head").append("<script src='/content/" + folder + "/" + frame + "/js" + path + "/" + req.query[key] + ".js'></script>");

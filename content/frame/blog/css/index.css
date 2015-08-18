@@ -99,6 +99,11 @@
 	margin:0 3px;
 }
 
+.panel-primary .boardInfo span
+{
+	color:white;
+}
+
 .corver
 {
 	position: absolute;

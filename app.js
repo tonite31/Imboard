@@ -36,6 +36,24 @@ catch(err)
 	global._localize = {};
 }
 
+try
+{
+	global._localizeCore = require(__dirname + '/content/common/core/properties/localize');
+}
+catch(err)
+{
+	global._localizeCore = {};
+}
+
+try
+{
+	global._localizeSettings = require(__dirname + '/content/common/settings/properties/localize');
+}
+catch(err)
+{
+	global._localizeSettings = {};
+}
+
 /**
  * 
  */
