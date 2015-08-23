@@ -54,6 +54,15 @@ catch(err)
 	global._localizeSettings = {};
 }
 
+try
+{
+	global._variables = require(__dirname + "/content/frame/" + _config.frame + "/properties/variables");
+}
+catch(err)
+{
+	global._variables = {};
+}
+
 /**
  * 
  */

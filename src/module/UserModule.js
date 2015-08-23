@@ -5,7 +5,9 @@ var RoleDao = require(_path.src + "/dao/RoleDao.js");
 module.exports.signedUser = function($, el, param, req, next)
 {
 	var template = this.getTemplate($, el);
-	$(el).html(template({user : req.session.user}));
+	var user = req.session.user;
+	user.password = null;
+	$(el).html(template({user : user}));
 	next();
 };
 
@@ -30,6 +32,7 @@ module.exports.getUser = function($, el, param, req, next)
 	var userVo = new UserVo(param);
 	UserDao.getUser(userVo, function(user)
 	{
+		user.password = "null;"
 		$(el).html(template({user : user}));
 		next();
 	});

@@ -1,0 +1,12 @@
+{
+	"boardName" :
+	{
+		"ko-KR" : "샘플게시판",
+		"default" : "Sample board"
+	},
+	"write" : 
+	{
+		"ko-KR" : "글쓰기",
+		"default" : "Write a article"
+	}
+}

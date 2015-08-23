@@ -1,0 +1,44 @@
+.dataTable
+{
+	width: 100%;
+}
+
+.dataTable th
+{
+	padding: 10px;
+	font-size: 13px;
+	border: 1px solid #dfdfdf;
+}
+
+.dataTable td
+{
+	padding: 10px;
+	font-size: 13px;
+	border: 1px solid #dfdfdf;
+}
+
+.dataTable .left
+{
+	text-align: left;
+}
+
+.dataTable .center
+{
+	text-align: center;
+}
+
+.dataTable .right
+{
+	text-align: right;
+}
+
+.textinput
+{
+	padding:5px;
+	border: 1px solid #dfdfdf;
+}
+
+.textinput:FOCUS, .textinput:ACTIVE
+{
+	outline: 2px solid #ccc;
+}

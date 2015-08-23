@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+
+<title>Title</title>
+
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap-theme.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="#{path.module}/imboard/css/imboard-ui.css" />
+
+<link rel="stylesheet" type="text/css" href="#{path.root}/css/index.css"/>
+
+<script src="#{path.lib}/jquery/jquery-1.10.2.js"></script>
+<script src="#{path.root}/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="#{path.lib}/handlebars/handlebars-v1.3.0.js"></script>
+
+<script src="#{path.root}/js/index.js"></script>
+
+<script src="#{path.module}/imboard/js/imboard-api.js"></script>
+<script src="#{path.module}/imboard/js/imboard-ui.js"></script>
+<script src="#{path.module}/imboard/js/handlebars-helper.js"></script>
+
+<script id="articleComponentTemplate" type="text/x-handlebars-template">
+{{#if articleList}}
+<table class="dataTable">
+	<colgroup>
+		<col style="width: 10%;"/>
+		<col style="width: 30%;"/>
+		<col style="width: 20%;"/>
+		<col style="width: 20%;"/>
+		<col style="width: 10%;"/>
+		<col style="width: 10%;"/>
+	</colgroup>
+	<thead>
+		<tr>
+			<th class="center">Seq</th>
+			<th class="center">Subject</th>
+			<th class="center">Writer</th>
+			<th class="center">Date</th>
+			<th class="center">Hit</th>
+			<th class="center">Delete</th>
+		</tr>
+	</thead>
+{{#each articleList}}
+	<tbody>
+		<tr>
+			<td class="center">{{seq}}</td>
+			<td><a href="?body=write&seq={{seq}}">{{subject}}</a></td>
+			<td>{{writerName}}</td>
+			<td class="center">{{registerDate}}</td>
+			<td class="center">{{hit}}</td>
+			<td class="center"><button type="button" class="btn btn-default" data-id="{{seq}}">Delete</button></td>
+		</tr>
+	</tbody>
+{{/each}}
+</table>
+{{/if}}
+</script>
+
+<script id="articleComponentPagingTemplate" type="text/x-handlebars-template">
+{{#if pageList}}
+<nav style='text-align:center;'>
+	<ul class="pagination">
+		{{#sign pageIndex ">" 1}}
+		<li>
+			<a href="#pageIndex={{math pageIndex "-" 1}}" aria-label="Previous">
+				<span aria-hidden="true">Previous</span>
+			</a>
+		</li>
+		{{/sign}}
+		{{#each pageList}}
+		<li {{#equals ../pageIndex pageNumber}}class="active"{{/equals}}>
+			<a href="#pageIndex={{pageNumber}}">{{pageNumber}} {{#equals ../pageIndex pageNumber}}<span class="sr-only">(current)</span>{{/equals}}</a>
+		</li>
+		{{/each}}
+		{{#sign pageIndex "<" maxPage}}
+		<li>
+			<a href="#pageIndex={{math pageIndex "+" 1}}" aria-label="Next">
+				<span aria-hidden="true">Next</span>
+			</a>
+		</li>
+		{{/sign}}
+	</ul>
+</nav>
+{{/if}}
+</script>
+</head>
+
+<body>
+	<div class="container">
+		<h1 class="page-header">#{lan.boardName}</h1>
+		<div data-fragment="body">
+			<p style="float: right;"><a href="?body=write" class="btn btn-default">#{lan.write}</a></p>
+			<div style="clear: both;" data-bind="articleComponent" data-param='{"boardId" : "sample"}'>
+				<div data-parts="body" data-template-id="articleComponentTemplate"></div>
+				<div data-parts="pagination" data-template-id="articleComponentPagingTemplate"></div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

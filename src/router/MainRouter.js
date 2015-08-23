@@ -150,23 +150,7 @@ function replaceData(html, req, frame)
 					}
 				}
 			}
-			
-			matchs = html.match(/[^]?#{locale[^}]*}/gi);
-			if(matchs != null)
-			{
-				for(var i=0; i<matchs.length; i++)
-				{
-					var m = matchs[i].substring(1);
-					if(matchs[i][0] == "#")
-					{
-						html = html.replace(matchs[i], m);
-						continue;
-					}
 
-					html = html.replace(m, cc);
-				}
-			}
-			
 			matchs = html.match(/[^]?#{locale}/gi);
 			if(matchs)
 			{
@@ -182,6 +166,22 @@ function replaceData(html, req, frame)
 					html = html.replace(m, cc);
 				}
 			}
+			
+//			matchs = html.match(/[^]?#{locale[^}]*}/gi);
+//			if(matchs != null)
+//			{
+//				for(var i=0; i<matchs.length; i++)
+//				{
+//					var m = matchs[i].substring(1);
+//					if(matchs[i][0] == "#")
+//					{
+//						html = html.replace(matchs[i], m);
+//						continue;
+//					}
+//
+//					html = html.replace(m, cc);
+//				}
+//			}
 			
 			matchs = html.match(/[^]?#{query}/gi);
 			if(matchs)
@@ -218,11 +218,14 @@ function replaceData(html, req, frame)
 					}
 					
 					var key = m.replace("#{query.", "").replace("}", "");
-					var value = req.query[key];
-					if(value == "" || value == null)
-						value = "";
-					
-					html = html.replace(m, value);
+					if(req.query.hasOwnProperty(key))
+					{
+						var value = req.query[key];
+						if(value == "" || value == null)
+							value = "";
+						
+						html = html.replace(m, value);
+					}
 				}
 			}
 			
@@ -240,13 +243,15 @@ function replaceData(html, req, frame)
 					
 					var key = m.replace("#{user.", "").replace("}", "");
 					var value = "";
-					if(req.session && req.session.user)
+					if(req.session && req.session.user && req.session.user.hasOwnProperty(key))
+					{
 						value = req.session.user[key];
-					
-					if(value == null)
-						value = "";
-					
-					html = html.replace(m, value);
+						
+						if(value == null)
+							value = "";
+						
+						html = html.replace(m, value);
+					}
 				}
 			}
 			
@@ -264,12 +269,40 @@ function replaceData(html, req, frame)
 					}
 					
 					var key = m.replace("#{path.", "").replace("}", "");
-					var value = frameData[key];
+					if(frameData.hasOwnProperty(key))
+					{
+						var value = frameData[key];
+						
+						if(value == null)
+							value = "";
+						
+						html = html.replace(m, value);
+					}
+				}
+			}
+			
+			matchs = html.match(/[^]?#{var\.[^}]*}/gi);
+			if(matchs != null)
+			{
+				for(var i=0; i<matchs.length; i++)
+				{
+					var m = matchs[i].substring(1);
+					if(matchs[i][0] == "#")
+					{
+						html = html.replace(matchs[i], m);
+						continue;
+					}
 					
-					if(value == null)
-						value = "";
-					
-					html = html.replace(m, value);
+					var key = m.replace("#{var.", "").replace("}", "");
+					if(global._variables.hasOwnProperty(key))
+					{
+						var value = global._variables[key];
+						
+						if(value == null)
+							value = "";
+						
+						html = html.replace(m, value);
+					}
 				}
 			}
 		}
@@ -308,6 +341,8 @@ function bindInnerHtml(req, frame, $, target)
 		var src = $(this).attr("data-html");
 		$(this).removeAttr("data-html");
 		
+		_log.error("소스가 나오겠지 : ", src);
+		
 		if(src)
 		{
 			if(src.indexOf("/", 0) != 0)
@@ -324,6 +359,7 @@ function bindInnerHtml(req, frame, $, target)
 		 		});
 			}
 			
+			bindReplaceHtml(req, frame, $, this);
 			bindInnerHtml(req, frame, $, this);
 		}
 	});
@@ -345,17 +381,25 @@ function bindReplaceHtml(req, frame, $, target)
 			if(layout)
 			{
 				layout = replaceData(layout, req, frame);
-				$(layout).insertBefore(this);
 				
-				$(layout).find("script[type='text/x-handlebars-template']").each(function()
+				var that = $(layout).get(0);
+				bindInnerHtml(req, frame, $, that);
+				bindReplaceHtml(req, frame, $, that);
+				
+				$(that).insertBefore(this);
+				
+				$(that).find("script[type='text/x-handlebars-template']").each(function()
 		 		{
 		 			$("head").append(this);
 		 		});
-
+				
 				$(this).remove();
 			}
-			
-			bindReplaceHtml(req, frame, $, this);
+			else
+			{
+				bindInnerHtml(req, frame, $, this);
+				bindReplaceHtml(req, frame, $, this);
+			}
 		}
 	});
 }
