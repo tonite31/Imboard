@@ -1,7 +1,12 @@
 {
   "name": "imboard",
+<<<<<<< Upstream, based on origin/development
   "version": "0.1.9",
   "description": "Most convenient platform for webpage development.",
+=======
+  "version": "0.1.5",
+  "description": "",
+>>>>>>> 560514c 버전 수정
   "repository": {
     "type": "git",
     "url": "https://github.com/tonite31/imboard.git"
