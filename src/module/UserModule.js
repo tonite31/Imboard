@@ -6,7 +6,9 @@ module.exports.signedUser = function($, el, param, req, next)
 {
 	var template = this.getTemplate($, el);
 	var user = req.session.user;
-	user.password = null;
+	if(user)
+		user.password = null;
+	
 	$(el).html(template({user : user}));
 	next();
 };
