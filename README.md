@@ -22,11 +22,7 @@
 <p>임보드를 다운로드 할 수 있는 몇 가지 방법을 제공합니다.</p>
 <ul>
 	<li><p><a href="http://resources.imboard.io/imboard/imboard.zip">imboard.zip</a></p></li>
-<<<<<<< Upstream, based on origin/development
 	<li><p><a href="http://resources.imboard.io/imboard/imboard.tar.gz">imboard.tar.gz</a></p></li>
-=======
-	<li><p><a href="http://resources.imboard.io/imboard//imboard.tar.gz">imboard.tar.gz</a></p></li>
->>>>>>> 386a80e readme파일 수정
 	<li><p>Clone the repository : <code>git clone https://github.com/tonite31/Imboard.git</code></p></li>
 	<li><p>Install with npm : <code>npm install imboard</code></p></li>
 </ul>
