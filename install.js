@@ -19,9 +19,12 @@ var QueryExecutor = function(queryList, connection)
 	this.connection = connection;
 };
 
-QueryExecutor.prototype.setQueryList = function(queryList)
+QueryExecutor.prototype.addQueryList = function(queryList)
 {
-	this.queryList = queryList;
+	for(var i=0; i<queryList.length; i++)
+	{
+		this.queryList.push(queryList[i]);
+	}
 };
 
 QueryExecutor.prototype.executeQuery = function(callback)
@@ -52,6 +55,11 @@ QueryExecutor.prototype.executeQuery = function(callback)
 	}
 };
 
+QueryExecutor.prototype.clear = function()
+{
+	this.queryList = [];
+};
+
 try
 {
 	var userdata = fs.readdirSync(__dirname + "/userdata");
@@ -76,19 +84,20 @@ connection.connect(function(err)
 	var qe = new QueryExecutor(split, connection);
 	qe.executeQuery(function()
 	{
+		qe.clear();
+		
 		result = fs.readFileSync(__dirname + '/resources/setup/db_dml');
 		split = result.toString().split(";");
-		qe.setQueryList(split);
+		qe.addQueryList(split);
 		
 		try
 		{
 			result = fs.readFileSync(__dirname + '/content/frame/' + config.frame + '/properties/database/db_dml');
 			split = result.toString().split(";");
-			qe.setQueryList(split);
+			qe.addQueryList(split);
 		}
 		catch(err)
 		{
-			
 		}
 		
 		qe.executeQuery(function()

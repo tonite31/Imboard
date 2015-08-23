@@ -11,7 +11,7 @@ $(document).ready(function()
 			$("#typeHeader").text("유입 URL");
 		else if(value == "date")
 			$("#typeHeader").text("접속일자");
-
+		
 		if(result.code == 1000)
 		{
 			var html = $("#imboard-settings-visitor-template").html();

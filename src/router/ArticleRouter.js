@@ -607,7 +607,6 @@ module.exports.uploadFile =
 				{
 					try
 					{
-						_log.error("허아ㅏㅂ : ", filename);
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
 						pathList.push("/resources/" + folder + "/" + filename);
@@ -643,7 +642,7 @@ module.exports.uploadFileToAWS =
 		var folder = "anonymous";
 		if(req.session.user != null && req.session.user.id != null)
 		{
-			folder = _utils.encrypt(req.session.user.id, _config.encryptKey);
+			folder = req.session.user.id;
 		}
 		
 		var files = req.files;

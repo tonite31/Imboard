@@ -167,23 +167,23 @@ $(document).ready(function()
 		}
 	});
 	
-	var headerRect = $(".top").getRect();
-	$(window).on("scroll", function()
-	{
-		var rect = $("#typewriter > .typewriter-controlPanel").getRect();
-		
-		if(rect.top <= headerRect.bottom)
-		{
-			if($("#clone").get(0) == null)
-			{
-				var clone = $("#typewriter > .typewriter-controlPanel").clone(true);
-				$("body").append(clone);
-				clone.attr("id", "clone").css("z-index", "10000").css("left", rect.left + "px").css("top", headerRect.bottom).css("width", rect.width + "px").css("position", "fixed").show();
-			}
-		}
-		else
-		{
-			$("#clone").remove();
-		}
-	});
+//	var headerRect = $(".top").getRect();
+//	$(window).on("scroll", function()
+//	{
+//		var rect = $("#typewriter > .typewriter-controlPanel").getRect();
+//		
+//		if(rect.top <= headerRect.bottom)
+//		{
+//			if($("#clone").get(0) == null)
+//			{
+//				var clone = $("#typewriter > .typewriter-controlPanel").clone(true);
+//				$("body").append(clone);
+//				clone.attr("id", "clone").css("z-index", "10000").css("left", rect.left + "px").css("top", headerRect.bottom).css("width", rect.width + "px").css("position", "fixed").show();
+//			}
+//		}
+//		else
+//		{
+//			$("#clone").remove();
+//		}
+//	});
 });

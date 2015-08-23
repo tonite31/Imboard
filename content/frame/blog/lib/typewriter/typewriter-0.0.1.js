@@ -490,24 +490,40 @@ TypeWriter = {};
 		
 		if(ancestor != editor && (ancestor.nodeName == "DIV" || ancestor.nodeName == "#text"))
 		{
-			//한줄 선택한경우
-			if(sc.parentElement.nodeName == "SPAN")
-				return [sc.parentElement.parentElement];
+			if(sc == ec)
+			{
+				if(sc.parentElement == editor || sc.parentElement.parentElement == editor)
+				{
+					if(sc.parentElement.nodeName == "SPAN")
+					{
+						console.log("여기로 온다");
+					}
+				}
+			}
 			else
-				return [sc.parentElement];
+			{
+				var list = [sc];
+				
+				if(sc != ec)
+				{
+					var target = sc.parentElement != editor ? sc.parentElement.nextSibling : sc.nextSibling;
+					while(target && target != ec && target != ec.parentElement)
+					{
+						list.push(target);
+						target = target.nextSibilng;
+					}
+					
+					list.push(ec);
+				}
+			}
+		}
+		else if(ancestor == editor)
+		{
+			
 		}
 		else
 		{
-			//여러줄 선택한경우
-			
-			var list = [];
-			
-			var target = sc;
-			
-			if(target.parentElement.nodeName == "SPAN")
-				list.push(target.parentElement.parentElement);
-			else
-				list.push(target.parentElement);
+			var list = [sc];
 			
 			var target = sc.parentElement.nodeName == "SPAN" ? sc.parentElement.nextSibling : sc.nextSibling;
 			//sc가 div하위의 마지막 text인경우 next가 안나온다.
@@ -517,23 +533,38 @@ TypeWriter = {};
 					target = sc.parentElement.parentElement.nextSibling;
 				else
 					target = sc.parentElement.nextSibilng;
-			}
-			
-			while(target && target != ec && target != ec.parentElement)
-			{
-				if(target.nodeName == "DIV")
-					list.push(target);
 				
-				target = target.nextSibling;
+				if(target)
+					target = target.childNodes[0];
 			}
 			
-			if(ec.parentElement.nodeName == "SPAN")
-				list.push(ec.parentElement.parentElement);
-			else
-				list.push(ec.parentElement);
+			while(target != ec && target != ec.parentElement)
+			{
+				if(target)
+				{
+					if(target.nodeName == "DIV")
+						target = target.childNodes[0];
+					list.push(target);
+					
+					if(target.nextSibling)
+					{
+						target = target.nextSibling;
+						if(target.nodeName == "DIV")
+							target = target.childNodes[0];
+					}
+					else
+					{
+						target = target.parentElement.nextSibling;
+						if(target.childNodes)
+							target = target.childNodes[0];
+					}
+				}
+			}
 			
-			return list;
+			list.push(ec);
 		}
+		
+		return list;
 	};
 	
 	$t.controller = {};
@@ -570,71 +601,44 @@ TypeWriter = {};
 		});
 	};
 	
-	$t.controller.align = function(editor, type)
-	{
-		if(window.getSelection)
-		{
-			var selection = window.getSelection();
-			if(selection.rangeCount > 0)
-			{
-				var range = selection.getRangeAt(0);
-				
-				var ancestor = range.commonAncestorContainer; 
-				var sc = range.startContainer;
-				var ec = range.endContainer;
-				
-				//가장 먼저 sc ~ ec를 뽑아낸다.
-				
-				if($(editor).has(sc).length <= 0 || $(editor).has(ec).length <= 0)
-				{
-					return;
-				}
-				
-				var div = $t.getSelectedDiv(range, editor);
-				
-				if(div)
-				{
-					for(var i=0; i<div.length; i++)
-					{
-						if(div[i] == editor)
-						{
-							var firstDiv = document.createElement("div");
-							var childNodes = div[i].childNodes; 
-							for(var j=0; j<childNodes.length; j++)
-							{
-								if(childNodes[j].nodeName == "DIV")
-									break;
-								else
-									firstDiv.appendChild(childNodes[j--]);
-							}
-							
-							firstDiv.style.textAlign = type;
-							
-							$(editor).prepend(firstDiv);
-						}
-						else
-						{
-							div[i].style.textAlign = type;
-						}
-					}
-				}
-			}
-		}
-	};
+ 	[{id : "h1", name : "H1", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h2", name : "H2", hotkey : [$t.keys.alt, $t.keys.h]}, {id : "h3", name : "H3", hotkey : [$t.keys.alt, $t.keys.h]}],
+ 	[{id : "imageUpload", className : "glyphicon glyphicon-picture", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.i]}, {id : "fileUpload", className : "glyphicon glyphicon-paperclip", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.f]}, {id : "youtubeUpload", name : "Youtube", hotkey : [$t.keys.ctrl, $t.keys.alt, $t.keys.y]}]
 	
 	$t.controller["alignLeft"] = function(editor)
 	{
- 		$t.controller.align(editor, "left");
+ 		$(this).on("click", function()
+ 		{
+ 			if(window.getSelection)
+ 			{
+ 				var selection = window.getSelection();
+ 				if(selection.rangeCount > 0)
+ 				{
+ 					var range = selection.getRangeAt(0);
+ 					
+ 					var ancestor = range.commonAncestorContainer; 
+ 					var sc = range.startContainer;
+ 					var ec = range.endContainer;
+ 					
+ 					//가장 먼저 sc ~ ec를 뽑아낸다.
+ 					
+ 					if($(editor).has(sc).length <= 0 || $(editor).has(ec).length <= 0)
+ 					{
+ 						return;
+ 					}
+ 					
+ 					var div = $t.getSelectedDiv(range, editor);
+ 					console.log(div);
+ 				}
+ 			}
+ 		})
 	};
 	
 	$t.controller["alignCenter"] = function(editor)
 	{
-		$t.controller.align(editor, "center");
 	};
 	
 	$t.controller["alignRight"] = function(editor)
 	{
-		$t.controller.align(editor, "right");
 	};
 	
 	$t.controller["image"] = $t.controller["video"] = $t.controller["file"] = function(instance)
@@ -754,7 +758,7 @@ TypeWriter = {};
 		});
 	};
 	
-	$t.generateEditor = function(option)
+	$t.getEditor = function(option)
 	{
 		if(!option)
 			option = {};
@@ -817,23 +821,13 @@ TypeWriter = {};
 				button.type = "button";
 				button.setAttribute("title", hotkey);
 				button.setAttribute("tabindex", "-1");
-				button.setAttribute("data-toggle", "tooltip");
-				button.setAttribute("data-placement", "bottom");
 				
 				button.innerHTML = "<span class='" + (group[j].className ? group[j].className : "") + "'>" + (group[j].name ? group[j].name : "") + "</span>";
 				
 				groupPanel.appendChild(button);
 				
 				if($t.controller[group[j].id])
-				{
-					(function(id)
-					{
-						$(button).on("click", function()
-						{
-							$t.controller[id].call(button, editor.contentArticle);
-						});
-					})(group[j].id);
-				}
+					$t.controller[group[j].id].call(button, editor.contentArticle);
 			}
 			
 			editor.controlPanel.appendChild(groupPanel);
@@ -984,7 +978,7 @@ TypeWriter = {};
 	instance.prototype.init = function()
 	{
 		var that = this;
-		this.editor = $t.generateEditor();
+		this.editor = $t.getEditor();
 		this.target.innerHTML = "";
 		this.target.appendChild(this.editor.typewriter);
 		
