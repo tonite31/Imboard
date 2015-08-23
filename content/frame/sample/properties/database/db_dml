@@ -1,0 +1,3 @@
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 0, "첫번째 게시글", "첫번째 게시글", "익명");
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 1, "두번째 게시글", "두번째 게시글", "익명");
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 2, "세번째 게시글", "세번째 게시글", "익명");

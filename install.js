@@ -78,8 +78,19 @@ connection.connect(function(err)
 	{
 		result = fs.readFileSync(__dirname + '/resources/setup/db_dml');
 		split = result.toString().split(";");
-
 		qe.setQueryList(split);
+		
+		try
+		{
+			result = fs.readFileSync(__dirname + '/content/frame/' + config.frame + '/properties/database/db_dml');
+			split = result.toString().split(";");
+			qe.setQueryList(split);
+		}
+		catch(err)
+		{
+			
+		}
+		
 		qe.executeQuery(function()
 		{
 			try
