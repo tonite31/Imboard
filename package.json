@@ -1,6 +1,6 @@
 {
   "name": "imboard",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Most convenient platform for webpage development.",
   "repository": {
     "type": "git",
@@ -36,6 +36,12 @@
     "serve-favicon": "^2.1.6",
     "winston": "^0.7.3"
   },
+  "keywords": [
+  	"Imboard",
+  	"Cms",
+  	"Webpage",
+  	"Web-Service"
+  ],
   "devDependencies": {},
   "author": "Alprensia",
   "homepage": "http://imboard.io",
