@@ -85,6 +85,20 @@
 	};
 	
 	/**
+	 * $.api.date
+	 */
+	$.api.date = {};
+	$.api.date.getDate = function(data)
+	{
+		return httpRequest({
+	       url: "/date/getDate.do",
+	       type: 'post',
+	       data: data,
+	       async: false
+	    });
+	};
+	
+	/**
 	 * $.api.board
 	 */
 	$.api.board = {};
