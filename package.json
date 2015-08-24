@@ -1,6 +1,6 @@
 {
   "name": "imboard",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "Most convenient platform for webpage development.",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "express-domain-middleware": "^0.1.0",
     "express-session": "^1.0.3",
     "handlebars": "^2.0.0",
-    "immybatis": "0.0.1",
+    "immybatis": "^0.0.2",
     "method-override": "^2.1.2",
     "mysql": "^2.0.1",
     "node-uuid": "^1.4.1",
@@ -36,6 +36,12 @@
     "serve-favicon": "^2.1.6",
     "winston": "^0.7.3"
   },
+  "keywords": [
+  	"Imboard",
+  	"Cms",
+  	"Webpage",
+  	"Web-Service"
+  ],
   "devDependencies": {},
   "author": "Alprensia",
   "homepage": "http://imboard.io",

@@ -6,7 +6,7 @@
         <result column="DATA" property="data" typeHandler="BlobTypeHandler" javaType="java.lang.String"/>
     </resultMap>
     
-    <select id="getData" parameterType="DataVo" resultMap="dataResult">
+    <select id="getData" parameterType="string" resultMap="dataResult">
         SELECT
         	ID,
         	DATA
@@ -35,7 +35,7 @@
        		ID = #{id}
     </update>
     
-    <delete id="deleteData" parameterType="DataVo">
+    <delete id="deleteData" parameterType="string">
         DELETE FROM
         	IMB_DATA
         WHERE

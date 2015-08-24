@@ -3,7 +3,7 @@ var SqlMapClient = require(_path.lib + "/Sqlmapclient.js");
 
 var DataDao = function()
 {
-	this.sqlMapClient = new SqlMapClient("imboardData");
+	this.sqlMapClient = new SqlMapClient("data");
 	
 	if(DataDao.caller != DataDao.getInstance)
 		throw new Error("This DataDao object cannot be instanciated");
@@ -20,10 +20,7 @@ DataDao.getInstance = function(){
 
 DataDao.prototype.getData = function(id, callback)
 {
-	var vo = new DataVo();
-	vo.id = id;
-	
-	this.sqlMapClient.selectQuery("getData", vo, callback);
+	this.sqlMapClient.selectQuery("getData", id, callback);
 };
 
 DataDao.prototype.insertData = function(imboardDataVo, callback)
@@ -38,10 +35,7 @@ DataDao.prototype.updateData = function(imboardDataVo, callback)
 
 DataDao.prototype.deleteData = function(id, callback)
 {
-	var vo = new DataVo();
-	vo.id = id;
-	
-	this.sqlMapClient.deleteQuery("deleteData", vo, callback);
+	this.sqlMapClient.deleteQuery("deleteData", id, callback);
 };
 
 module.exports = DataDao.getInstance();

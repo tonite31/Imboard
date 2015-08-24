@@ -1,3 +1,6 @@
+- 0.2.0
+1. $.api.data API가 추가되었습니다. 단순한 key, value로 구성된 데이터이며 자유롭게 필요한 데이터를 저장하고 관리할 수 있습니다. 자세한 내용은 문서를 참고하십시오.
+
 - 0.1.9
 1. $.api.article.updateGood, $.api.article.updateBad 함수에 good, bad 파라미터가 각각 추가되었습니다. 각 파라미터는 정수값이며 입력한 정수값으로 good, bad값이 연산되어 저장됩니다.
 2. {{#localize}} ~ {{/localize}} 문법을 문자 그대로 사용할 수 있는 문법이 추가되었습니다. {{##localize}} @#{ko-KR} @#{default} {{//localize}} 와 같이 사용하면 문자 그대로 치환됩니다.
