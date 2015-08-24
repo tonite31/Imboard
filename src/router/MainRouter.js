@@ -341,8 +341,6 @@ function bindInnerHtml(req, frame, $, target)
 		var src = $(this).attr("data-html");
 		$(this).removeAttr("data-html");
 		
-		_log.error("소스가 나오겠지 : ", src);
-		
 		if(src)
 		{
 			if(src.indexOf("/", 0) != 0)
