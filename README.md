@@ -14,7 +14,6 @@
 <ul>
 	<li><a href="#quickStart">Quick Start</a></li>
 	<li><a href="#documentation">Documentation</a></li>
-	<li><a href="#community">Community</a></li>
 	<li><a href="#copyright">Copyright and license</a></li>
 </ul>
 
@@ -29,9 +28,6 @@
 
 <h2 id="documentation">Documentation</h2>
 <p>임보드 문서는 <a href="http://imboard.io?fragment=document">임보드 홈페이지</a>에 포함되어있습니다. 다운로드 및 설치 가이드와 개발가이드를 제공하고 있습니다.</p>
-
-<h2 id="community">Community</h2>
-<p>임보드와 관련된 버그나 오류제보 또는 새로운 기능 요청, 그리고 각종 질문과 웹기술에 관련된 모든 활동들은 임보드 커뮤니티를 통해 이루어집니다. <a href="http://imboard.io?fragment=community">커뮤니티</a>를 방문하세요.</p>
 
 <h2 id="copyright">Copyright and license</h2>
 <p>Code and documentation copyright 2015-2015 Alprensia World. Code licensed under <a rel="license" href="https://github.com/tonite31/imboard/blob/master/LICENSE" target="_blank">MIT</a>, documentation under <a rel="license" href="https://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a></p>
