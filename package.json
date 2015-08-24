@@ -21,7 +21,7 @@
     "express-domain-middleware": "^0.1.0",
     "express-session": "^1.0.3",
     "handlebars": "^2.0.0",
-    "immybatis": "^0.0.2",
+    "immybatis": "^0.0.4",
     "method-override": "^2.1.2",
     "mysql": "^2.0.1",
     "node-uuid": "^1.4.1",

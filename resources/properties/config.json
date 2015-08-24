@@ -19,7 +19,7 @@
     },
     "jdbc": {
         "host": "host",
-        "user": "user",
+        "user": "username",
         "password": "password",
         "database": "database",
         "typeCast": true,

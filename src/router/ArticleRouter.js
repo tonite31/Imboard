@@ -221,7 +221,9 @@ function updateArticle(req, res)
 	var param = req.body;
 	
 	if(!param.searchData)
-		param.searchData.signinUserId = req.session.user ? req.session.user.id : "";
+		param.searchData = {};
+	
+	param.searchData.signinUserId = req.session.user ? req.session.user.id : "";
 	
 	var vo = new ArticleVo(param);
 	ArticleDao.getArticle(param.boardId, param.seq, param.searchData, function(response)

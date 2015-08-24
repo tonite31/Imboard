@@ -402,7 +402,7 @@
         	CONTENT = #{content},
         	THUMBNAIL_URL = #{thumbnailUrl},
         	TAG = #{tag},
-        	STATUS = #{status},
+        	<if test="#{status}">STATUS = #{status},</if>
         	PASSWORD = #{password},
         	IS_NOTICE = #{isNotice}
         WHERE
