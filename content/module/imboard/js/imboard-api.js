@@ -657,5 +657,49 @@
 		   async: false
 		});
 	};
-
+	
+	
+	/**
+	 * $.api.data
+	 */
+	$.api.data = {};
+	$.api.data.getData = function(data)
+	{
+		return httpRequest({
+		   url: "/data/getData.do",
+		   type: 'post',
+		   data : data,
+		   async: false
+		});
+	};
+	
+	$.api.data.insertData = function(data)
+	{
+		return httpRequest({
+		   url: "/data/insertData.do",
+		   type: 'post',
+		   data : data,
+		   async: false
+		});
+	};
+	
+	$.api.data.updateData = function(data)
+	{
+		return httpRequest({
+		   url: "/data/updateData.do",
+		   type: 'post',
+		   data : data,
+		   async: false
+		});
+	};
+	
+	$.api.data.deleteData = function(data)
+	{
+		return httpRequest({
+		   url: "/data/deleteData.do",
+		   type: 'post',
+		   data : data,
+		   async: false
+		});
+	};
 }(jQuery));
