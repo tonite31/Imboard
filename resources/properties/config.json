@@ -18,10 +18,10 @@
         "DATA_NOT_FOUND": "-9994"
     },
     "jdbc": {
-        "host": "localhost",
-        "user": "imboard",
-        "password": "imboard",
-        "database": "imboard",
+        "host": "host",
+        "user": "username",
+        "password": "password",
+        "database": "database",
         "typeCast": true,
         "multipleStatements": true
     },
