@@ -218,14 +218,11 @@ function replaceData(html, req, frame)
 					}
 					
 					var key = m.replace("#{query.", "").replace("}", "");
-					if(req.query.hasOwnProperty(key))
-					{
-						var value = req.query[key];
-						if(value == "" || value == null)
-							value = "";
-						
-						html = html.replace(m, value);
-					}
+					var value = req.query[key];
+					if(value == "" || value == null)
+						value = "";
+					
+					html = html.replace(m, value);
 				}
 			}
 			
@@ -243,15 +240,14 @@ function replaceData(html, req, frame)
 					
 					var key = m.replace("#{user.", "").replace("}", "");
 					var value = "";
-					if(req.session && req.session.user && req.session.user.hasOwnProperty(key))
-					{
+					
+					if(req.session && req.session.user)
 						value = req.session.user[key];
-						
-						if(value == null)
-							value = "";
-						
-						html = html.replace(m, value);
-					}
+					
+					if(value == null)
+						value = "";
+					
+					html = html.replace(m, value);
 				}
 			}
 			
@@ -269,15 +265,12 @@ function replaceData(html, req, frame)
 					}
 					
 					var key = m.replace("#{path.", "").replace("}", "");
-					if(frameData.hasOwnProperty(key))
-					{
-						var value = frameData[key];
-						
-						if(value == null)
-							value = "";
-						
-						html = html.replace(m, value);
-					}
+					var value = frameData[key];
+					
+					if(value == null)
+						value = "";
+					
+					html = html.replace(m, value);
 				}
 			}
 			
@@ -294,15 +287,12 @@ function replaceData(html, req, frame)
 					}
 					
 					var key = m.replace("#{var.", "").replace("}", "");
-					if(global._variables.hasOwnProperty(key))
-					{
-						var value = global._variables[key];
-						
-						if(value == null)
-							value = "";
-						
-						html = html.replace(m, value);
-					}
+					var value = global._variables[key];
+					
+					if(value == null)
+						value = "";
+					
+					html = html.replace(m, value);
 				}
 			}
 		}
