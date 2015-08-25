@@ -199,7 +199,7 @@ module.exports.insertArticle =
 		ArticleDao.getNextSeq(vo.boardId, function(seq)
 		{
 			if(seq == null)
-				seq = 0;
+				seq = 1;
 			else
 				seq++;
 			
@@ -316,7 +316,7 @@ module.exports.writeArticle =
 			ArticleDao.getNextSeq(vo.boardId, function(seq)
 			{
 				if(seq == null)
-					seq = 0;
+					seq = 1;
 				else
 					seq++;
 				
