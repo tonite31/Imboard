@@ -588,10 +588,10 @@ module.exports.uploadFile =
 						{
 							var data = fs.readFileSync(filepath.replace(".gif", ".png"));
 							
-							fs.writeFileSync(rootPath + filename.replace(".gif", ".png"), data);
+							fs.writeFileSync(path + filename.replace(".gif", ".png"), data);
 							
 							var data = fs.readFileSync(filepath);
-							fs.writeFileSync(rootPath + filename, data);
+							fs.writeFileSync(path + filename, data);
 							
 							pathList.push("/resources/" + folder + "/" + filename);
 						}
