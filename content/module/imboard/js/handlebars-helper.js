@@ -8,6 +8,16 @@ catch(err)
 	
 }
 
+Handlebars.registerHelper('test', function(test, opts)
+{
+	var f = new Function("if(" + test + "){return true;}else{return false;}");
+	
+	if(f())
+		return opts.fn(this);
+	else
+		return ops.inverse(this);
+});
+
 Handlebars.registerHelper('equals', function(a, b, opts)
 {
 	if(a === b) // Or === depending on your needs
