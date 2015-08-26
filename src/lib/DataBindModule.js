@@ -64,6 +64,7 @@ DataBindModule.prototype.getTemplate = function($, el)
 			}
 			
 			html = $(el).html().replace(/\\&quot;/gi, "\"");
+			html = html.replace(/&apos;/gi, "\'");
 		}
 		
 		$(el).removeAttr("data-template-id");
