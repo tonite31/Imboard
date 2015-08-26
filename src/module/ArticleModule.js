@@ -78,7 +78,7 @@ module.exports.articleComponent = function($, el, param, req, next)
 	};
 	
 	var pageIndex = req.query.pageIndex;
-	if(pageIndex == null || isNaN(pageIndex))
+	if(!pageIndex || isNaN(pageIndex))
 		pageIndex = 1;
 	
 	var searchData = param.searchData;
