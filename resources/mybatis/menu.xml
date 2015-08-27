@@ -12,7 +12,7 @@
         <result column="CHILD_MENU_COUNT" property="childMenuCount"/>
         <result column="CREATOR" property="creator"/>
     </resultMap>
-    
+
     <select id="getMenuList" parameterType="string" resultMap="menuResult">
         SELECT
         	ID,
@@ -34,7 +34,7 @@
         ORDER BY
         	PARENT_MENU_ID, PRIORITY
     </select>
-    
+
     <select id="getMenu" parameterType="MenuVo" resultMap="menuResult">
         SELECT
         	ID,
@@ -69,7 +69,7 @@
         		AND CREATOR = #{creator}
         	</if>
     </select>
-    
+
     <select id="getMenuByName" parameterType="MenuVo" resultMap="menuResult">
         SELECT
         	ID,
@@ -86,9 +86,9 @@
         WHERE
         	NAME = #{name}
     </select>
-    
+
     <insert id="insertMenu" parameterType="MenuVo">
-        INSERT IMB_MENU
+        INSERT INTO IMB_MENU
         	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL, CREATOR)
         VALUES
         	(
@@ -102,7 +102,7 @@
         		#{creator}
         	)
     </insert>
-    
+
     <update id="updateMenu" parameterType="MenuVo">
         UPDATE
         	IMB_MENU
@@ -116,7 +116,7 @@
         WHERE
        		ID = #{id}
     </update>
-    
+
     <delete id="deleteMenu" parameterType="MenuVo">
         DELETE FROM
         	IMB_MENU
