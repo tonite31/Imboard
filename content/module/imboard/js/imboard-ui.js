@@ -510,6 +510,7 @@
     		input.style.top = "0";
     		input.style.bottom = "0";
     		input.style.opacity = "0";
+    		input.style.width = $(context).getRect().width + "px";
     		
     		input.onchange = param[0];
     		
