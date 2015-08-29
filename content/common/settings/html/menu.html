@@ -1,24 +1,29 @@
-<script id="imboard-settings-menu-template" type="text/x-handlebars-template">
-{{#if list}}
-{{#each list}}
-<li data-id="{{id}}">
-	<span data-name>{{name}}</span>
-	<div>
-	<select data-id="{{id}}">
-		<option value="" {{#equals viewLevel ''}}selected{{/equals}}>Everyone</option>
-		{{#if ../../roleList}}
-		{{#each ../../roleList}}
-			<option value="{{level}}" {{#equals ../../viewLevel level}}selected{{/equals}}>{{name}}</option>
-		{{/each}}
-		{{/if}}
-	</select>
-	<button type="button" class="btn btn-default" data-id="delete"><span class="glyphicon glyphicon-minus"></span></button>
-	<button type="button" class="btn btn-default" data-id="up"><span class="glyphicon glyphicon-arrow-up"></span></button>
-	<button type="button" class="btn btn-default" data-id="down"><span class="glyphicon glyphicon-arrow-down"></span></button>
-	</div>
+<script id="imboard-settings-menu-template" type="text/x-handlebars-template" data-precompile="true">
+{{#if menuList}}
+{{#each menuList}}
+<li>
+	<span>{{id}}</span>
+	<span>{{name}}</span>
+	{{#sign childMenuCount ">" 0}}
+	<ul data-bind="menuList" data-param='{"parentMenuId" : "{{id}}"}' data-template-id="imboard-settings-menu-template"></ul>
+	{{/sign}}
 </li>
 {{/each}}
 {{/if}}
 </script>
 
-<div id="menu"></div>
+<div id="menu">
+	<div class="col-xs-8">
+		<div style="clear: both; display: table; width: 100%;">
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-default">위로</button>
+				<button type="button" class="btn btn-default">아래로</button>
+			</div>
+			<div class="col-xs-6">
+				<button type="button" class="btn btn-default">추가</button>
+				<button type="button" class="btn btn-default">삭제</button>
+			</div>
+		</div>
+		<ul style="clear: both; margin-top: 10px;" data-bind="menuList" data-template-id="imboard-settings-menu-template"></ul>
+	</div>
+</div>

@@ -244,9 +244,9 @@
        	</if>
        	) ARTICLE
        	ORDER BY
-       		GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
+       		<choose><when test="#{orderByIsNotice}">IS_NOTICE ${orderByIsNotice}</when><otherwise>IS_NOTICE DESC</otherwise></choose>
+       		,GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
        		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
-       		<if test="#{orderByIsNotice}">, IS_NOTICE ${orderByIsNotice}</if>
        		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
 	    <if test="#{startIndex} != null and #{endIndex} != null">
 	       	LIMIT #{startIndex}, #{endIndex}

@@ -175,11 +175,13 @@
     				var value = context.getValue.call(this, key);
     				if(this.nodeName == "INPUT" && this.type == "checkbox")
     				{
-    					if(!data[key])
-    						data[key] = [];
-    					
     					if(value)
-    						data[key].push(value);
+    					{
+    						if(data[key])
+    							data[key].push(value);
+    						else
+    							data[key] = value;
+    					}
     				}
     				else if(this.nodeName == "INPUT" && this.type == "radio")
     				{
@@ -508,6 +510,7 @@
     		input.style.top = "0";
     		input.style.bottom = "0";
     		input.style.opacity = "0";
+    		input.style.width = $(context).getRect().width + "px";
     		
     		input.onchange = param[0];
     		

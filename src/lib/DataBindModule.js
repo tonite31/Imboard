@@ -64,6 +64,7 @@ DataBindModule.prototype.getTemplate = function($, el)
 			}
 			
 			html = $(el).html().replace(/\\&quot;/gi, "\"");
+			html = html.replace(/&apos;/gi, "\'");
 		}
 		
 		$(el).removeAttr("data-template-id");
@@ -169,7 +170,8 @@ DataBindModule.prototype.compile = function($, list, req, callback, index)
 			}
 			else
 			{
-				$(el).attr("data-bind-description", "module not found"); // 모듈이 없는경우 알려주기 위해..
+				$(el).removeAttr("data-param").removeAttr("data-template-id");
+				$(el).html("<span> ModuleNotFoundException : " + name + "</span>"); // 모듈이 없는경우 알려주기 위해..
 				that.compile($, list, req, callback, index+1);
 			}
 		});

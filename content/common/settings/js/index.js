@@ -2,8 +2,8 @@ $(document).ready(function()
 {
 	if($.query.fragment)
 	{
-		$(".tabs .tab").removeClass("selected");
-		$(".tabs .tab[href='?fragment=" + $.query.fragment + "']").addClass("selected");
+		$(".list-group-item").removeClass("active");
+		$(".list-group-item a[href='?fragment=" + $.query.fragment + "']").parent().addClass("active");
 	}
 	else
 	{

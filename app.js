@@ -83,6 +83,9 @@ var fs = require('fs');
 if(!fs.existsSync(_path.log))
 	fs.mkdirSync(_path.log, 0777);
 
+if(!fs.existsSync(_path.userdata))
+	fs.mkdirSync(_path.userdata, 0777);
+
 /**
  * global 객체 생성
  */

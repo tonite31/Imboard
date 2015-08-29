@@ -112,7 +112,10 @@ module.exports.deleteBoard =
 			{
 				boardDao.deleteBoard(param.id, function(response)
 				{
-					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+					boardAuthDao.deleteBoardAuth(param.id, function(response)
+					{
+						res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+					});
 				});
 			}
 			else
