@@ -15,8 +15,3 @@ INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/insertUse
 
 INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/user/initializeAdminAccount.do', -1, 'Y', 'N');
 INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('/boardAuth/updateBoardAuth.do', -1, 'Y', 'N');
-
-INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN) VALUES ('free', '자유게시판', 0, '자유롭게 글을 쓸 수 있는 게시판', 'Y');
-INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN) VALUES ('qna', '질문과 답변', 0, '궁금한점을 질문하고 답변받을 수 있는 게시판', 'Y');
-INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN) VALUES ('faq', '자주묻는질문', 0, '자주묻는질문을 빠르게 볼 수 있는 게시판', 'Y');
-INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN) VALUES ('contact', 'Contact', 0, '관리자에게 질문이나 건의사항을 올릴 수 있는 게시판', 'Y');
