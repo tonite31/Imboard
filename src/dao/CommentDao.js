@@ -99,7 +99,7 @@ CommentDao.prototype.updateCommentStatus = function(commentVo, callback)
 	this.sqlMapClient.updateQuery("updateCommentStatus", commentVo, callback);
 };
 
-CommentDao.prototype.deleteComment = function(boardId, articleSeq, seq, callback)
+CommentDao.prototype.deleteComment = function(boardId, articleSeq, seq, isRemove, callback)
 {
 	var vo = new CommentVo();
 	vo.boardId = boardId;
@@ -107,8 +107,10 @@ CommentDao.prototype.deleteComment = function(boardId, articleSeq, seq, callback
 	vo.seq = seq;
 	vo.status = -1;
 	
-	this.sqlMapClient.updateQuery("updateCommentStatus", vo, callback);
-//	this.sqlMapClient.deleteQuery("deleteComment", vo, callback);
+	if(isRemove == "Y")
+		this.sqlMapClient.deleteQuery("deleteComment", vo, callback);
+	else
+		this.sqlMapClient.updateQuery("updateCommentStatus", vo, callback);
 };
 
 CommentDao.prototype.deleteCommentByArticle = function(boardId, articleSeq, callback)

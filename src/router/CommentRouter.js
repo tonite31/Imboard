@@ -141,7 +141,7 @@ module.exports.deleteComment =
 	{
 		var param = req.body;
 		
-		commentDao.deleteComment(param.boardId, param.articleSeq, param.seq, function(response)
+		commentDao.deleteComment(param.boardId, param.articleSeq, param.seq, param.isRemove, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
 		});
