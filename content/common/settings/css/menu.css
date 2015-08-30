@@ -1,0 +1,35 @@
+#menu button
+{
+    border:0;
+    background: transparent;
+    padding: 5px;
+}
+
+#menu button:hover
+{
+    outline: 1px solid #dfdfdf;
+}
+
+.menuList, .menuList li
+{
+    list-style: none;
+    margin:0;
+    padding:0;
+}
+
+.menuList, .menuList ul
+{
+    padding-left: 20px;
+}
+
+.menuList li p
+{
+    padding: 10px;
+    border: 1px solid #dfdfdf;
+    cursor: pointer;
+}
+
+.menuList li p:hover, .menuList li p.selected
+{
+    background-color: #efefef;
+}

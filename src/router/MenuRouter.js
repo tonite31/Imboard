@@ -14,6 +14,20 @@ module.exports.getMenuList =
 	}
 };
 
+module.exports.searchMenu =
+{
+	type : 'post',
+	path : '/menu/searchMenu.do',
+	callback : function(req, res)
+	{
+		var param = req.body;
+		menuDao.searchMenu(new MenuVo(param), function(response)
+		{
+			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
+		});
+	}
+};
+
 module.exports.getMenu =
 {
 	type : 'post',
@@ -21,7 +35,7 @@ module.exports.getMenu =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		menuDao.getMenu(new MenuVo(param), function(response)
+		menuDao.getMenu(param.id, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
 		});
@@ -45,10 +59,14 @@ module.exports.insertMenu =
 				{
 					if(req.session.user)
 						menuVo.creator = req.session.user.id;
-					
-					menuDao.insertMenu(menuVo, function(response)
+
+					menuDao.getNextPriority(function(priority)
 					{
-						res.end(JSON.stringify({code : _code.SUCCESS}));
+						menuVo.priority = priority;
+						menuDao.insertMenu(menuVo, function(response)
+						{
+							res.end(JSON.stringify({code : _code.SUCCESS, data : menuVo}));
+						});
 					});
 				}
 				else
@@ -99,7 +117,7 @@ module.exports.deleteMenu =
 		var param = req.body;
 		var menuVo = new MenuVo();
 		menuVo.id = param.id;
-		
+
 		menuDao.getMenu(menuVo, function(response)
 		{
 			if(!response.creator || (req.session.user && (req.session.user.level < 0 || response.creator == req.session.user.id)))

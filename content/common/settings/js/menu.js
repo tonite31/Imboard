@@ -1,113 +1,158 @@
-//pageReady(function()
-//{
-//	var html = '<button type="button" class="btn btn-default" id="addMenuButton"><span class="glyphicon glyphicon-plus"></span></button><ul id="menuList"></ul>';
-//	$("#menu").html(html);
-//	
-//	var roleList = $.api.role.getRoleList({imboardId : _globalData.imboard.id});
-//	var menuList = $.api.menu.getMenuList({imboardId : _globalData.imboard.id});
-//	var template = Handlebars.compile($("#imboard-settings-menu-template").html());
-//	$("#menuList").html(template({list : menuList, roleList : roleList}));
-//	
-//	$("#addMenuButton").on("click", function()
-//	{
-//		var id = new Date().getTime();
-//		var html = "<li data-id='" + id + "'><span contenteditable='true'></span>";
-//		html += "<div>";
-//		html += "<select data-id='" + id + "'></select>\n";
-//		html += '<button type="button" class="btn btn-default" data-id="delete"><span class="glyphicon glyphicon-minus"></span></button>\n';
-//		html += '<button type="button" class="btn btn-default" data-id="up"><span class="glyphicon glyphicon-arrow-up"></span></button>\n';
-//		html += '<button type="button" class="btn btn-default" data-id="down"><span class="glyphicon glyphicon-arrow-down"></span></button></li>';
-//		html += "</div>";
-//		$("#menuList").append(html);
-//		
-//		var option = "";
-//		for(var i=0; i<roleList.length; i++)
-//			option += "<option value='" + roleList[i].level + "'>" + roleList[i].name + "</option>";
-//		
-//		$("#menuList select[data-id='" + id + "']").html(option);
-//		
-//		var target = $("#menuList span[contenteditable]");
-//		$(target).parent().find("*[data-id]").hide();
-//		target.focus();
-//		target.on('blur keydown', function(e)
-//		{
-//			var type = $(this).attr('contenteditable');
-//			if(type == "true" && (e.type == "blur" || e.type == "keydown" && e.keyCode == 13))
-//			{
-//				if($(this).text() != '')
-//				{
-//					var param = {
-//						imboardId : _globalData.imboard.id,
-//						id : id,
-//						name : $(this).text(),
-//						parameter : "",
-//						priority : $("#menuList li").index(target.parent())
-//					};
-//
-//					$.api.menu.insertMenu(param);
-//					
-//					$(this).parent().find("*[data-id]").show();
-//					$(this).removeAttr("contenteditable");
-//				}
-//				else
-//				{
-//					$(this).parent().remove();
-//				}
-//			}
-//		});
-//		
-//		$(target).parent().find("button[data-id='delete']").on("click", function()
-//		{
-//			$.api.menu.deleteMenu({imboardId : _globalData.imboard.id, id : $(this).parent().parent().attr("data-id")});
-//			$(this).parent().parent().remove();
-//		});
-//	});
-//	
-//	$("#menuList button[data-id='delete']").on("click", function()
-//	{
-//		$.api.menu.deleteMenu({imboardId : _globalData.imboard.id, id : $(this).parent().parent().attr("data-id")});
-//		$(this).parent().parent().remove();
-//	});
-//	
-//	$("#menuList select").on("change", function()
-//	{
-//		var param = {
-//			imboardId : _globalData.imboard.id,
-//			id : $(this).attr("data-id"),
-//			name : $(this).parent().parent().find("span[data-name]").text(),
-//			viewLevel : $(this).val()
-//		};
-//		
-//		$.api.menu.updateMenu(param);
-//	});
-//	
-//	$("#menuList span[data-name]").on("click", function()
-//	{
-//		$(this).attr("contenteditable", "true");
-//		$(this).focus();
-//		$(this).on('blur keydown', function(e)
-//		{
-//			if(e.type == "blur" || e.type == "keydown" && e.keyCode == 13)
-//			{
-//				if($(this).text() != '')
-//				{
-//					var param = {
-//						imboardId : _globalData.imboard.id,
-//						id : $(this).parent().attr('data-id'),
-//						name : $(this).text()
-//					};
-//
-//					$.api.menu.updateMenu(param);
-//				}
-//				
-//				$(this).removeAttr("contenteditable");
-//				$(this).off('blur keydown');
-//			}
-//		});
-//	});
-//	
-//	$("#menuList span").on("blur", function()
-//	{
-//		//imboardId, id, name, parameter, priority, parentMenuId, viewLevel
-//	});
-//});
+var selectedMenu = null;
+
+$(document).ready(function()
+{
+    $("#form").compile(function(data)
+    {
+        $.api.menu.updateMenu(data);
+        $("p[data-id='" + data.id + "']").attr("class", "selected");
+        selectedMenu = $("p[data-id='" + data.id + "']");
+    });
+
+    var menuClickHandler = function(e)
+    {
+        $(".menuList p").removeAttr("class");
+        if($(this).attr("data-id"))
+        {
+            $(this).attr("class", "selected");
+
+            selectedMenu = this;
+
+            $("#form").show();
+
+            var result = $.api.menu.getMenu({id : $(this).attr("data-id")});
+            if(result.code == 1000)
+            {
+                $("#form").setData(result.data);
+            }
+
+            e.stopPropagation();
+        }
+        else
+        {
+            selectedMenu = null;
+            $(".menuList p").removeAttr("class");
+
+            $("#form").hide();
+        }
+    };
+
+    $(".menuList p").on("click", menuClickHandler);
+
+    $("#moveUp").on("click", function(e)
+    {
+        if(selectedMenu)
+        {
+            var prev = $(selectedMenu).parent().prev().children("p");
+            if(prev.length > 0)
+            {
+                var prevId = prev.attr("data-id");
+                var prevPriority = prev.attr("data-priority");
+                var prevName = prev.attr("data-name");
+
+                var id = $(selectedMenu).attr("data-id");
+                var priority = $(selectedMenu).attr("data-priority");
+                var name = $(selectedMenu).attr("data-name");
+
+                $.api.menu.updateMenu({id : id, name : name, priority : prevPriority});
+                $.api.menu.updateMenu({id : prevId, name : prevName, priority : priority});
+
+                $(selectedMenu).parent().insertBefore(prev.parent());
+            }
+        }
+
+        e.stopPropagation();
+    });
+
+    $("#moveDown").on("click", function(e)
+    {
+        if(selectedMenu)
+        {
+            var next = $(selectedMenu).parent().next().children("p");
+            if(next.length > 0)
+            {
+                var nextId = next.attr("data-id");
+                var nextPriority = next.attr("data-priority");
+                var nextName = next.attr("data-name");
+
+                var id = $(selectedMenu).attr("data-id");
+                var priority = $(selectedMenu).attr("data-priority");
+                var name = $(selectedMenu).attr("data-name");
+
+                $.api.menu.updateMenu({id : id, name : name, priority : nextPriority});
+                $.api.menu.updateMenu({id : nextId, name : nextName, priority : priority});
+
+                next.parent().insertBefore($(selectedMenu).parent());
+            }
+        }
+
+        e.stopPropagation();
+    });
+
+    $("#addMenu").on("click", function(e)
+    {
+        var parentMenuId = null;
+        if(selectedMenu)
+        {
+            parentMenuId = $(selectedMenu).attr("data-id");
+        }
+
+        var result = $.api.menu.insertMenu({id : new Date().getTime(), name : "메뉴", parentMenuId : parentMenuId});
+        if(result.code == 1000)
+        {
+            var p = document.createElement("p");
+            $(p).attr("data-id", result.data.id);
+            $(p).attr("data-name", result.data.name);
+            $(p).attr("data-priority", result.data.priority);
+            $(p).on("click", menuClickHandler);
+
+            $(p).html("<span>" + result.data.id + "</span><span>" + result.data.name + "</span>");
+
+            var li = document.createElement("li");
+            li.appendChild(p);
+
+            var ul = null;
+            if(selectedMenu)
+                ul = $(selectedMenu).parent().find("ul");
+            else
+                ul = $(".menuList");
+
+            if(ul.length > 0)
+            {
+                $(ul).append(li);
+            }
+            else
+            {
+                var ul = document.createElement("ul");
+                ul.appendChild(li);
+                $(selectedMenu).parent().append(ul);
+            }
+        }
+
+        e.stopPropagation();
+    });
+
+    $("#deleteMenu").on("click", function(e)
+    {
+        if(selectedMenu)
+        {
+            var result = $.api.menu.deleteMenu({id : $(selectedMenu).attr("data-id")});
+            if(result.code == 1000)
+            {
+                var next = $(selectedMenu).parent().next().find("p");
+                $(selectedMenu).parent().remove();
+                if(next.length > 0)
+                {
+                    next.attr("class", "selected");
+                    selectedMenu = next;
+                }
+            }
+            else
+            {
+                console.error(result);
+            }
+        }
+
+        e.stopPropagation();
+    });
+});
