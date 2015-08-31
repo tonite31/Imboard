@@ -28,14 +28,14 @@
         	IMB_MENU A
         WHERE
         	<choose>
-        		<when test="#{parentMenuId} == null or #{parentMenuId} == ''">PARENT_MENU_ID IS NULL OR PARENT_MENU_ID = ID</when>
+        		<when test="!#{parentMenuId}">PARENT_MENU_ID IS NULL OR PARENT_MENU_ID = ID OR PARENT_MENU_ID = ''</when>
         		<otherwise>PARENT_MENU_ID = #{parentMenuId}</otherwise>
         	</choose>
         ORDER BY
         	PARENT_MENU_ID, PRIORITY
     </select>
 
-    <select id="getMenu" parameterType="MenuVo" resultMap="menuResult">
+    <select id="searchMenu" parameterType="MenuVo" resultMap="menuResult">
         SELECT
         	ID,
         	NAME,
@@ -70,6 +70,27 @@
         	</if>
     </select>
 
+    <select id="getMenu" parameterType="id" resultMap="menuResult">
+        SELECT
+        	ID,
+        	NAME,
+        	TYPE,
+        	PARAMETER,
+        	PRIORITY,
+        	PARENT_MENU_ID,
+        	VIEW_LEVEL,
+        	(SELECT COUNT(*) FROM IMB_MENU WHERE PARENT_MENU_ID = A.ID) AS CHILD_MENU_COUNT,
+        	CREATOR
+        FROM
+        	IMB_MENU A
+        WHERE
+    		ID = #{id}
+    </select>
+
+    <select id="getNextPriority" resultType="int">
+        SELECT if(isnull(MAX(PRIORITY)), 0, MAX(PRIORITY)+1) FROM IMB_MENU
+    </select>
+
     <select id="getMenuByName" parameterType="MenuVo" resultMap="menuResult">
         SELECT
         	ID,
@@ -89,7 +110,7 @@
 
     <insert id="insertMenu" parameterType="MenuVo">
         INSERT INTO IMB_MENU
-        	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL, CREATOR)
+        	(ID, NAME, TYPE, PARAMETER, PRIORITY, PARENT_MENU_ID, VIEW_LEVEL, CREATOR, GROUP_ID)
         VALUES
         	(
         		#{id},
@@ -99,7 +120,8 @@
         		#{priority},
         		#{parentMenuId},
         		#{viewLevel},
-        		#{creator}
+        		#{creator},
+                #{parentMenuId}
         	)
     </insert>
 
@@ -108,7 +130,7 @@
         	IMB_MENU
        	SET
        		NAME = #{name}
-       		<if test="#{type} != null">TYPE = #{type}</if>
+       		<if test="#{type} != null">,TYPE = #{type}</if>
        		<if test="#{parameter} != null">,PARAMETER = #{parameter}</if>
        		<if test="#{priority} != null">,PRIORITY = #{priority}</if>
        		<if test="#{parentMenuId} != null">,PARENT_MENU_ID = #{parentMenuId}</if>
@@ -117,10 +139,16 @@
        		ID = #{id}
     </update>
 
-    <delete id="deleteMenu" parameterType="MenuVo">
+    <delete id="deleteMenu" parameterType="string">
         DELETE FROM
         	IMB_MENU
         WHERE
        		ID = #{id}
+    </delete>
+    <delete id="deleteMenuByParentMenuId" parameterType="string">
+        DELETE FROM
+        	IMB_MENU
+        WHERE
+       		GROUP_ID = #{id}
     </delete>
 </mapper>

@@ -18,28 +18,28 @@
 (function($)
 {
 	$.api = {};
-	
+
 	var httpRequest = function(param)
 	{
 //		if(!param.data)
 //			param.data = {};
-	//	
+	//
 //		param.data.uuid = globalData.uuid;
-		
+
 		var successCallback = null;
 		if(param.success)
 		{
 			successCallback = param.success;
 			delete param.success;
 		}
-		
+
 		var errorCallback = function(data) { console.error(data); };
 		if(param.error)
 		{
 			errorCallback = param.error;
 			delete param.error;
 		}
-		
+
 		var json =
 		{
 			success: function(data)
@@ -54,7 +54,7 @@
 							data.code = parseInt(data.code);
 							if(successCallback != null)
 								successCallback(data);
-							
+
 							result = data;
 						}
 	    		   }
@@ -65,10 +65,10 @@
 	    			   result = null;
 	    			   errorCallback(result);
 	    		   }
-				}	
-			} 
+				}
+			}
 		};
-		
+
 		for(var key in param)
 		{
 			if(param.hasOwnProperty(key))
@@ -76,14 +76,14 @@
 				json[key] = param[key];
 			}
 		}
-		
+
 		json.__ajax = true;
 		var result = null;
 	    $.ajax(json);
-	    
+
 	    return result;
 	};
-	
+
 	/**
 	 * $.api.date
 	 */
@@ -97,7 +97,7 @@
 	       async: false
 	    });
 	};
-	
+
 	/**
 	 * $.api.board
 	 */
@@ -121,7 +121,7 @@
 	       async: false
 	    });
 	};
-	
+
 	$.api.board.getBoardByName = function(data)
 	{
 		return httpRequest({
@@ -221,7 +221,7 @@
 	       async: false
 	    });
 	};
-	
+
 	//boardId, seq, subject, content, groupId, parentSeq, thumbnailUrl, tag, password, isNotice
 	$.api.article.writeArticle = function(data)
 	{
@@ -335,7 +335,7 @@
 	       data : data,
 	       async: false
 	    });
-		
+
 		return result;
 	};
 
@@ -435,8 +435,18 @@
 	       data: data,
 	       async: false
 	    });
-		
+
 		return menuList;
+	};
+
+	$.api.menu.searchMenu = function(data)
+	{
+		return httpRequest({
+	       url: "/menu/searchMenu.do",
+	       type: 'post',
+	       data: data,
+	       async: false
+	    });
 	};
 
 	$.api.menu.getMenu = function(data)
@@ -448,7 +458,7 @@
 	       async: false
 	    });
 	};
-	
+
 	//id, name, type, parameter, priority, parentMenuId, viewLevel
 	$.api.menu.insertMenu = function(data)
 	{
@@ -494,7 +504,7 @@
 	       async: false
 	    });
 	};
-	
+
 	$.api.user.getUser = function(data)
 	{
 		return httpRequest({
@@ -504,7 +514,7 @@
 	       async: false
 	    });
 	};
-	
+
 	$.api.user.updateUser = function(data)
 	{
 		return httpRequest({
@@ -514,7 +524,7 @@
 	       async: false
 	    });
 	};
-	
+
 	$.api.user.dropOut = function(data)
 	{
 		return httpRequest({
@@ -551,7 +561,7 @@
 	       type: 'post',
 	       async: false
 	    });
-		
+
 		return userInfo;
 	};
 
@@ -563,7 +573,7 @@
 //	       data : data,
 //	       async: false
 //	    });
-//		
+//
 //		return userInfo;
 //	};
 
@@ -671,8 +681,8 @@
 		   async: false
 		});
 	};
-	
-	
+
+
 	/**
 	 * $.api.data
 	 */
@@ -686,7 +696,7 @@
 		   async: false
 		});
 	};
-	
+
 	$.api.data.insertData = function(data)
 	{
 		return httpRequest({
@@ -696,7 +706,7 @@
 		   async: false
 		});
 	};
-	
+
 	$.api.data.updateData = function(data)
 	{
 		return httpRequest({
@@ -706,7 +716,7 @@
 		   async: false
 		});
 	};
-	
+
 	$.api.data.deleteData = function(data)
 	{
 		return httpRequest({

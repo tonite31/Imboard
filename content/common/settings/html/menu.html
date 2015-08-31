@@ -2,8 +2,10 @@
 {{#if menuList}}
 {{#each menuList}}
 <li>
-	<span>{{id}}</span>
-	<span>{{name}}</span>
+	<p data-id="{{id}}" data-priority="{{priority}}" data-name="{{name}}">
+		<span>{{id}}</span>
+		<span>{{name}}</span>
+	</p>
 	{{#sign childMenuCount ">" 0}}
 	<ul data-bind="menuList" data-param='{"parentMenuId" : "{{id}}"}' data-template-id="imboard-settings-menu-template"></ul>
 	{{/sign}}
@@ -13,17 +15,54 @@
 </script>
 
 <div id="menu">
-	<div class="col-xs-8">
+	<div class="col-xs-4">
 		<div style="clear: both; display: table; width: 100%;">
 			<div class="col-xs-6">
-				<button type="button" class="btn btn-default">위로</button>
-				<button type="button" class="btn btn-default">아래로</button>
+				<button type="button" class="glyphicon glyphicon-arrow-up" id="moveUp"></button>
+				<button type="button" class="glyphicon glyphicon-arrow-down" id="moveDown"></button>
 			</div>
-			<div class="col-xs-6">
-				<button type="button" class="btn btn-default">추가</button>
-				<button type="button" class="btn btn-default">삭제</button>
+			<div class="col-xs-6" style="text-align:right; padding-right:0;">
+				<button type="button" class="glyphicon glyphicon-plus" id="addMenu"></button>
+				<button type="button" class="glyphicon glyphicon-minus" id="deleteMenu"></button>
 			</div>
 		</div>
-		<ul style="clear: both; margin-top: 10px;" data-bind="menuList" data-template-id="imboard-settings-menu-template"></ul>
+		<ul class="menuList" style="clear: both; margin-top: 10px;">
+			<li>
+				<p>메뉴목록</p>
+				<ul data-bind="menuList" data-template-id="imboard-settings-menu-template"></ul>
+			</li>
+		</ul>
+	</div>
+	<div class="col-xs-4">
+		<form data-component="form" id="form" style="display:none;">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<table class="dataTable">
+					<colgroup>
+						<col style="width: 30%;"/>
+						<col style="width: 70%;"/>
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>메뉴 아이디</th>
+							<td style="height:50px;"><span data-name="id">{{id}}</span><input type="hidden" name="id" value="{{id}}"/></td>
+						</tr>
+						<tr>
+							<th>메뉴 이름</th>
+							<td><input type="text" name="name" value="{{name}}"></td>
+						</tr>
+						<tr>
+							<th>파라미터</th>
+							<td><input type="text" name="name" value="{{parameter}}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="panel-footer" style="text-align:right; position:relative;">
+				<span style="position:absolute; left:15px; color:red; font-size:12px; line-height:35px;" data-id="result"></span>
+				<input type="submit" class="btn btn-default" value="저장"/>
+			</div>
+		</div>
+		</form>
 	</div>
 </div>

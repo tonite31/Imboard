@@ -33,7 +33,7 @@ QueryExecutor.prototype.executeQuery = function(callback)
 	if(this.queryList.length > 0)
 	{
 		var query = this.queryList.shift();
-		if(query)
+		if(query && query.trim())
 		{
 			connection.query(query, function(err, result)
 			{

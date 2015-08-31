@@ -159,7 +159,8 @@
        		UNION
        	</if>
        	<if test="#{isNotice} != 'Y'">
-       		(SELECT
+       		(
+       		SELECT
 	        	A.BOARD_ID,
 	        	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
 	        	A.SEQ,
@@ -240,17 +241,21 @@
 				AND THUMBNAIL_URL IS NOT NULL     
 				AND THUMBNAIL_URL != ''       
 	        </if>
-	     	)
+	     	ORDER BY
+       		GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
+       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+       		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
+		    <if test="#{startIndex} != null and #{endIndex} != null">
+		       	LIMIT #{startIndex}, #{endIndex}
+	        </if>
+	        )
        	</if>
        	) ARTICLE
        	ORDER BY
-       		<choose><when test="#{orderByIsNotice}">IS_NOTICE ${orderByIsNotice}</when><otherwise>IS_NOTICE DESC</otherwise></choose>
-       		,GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
-       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
-       		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
-	    <if test="#{startIndex} != null and #{endIndex} != null">
-	       	LIMIT #{startIndex}, #{endIndex}
-        </if>
+       	<choose><when test="#{orderByIsNotice}">IS_NOTICE ${orderByIsNotice}</when><otherwise>IS_NOTICE DESC</otherwise></choose>
+       	,GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
+      	,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+      	<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
     </select>
     
     <select id="getArticle" parameterType="ArticleVo" resultMap="articleResult">
