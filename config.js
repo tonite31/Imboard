@@ -21,14 +21,14 @@ Menu.prototype.showMenu = function(loop, quitCallback)
 	{
 		console.log((i+1) + ". " + this.menuList[i].name);
 	}
-	
+
 	if(loop)
 		console.log("q. quit");
-	
+
 	prompt.start();
 	prompt.message = "";
 	prompt.delimiter = "";
-	
+
 	var that = this;
 	prompt.get(['select a menu : '], function (err, result)
 	{
@@ -37,7 +37,7 @@ Menu.prototype.showMenu = function(loop, quitCallback)
 			console.error(err);
 			return;
 		}
-		
+
 		var menu = result['select a menu : '];
 		if(menu == "q")
 		{
@@ -50,15 +50,15 @@ Menu.prototype.showMenu = function(loop, quitCallback)
 			console.log();
 			console.log("selected menu is invalid");
 			console.log("-----------------------------------------");
-			
+
 			if(loop)
 			{
 				that.showMenu(loop, quitCallback);
 			}
-			
+
 			return;
 		}
-		
+
 		var callback = that.menuList[menu-1].callback;
 		if(callback)
 		{
@@ -91,7 +91,7 @@ configMenu.addMenu("frame", function(callback)
 	prompt.start();
 	prompt.message = "";
 	prompt.delimiter = "";
-	
+
 	prompt.get(['frame name : '], function(err, result)
 	{
 		if(err)
@@ -99,10 +99,10 @@ configMenu.addMenu("frame", function(callback)
 			console.error(err);
 			return;
 		}
-		
+
 		var name = result['frame name : '];
 		config.frame = name ? name : "blog";
-		
+
 		if(callback)
 			callback();
 	});
@@ -113,7 +113,7 @@ configMenu.addMenu("server", function(callback)
 	prompt.start();
 	prompt.message = "";
 	prompt.delimiter = "";
-	
+
 	prompt.get(['port : ', 'host : '], function(err, result)
 	{
 		if(err)
@@ -121,14 +121,14 @@ configMenu.addMenu("server", function(callback)
 			console.error(err);
 			return;
 		}
-		
+
 		var host = result['host : '];
 		if(host[host.length-1] == "/")
 			host = host.substring(0, host.length-1);
-		
+
 		config.server.port = result['port : '];
 		config.server.host = host;
-		
+
 		if(callback)
 			callback();
 	});
@@ -139,7 +139,7 @@ configMenu.addMenu("log", function(callback)
 	prompt.start();
 	prompt.message = "";
 	prompt.delimiter = "";
-	
+
 	prompt.get(['level : '], function(err, result)
 	{
 		if(err)
@@ -147,9 +147,9 @@ configMenu.addMenu("log", function(callback)
 			console.error(err);
 			return;
 		}
-		
+
 		config.log.level = result['level : '];
-		
+
 		if(callback)
 			callback();
 	});
@@ -160,20 +160,21 @@ configMenu.addMenu("jdbc", function(callback)
 	prompt.start();
 	prompt.message = "";
 	prompt.delimiter = "";
-	
-	prompt.get(['host     : ', 'username : ', 'password : ', 'database : '], function(err, result)
+
+	prompt.get(['host     : ', 'username : ', 'password : ', 'database : ', 'port     : '], function(err, result)
 	{
 		if(err)
 		{
 			console.error(err);
 			return;
 		}
-		
+
 		config.jdbc.host 	 = result['host     : '];
 		config.jdbc.user 	 = result['username : '];
 		config.jdbc.password = result['password : '];
 		config.jdbc.database = result['database : '];
-		
+		config.jdbc.port	 = result['port     : '];
+
 		if(callback)
 			callback();
 	});

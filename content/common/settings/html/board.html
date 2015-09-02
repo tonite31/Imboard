@@ -1,4 +1,4 @@
-<script id="settings-board-template" type="text/x-handlebars-template">
+<script id="settings-board-template" type="text/x-handlebars-template" data-precompile="true">
 {{#if boardList}}
 {{#each boardList}}
 <div class="col-xs-6 col-md-4">
@@ -75,7 +75,7 @@
 						</select>
 					</td>
 				</tr>
-				<tr>	
+				<tr>
 					<th>사용여부</th>
 					<td>
 						<input type="radio" name="useYn" value="Y" {{#equals useYn "Y"}}checked="checked"{{/equals}}/> <span style="font-size:12px; margin-right:10px; margin-left:3px;">사용</span>
@@ -101,6 +101,6 @@
 <div id="board">
 	<div style="margin-bottom: 10px;">
 		<button type="button" class="btn btn-default" id="addBoardButton">게시판 추가</button>
-	</div>		
+	</div>
 	<div class="row" data-bind="boardList" data-template-id="settings-board-template" id="boardList"></div>
 </div>
