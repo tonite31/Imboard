@@ -3,7 +3,6 @@
 {{#each menuList}}
 <li>
 	<p data-id="{{id}}" data-priority="{{priority}}" data-name="{{name}}">
-		<span>{{id}}</span>
 		<span>{{name}}</span>
 	</p>
 	{{#sign childMenuCount ">" 0}}
@@ -49,11 +48,11 @@
 						</tr>
 						<tr>
 							<th>메뉴 이름</th>
-							<td><input type="text" name="name" value="{{name}}"></td>
+							<td><input type="text" name="name"></td>
 						</tr>
 						<tr>
 							<th>파라미터</th>
-							<td><input type="text" name="name" value="{{parameter}}"></td>
+							<td><input type="text" name="parameter"></td>
 						</tr>
 					</tbody>
 				</table>

@@ -106,16 +106,16 @@ $(document).ready(function()
             $(p).attr("data-priority", result.data.priority);
             $(p).on("click", menuClickHandler);
 
-            $(p).html("<span>" + result.data.id + "</span><span>" + result.data.name + "</span>");
+            $(p).html("<span>" + result.data.name + "</span>");
 
             var li = document.createElement("li");
             li.appendChild(p);
 
             var ul = null;
             if(selectedMenu)
-                ul = $(selectedMenu).parent().find("ul");
+                ul = $(selectedMenu).parent().children("ul");
             else
-                ul = $(".menuList");
+                ul = $(".menuList > li > ul");
 
             if(ul.length > 0)
             {
@@ -141,10 +141,11 @@ $(document).ready(function()
             {
                 var next = $(selectedMenu).parent().next().find("p");
                 $(selectedMenu).parent().remove();
+                $("#form").hide();
+                
                 if(next.length > 0)
                 {
-                    next.attr("class", "selected");
-                    selectedMenu = next;
+                    next.click();
                 }
             }
             else

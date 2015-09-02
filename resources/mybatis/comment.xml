@@ -21,7 +21,7 @@
         <result column="PARENT_SEQ" property="parentSeq" />
         <result column="STATUS" property="status" />
     </resultMap>
-    
+
     <select id="getNextSeq" parameterType="CommentVo" resultType="String">
 		SELECT
 			CASE
@@ -32,7 +32,7 @@
 			IMB_COMMENT
 		WHERE BOARD_ID = #{boardId} AND ARTICLE_SEQ = #{articleSeq}
     </select>
-    
+
     <select id="getCommentListCount" parameterType="CommentVo" resultType="String">
         SELECT
         	COUNT(IMBOARD_ID) AS COUNT
@@ -63,8 +63,8 @@
         		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
-       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>ASC</otherwise></choose>
+       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>ASC</otherwise></choose>
        		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
      	<if test="startIndex">
         	<if test="endIndex">
@@ -72,7 +72,7 @@
         	</if>
         </if>
     </select>
-    
+
     <select id="getCommentList" parameterType="CommentVo" resultMap="commentResult">
         SELECT
         	A.BOARD_ID,
@@ -139,14 +139,14 @@
         		AND B.DISPLAY_ID LIKE CONCAT('%',#{likeWriterDisplayId},'%')
         	</if>
         ORDER BY
-        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>DESC</otherwise></choose>
-       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>DESC</otherwise></choose>
+        	GROUP_ID <choose><when test="#{orderByGroupId}">${orderByGroupId}</when><otherwise>ASC</otherwise></choose>
+       		,SEQ <choose><when test="#{orderBySeq}">${orderBySeq}</when><otherwise>ASC</otherwise></choose>
        		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
      	<if test="#{startIndex} and #{endIndex}">
        		LIMIT #{startIndex}, #{endIndex}
         </if>
     </select>
-    
+
     <select id="getComment" parameterType="CommentVo" resultMap="commentResult">
         SELECT
         	A.BOARD_ID,
@@ -195,7 +195,7 @@
         ORDER BY
         	A.GROUP_ID, A.SEQ
     </select>
-    
+
     <insert id="insertComment" parameterType="CommentVo">
         INSERT INTO	IMB_COMMENT
         	(BOARD_ID, ARTICLE_SEQ, SEQ, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, PARENT_WRITER_ID, PARENT_WRITER_NAME)
@@ -220,7 +220,7 @@
         		#{parentWriterName}
         	)
     </insert>
-    
+
     <update id="updateComment" parameterType="CommentVo">
         UPDATE IMB_COMMENT SET
         	CONTENT = #{content},
@@ -230,7 +230,7 @@
         	AND ARTICLE_SEQ = #{articleSeq}
         	AND SEQ = #{seq}
     </update>
-    
+
     <update id="updateGood" parameterType="CommentVo">
         UPDATE IMB_COMMENT SET
         	GOOD = GOOD + 1
@@ -239,7 +239,7 @@
         	AND ARTICLE_SEQ = #{articleSeq}
         	AND SEQ = #{seq}
     </update>
-    
+
     <update id="updateBad" parameterType="CommentVo">
         UPDATE IMB_COMMENT SET
         	BAD = BAD + 1
@@ -248,7 +248,7 @@
         	AND ARTICLE_SEQ = #{articleSeq}
         	AND SEQ = #{seq}
     </update>
-    
+
     <update id="updateCommentStatus" parameterType="CommentVo">
         UPDATE IMB_COMMENT SET
         	STATUS = #{status}
@@ -257,7 +257,7 @@
         	AND ARTICLE_SEQ = #{articleSeq}
         	AND SEQ = #{seq}
     </update>
-    
+
     <delete id="deleteComment" parameterType="CommentVo">
         DELETE FROM
         	IMB_COMMENT
@@ -266,7 +266,7 @@
         	AND ARTICLE_SEQ = #{articleSeq}
         	AND SEQ = #{seq}
     </delete>
-    
+
     <delete id="deleteCommentByArticle" parameterType="CommentVo">
         DELETE FROM
         	IMB_COMMENT
