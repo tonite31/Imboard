@@ -1,3 +1,7 @@
-INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 0, "첫번째 게시글", "첫번째 게시글", "익명");
-INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 1, "두번째 게시글", "두번째 게시글", "익명");
-INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('sample', 2, "세번째 게시글", "세번째 게시글", "익명");
+INSERT IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('listBoard', '목록형 게시판', 0, '일반적인 목록형 게시판입니다.', 'Y', 'admin');
+INSERT IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('blogBoard', '블로그', 1, '블로그형 게시판입니다.', 'Y', 'admin');
+INSERT IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('galleryBoard', '갤러리', 2, '갤러리형 게시판입니다.', 'Y', 'admin');
+
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('listBoard', 0, "첫번째 게시글", "첫번째 게시글", "익명");
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('listBoard', 1, "두번째 게시글", "두번째 게시글", "익명");
+INSERT INTO IMB_ARTICLE(BOARD_ID, SEQ, SUBJECT, CONTENT, WRITER_NAME) VALUE ('listBoard', 2, "세번째 게시글", "세번째 게시글", "익명");

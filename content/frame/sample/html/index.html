@@ -65,20 +65,20 @@
 	<ul class="pagination">
 		{{#sign pageIndex ">" 1}}
 		<li>
-			<a href="#pageIndex={{math pageIndex "-" 1}}" aria-label="Previous">
-				<span aria-hidden="true">Previous</span>
+			<a href="?boardId=#{query.boardId}&pageIndex={{math pageIndex "-" 1}}" aria-label="Previous">
+				<span aria-hidden="true">&lt;</span>
 			</a>
 		</li>
 		{{/sign}}
 		{{#each pageList}}
 		<li {{#equals ../pageIndex pageNumber}}class="active"{{/equals}}>
-			<a href="#pageIndex={{pageNumber}}">{{pageNumber}} {{#equals ../pageIndex pageNumber}}<span class="sr-only">(current)</span>{{/equals}}</a>
+			<a href="?boardId=#{query.boardId}&pageIndex={{pageNumber}}">{{pageNumber}} {{#equals ../pageIndex pageNumber}}<span class="sr-only">(current)</span>{{/equals}}</a>
 		</li>
 		{{/each}}
 		{{#sign pageIndex "<" maxPage}}
 		<li>
-			<a href="#pageIndex={{math pageIndex "+" 1}}" aria-label="Next">
-				<span aria-hidden="true">Next</span>
+			<a href="?boardId=#{query.boardId}&pageIndex={{math pageIndex "+" 1}}" aria-label="Next">
+				<span aria-hidden="true">&gt;</span>
 			</a>
 		</li>
 		{{/sign}}
@@ -89,14 +89,35 @@
 </head>
 
 <body>
-	<div class="container">
-		<h1 class="page-header">#{lan.boardName}</h1>
-		<div data-fragment="body">
-			<p style="float: right;"><a href="?body=write" class="btn btn-default">#{lan.write}</a></p>
-			<div style="clear: both;" data-bind="articleComponent" data-param='{"boardId" : "sample"}'>
-				<div data-parts="body" data-template-id="articleComponentTemplate"></div>
-				<div data-parts="pagination" data-template-id="articleComponentPagingTemplate"></div>
+	<div class="container" style="position: relative;">
+		<h1 class="page-header">Sample</h1>
+		<div class="row">
+			<div class="col-xs-2">
+				<ul class="list-group" data-bind="boardList">
+				{{#if boardList}}
+				{{#each boardList}}
+					<li class="list-group-item {{#equals id '#{query.boardId}'}}active{{/equals}}"><a href="?boardId={{id}}">{{name}}</a></li>
+				{{/each}}
+				{{/if}}
+				</ul>
 			</div>
+			<div class="col-xs-10" data-fragment="body">
+				<p style="text-align: right;"><a href="?body=write&boardId=#{query.boardId}" class="btn btn-default">#{lan.write}</a></p>
+				<div style="clear: both;" data-bind="articleComponent" data-param='{"boardId" : "#{query.boardId}"}'>
+					<div data-parts="body" data-template-id="articleComponentTemplate"></div>
+					<div data-parts="pagination" data-template-id="articleComponentPagingTemplate"></div>
+				</div>
+			</div>
+		</div>
+		<div class="loginBox" data-bind="signedUser">
+		{{#if user}}
+		{{#sign user.level "lt" 0}}
+		<a href="/settings" class="btn btn-default">관리자 대쉬보드</a>
+		<a href="/signout.do" class="btn btn-default">로그아웃</a>
+		{{/sign}}
+		{{else}}
+		<a href="/signin" class="btn btn-default">로그인</a>
+		{{/if}}
 		</div>
 	</div>
 </body>
