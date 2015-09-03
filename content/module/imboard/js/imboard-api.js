@@ -8,8 +8,9 @@
 		for(var i=0; i<split.length; i++)
 		{
 			var keyValue = split[i].split("=");
-			if(keyValue[1].indexOf("#") != -1)
+			if(keyValue[1] && keyValue[1].indexOf("#") != -1)
 				keyValue[1] = keyValue[1].split("#")[0];
+
 			$.query[keyValue[0]] = decodeURIComponent(keyValue[1]);
 		}
 	}

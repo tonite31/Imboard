@@ -5,19 +5,19 @@
 		var template = Handlebars.compile(html);
 		$(this).html(template(data));
 	};
-	
+
     $.fn.attrr = function(key)
     {
     	var value = $(this).attr(key);
     	$(this).removeAttr(key);
     	return value;
     };
-    
+
     $.fn.getRect = function()
     {
     	return this.get(0).getBoundingClientRect();
     };
-    
+
     $.fn.showProgress = function()
     {
     	try
@@ -26,25 +26,25 @@
     		{
     			var progress = document.createElement('div');
             	progress.className = "imboard-progress";
-            	
+
             	var style = getComputedStyle(this.get(0));
-            	
+
             	var width = new Number(style.width.replace("px", ""));
             	var height = new Number(style.height.replace("px", ""));
-            	
+
             	if(width > 100 || height > 100)
             	{
             		width = 100;
             		height = 100;
-            		
+
             		var rect = this.get(0).getBoundingClientRect();
-            		
+
             		var mw = (rect.width - width) / 2;
             		var mh = (rect.height - height) / 2;
-            		
+
             		progress.style.margin = mh + "px " + mw + "px";
             	}
-            	
+
             	progress.style.width = width + "px";
             	progress.style.height = height + "px";
 
@@ -62,7 +62,7 @@
     		console.error(err.stack);
     	}
     };
-    
+
     $.fn.isProcessing = function()
     {
     	if(this.get(0) != null)
@@ -70,27 +70,27 @@
     	else
     		return false;
     };
-    
+
     $.fn.dismissProgress = function()
     {
     	if(this.get(0) != null)
     	{
     		var progress = this.get(0).progress;
         	$(progress).remove();
-        	
+
         	this.get(0).progress = null;
     	}
-    	
+
     	this.show();
     };
-    
+
     $.fn.flickering = function(option)
     {
     	var theme = option && option.theme ? option.theme : "default";
     	var time = option && option.time ? option.time : 500;
     	this.addClass(theme);
     	this.addClass("flickering");
-    	
+
     	var that = this;
     	setTimeout(function(){
     		that.removeClass(theme);
@@ -100,7 +100,7 @@
     		}, time);
     	}, time);
     };
-    
+
     $.fn.getData = function()
     {
     	if(this.get(0).getData)
@@ -108,7 +108,7 @@
     	else
     		return null;
     };
-    
+
     $.fn.setData = function(data)
     {
     	if(this.get(0).setData)
@@ -129,7 +129,7 @@
 			{
 				component[name]($(this[i]).get(0), param);
 			}
-			
+
 			$(this[i]).find("*[data-component][data-autocompile='true']").each(function()
 			{
 				$(this).removeAttr("data-autocompile");
@@ -141,7 +141,7 @@
 			});
 		}
     };
-    
+
     (function()
     {
     	this.form = function(context, param)
@@ -156,7 +156,7 @@
         			input.style.position = "absolute";
         			input.style.left = "-10000px";
         			input.style.zIndex = "-1";
-        			
+
         			context._submit = input;
         			$(context).append(input);
         		}
@@ -164,8 +164,17 @@
         		{
         			context._submit = submit[0];
         		}
+
+				$(context).find("input").on("keyup keypress", function(e)
+				{
+					if(e.keyCode == 13)
+					{
+						e.preventDefault();
+						return false;
+					}
+				});
     		}
-    		
+
     		context.getData = function()
     		{
     			var data = {};
@@ -193,16 +202,16 @@
     					data[key] = value;
     				}
     			});
-    			
+
     			$(context).find("*[data-name]").each(function()
     			{
     				var key = $(this).attr("data-name");
     				data[key] = context.getValue.call(this, key);
     			});
-    			
+
     			return data;
     		};
-    		
+
     		context.setData = function(data)
     		{
     			for(var key in data)
@@ -211,14 +220,14 @@
     				{
     					context.setValue.call(this, data[key]);
     				});
-    				
+
     				$(context).find("*[data-name='" + key + "']").each(function()
     				{
     					context.setValue.call(this, data[key]);
     				});
     			};
     		};
-    		
+
     		context.setValue = function(data)
     		{
     			if(this.nodeName == "INPUT" && this.type == "radio" && this.value == data[key])
@@ -268,7 +277,7 @@
 					$(this).text(data);
 				}
     		}
-    		
+
     		context.getValue = function(key)
     		{
     			if(this.nodeName == "INPUT" && this.type == "radio")
@@ -301,7 +310,7 @@
 						{
 							data.push(this.value);
 						})
-						
+
 						return data;
 					}
 					else
@@ -314,48 +323,48 @@
 					return $(this).text();
 				}
     		};
-    		
+
     		context.makeValidationMessage = function()
     		{
     			var message = $(this).attr("data-validation-message");
 				if(!message)
 					message = this.validationMessage;
-				
+
     			var rect = this.getBoundingClientRect();
-				
+
 				var pos = {left : this.offsetLeft, top : this.offsetTop};
-				
+
 				var parent = this.offsetParent;
 				while(parent)
 				{
 					pos.left += parent.offsetLeft;
 					pos.top += parent.offsetTop;
-					
+
 					parent = parent.offsetParent;
 				}
-				
+
 				var div = document.createElement("div");
 				div.className = "imboard-ui-validation"
 				div.style.left = pos.left + 20 + "px";
 				div.style.top = pos.top + rect.height + 5 + "px";
-				
+
 				var arrow = document.createElement("span");
 				arrow.className = "arrow";
-				
+
 				var arrowBorder = document.createElement("span");
 				arrowBorder.className = "arrowBorder";
-				
+
 				var span = document.createElement("span");
 				span.className = "validation-message";
 				span.innerText = message;
-				
+
 				div.appendChild(arrowBorder);
 				div.appendChild(arrow);
 				div.appendChild(span);
-				
+
 				document.body.appendChild(div);
     		};
-    		
+
     		context.validation = function()
     		{
     			var check = true;
@@ -371,16 +380,16 @@
     					{
     						$(".imboard-ui-validation").remove();
     					});
-    					
+
     					return false;
     				}
-    				
+
 					check = check && result;
     			}
-    			
+
     			return check;
     		};
-    		
+
     		var submitButton = $(context).find("*[data-role='submit']");
     		for(var i=0; i<submitButton.length; i++)
     		{
@@ -418,16 +427,16 @@
 					});
     			})($(submitButton[i]).attrr("data-role-type"));
     		}
-    		
+
     		if(context.nodeName == "FORM")
     		{
     			var novalidate = $(context).attr("novalidate");
 				context.novalidate = novalidate ? true : false;
 				if(!novalidate)
 					$(context).attr("novalidate", "novalidate");
-    			
-				$(context).unbind();
-    			$(context).submit(function(e)
+
+				$(context).off("submit");
+    			$(context).on("submit", function(e)
 	    		{
     				try
     				{
@@ -455,7 +464,7 @@
 	    		});
     		}
     	};
-    	
+
     	this.scrollFollower = function(context, param)
     	{
     		var options = param[0];
@@ -463,11 +472,11 @@
 				options = {top : 10, direction : "vertical"};
 			else if(options.direction == "horizontal" && !options.left)
 				options.left = 10;
-			
+
 			var rect = $(context).getRect();
 			var top = rect.top + $(window).scrollTop();
 			var left = rect.left + $(window).scrollLeft();
-			
+
 			var setPosition = function()
 			{
 				if(options.direction == "vertical")
@@ -493,15 +502,15 @@
 					}
 				}
 			};
-			
+
 			$(window).on("scroll", setPosition);
 			setPosition();
     	};
-    	
+
     	this.fileUploader = function(context, param)
     	{
     		context.style.position = "relative";
-    		
+
     		var input = document.createElement("input");
     		input.type = "file";
     		input.style.position = "absolute";
@@ -511,13 +520,13 @@
     		input.style.bottom = "0";
     		input.style.opacity = "0";
     		input.style.width = $(context).getRect().width + "px";
-    		
+
     		input.onchange = param[0];
-    		
+
     		context.appendChild(input);
     	};
     }).call(component);
-    
+
     (function()
     {
     	$(document).ready(function()
@@ -525,5 +534,5 @@
     		$("body").compile();
     	});
     })();
-    
+
 })(jQuery);

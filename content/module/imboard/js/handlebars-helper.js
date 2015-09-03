@@ -19,6 +19,9 @@ Handlebars.registerHelper('test', function()
 	{
 		if(test)
 			test += " ";
+		if(typeof args[i] == "object")
+			args[i] = true;
+
 		test += (args[i] ? args[i] : "''");
 	}
 
