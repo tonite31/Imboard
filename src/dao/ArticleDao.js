@@ -26,6 +26,11 @@ ArticleDao.prototype.getNextSeq = function(boardId, callback)
 	this.sqlMapClient.selectQuery("getNextSeq", vo, callback);
 };
 
+ArticleDao.prototype.getArticleTagList = function(boardId, callback)
+{
+	this.sqlMapClient.selectsQuery("getArticleTagList", boardId, callback);
+};
+
 ArticleDao.prototype.getArticleListCount = function(boardId, searchData, callback)
 {
 	var vo = new ArticleVo();

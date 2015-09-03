@@ -35,6 +35,15 @@
         	BOARD_ID = #{boardId}
     </select>
     
+    <select id="getArticleTagList" parameterType="String" resultType="String">
+    	SELECT
+    		TAG
+    	FROM
+    		IMB_ARTICLE
+    	WHERE
+    		BOARD_ID = #{boardId}
+    </select>
+    
     <select id="getArticleListCount" parameterType="ArticleVo" resultType="String">
         SELECT
         	COUNT(*) AS COUNT
