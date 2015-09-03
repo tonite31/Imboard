@@ -5,15 +5,15 @@ try
 }
 catch(err)
 {
-	
+
 }
 
 Handlebars.registerHelper('test', function()
 {
 	var args = arguments;
-	
+
 	var opts = args[args.length-1];
-	
+
 	var test = "";
 	for(var i=0; i<args.length-1; i++)
 	{
@@ -21,9 +21,9 @@ Handlebars.registerHelper('test', function()
 			test += " ";
 		test += (args[i] ? args[i] : "''");
 	}
-	
+
 	var f = new Function("if(" + test + "){return true;}else{return false;}");
-	
+
 	if(f())
 		return opts.fn(this);
 	else
@@ -77,7 +77,7 @@ Handlebars.registerHelper("tojson", function(a, b, opts)
 Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
-        
+
     return {
         "+": lvalue + rvalue,
         "-": lvalue - rvalue,
@@ -90,7 +90,7 @@ Handlebars.registerHelper("math", function(lvalue, operator, rvalue, options) {
 Handlebars.registerHelper("sign", function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
-    
+
     return {
         "<": lvalue < rvalue,
         "lt": lvalue < rvalue,
@@ -114,9 +114,9 @@ Handlebars.registerHelper("shortDate", function(a)
 		var split = a.split(" ");
 		var date = split[0];
 		var time = split[1];
-		
+
 		date = date.split("-");
-		
+
 		var today = new Date();
 		if(today.getFullYear() == parseInt(date[0]) && today.getMonth()+1 == parseInt(date[1]) && today.getDate() == parseInt(date[2]))
 			return time;
