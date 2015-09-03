@@ -71,6 +71,7 @@ DataBindModule.prototype.getTemplate = function($, el)
 			}
 
 			html = $(el).html().replace(/\\&quot;/gi, "\"");
+			html = html.replace(/&amp;/gi, "&").replace(/&lt;/gi, "<").replace(/&gt;/gi, ">");
 			html = html.replace(/&apos;/gi, "\'");
 		}
 

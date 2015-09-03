@@ -20,23 +20,23 @@ module.exports.getArticleListCount =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var boardId = param.boardId;
-		
+
 		if(!param.searchData)
 			param.searchData = {};
-		
+
 		if(req.session.user != null)
 		{
 			param.searchData.signinUserId = req.session.user.id;
 			param.searchData.signinUserLevel = req.session.user.level;
 		}
-		
+
 		if(param.searchData.startIndex)
 			param.searchData.startIndex = parseInt(param.searchData.startIndex);
 		if(param.searchData.endIndex)
 			param.searchData.endIndex = parseInt(param.searchData.endIndex);
-		
+
 		ArticleDao.getArticleListCount(boardId, param.searchData, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
@@ -52,15 +52,15 @@ module.exports.getArticleList =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var boardId = param.boardId;
-		
+
 		if(param.searchData == null)
 			param.searchData = {};
-		
+
 		var pageIndex = param.searchData.pageIndex;
 		var cpp = param.searchData.cpp;
-		
+
 		try
 		{
 			if(pageIndex != null && cpp != null)
@@ -74,18 +74,18 @@ module.exports.getArticleList =
 			param.searchData.startIndex = null;
 			param.searchData.endIndex = null;
 		}
-		
+
 		if(param.searchData.startIndex)
 			param.searchData.startIndex = parseInt(param.searchData.startIndex);
 		if(param.searchData.endIndex)
 			param.searchData.endIndex = parseInt(param.searchData.endIndex);
-		
+
 		if(req.session.user != null)
 		{
 			param.searchData.signinUserId = req.session.user.id;
 			param.searchData.signinUserLevel = req.session.user.level;
 		}
-		
+
 		ArticleDao.getArticleList(boardId, param.searchData, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
@@ -93,7 +93,7 @@ module.exports.getArticleList =
 	}
 };
 
-module.exports.getArticle = 
+module.exports.getArticle =
 {
 	type : 'post',
 	path : '/article/getArticle.do',
@@ -101,16 +101,16 @@ module.exports.getArticle =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		if(req.session.user != null)
 		{
 			if(param.searchData == null)
 				param.searchData = {};
-			
+
 			param.searchData.signinUserId = req.session.user.id;
 			param.searchData.signinUserLevel = req.session.user.level;
 		}
-		
+
 		_async.waterfall([
 		    function(cb)
 		    {
@@ -143,7 +143,7 @@ module.exports.getArticle =
 		    function(response, cb)
 		    {
 		    	response.password = null;
-		    	
+
 		    	if(param.seq != null)
 		    	{
 		    		var userId = null;
@@ -151,7 +151,7 @@ module.exports.getArticle =
 						userId = req.session.user.id;
 					else
 						userId = (req.headers['x-forwarded-for'] || req.connection.remoteAddress) + "__" + req.headers['user-agent'];
-					
+
 					ArticleReaderDao.getArticleReader(param.boardId, param.seq, userId, function(articleReader)
     				{
     					if(articleReader == null)
@@ -160,9 +160,9 @@ module.exports.getArticle =
     						vo.boardId = param.boardId;
     						vo.articleSeq = param.seq;
     						vo.userId = userId;
-    						
+
     						ArticleReaderDao.insertArticleReader(vo);
-    						
+
     						ArticleDao.updateHit(vo.boardId, vo.articleSeq, function()
     						{
     							res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
@@ -191,20 +191,20 @@ module.exports.insertArticle =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var vo = new ArticleVo(param);
 		if(!vo.writerId && req.session.user != null)
 			vo.writerId = req.session.user.id;
-		
+
 		ArticleDao.getNextSeq(vo.boardId, function(seq)
 		{
 			if(seq == null)
 				seq = 1;
 			else
 				seq++;
-			
+
 			vo.seq = seq;
-			
+
 			if(!req.session.user || req.session.user.level >= 0)
 				vo.isNotice = null;
 
@@ -219,12 +219,12 @@ module.exports.insertArticle =
 function updateArticle(req, res)
 {
 	var param = req.body;
-	
+
 	if(!param.searchData)
 		param.searchData = {};
-	
+
 	param.searchData.signinUserId = req.session.user ? req.session.user.id : "";
-	
+
 	var vo = new ArticleVo(param);
 	ArticleDao.getArticle(param.boardId, param.seq, param.searchData, function(response)
 	{
@@ -250,7 +250,7 @@ function updateArticle(req, res)
 					{
 						if(!req.session.user || req.session.user.level >= 0)
 							vo.isNotice = null;
-						
+
 						ArticleDao.updateArticle(vo, function(response)
 						{
 							if(response == 1)
@@ -279,7 +279,7 @@ function updateArticle(req, res)
 	});
 }
 
-module.exports.updateArticle = 
+module.exports.updateArticle =
 {
 	type : 'post',
 	path : '/article/updateArticle.do',
@@ -302,11 +302,11 @@ module.exports.writeArticle =
 
 		if(req.session.user)
 			param.searchData.signinUserId = req.session.user.id;
-		
+
 		var vo = new ArticleVo(param);
 		if(vo.writerId == null && req.session.user != null)
 			vo.writerId = req.session.user.id;
-		
+
 		if(vo.seq)
 		{
 			updateArticle(req, res);
@@ -319,9 +319,9 @@ module.exports.writeArticle =
 					seq = 1;
 				else
 					seq++;
-				
+
 				vo.seq = seq;
-				
+
 				ArticleDao.insertArticleWithSeq(vo, function(response)
 				{
 					res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
@@ -338,7 +338,7 @@ module.exports.updateArticleBoardId =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		ArticleDao.updateArticleBoardId(new ArticleVo(param), function(response)
 		{
 			if(response == 1)
@@ -356,7 +356,7 @@ module.exports.updateHit =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		ArticleDao.updateHit(param.boardId, param.seq, function(response)
 		{
 			if(response == 1)
@@ -374,7 +374,7 @@ module.exports.updateGood =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		ArticleDao.updateGood(param.boardId, param.seq, param.good, function(response)
 		{
 			if(response == 1)
@@ -392,7 +392,7 @@ module.exports.updateBad =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		ArticleDao.updateBad(param.boardId, param.seq, param.bad, function(response)
 		{
 			if(response == 1)
@@ -410,7 +410,7 @@ module.exports.updateStatus =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var vo = new ArticleVo(param);
 		ArticleDao.updateStatus(vo, function(response)
 		{
@@ -422,7 +422,7 @@ module.exports.updateStatus =
 	}
 };
 
-module.exports.deleteArticle = 
+module.exports.deleteArticle =
 {
 	type : 'post',
 	path : '/article/deleteArticle.do',
@@ -432,9 +432,9 @@ module.exports.deleteArticle =
 		var param = req.body;
 		if(!param.searchData)
 			param.searchData = {};
-		
+
 		param.searchData.signinUserId = req.session.user ? req.session.user.id : "";
-		
+
 		ArticleDao.getArticle(param.boardId, param.seq, param.searchData, function(response)
 		{
 			if(response)
@@ -463,33 +463,31 @@ module.exports.deleteArticle =
 				{
 					var userVo = new UserVo();
 					userVo.id = req.session.user.id;
-					UserDao.getUser(userVo, function(member)
+
+					if(req.session.user.id == response.writerId || req.session.user.level < 0)
 					{
-						if(req.session.user.id == response.writerId || member.level < 0)
+						ArticleDao.deleteArticle(param.boardId, param.seq, param.isRemove, function(response)
 						{
-							ArticleDao.deleteArticle(param.boardId, param.seq, param.isRemove, function(response)
+							if(response == 1)
 							{
-								if(response == 1)
+								CommentDao.deleteCommentByArticle(param.boardId, param.seq, function(response)
 								{
-									CommentDao.deleteCommentByArticle(param.boardId, param.seq, function(response)
-									{
-										if(response >= 0)
-											res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-										else
-											res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-									});
-								}
-								else
-								{
-									res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-								}
-							});
-						}
-						else
-						{
-							res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
-						}
-					});
+									if(response >= 0)
+										res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+									else
+										res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+								});
+							}
+							else
+							{
+								res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+							}
+						});
+					}
+					else
+					{
+						res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+					}
 				}
 				else
 				{
@@ -500,7 +498,7 @@ module.exports.deleteArticle =
 			else
 			{
 				//글이 없다
-				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ARTICLE_IS_EMPTY"}));
 			}
 		});
 	}
@@ -513,7 +511,7 @@ module.exports.updateArticleReaderStatus =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var vo = new ArticleReaderVo(param);
 		ArticleReaderDao.getArticleReader(vo.imboardId, vo.boardId, vo.articleSeq, vo.userId, function(response)
 		{
@@ -546,21 +544,21 @@ module.exports.uploadFile =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var folder = "anonymous";
 		if(req.session.user != null && req.session.user.id != null)
 		{
 			folder = req.session.user.id;
 		}
-		
+
 		var files = req.files;
 		var keyList = [];
 		for(var key in files)
 			keyList.push(key);
 		var pathList = [];
-		
+
 		var path = _path.userdata + '/' + folder + "/";
-		
+
 		try
 		{
 			fileList = fs.readdirSync(path);
@@ -575,11 +573,11 @@ module.exports.uploadFile =
 			forEach(keyList, function(key, index)
 			{
 				var done = this.async();
-				
+
 				var file = files[key];
 				var filepath = file.path;
 				var filename = file.originalFilename;
-				
+
 				if(filepath.lastIndexOf(".gif") == filepath.length-4)
 				{
 					easyimg.convert({src : filepath + "[0]", dst : filepath.replace(".gif", ".png"), quality:100}).then(function()
@@ -587,12 +585,12 @@ module.exports.uploadFile =
 						try
 						{
 							var data = fs.readFileSync(filepath.replace(".gif", ".png"));
-							
+
 							fs.writeFileSync(path + filename.replace(".gif", ".png"), data);
-							
+
 							var data = fs.readFileSync(filepath);
 							fs.writeFileSync(path + filename, data);
-							
+
 							pathList.push("/resources/" + folder + "/" + filename);
 						}
 						catch(err)
@@ -637,36 +635,36 @@ module.exports.uploadFileToAWS =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		
+
 		var bucketName = param.bucketName ? param.bucketName : _aws.s3.bucketName;
 		var resourcesUrl = _aws.s3.resourcesUrl;
-		
+
 		var folder = "anonymous";
 		if(req.session.user != null && req.session.user.id != null)
 		{
 			folder = req.session.user.id;
 		}
-		
+
 		var files = req.files;
 		var keyList = [];
 		for(var key in files)
 			keyList.push(key);
 		var pathList = [];
-		
+
 		var forEach = require('async-foreach').forEach;
 		forEach(keyList, function(key, index)
 		{
 			var done = this.async();
-			
+
 			var file = files[key];
 			var path = file.path;
-			
+
 			var param = {};
 			param.filePath = file.path.replace(".gif", ".png");
 			param.fileName = file.originalFilename.replace(".gif", ".png");
 			param.folder = folder;
 			param.bucketName = bucketName;
-			
+
 			if(path.lastIndexOf(".gif") == path.length -4)
 			{
 				param.callback = function(path)
@@ -677,7 +675,7 @@ module.exports.uploadFileToAWS =
 						{
 							if(path != null)
 								pathList.push(path);
-							
+
 							done();
 						}});
 					}
@@ -686,7 +684,7 @@ module.exports.uploadFileToAWS =
 						done();
 					}
 				};
-				
+
 				easyimg.convert({src : path + "[0]", dst : path.replace(".gif", ".png"), quality:100}).then(function()
 				{
 					uploadFileToS3(param);
@@ -702,10 +700,10 @@ module.exports.uploadFileToAWS =
 				{
 					if(path != null)
 						pathList.push(path);
-					
+
 					done();
 				};
-				
+
 				uploadFileToS3(param);
 			}
 		}, function(){
@@ -721,11 +719,11 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 		successCallback();
 		return;
 	}
-	
+
 	var file = files[keyList.pop()];
 	var filepath = file.path;
 	var filename = file.originalFilename;
-	
+
 	if(filepath.lastIndexOf(".gif") == filepath.length-4)
 	{
 		easyimg.convert({src : filepath + "[0]", dst : filepath.replace(".gif", ".png"), quality:100}).then(function()
@@ -733,14 +731,14 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 			try
 			{
 				var data = fs.readFileSync(filepath.replace(".gif", ".png"));
-				
+
 				fs.writeFileSync(rootPath + filename.replace(".gif", ".png"), data);
-				
+
 				var data = fs.readFileSync(filepath);
 				fs.writeFileSync(rootPath + filename, data);
-				
+
 				pathList.push("/resources/" + folder + "/" + filename);
-				
+
 				uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
 			}
 			catch(err)
@@ -753,7 +751,7 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 	{
 		var data = fs.readFileSync(filepath);
 		fs.writeFileSync(rootPath + filename, data);
-		
+
 		pathList.push("/resources/" + folder + "/" + filename);
 		uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
 	}
@@ -766,7 +764,7 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 //		successCallback();
 //		return;
 //	}
-//	
+//
 //	var file = files[keyList.pop()];
 //	var path = file.path;
 //	if(path.lastIndexOf(".gif") == path.length -4)
@@ -781,7 +779,7 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 //					{
 //						if(path != null)
 //							pathList.push(path);
-//						
+//
 //						uploadAws(files, keyList, folder, pathList, successCallback);
 //					}});
 //				}
@@ -800,7 +798,7 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 //		{
 //			if(path != null)
 //				pathList.push(path);
-//			
+//
 //			uploadAws(files, keyList, folder, pathList, successCallback);
 //		}});
 //	}
@@ -812,12 +810,12 @@ function uploadFileToS3(param)
 	var fileName = param.fileName;
 	var folder = param.folder;
 	var callback = param.callback;
-	
+
 	var AWS = require('aws-sdk');
 	AWS.config.update({accessKeyId: _aws.accessKeyId, secretAccessKey: _aws.secretAccessKey});
 //	AWS.config.loadFromPath(_path.resources + "/properties/aws.json");
 	var s3 = new AWS.S3({endpoint:"http://s3.amazonaws.com"});
-	
+
 	try
 	{
 		fs.readFile(filePath, function(err, data)
