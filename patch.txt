@@ -1,3 +1,6 @@
+- 0.2.8
+1. form 컴포넌트의 오류가 수정되었습니다.
+
 - 0.2.7
 1. articleTagList 모듈이 추가되었습니다.
 2. articleListCount 모듈이 추가되었습니다.
