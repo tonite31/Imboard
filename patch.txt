@@ -1,5 +1,7 @@
 - 0.2.7
 1. articleTagList 모듈이 추가되었습니다.
+2. articleListCount 모듈이 추가되었습니다.
+3. comment에 password컬럼이 추가되었습니다.
 
 - 0.2.6
 1. data-bind 모듈의 template의 &lt; &gt; &amp; 가 각각 < > &문자열로 치환됩니다.
