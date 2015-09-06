@@ -1,4 +1,4 @@
-var commentDao = require(_path.src + "/dao/CommentDao.js");
+var CommentDao = require(_path.src + "/dao/CommentDao.js");
 var CommentVo = require(_path.src + '/vo/CommentVo.js');
 
 module.exports.getCommentListCount =
@@ -12,7 +12,7 @@ module.exports.getCommentListCount =
 		var boardId = param.boardId;
 		var articleSeq = param.articleSeq;
 		
-		commentDao.getCommentListCount(boardId, articleSeq, param.searchData, function(response)
+		CommentDao.getCommentListCount(boardId, articleSeq, param.searchData, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
 		});
@@ -50,7 +50,7 @@ module.exports.getCommentList = {
 			param.searchData.endIndex = null;
 		}
 		
-		commentDao.getCommentList(boardId, articleSeq, param.searchData, function(response)
+		CommentDao.getCommentList(boardId, articleSeq, param.searchData, function(response)
 		{
 			if(response)
 				res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
@@ -74,10 +74,10 @@ module.exports.insertComment =
 		if(vo.writerId == null && req.session.user != null)
 			vo.writerId = req.session.user.id;
 		
-		commentDao.getNextSeq(vo.boardId, vo.articleSeq, function(seq)
+		CommentDao.getNextSeq(vo.boardId, vo.articleSeq, function(seq)
 		{
 			vo.seq = seq;
-			commentDao.insertComment(vo, function(response)
+			CommentDao.insertComment(vo, function(response)
 			{
 				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
 			});
@@ -94,10 +94,26 @@ module.exports.updateComment =
 		var param = req.body;
 		
 		var vo = new CommentVo(param);
-		
-		commentDao.updateComment(vo, function(response)
+		CommentDao.getComment(param.boardId, param.articleSeq, param.seq, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(response)
+			{
+				if((!response.writerId && (!response.password || response.password == param.password)) || (req.session && req.session.user && (req.session.user.id == response.writerId || req.session.user.level < 0)))
+				{
+					CommentDao.updateComment(vo, function(response)
+					{
+						res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+					});
+				}
+				else
+				{
+					res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+				}
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "COMMENT IS NOT FOUND"}));
+			}
 		});
 	}
 };
@@ -110,10 +126,17 @@ module.exports.updateGood =
 	{
 		var param = req.body;
 		
-		commentDao.updateGood(param.boardId, param.articleSeq, param.seq, function(response)
+		if(req.session && req.session.user)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-		});
+			commentDao.updateGood(param.boardId, param.articleSeq, param.seq, function(response)
+			{
+				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+		}
 	}
 };
 
@@ -125,10 +148,17 @@ module.exports.updateBad =
 	{
 		var param = req.body;
 		
-		commentDao.updateBad(param.boardId, param.articleSeq, param.seq, function(response)
+		if(req.session && req.session.user)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-		});
+			commentDao.updateBad(param.boardId, param.articleSeq, param.seq, function(response)
+			{
+				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+		}
 	}
 };
 
@@ -141,9 +171,26 @@ module.exports.deleteComment =
 	{
 		var param = req.body;
 		
-		commentDao.deleteComment(param.boardId, param.articleSeq, param.seq, param.isRemove, function(response)
+		CommentDao.getComment(param.boardId, param.articleSeq, param.seq, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(response)
+			{
+				if((!response.writerId && (!response.password || response.password == param.password)) || (req.session && req.session.user && (req.session.user.id == response.writerId || req.session.user.level < 0)))
+				{
+					CommentDao.deleteComment(param.boardId, param.articleSeq, param.seq, param.isRemove, function(response)
+					{
+						res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+					});
+				}
+				else
+				{
+					res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+				}
+			}
+			else
+			{
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "COMMENT IS NOT FOUND"}));
+			}
 		});
 	}
 };

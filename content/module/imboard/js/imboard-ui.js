@@ -114,6 +114,54 @@
     	if(this.get(0).setData)
     		this.get(0).setData(data);
     };
+    
+    $.fn.makeValidationMessage = function(message)
+    {
+    	var that = this.get(0);
+		var rect = that.getBoundingClientRect();
+		
+		if(!message)
+			message = that.validationMessage;
+
+		var pos = {left : that.offsetLeft, top : that.offsetTop};
+
+		var parent = that.offsetParent;
+		while(parent)
+		{
+			pos.left += parent.offsetLeft;
+			pos.top += parent.offsetTop;
+
+			parent = parent.offsetParent;
+		}
+
+		var div = document.createElement("div");
+		div.className = "imboard-ui-validation"
+		div.style.left = pos.left + 20 + "px";
+		div.style.top = pos.top + rect.height + 5 + "px";
+
+		var arrow = document.createElement("span");
+		arrow.className = "arrow";
+
+		var arrowBorder = document.createElement("span");
+		arrowBorder.className = "arrowBorder";
+
+		var span = document.createElement("span");
+		span.className = "validation-message";
+		span.innerText = message;
+
+		div.appendChild(arrowBorder);
+		div.appendChild(arrow);
+		div.appendChild(span);
+
+		document.body.appendChild(div);
+		
+		that.focus();
+		$(that).off("input blur");
+		$(that).on("input blur", function(e)
+		{
+			$(".imboard-ui-validation").remove();
+		});
+    };
 }(jQuery));
 
 (function($)
@@ -374,12 +422,13 @@
     				var result = inputList[i].checkValidity();
     				if(!result)
     				{
-    					context.makeValidationMessage.call(inputList[i]);
-    					inputList[i].focus();
-    					$(inputList[i]).on("input blur", function(e)
-    					{
-    						$(".imboard-ui-validation").remove();
-    					});
+    					$(inputList[i]).makeValidationMessage($(inputList[i]).attr("data-validation-message"));
+//    					context.makeValidationMessage.call(inputList[i]);
+//    					inputList[i].focus();
+//    					$(inputList[i]).on("input blur", function(e)
+//    					{
+//    						$(".imboard-ui-validation").remove();
+//    					});
 
     					return false;
     				}
@@ -388,6 +437,36 @@
     			}
 
     			return check;
+    		};
+    		
+    		context.submit = function(roleType)
+    		{
+    			if(context.nodeName == "FORM")
+				{
+					var evt = document.createEvent('MouseEvents');
+					evt.initEvent(
+					   'click'      // event type
+					   ,true      // can bubble?
+					   ,true      // cancelable?
+					);
+
+					context._roleType = roleType;
+					context._context = this;
+					context._submit.dispatchEvent(evt);
+				}
+				else
+				{
+					if(context.validation())
+					{
+						var data = context.getData();
+    	    			data.__roleType = roleType;
+    	    			var callback = param[0];
+    	        		if(callback)
+    	        		{
+	        				callback.call(context._context, data);
+	        			}
+					}
+				}
     		};
 
     		var submitButton = $(context).find("*[data-role='submit']");
@@ -398,32 +477,7 @@
     			{
     				$(submitButton[i]).on("click", function()
 					{
-    					if(context.nodeName == "FORM")
-    					{
-    						var evt = document.createEvent('MouseEvents');
-        					evt.initEvent(
-        					   'click'      // event type
-        					   ,true      // can bubble?
-        					   ,true      // cancelable?
-        					);
-
-        					context._roleType = roleType;
-        					context._context = this;
-        					context._submit.dispatchEvent(evt);
-    					}
-    					else
-    					{
-    						if(context.validation())
-    						{
-    							var data = context.getData();
-    	    	    			data.__roleType = roleType;
-    	    	    			var callback = param[0];
-    	    	        		if(callback)
-    	    	        		{
-        	        				callback.call(context._context, data);
-        	        			}
-    						}
-    					}
+    					context.submit.call(this, roleType);
 					});
     			})($(submitButton[i]).attrr("data-role-type"));
     		}

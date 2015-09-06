@@ -6,6 +6,59 @@ var ArticleReaderDao = require(_path.src + "/dao/ArticleReaderDao.js");
 var BoardDao = require(_path.src + "/dao/BoardDao.js");
 var BoardAuthDao = require(_path.src + "/dao/BoardAuthDao.js");
 
+module.exports.articleListCount = function($, el, param, req, next)
+{
+	var that = this;
+	
+	var boardId = param.boardId;
+	var searchData = param.searchData;
+	ArticleDao.getArticleListCount(boardId, searchData, function(count)
+	{
+		var template = that.getTemplate($, el);
+		$(el).html(template({count : count}));
+		next();
+	});
+};
+
+module.exports.articleTagList = function($, el, param, req, next)
+{
+	var that = this;
+	var boardId = param.boardId;
+	
+	var filter = {};
+	var tagList = [];
+	ArticleDao.getArticleTagList(boardId, function(list)
+	{
+		for(var i=0; i<list.length; i++)
+		{
+			if(list[i])
+			{
+				var split = list[i].split(" ");
+				for(var j=0; j<split.length; j++)
+				{
+					if(!filter[split[j]])
+					{
+						filter[split[j]] = {tag : split[j], count : 1};
+					}
+					else
+					{
+						filter[split[j]].count++;
+					}
+				}
+			}
+		}
+		
+		for(var key in filter)
+		{
+			tagList.push(filter[key]);
+		}
+		
+		var template = that.getTemplate($, el);
+		$(el).html(template({tagList : tagList}));
+		next();
+	});
+};
+
 module.exports.articleList = function($, el, param, req, next)
 {
 	var that = this;

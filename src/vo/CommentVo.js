@@ -29,6 +29,8 @@ var CommentVo = function(param)
 	this.orderBySeq = undefined;
 	this.orderByRegisterDate = undefined;
 	
+	this.password = undefined;
+	
 	ParameterBinder.bind(this, param);
 };
 

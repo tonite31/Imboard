@@ -20,6 +20,7 @@
         <result column="GROUP_ID" property="groupId" />
         <result column="PARENT_SEQ" property="parentSeq" />
         <result column="STATUS" property="status" />
+        <result column="PASSWORD" property="password" />
     </resultMap>
 
     <select id="getNextSeq" parameterType="CommentVo" resultType="String">
@@ -110,7 +111,8 @@
         	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
-        	A.STATUS
+        	A.STATUS,
+        	'' AS PASSWORD
         FROM
         	IMB_COMMENT AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
         	LEFT OUTER JOIN IMB_USER C ON A.PARENT_WRITER_ID = C.ID
@@ -184,7 +186,8 @@
         	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	A.PARENT_SEQ,
         	A.GROUP_ID,
-        	A.STATUS
+        	A.STATUS,
+        	A.PASSWORD
         FROM
         	IMB_COMMENT AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID
         	LEFT OUTER JOIN IMB_USER C ON A.PARENT_WRITER_ID = C.ID
@@ -198,7 +201,7 @@
 
     <insert id="insertComment" parameterType="CommentVo">
         INSERT INTO	IMB_COMMENT
-        	(BOARD_ID, ARTICLE_SEQ, SEQ, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, PARENT_WRITER_ID, PARENT_WRITER_NAME)
+        	(BOARD_ID, ARTICLE_SEQ, SEQ, CONTENT, WRITER_ID, WRITER_NAME, GROUP_ID, PARENT_SEQ, PARENT_WRITER_ID, PARENT_WRITER_NAME, PASSWORD)
         VALUES
         	(
         		#{boardId},
@@ -217,7 +220,8 @@
         		</choose>,
         		#{parentSeq},
         		#{parentWriterId},
-        		#{parentWriterName}
+        		#{parentWriterName},
+        		#{password}
         	)
     </insert>
 
