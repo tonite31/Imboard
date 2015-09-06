@@ -6,6 +6,8 @@
 	padding: 7px;
 	background: white;
 	box-shadow: 1px 2px 7px rgba(0, 0, 0, 0.3);
+	
+	z-index: 99999;
 }
 
 .imboard-ui-validation .arrow
