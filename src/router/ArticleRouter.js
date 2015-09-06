@@ -230,7 +230,7 @@ function updateArticle(req, res)
 	{
 		if(response)
 		{
-			if(!response.writerId)
+			if((!response.writerId && (!response.password || response.password == param.password)) || (req.session && req.session.user && (req.session.user.id == response.writerId || req.session.user.level < 0)))
 			{
 				ArticleDao.updateArticle(vo, function(response)
 				{
@@ -240,41 +240,14 @@ function updateArticle(req, res)
 						res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
 				});
 			}
-			else if(req.session && req.session.user)
-			{
-				var userVo = new UserVo();
-				userVo.id = req.session.user.id;
-				UserDao.getUser(userVo, function(member)
-				{
-					if(req.session.user.id == response.writerId || member.level < 0)
-					{
-						if(!req.session.user || req.session.user.level >= 0)
-							vo.isNotice = null;
-
-						ArticleDao.updateArticle(vo, function(response)
-						{
-							if(response == 1)
-								res.end(JSON.stringify({code : _code.SUCCESS, data : {seq : param.seq}, msg : "SUCCESS"}));
-							else
-								res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-						});
-					}
-					else
-					{
-						res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
-					}
-				});
-			}
 			else
 			{
-				//작성자가 아님
 				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
 			}
 		}
 		else
 		{
-			//글이 없다
-			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ARTICLE IS NOT FOUND"}));
 		}
 	});
 }
@@ -375,13 +348,20 @@ module.exports.updateGood =
 	{
 		var param = req.body;
 
-		ArticleDao.updateGood(param.boardId, param.seq, param.good, function(response)
+		if(req.session.user)
 		{
-			if(response == 1)
-				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-			else
-				res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-		});
+			ArticleDao.updateGood(param.boardId, param.seq, param.good, function(response)
+			{
+				if(response == 1)
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				else
+					res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+		}
 	}
 };
 
@@ -393,13 +373,20 @@ module.exports.updateBad =
 	{
 		var param = req.body;
 
-		ArticleDao.updateBad(param.boardId, param.seq, param.bad, function(response)
+		if(req.session.user)
 		{
-			if(response == 1)
-				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-			else
-				res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-		});
+			ArticleDao.updateBad(param.boardId, param.seq, param.bad, function(response)
+			{
+				if(response == 1)
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				else
+					res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+		}
 	}
 };
 
@@ -410,14 +397,37 @@ module.exports.updateStatus =
 	callback : function(req, res)
 	{
 		var param = req.body;
+		if(!param.searchData)
+			param.searchData = {};
 
-		var vo = new ArticleVo(param);
-		ArticleDao.updateStatus(vo, function(response)
+		param.searchData.signinUserId = req.session.user ? req.session.user.id : "";
+
+		ArticleDao.getArticle(param.boardId, param.seq, param.searchData, function(response)
 		{
-			if(response == 1)
-				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(response)
+			{
+				if((!response.writerId && (!response.password || response.password == param.password)) || (req.session && req.session.user && (req.session.user.id == response.writerId || req.session.user.level < 0)))
+				{
+					var vo = new ArticleVo(param);
+					ArticleDao.updateStatus(vo, function(response)
+					{
+						if(response == 1)
+							res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+						else
+							res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+					});
+				}
+				else
+				{
+					//작성자가 아님
+					res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
+				}
+			}
 			else
-				res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+			{
+				//글이 없다
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ARTICLE_IS_EMPTY"}));
+			}
 		});
 	}
 };
@@ -439,7 +449,7 @@ module.exports.deleteArticle =
 		{
 			if(response)
 			{
-				if(!response.writerId)
+				if((!response.writerId && (!response.password || response.password == param.password)) || (req.session && req.session.user && (req.session.user.id == response.writerId || req.session.user.level < 0)))
 				{
 					ArticleDao.deleteArticle(param.boardId, param.seq, param.isRemove, function(response)
 					{
@@ -459,36 +469,6 @@ module.exports.deleteArticle =
 						}
 					});
 				}
-				else if(req.session && req.session.user)
-				{
-					var userVo = new UserVo();
-					userVo.id = req.session.user.id;
-
-					if(req.session.user.id == response.writerId || req.session.user.level < 0)
-					{
-						ArticleDao.deleteArticle(param.boardId, param.seq, param.isRemove, function(response)
-						{
-							if(response == 1)
-							{
-								CommentDao.deleteCommentByArticle(param.boardId, param.seq, function(response)
-								{
-									if(response >= 0)
-										res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-									else
-										res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-								});
-							}
-							else
-							{
-								res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
-							}
-						});
-					}
-					else
-					{
-						res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ACCESS_DENIED"}));
-					}
-				}
 				else
 				{
 					//작성자가 아님
@@ -498,7 +478,7 @@ module.exports.deleteArticle =
 			else
 			{
 				//글이 없다
-				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ARTICLE_IS_EMPTY"}));
+				res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : '', msg : "ARTICLE_IS_NOT_FOUND"}));
 			}
 		});
 	}
