@@ -66,6 +66,7 @@ $(document).ready(function()
 				}
 				else
 				{
+					console.log("리절트 : ", result);
 					result = result.data;
 					for(var i=0; i<result.length; i++)
 					{
@@ -79,7 +80,7 @@ $(document).ready(function()
 			}
 		};
 		
-		$.api.article.uploadFileToAWS(param);
+		$.api.article.uploadFile(param);
 	});
 	
 //	$("#userProfileForm").compile(function(param)
