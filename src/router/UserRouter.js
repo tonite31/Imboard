@@ -94,19 +94,21 @@ module.exports.updateUserPassword =
 		var userVo = new UserVo(req.body);
 		if(req.session && req.session.user.id == userVo.id)
 		{
+			//현재 로그인한 사용자와 변경하려는 사용자 아이디가 일치할때만 변경하므로 아래에서 oldPassword체크할필요 없음.
 			UserDao.getEncryptKey(userVo.id, function(encryptKey)
 			{
 				UserDao.getUser(userVo, function(response)
 				{
-					if(response && Utils.encrypt(userVo.oldPassword, encryptKey) == response.password)
+					UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, encryptKey), function(response)
 					{
-						UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, encryptKey), function(response)
-						{
-							res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
-						});
-					}
+						res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+					});
 				});
 			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
 		}
 	}
 };
@@ -124,6 +126,10 @@ module.exports.dropOut =
 			{
 				res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
 			});
+		}
+		else
+		{
+			res.end(JSON.stringify({code : _code.ACCESS_DENIED, data : _code.ACCESS_DENIED, msg : "ACCESS_DENIED"}));
 		}
 	}
 };
