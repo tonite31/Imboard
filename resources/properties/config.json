@@ -29,17 +29,17 @@
         "facebook": {
             "appId": "appId",
             "secret": "secret",
-            "callback" : "http://localhost:3000/auth/facebook/callback"
+            "callback": "http://localhost:3000/auth/facebook/callback"
         },
         "twitter": {
             "appId": "appId",
             "secret": "secret",
-            "callback" : "http://localhost:3000/auth/twitter/callback"
+            "callback": "http://localhost:3000/auth/twitter/callback"
         },
         "google": {
             "appId": "appId",
             "secret": "secret",
-            "callback" : "http://localhost:3000/auth/google/callback"
+            "callback": "http://localhost:3000/auth/google/callback"
         }
     },
     "aws": {
