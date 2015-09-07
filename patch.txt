@@ -2,6 +2,8 @@
 1. form 컴포넌트의 오류가 수정되었습니다.
 2. getUser모듈의 이름이 user로 변경되었습니다.
 3. 관리자 대시보드의 관리자 계정설정 메뉴가 Admin 계정설정으로 이름이 변경되었습니다.
+4. config.json의 server.host 값이 삭제되었습니다. 더 이상 host값은 필요하지 않습니다.
+5. config.json의 OAuth의 각 프로바이더별로 callback URL을 지정하도록 변경되었습니다.
 
 - 0.2.7
 1. articleTagList 모듈이 추가되었습니다.
