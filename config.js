@@ -114,7 +114,7 @@ configMenu.addMenu("server", function(callback)
 	prompt.message = "";
 	prompt.delimiter = "";
 
-	prompt.get(['port : ', 'host : '], function(err, result)
+	prompt.get(['port : '], function(err, result)
 	{
 		if(err)
 		{
@@ -122,12 +122,7 @@ configMenu.addMenu("server", function(callback)
 			return;
 		}
 
-		var host = result['host : '];
-		if(host[host.length-1] == "/")
-			host = host.substring(0, host.length-1);
-
 		config.server.port = result['port : '];
-		config.server.host = host;
 
 		if(callback)
 			callback();

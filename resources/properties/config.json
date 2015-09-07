@@ -1,8 +1,7 @@
 {
     "frame": "sample",
     "server": {
-        "port": 3000,
-        "host": "http://localhost:3000"
+        "port": 3000
     },
     "log": {
         "level": "debug",
@@ -22,22 +21,25 @@
         "user": "username",
         "password": "password",
         "database": "database",
-        "port" : 3306,
+        "port": 3306,
         "typeCast": true,
         "multipleStatements": true
     },
     "OAuth": {
         "facebook": {
             "appId": "appId",
-            "secret": "secret"
+            "secret": "secret",
+            "callback" : "http://localhost:3000/auth/facebook/callback"
         },
         "twitter": {
             "appId": "appId",
-            "secret": "secret"
+            "secret": "secret",
+            "callback" : "http://localhost:3000/auth/twitter/callback"
         },
         "google": {
             "appId": "appId",
-            "secret": "secret"
+            "secret": "secret",
+            "callback" : "http://localhost:3000/auth/google/callback"
         }
     },
     "aws": {

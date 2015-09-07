@@ -23,8 +23,6 @@ global._OAuth = _config.OAuth;
 global._code = _config.code;
 
 global._port = _config.server.port;
-global._host = _config.server.host;
-global._baseUrl = _host;
 global._modules = {};
 
 try

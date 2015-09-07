@@ -235,9 +235,16 @@
     					if(value)
     					{
     						if(data[key])
-    							data[key].push(value);
+    						{
+    							if(typeof data[key] == "Array")
+    								data[key].push(value);
+    							else
+    								data[key] = [data[key], value];
+    						}
     						else
+    						{
     							data[key] = value;
+    						}
     					}
     				}
     				else if(this.nodeName == "INPUT" && this.type == "radio")

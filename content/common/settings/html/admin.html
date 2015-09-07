@@ -13,8 +13,10 @@ p
 				<a class="profileImgButton" id="linkUrlImg"><span class="glyphicon glyphicon-link"></span> <span>URL</span></a>
 				<input type="text" id="urlInput" class="linkUrl" placeholder="url을 입력해주세요"/>
 			</p>
-			<div class="profileImageContainer">
-				<img src="#{user.profileImgUrl}" id="profileImg" style="width: 100%; height:300px;" alt="프로필 이미지"/>
+			<div class="profileImageContainer" data-bind="user" data-param='{"id" : "admin"}'>
+			{{#if profileImgUrl}}
+				<img src="{{profileImgUrl}}" id="profileImg" style="width: 100%;"/>
+			{{/if}}
 			</div>
 			<hr/>
 			<p><input type="text" class="textinput default" name="id" style="font-size:15px;" placeholder="아이디" readonly="readonly" value="#{user.id}" /></p>

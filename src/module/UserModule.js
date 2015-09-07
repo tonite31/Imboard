@@ -27,7 +27,7 @@ module.exports.userList = function($, el, param, req, next)
 	});
 };
 
-module.exports.getUser = function($, el, param, req, next)
+module.exports.user = function($, el, param, req, next)
 {
 	var template = this.getTemplate($, el);
 	
@@ -35,7 +35,7 @@ module.exports.getUser = function($, el, param, req, next)
 	UserDao.getUser(userVo, function(user)
 	{
 		user.password = "null;"
-		$(el).html(template({user : user}));
+		$(el).html(template(user));
 		next();
 	});
 };
