@@ -11,12 +11,8 @@ $(document).ready(function()
 			console.error(result);
 	});
 
-	if(!$.query.boardId)
+	if(!$.query.boardId && !$.query.body)
 	{
 		location.href = "?boardId=listBoard";
-	}
-	else
-	{
-		
 	}
 });
