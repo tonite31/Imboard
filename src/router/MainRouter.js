@@ -77,7 +77,7 @@ module.exports.main =
 				var userAgent = req.headers['user-agent'];
 				var referer = req.headers['referer'];
 				
-				if(referer == null || referer.indexOf(_host) != -1)
+				if(referer == null)
 					referer = "";
 				
 				VisitorDao.insertVisitor(ip, userAgent, referer, function()
