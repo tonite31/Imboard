@@ -12,13 +12,14 @@ module.exports.main =
 	{
 		try
 		{
-			var re = new RegExp(("http://" + req.headers.host), 'gi');
-			var match = _host.match(re);
-			if(match == null)
-			{
-				res.redirect(global._host + req.url);
-				return;
-			}
+//			이부분은 딱히 필요가 없을거같다.
+//			var re = new RegExp(("http://" + req.headers.host), 'gi');
+//			var match = _host.match(re);
+//			if(match == null)
+//			{
+//				res.redirect(global._host + req.url);
+//				return;
+//			}
 			
 			if(!req.session)
 				req.session = {};			

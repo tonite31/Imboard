@@ -114,7 +114,7 @@ configMenu.addMenu("server", function(callback)
 	prompt.message = "";
 	prompt.delimiter = "";
 
-	prompt.get(['port : ', 'host : '], function(err, result)
+	prompt.get(['port : ', 'base URL : '], function(err, result)
 	{
 		if(err)
 		{
@@ -122,12 +122,18 @@ configMenu.addMenu("server", function(callback)
 			return;
 		}
 
-		var host = result['host : '];
-		if(host[host.length-1] == "/")
-			host = host.substring(0, host.length-1);
+		var baseUrl = result['base URL : '];
+		if(baseUrl[baseUrl.length-1] == "/")
+			baseUrl = baseUrl.substring(0, baseUrl.length-1);
+		
+		if(baseUrl.indexOf("http://") == -1 && baseUrl.indexOf("https://") == -1)
+			baseUrl = "http://" + baseUrl;
+		
+		if(baseUrl.indexOf(":") != -1)
+			baseUrl = baseUrl.split(":")[0];
 
 		config.server.port = result['port : '];
-		config.server.host = host;
+		config.server.baseUrl = baseUrl;
 
 		if(callback)
 			callback();
