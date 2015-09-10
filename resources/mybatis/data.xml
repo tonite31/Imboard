@@ -3,12 +3,14 @@
 <mapper namespace="data">
     <resultMap type="DataVo" id="dataResult">
         <result column="ID" property="id" />
+        <result column="TYPE" property="type" />
         <result column="DATA" property="data" typeHandler="BlobTypeHandler" javaType="java.lang.String"/>
     </resultMap>
     
     <select id="getData" parameterType="string" resultMap="dataResult">
         SELECT
         	ID,
+        	TYPE,
         	DATA
         FROM
         	IMB_DATA
@@ -18,10 +20,11 @@
     
     <insert id="insertData" parameterType="DataVo">
         INSERT IMB_DATA
-        	(ID, DATA)
+        	(ID, TYPE, DATA)
         VALUES
         	(
         		#{id},
+        		#{type},
         		#{data}
         	)
     </insert>
@@ -30,6 +33,7 @@
         UPDATE
         	IMB_DATA
        	SET
+       		TYPE = #{type},
        		DATA = #{data}
         WHERE
        		ID = #{id}
