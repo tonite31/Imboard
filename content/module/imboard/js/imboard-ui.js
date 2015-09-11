@@ -117,6 +117,8 @@
     
     $.fn.makeValidationMessage = function(message)
     {
+    	$(".imboard-ui-validation").remove();
+    		
     	var that = this.get(0);
 		var rect = that.getBoundingClientRect();
 		
@@ -375,7 +377,11 @@
 				}
 				else
 				{
-					return $(this).text();
+					var value = $(this).attr("data-value");
+					if(value)
+						return value;
+					else
+						return $(this).text();
 				}
     		};
 
