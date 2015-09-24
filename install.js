@@ -10,7 +10,8 @@ var connection = mysql.createConnection({
 	host     : config.jdbc.host,
 	user     : config.jdbc.user,
 	password : config.jdbc.password,
-	database : config.jdbc.database
+	database : config.jdbc.database,
+	port : config.jdbc.port
 });
 
 var QueryExecutor = function(queryList, connection)
