@@ -137,6 +137,25 @@ DataBindModule.prototype.compile = function($, list, req, callback)
 	{
 		var el = list.pop();
 
+		/*
+		 * <div class="col-xs-5" data-bind="boardList">
+			{{#if boardList}}
+			{{#each boardList}}
+			{{#notequals id "corver"}}
+			<div class="category">
+				<h2>{{name}}</h2>
+				<div data-bind="articleList" data-param='{"boardId" : "{{id}}", "searchData" : {"startIndex" : 0, "endIndex" : 5}}'>
+					<h3>{{subject}}</h3>
+				</div>
+			</div>
+			{{/notequals}}
+			{{/each}}
+			{{/if}}
+			</div>
+			
+			위 구조의 경우 articleList의 파라미터에 {{id}}이게 치환이 안되어서 articleList가 정상적으로 수행되지 않는다. 왜냐하면 내부의 data-bind가 먼저 처리되기 때문이다.
+			다시 방법을 바꿔서 먼저 발견된 data-bind를 수행하도록 한다. 단 getTemplate를 할때 하위에 있는 data-bind의 innerHTML을 제외하고 템플리팅을 한 뒤에 다시 넣어주면 될것같다.
+		 */
 		this.databind($, el, req, function() // el의 innerHTML로 템플릿이 작성되어있는경우 data-bind가 발견될 수 있다. 그럼 끝까지 파고들어서 맨 마지막 data-bind부터 실행함.
 		{
 			//마지막 data-bind el의 innerHTML에 data-bind가 없는 경우 아래 코드가 수행됨
