@@ -1,5 +1,6 @@
 - 0.4.1
 1. express 버전이 4.13.3 으로 업데이트 되었습니다.
+2. imboard-ui.js의 validationMessage blur 조건이 변경되었습니다.
 
 - 0.4.0
 1. Data테이블에 type컬럼이 추가되었습니다.
