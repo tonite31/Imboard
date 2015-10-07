@@ -156,10 +156,11 @@
 		div.appendChild(span);
 
 		document.body.appendChild(div);
-		
+
+		document.body.scrollTop = that.getBoundingClientRect().top + document.body.scrollTop;
 		that.focus();
 		$(that).off("input blur");
-		$(that).on("input blur", function(e)
+		$(that).on("input blur click", function(e)
 		{
 			$(".imboard-ui-validation").remove();
 		});
