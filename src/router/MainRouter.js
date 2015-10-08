@@ -65,7 +65,7 @@ module.exports.main =
 			}
 			else
 			{
-				if(req.url.match(/[^\.]*.js/) != null || req.url.match(/[^\.]*.css/) != null)
+				if(req.url.match(/resources/) != null || req.url.match(/[^\.]*.js/) != null || req.url.match(/[^\.]*.css/) != null)
 				{
 					next();
 					return;
@@ -337,7 +337,7 @@ function replaceInnerTemplate($, el)
 		if(innerHTML && !$(this).attr("data-template-id"))
 		{
 			var id = Utils.guid();
-			var script = "<script id='" + id + "' type='text/x-handlebars-template'>" + innerHTML + "</script>";
+			var script = "<script id='" + id + "' type='text/x-handlebars-template' data-precompile='true'>" + innerHTML + "</script>";
 			$("head").append(script);
 			$(this).attr("data-template-id", id);
 			$(this).html("");
