@@ -135,73 +135,46 @@ DataBindModule.prototype.compile = function($, list, req, callback)
 	}
 	else
 	{
-		var el = list.pop();
-
-		/*
-		 * <div class="col-xs-5" data-bind="boardList">
-			{{#if boardList}}
-			{{#each boardList}}
-			{{#notequals id "corver"}}
-			<div class="category">
-				<h2>{{name}}</h2>
-				<div data-bind="articleList" data-param='{"boardId" : "{{id}}", "searchData" : {"startIndex" : 0, "endIndex" : 5}}'>
-					<h3>{{subject}}</h3>
-				</div>
-			</div>
-			{{/notequals}}
-			{{/each}}
-			{{/if}}
-			</div>
-			
-			위 구조의 경우 articleList의 파라미터에 {{id}}이게 치환이 안되어서 articleList가 정상적으로 수행되지 않는다. 왜냐하면 내부의 data-bind가 먼저 처리되기 때문이다.
-			다시 방법을 바꿔서 먼저 발견된 data-bind를 수행하도록 한다. 단 getTemplate를 할때 하위에 있는 data-bind의 innerHTML을 제외하고 템플리팅을 한 뒤에 다시 넣어주면 될것같다.
-		 */
-		this.databind($, el, req, function() // el의 innerHTML로 템플릿이 작성되어있는경우 data-bind가 발견될 수 있다. 그럼 끝까지 파고들어서 맨 마지막 data-bind부터 실행함.
+		var el = list.shift();
+		
+		var name = $(el).attr("data-bind");
+		$(el).removeAttr("data-bind");
+		
+		if(this.modules.hasOwnProperty(name))
 		{
-			//마지막 data-bind el의 innerHTML에 data-bind가 없는 경우 아래 코드가 수행됨
-
-			var name = $(el).attr("data-bind");
-			$(el).removeAttr("data-bind");
-
-			if(that.modules.hasOwnProperty(name)) // data-bind 모듈체크 후
+			var param = this.getParameters($, el);
+			if(param == null)
 			{
-				var param = that.getParameters($, el);
-				if(param == null)
-				{
-					that.compile($, list, req, callback); // 파라미터 가져오는도중 파싱에러가 발생하면 다음 시블링의 data-bind로 넘어간다.
-				}
-				else
-				{
-					try
-					{
-						that.modules[name].call(that, $, el, param, req, function() // 정상적인 파라미터를 얻은경우 모듈 호출.
-						{
-							that.databind($, el, req, function() //script로 템플릿이 작성된경우는 위에서 검출이 안된다. 따라서 data-bind 후 템플릿이 실제로 innerHTML로 만들어졌을 때 data-bind가 또 있는지 체크하고 수행함
-							{
-								that.compile($, list, req, callback); //끝나면 다음 시블링 data-bind로 넘어감.
-							});
-						});
-					}
-					catch(err)
-					{
-						//모듈 호출시 오류 발생하는경우
-						_log.error(err.stack);
-
-						//다음으로 넘어감
-						that.databind($, el, req, function()
-						{
-							that.compile($, list, req, callback); //끝나면 다음 시블링 data-bind로 넘어감.
-						});
-					}
-				}
+				this.compile($, list, req, callback); // 파라미터 가져오는도중 파싱에러가 발생하면 다음 시블링의 data-bind로 넘어간다.
 			}
 			else
 			{
-				$(el).removeAttr("data-param").removeAttr("data-template-id");
-				$(el).html("<span> ModuleNotFoundException : " + name + "</span>"); // 모듈이 없는경우 알려주기 위해..
-				that.compile($, list, req, callback);
+				try
+				{
+					this.modules[name].call(that, $, el, param, req, function() // 정상적인 파라미터를 얻은경우 모듈 호출.
+					{
+						that.databind($, el, req, function() //script로 템플릿이 작성된경우는 모듈 호출 후에 data-bind가 새로 등장할 수 있음. 따라서 data-bind 후 템플릿이 실제로 innerHTML로 만들어졌을 때 data-bind가 또 있는지 체크하고 수행함
+						{
+							that.compile($, list, req, callback); //끝나면 다음 시블링 data-bind로 넘어감.
+						});
+					});
+				}
+				catch(err)
+				{
+					//모듈 호출시 오류 발생하는경우
+					_log.error(err.stack);
+
+					//다음으로 넘어감
+					this.compile($, list, req, callback); //끝나면 다음 시블링 data-bind로 넘어감.
+				}
 			}
-		});
+		}
+		else
+		{
+			$(el).removeAttr("data-param").removeAttr("data-template-id");
+			$(el).html("<span> ModuleNotFoundException : " + name + "</span>"); // 모듈이 없는경우 알려주기 위해..
+			this.compile($, list, req, callback);
+		}
 	}
 };
 

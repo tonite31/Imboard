@@ -3,6 +3,7 @@ var fs = require('fs');
 var cheerio = require('cheerio');
 var VisitorDao = require(_path.src + "/dao/VisitorDao.js");
 var DataBindModule = require(_path.lib + "/DataBindModule.js");
+var Utils = require(_path.src + "/lib/Utils.js");
 
 module.exports.main =
 {
@@ -313,7 +314,8 @@ function render(req, res, folder, frame, path)
 	{
 		bindInnerHtml(req, frame, $, "body");
 		bindReplaceHtml(req, frame, $, "body");
-
+		replaceInnerTemplate($, "body");
+		
 		DataBindModule.databind($, "body", req, function(html)
 		{
 			Render.render(req, res, html);
@@ -323,6 +325,24 @@ function render(req, res, folder, frame, path)
 	{
 		render(req, res, "common", "core", "/404.html");
 	}
+}
+
+function replaceInnerTemplate($, el)
+{
+	$(el).find("*[data-bind]").each(function()
+	{
+		replaceInnerTemplate($, this);
+		
+		var innerHTML = $(this).html();
+		if(innerHTML && !$(this).attr("data-template-id"))
+		{
+			var id = Utils.guid();
+			var script = "<script id='" + id + "' type='text/x-handlebars-template'>" + innerHTML + "</script>";
+			$("head").append(script);
+			$(this).attr("data-template-id", id);
+			$(this).html("");
+		}
+	});
 }
 
 function bindInnerHtml(req, frame, $, target)
