@@ -2,6 +2,7 @@
 1. express 버전이 4.13.3 으로 업데이트 되었습니다.
 2. imboard-ui.js의 validationMessage blur 조건이 변경되었습니다.
 3. data-bind모듈의 innerHTML로 작성된 템플릿을 처리하는 과정에서 발생하는 버그가 수정되었습니다.
+4. article 모듈 호출시 조회수가 정상적으로 증가하지 않는 문제가 수정되었습니다.
 
 - 0.4.0
 1. Data테이블에 type컬럼이 추가되었습니다.
