@@ -353,15 +353,15 @@ module.exports.article = function($, el, param, req, next)
 						return;
 					}
 				}
-				
-				var template = that.getTemplate($, el);
-				$(el).html(template(article));
+			}
+			
+			var template = that.getTemplate($, el);
+			$(el).html(template(article));
+			
+			if(article)
 				cb();
-			}
 			else
-			{
 				next();
-			}
 		});
 	};
 
