@@ -85,7 +85,7 @@ DataBindModule.prototype.getTemplate = function($, el)
 		{
 			for(var i=0; i<matchs.length; i++)
 			{
-				var replaceString = matchs[i].replace(/&quot;/gi, "\"");
+				var replaceString = matchs[i].replace(/&quot;/gi, "\"").replace(/&apos;/gi, "'").replace(/&gt;/, ">").replace(/&lt;/, "<");
 				html = html.replace(matchs[i], replaceString);
 			}
 		}
