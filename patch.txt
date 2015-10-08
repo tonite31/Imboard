@@ -1,3 +1,7 @@
+- 0.4.2
+1. /resources/로 시작되는 url은 방문자 체크를 하지 않도록 수정되었습니다.
+2. Article 모듈에서 조회된 article이 없더라도 템플리팅이 되도록 수정되었습니다.
+
 - 0.4.1
 1. express 버전이 4.13.3 으로 업데이트 되었습니다.
 2. imboard-ui.js의 validationMessage blur 조건이 변경되었습니다.
