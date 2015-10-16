@@ -1,5 +1,6 @@
 var boardDao = require(_path.src + "/dao/BoardDao.js");
 var BoardVo = require(_path.src + '/vo/BoardVo.js');
+var boardAuthDao = require(_path.src + '/dao/BoardAuthDao.js');
 
 var urlAuthDao = require(_path.src + "/dao/UrlAuthDao.js");
 var UrlAuthVo = require(_path.src + '/vo/UrlAuthVo.js');
@@ -65,9 +66,19 @@ module.exports.insertBoard =
 		if(req.session.user)
 			boardVo.creator = req.session.user.id;
 		
-		boardDao.insertBoard(boardVo, function(response)
+		boardDao.getBoard(boardVo.id, function(response)
 		{
-			res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+			if(response)
+			{
+				res.end(JSON.stringify({code : _code.DUPLICATED, data : _code.DUPLICATED, msg : "DUPLICATED"}));
+			}
+			else
+			{
+				boardDao.insertBoard(boardVo, function(response)
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
+				});
+			}
 		});
 	}
 };

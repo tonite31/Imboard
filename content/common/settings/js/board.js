@@ -30,16 +30,19 @@ $(document).ready(function()
 				data.id = new Date().getTime();
 
 			var result = $.api.board.insertBoard(data);
-			
 			if(result.code == 1000)
 			{
 				data.boardId = data.id;
 				$.api.boardAuth.updateBoardAuth(data);
 				refresh();
 			}
+			else if(result.code == -9996)
+			{
+				$(form).find("span[data-id='result']").text("이미 존재하는 게시판 아이디입니다.").css("color", "white");
+			}
 			else
 			{
-				$("#result").text(JSON.stringify(result)).css("color", "white");
+				$(form).find("span[data-id='result']").text(JSON.stringify(result)).css("color", "white");
 			}
 		});
 	});
