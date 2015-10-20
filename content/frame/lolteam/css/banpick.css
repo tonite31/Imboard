@@ -2,18 +2,20 @@
 {
 	display: inline-block;
 	position: relative;
+	margin: 5px;
 }
 
 .championSquare
 {
-	width: 70px;
-	height: 70px;
-	outerline: 1px solid #ccc;
+	width: 78.4px;
+	height: 78.4px;
+	outline: 1px solid #ccc;
 }
 
 #championList
 {
 	-webkit-user-select: none;
+	margin-top: -5px;
 }
 
 .championName
@@ -36,7 +38,7 @@
 
 .position
 {
-	margin: 5px 0;
+	padding: 5px 0;
 }
 
 .position > div
@@ -53,7 +55,7 @@
 
 .position > div:LAST-CHILD
 {
-	width: 50%;
+	position: relative;
 }
 
 .animated { 

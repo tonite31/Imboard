@@ -10,8 +10,9 @@
 </script>
 
 <div class="container">
-	<div style="text-align: right;">
-		<input type="text" class="textinput" placeholder="Search"/>
+	<div style="text-align: center; margin-left: 300px; padding: 5px 0;">
+		<input type="text" class="textinput" placeholder="밴픽 이름" style="width: 500px;" id="subject"/>
+		<input type="text" class="textinput" placeholder="Search" id="search"/>
 		<span class="glyphicon glyphicon-refresh" style="cursor: pointer;" id="refresh"></span>
 	</div>
 	<div class="col-xs-2" style="margin-top: -5px;">
@@ -19,30 +20,35 @@
 			<div>Top</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="top"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>Jungle</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="jungle"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>Mid</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="mid"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>AD Carry</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ad"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>Support</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="support"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<hr/>
@@ -50,18 +56,21 @@
 			<div>Ban1</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban1"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>Ban2</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban2"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 		<div class="position">
 			<div>Ban3</div>
 			<div>
 				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban3"/>
+				<span class="championName" style="display: none;"></span>
 			</div>
 		</div>
 	</div>
@@ -71,5 +80,6 @@
 	<p class="alert alert-danger" role="alert" style="display: none; text-align: center; font-size: 13px;" id="error">모든포지션의 챔피언과 밴픽을 선택해주세요.</p>
 	<p style="text-align: center;">
 		<button type="button" class="btn btn-primary" style="width: 80px; height: 40px;" id="save">저장</button>
+		<button type="button" class="btn btn-default" style="width: 80px; height: 40px;margin-left: 10px;" id="delete">삭제</button>
 	</p>
 </div>

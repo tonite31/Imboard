@@ -1,0 +1,33 @@
+.position
+{
+	position: relative;
+	display: inline-block;
+}
+
+.position img
+{
+	width: 80px;
+}
+
+.championName
+{
+	position: absolute;
+	height: 20px;
+	bottom:0;
+	left:0;
+	right:0;
+	
+	line-height: 20px;
+	
+	background-color: rgba(0, 0, 0, 0.7);
+	
+	color: white;
+	
+	font-size: 11px;
+	text-align: center;
+}
+
+.gray
+{
+	background-color: #f5f5f5;
+}

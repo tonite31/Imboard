@@ -77,14 +77,14 @@ module.exports.lol_getChampions =
 						{
 							DataDao.updateData(dataVo, function(response)
 							{
-								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : data}}));
+								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : dataVo.data}}));
 							});
 						}
 						else
 						{
 							DataDao.insertData(dataVo, function(response)
 							{
-								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : data}}));
+								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : dataVo.data}}));
 							});
 						}
 					});
