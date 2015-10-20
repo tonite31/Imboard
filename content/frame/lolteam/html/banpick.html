@@ -2,7 +2,7 @@
 {{#if championList}}
 {{#each championList}}
 	<div class="championSquareBox">
-		<img class="championSquare" id="champion_{{id}}" src="http://ddragon.leagueoflegends.com/cdn/5.20.1/img/champion/{{image/full}}" draggble="true" ondragstart="drag(event)"/>
+		<img class="championSquare" id="champion_{{id}}" data-info='{"id" : "{{id}}", "name" : "{{name}}", "image" : "http://ddragon.leagueoflegends.com/cdn/5.20.1/img/champion/{{image/full}}"}' src="http://ddragon.leagueoflegends.com/cdn/5.20.1/img/champion/{{image/full}}" draggble="true" ondragstart="drag(event)"/>
 		<span class="championName">{{name}}</span>
 	</div>
 {{/each}}
@@ -12,57 +12,64 @@
 <div class="container">
 	<div style="text-align: right;">
 		<input type="text" class="textinput" placeholder="Search"/>
+		<span class="glyphicon glyphicon-refresh" style="cursor: pointer;" id="refresh"></span>
 	</div>
 	<div class="col-xs-2" style="margin-top: -5px;">
 		<div class="position">
 			<div>Top</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="top"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>Jungle</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="jungle"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>Mid</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="mid"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>AD Carry</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ad"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>Support</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="support"/>
 			</div>
 		</div>
 		<hr/>
 		<div class="position">
 			<div>Ban1</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban1"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>Ban2</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban2"/>
 			</div>
 		</div>
 		<div class="position">
 			<div>Ban3</div>
 			<div>
-				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)" id="ban3"/>
 			</div>
 		</div>
 	</div>
 	<div class="col-xs-10" id="championList"></div>
+</div>
+<div class="container" style="margin-top: 20px;">
+	<p class="alert alert-danger" role="alert" style="display: none; text-align: center; font-size: 13px;" id="error">모든포지션의 챔피언과 밴픽을 선택해주세요.</p>
+	<p style="text-align: center;">
+		<button type="button" class="btn btn-primary" style="width: 80px; height: 40px;" id="save">저장</button>
+	</p>
 </div>

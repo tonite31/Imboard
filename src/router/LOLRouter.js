@@ -62,7 +62,7 @@ module.exports.lol_getChampions =
 			{
 				if(error)
 				{
-					_log.error("에러", error);
+					_log.error(error);
 					res.end(JSON.stringify({code : _code.ERROR, data : error}));
 				}
 				else
@@ -77,14 +77,14 @@ module.exports.lol_getChampions =
 						{
 							DataDao.updateData(dataVo, function(response)
 							{
-								res.end(JSON.stringify({code : _code.SUCCESS, data : data}));
+								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : data}}));
 							});
 						}
 						else
 						{
 							DataDao.insertData(dataVo, function(response)
 							{
-								res.end(JSON.stringify({code : _code.SUCCESS, data : data}));
+								res.end(JSON.stringify({code : _code.SUCCESS, data : {data : data}}));
 							});
 						}
 					});
@@ -266,9 +266,6 @@ module.exports.lol_getChampions =
 									try
 									{
 										body = JSON.parse(body);
-										
-										console.log("챔 : ", body);
-										
 										for(var key in body)
 										{
 											championList[index][key] = body[key];

@@ -11,6 +11,11 @@
 	outerline: 1px solid #ccc;
 }
 
+#championList
+{
+	-webkit-user-select: none;
+}
+
 .championName
 {
 	position: absolute;
@@ -49,4 +54,40 @@
 .position > div:LAST-CHILD
 {
 	width: 50%;
+}
+
+.animated { 
+    -webkit-animation-duration: 2s; 
+    animation-duration: 2s; 
+    -webkit-animation-fill-mode: both; 
+    animation-fill-mode: both; 
+    -webkit-animation-timing-function: linear; 
+    animation-timing-function: linear; 
+    animation-iteration-count:infinite; 
+    -webkit-animation-iteration-count:infinite; 
+} 
+
+@-webkit-keyframes rotateOut { 
+    0% { 
+        -webkit-transform-origin: center center; 
+        -webkit-transform: rotate(0); 
+    } 
+    100% { 
+        -webkit-transform-origin: center center; 
+        -webkit-transform: rotate(360deg); 
+    } 
+} 
+@keyframes rotateOut { 
+    0% { 
+        transform-origin: center center; 
+        transform: rotate(0); 
+    } 
+    100% { 
+        transform-origin: center center; 
+        transform: rotate(360deg); 
+    } 
+} 
+.rotateOut { 
+    -webkit-animation-name: rotateOut; 
+    animation-name: rotateOut; 
 }
