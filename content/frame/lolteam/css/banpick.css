@@ -1,0 +1,52 @@
+.championSquareBox
+{
+	display: inline-block;
+	position: relative;
+}
+
+.championSquare
+{
+	width: 70px;
+	height: 70px;
+	outerline: 1px solid #ccc;
+}
+
+.championName
+{
+	position: absolute;
+	height: 20px;
+	bottom:0;
+	left:0;
+	right:0;
+	
+	line-height: 20px;
+	
+	background-color: rgba(0, 0, 0, 0.7);
+	
+	color: white;
+	
+	font-size: 11px;
+	text-align: center;
+}
+
+.position
+{
+	margin: 5px 0;
+}
+
+.position > div
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.position > div:FIRST-CHILD
+{
+	width: 45%;
+	text-align: center;
+}
+
+.position > div:LAST-CHILD
+{
+	width: 50%;
+}

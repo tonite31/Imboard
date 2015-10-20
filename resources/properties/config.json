@@ -1,7 +1,7 @@
 {
-    "frame": "sample",
+    "frame": "lolteam",
     "server": {
-        "port": 3000
+        "port": 3001
     },
     "log": {
         "level": "debug",
@@ -17,10 +17,10 @@
         "DATA_NOT_FOUND": "-9994"
     },
     "jdbc": {
-        "host": "host",
-        "user": "username",
-        "password": "password",
-        "database": "database",
+        "host": "localhost",
+        "user": "imboard",
+        "password": "imboard",
+        "database": "imboard",
         "port": 3306,
         "typeCast": true,
         "multipleStatements": true

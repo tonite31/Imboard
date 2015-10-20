@@ -1,0 +1,101 @@
+a
+{
+	color: #444;
+}
+
+.header
+{
+	padding: 50px;
+}
+
+.header h1
+{
+	font-size: 50px;
+}
+
+.menu
+{
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;	
+}
+
+.menu ul, .menu li
+{
+	list-style: none;
+	padding:0;
+	margin:0;
+}
+
+.menu li
+{
+	display: inline-block;
+}
+
+.menu li a
+{
+	padding: 15px 35px;
+	display: inline-block;
+	font-size: 15px;
+}
+
+.menu li:HOVER
+{
+	background-color: #f7f7f7;
+}
+
+.menu li:HOVER a
+{
+	text-decoration: none;
+	color: black;
+}
+
+.dataTable
+{
+	width: 100%;
+}
+
+.dataTable th
+{
+	padding: 10px;
+	font-size: 13px;
+	border: 1px solid #dfdfdf;
+	text-align: center;
+}
+
+.dataTable td
+{
+	padding: 10px;
+	font-size: 13px;
+	border: 1px solid #dfdfdf;
+}
+
+.dataTable .left
+{
+	text-align: left;
+}
+
+.dataTable .center
+{
+	text-align: center;
+}
+
+.dataTable .right
+{
+	text-align: right;
+}
+
+.textinput
+{
+	padding:5px;
+	border: 1px solid #dfdfdf;
+}
+
+.textinput:FOCUS, .textinput:ACTIVE
+{
+	outline: 2px solid #ccc;
+}
+
+.page-header
+{
+	font-size: 20px;
+}

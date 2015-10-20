@@ -84,6 +84,8 @@
 
 	    return result;
 	};
+	
+	$.api.httpRequest = httpRequest;
 
 	/**
 	 * $.api.date
@@ -727,4 +729,5 @@
 		   async: false
 		});
 	};
+	
 }(jQuery));

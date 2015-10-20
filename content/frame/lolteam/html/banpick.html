@@ -1,0 +1,68 @@
+<script type="text/x-handlebars-template" id="championListTemplate">
+{{#if championList}}
+{{#each championList}}
+	<div class="championSquareBox">
+		<img class="championSquare" id="champion_{{id}}" src="http://ddragon.leagueoflegends.com/cdn/5.20.1/img/champion/{{image/full}}" draggble="true" ondragstart="drag(event)"/>
+		<span class="championName">{{name}}</span>
+	</div>
+{{/each}}
+{{/if}}
+</script>
+
+<div class="container">
+	<div style="text-align: right;">
+		<input type="text" class="textinput" placeholder="Search"/>
+	</div>
+	<div class="col-xs-2" style="margin-top: -5px;">
+		<div class="position">
+			<div>Top</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>Jungle</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>Mid</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>AD Carry</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>Support</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<hr/>
+		<div class="position">
+			<div>Ban1</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>Ban2</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+		<div class="position">
+			<div>Ban3</div>
+			<div>
+				<img class="championSquare" src="" ondrop="drop(event)" ondragover="allowDrop(event)"/>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-10" id="championList"></div>
+</div>
