@@ -52,7 +52,7 @@ ModuleScanner.prototype.scanRouter = function(dir)
 				var auth = router[name].auth;
 				var multipart = router[name].multipart;
 				
-				if(this.requestPaths.indexOf(";" + path + "@") == -1)
+				if(this.requestPaths.indexOf(";[" + type + "]" + path + "@") == -1)
 				{
 					if(!type)
 						type = "get";
@@ -64,11 +64,11 @@ ModuleScanner.prototype.scanRouter = function(dir)
 						app[type](path, _multipart(), RouterCallbackWrapper.create(callback));
 					else
 						app[type](path, RouterCallbackWrapper.create(callback));
-					this.requestPaths += ";" + path + "@";
+					this.requestPaths += ";[" + type + "]" + path + "@";
 				}
 				else
 				{
-					throw Error("DuplicatedPathException : " + path + " (" + dir + '/' + files[i] + ")");
+					throw Error("DuplicatedPathException : [" + type + "]" + path + " (" + dir + '/' + files[i] + ")");
 				}
 			}
 		}	
