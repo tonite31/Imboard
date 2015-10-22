@@ -74,6 +74,7 @@ var cookieParser = require("cookie-parser");
 var favicon = require('serve-favicon');
 var https = require("https");
 
+var Immybatis = require(_path.lib + "/Immybatis");
 var Logger  = require(_path.lib + "/Logger");
 var ModuleScanner = require(_path.lib + "/ModuleScanner");
 
@@ -97,6 +98,8 @@ global.Delegator = require(_path.lib + "/Delegator.js");
 global.Render = require(_path.lib + "/Render.js");
 global._async = require('async');
 global._utils = require(_path.lib + "/Utils.js");
+var imm = new Immybatis(pool);
+imm.setQuery("resources/mybatis");
 
 var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
