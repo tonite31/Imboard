@@ -1,6 +1,8 @@
 var DataDao = require(_path.src + "/dao/DataDao.js");
 var DataVo = require(_path.src + "/vo/DataVo.js");
 
+var schedule = require('node-schedule');
+
 var request = require('request');
 
 var LOL = {};
@@ -355,11 +357,11 @@ module.exports.lol_getChampionsOfSummoner =
 		});
 	};
 	
-	this.getChampionsOfSummoner = function(summonerId, season, callback)
+	this.getChampionsOfSummoner = function(summonerId, season)
 	{
 		var options =
 		{
-		    url: 'https://kr.api.pvp.net/api/lol/' + self.region + 'v1.3/stats/by-summoner/' + summonerId + '/ranked',
+		    url: 'https://kr.api.pvp.net/api/lol/' + self.region + '/v1.3/stats/by-summoner/' + summonerId + '/ranked',
 		    method: 'GET',
 		    qs: {'api_key': self.apiKey, 'season' : season}
 		};
@@ -408,37 +410,39 @@ module.exports.lol_getChampionsOfSummoner =
 							},
 							function()
 							{
-								callback(null, championList);
+								console.log("챔챔 : ", championList);
 							});
 							
 							break;
 						case 400:
-							callback("Bad request");
+							console.error("Bad request");
 							break;
 						case 401:
-							callback("Unauthorized");
+							console.error("Unauthorized");
 							break;
 						case 429:
-							callback("Rate limit exceeded");
+							console.error("Rate limit exceeded");
 							break;
 						case 500:
-							callback("Internal server error");
+							console.error("Internal server error");
 							break;
 						case 503:
-							callback("Service unavailable");
+							console.error("Service unavailable");
 							break;
 					}
 				}
 				else
 				{
-					callback(error, null);
+					_log.error(error);
 				}
 			}
 			catch(err)
 			{
-				callback(err.stack);
+				_log.error(err.stack);
 			}
 		});
 	};
+	
+	this.getChampionsOfSummoner("10539425", "SEASON2015");
 	
 }).call(LOL);
