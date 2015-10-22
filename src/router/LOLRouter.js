@@ -108,6 +108,47 @@ module.exports.lol_getChampions =
 	}
 };
 
+module.exports.lol_getChampionsOfSummoner =
+{
+	type : 'post',
+	path : '/lol/getChampionsOfSummoner.do',
+	callback : function(req, res)
+	{
+		LOL.getChampionsOfSummoner(function(error, data)
+		{
+			if(error)
+			{
+				_log.error(error);
+				res.end(JSON.stringify({code : _code.ERROR, data : error}));
+			}
+			else
+			{
+				
+				var dataVo = new DataVo();
+				dataVo.id = "lol_champions_summoner";
+				dataVo.data = JSON.stringify(data);
+				DataDao.getData(dataVo.id, function(response)
+				{
+					if(response)
+					{
+						DataDao.updateData(dataVo, function(response)
+						{
+							res.end(JSON.stringify({code : _code.SUCCESS, data : {data : dataVo.data}}));
+						});
+					}
+					else
+					{
+						DataDao.insertData(dataVo, function(response)
+						{
+							res.end(JSON.stringify({code : _code.SUCCESS, data : {data : dataVo.data}}));
+						});
+					}
+				});
+			}
+		});
+	}
+};
+
 (function()
 {
 	var self = this;
@@ -235,6 +276,92 @@ module.exports.lol_getChampions =
 		    url: 'https://kr.api.pvp.net/api/lol/' + self.region + '/v1.2/champion',
 		    method: 'GET',
 		    qs: {'api_key': self.apiKey}
+		};
+			 
+		// Start the request
+		request(options, function (error, response, body)
+		{
+			try
+			{
+				if(!error)
+				{
+					switch(response.statusCode)
+					{
+						case 200:
+							var championList = JSON.parse(body)["champions"];
+							var forEach = require('async-foreach').forEach;
+							
+							forEach(championList, function(champion, index)
+							{
+								var done = this.async();
+								var options =
+								{
+								    url: 'https://global.api.pvp.net/api/lol/static-data/' + self.region + '/v1.2/champion/' + champion.id,
+								    method: 'GET',
+								    qs: {'api_key': self.apiKey, 'locale' : self.locale, 'champData' : 'image,info'}
+								};
+									 
+								// Start the request
+								request(options, function (error, response, body)
+								{
+									try
+									{
+										body = JSON.parse(body);
+										for(var key in body)
+										{
+											championList[index][key] = body[key];
+										}
+										
+										done();
+									}
+									catch(err)
+									{
+										_log.error(err);
+									}
+								});
+							},
+							function()
+							{
+								callback(null, championList);
+							});
+							
+							break;
+						case 400:
+							callback("Bad request");
+							break;
+						case 401:
+							callback("Unauthorized");
+							break;
+						case 429:
+							callback("Rate limit exceeded");
+							break;
+						case 500:
+							callback("Internal server error");
+							break;
+						case 503:
+							callback("Service unavailable");
+							break;
+					}
+				}
+				else
+				{
+					callback(error, null);
+				}
+			}
+			catch(err)
+			{
+				callback(err.stack);
+			}
+		});
+	};
+	
+	this.getChampionsOfSummoner = function(summonerId, season, callback)
+	{
+		var options =
+		{
+		    url: 'https://kr.api.pvp.net/api/lol/' + self.region + 'v1.3/stats/by-summoner/' + summonerId + '/ranked',
+		    method: 'GET',
+		    qs: {'api_key': self.apiKey, 'season' : season}
 		};
 			 
 		// Start the request

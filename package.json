@@ -24,6 +24,7 @@
     "immybatis": "^0.0.4",
     "method-override": "^2.1.2",
     "mysql": "^2.0.1",
+    "node-schedule": "^0.2.9",
     "node-uuid": "^1.4.1",
     "nodemailer": "^1.3.2",
     "passport": "^0.2.0",
@@ -33,14 +34,15 @@
     "prompt": "^0.2.14",
     "querystring": "^0.2.0",
     "randomstring": "^1.0.7",
+    "request": "^2.65.0",
     "serve-favicon": "^2.1.6",
     "winston": "^0.7.3"
   },
   "keywords": [
-  	"Imboard",
-  	"Cms",
-  	"Webpage",
-  	"Web-Service"
+    "Imboard",
+    "Cms",
+    "Webpage",
+    "Web-Service"
   ],
   "devDependencies": {},
   "author": "Alprensia",
