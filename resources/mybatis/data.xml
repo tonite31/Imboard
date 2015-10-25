@@ -11,6 +11,9 @@
         SELECT
         	ID,
         	TYPE,
+        <if test="#{id} == 'test'">
+        	'TEST' as TEST,
+        </if>
         	DATA
         FROM
         	IMB_DATA

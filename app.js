@@ -100,6 +100,10 @@ global._async = require('async');
 global._utils = require(_path.lib + "/Utils.js");
 var imm = new Immybatis(pool);
 imm.setQuery("resources/mybatis");
+setTimeout(function()
+{
+	imm.executeQuery("data", "getData", {id : "test"});
+}, 2000);
 
 var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
