@@ -79,64 +79,64 @@ ModuleScanner.prototype.scanRouter = function(dir)
 
 ModuleScanner.prototype.scanModel = function(dir)
 {
-	this._log.debug("=================================================");
-	this._log.debug("time : " + new Date().toString());
-	this._log.debug("-------------------------------------------------");
-	this._log.debug(" # Model Scaning #");
-	this._log.debug(" -- " + dir);
-	
-	var files = fs.readdirSync(dir);
-	
-	for(var i=0; i<files.length; i++)
-	{
-		if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
-		{
-			this.modelScan(dir + '/' + files[i]);
-		}
-		else
-		{
-			var lastIndex = files[i].lastIndexOf(".js"); 
-			if(lastIndex == -1)
-				continue;
-			
-			var filename = files[i].substring(0, lastIndex);
-			
-			this._log.debug(" - " + files[i]);
-			var model = require(dir + '/' + files[i]);
-			global.sqlMapConfig.adicioneModel(filename, model);
-		}	
-	}
-	
-	this._log.debug("=================================================\n");
+//	this._log.debug("=================================================");
+//	this._log.debug("time : " + new Date().toString());
+//	this._log.debug("-------------------------------------------------");
+//	this._log.debug(" # Model Scaning #");
+//	this._log.debug(" -- " + dir);
+//	
+//	var files = fs.readdirSync(dir);
+//	
+//	for(var i=0; i<files.length; i++)
+//	{
+//		if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
+//		{
+//			this.modelScan(dir + '/' + files[i]);
+//		}
+//		else
+//		{
+//			var lastIndex = files[i].lastIndexOf(".js"); 
+//			if(lastIndex == -1)
+//				continue;
+//			
+//			var filename = files[i].substring(0, lastIndex);
+//			
+//			this._log.debug(" - " + files[i]);
+//			var model = require(dir + '/' + files[i]);
+//			global.sqlMapConfig.adicioneModel(filename, model);
+//		}	
+//	}
+//	
+//	this._log.debug("=================================================\n");
 };
 
 ModuleScanner.prototype.scanMybatisXml = function(dir)
 {
-	this._log.debug("=================================================");
-	this._log.debug("time : " + new Date().toString());
-	this._log.debug("-------------------------------------------------");
-	this._log.debug(" # MybatisXml Scaning #");
-	this._log.debug(" -- " + dir);
-	
-	var files = fs.readdirSync(dir);
-	
-	for(var i=0; i<files.length; i++)
-	{
-		if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
-		{
-			this.mybatisXmlScan(dir + '/' + files[i]);
-		}
-		else
-		{
-			if(files[i].lastIndexOf(".xml") == -1)
-				continue;
-			
-			this._log.debug(" - " + files[i]);
-			global.sqlMapConfig.adicione(_mybatis.processeArquivo(dir + '/' + files[i]));
-		}	
-	}
-	
-	this._log.debug("=================================================\n");
+//	this._log.debug("=================================================");
+//	this._log.debug("time : " + new Date().toString());
+//	this._log.debug("-------------------------------------------------");
+//	this._log.debug(" # MybatisXml Scaning #");
+//	this._log.debug(" -- " + dir);
+//	
+//	var files = fs.readdirSync(dir);
+//	
+//	for(var i=0; i<files.length; i++)
+//	{
+//		if(fs.lstatSync(dir + '/' + files[i]).isDirectory())
+//		{
+//			this.mybatisXmlScan(dir + '/' + files[i]);
+//		}
+//		else
+//		{
+//			if(files[i].lastIndexOf(".xml") == -1)
+//				continue;
+//			
+//			this._log.debug(" - " + files[i]);
+//			global.sqlMapConfig.adicione(_mybatis.processeArquivo(dir + '/' + files[i]));
+//		}	
+//	}
+//	
+//	this._log.debug("=================================================\n");
 };
 
 ModuleScanner.instance = null;

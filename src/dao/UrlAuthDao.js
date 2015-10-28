@@ -27,6 +27,7 @@ UrlAuthDao.prototype.matchUrlAuth = function(url, useYn, callback)
 {
 	var vo = new UrlAuthVo();
 	vo.url = url;
+	vo.useYn = useYn;
 	
 	this.sqlMapClient.selectsQuery("matchUrlAuth", vo, callback);
 };

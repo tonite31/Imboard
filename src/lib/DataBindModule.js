@@ -94,7 +94,12 @@ DataBindModule.prototype.getTemplate = function($, el)
 	}
 	catch(err)
 	{
-		_log.error(err.stack);
+		_loge.error("=================================================");
+		_loge.error("time : " + new Date().toString());
+		_loge.error("name : DataBindModule getTemplate");
+		_loge.error("-------------------------------------------------");
+		_loge.error(err.stack);
+		_loge.error("=================================================");
 	}
 
 	return null;
@@ -118,7 +123,13 @@ DataBindModule.prototype.getParameters = function($, el)
 	}
 	catch(err)
 	{
-		_log.error(err.stack);
+		_loge.error("=================================================");
+		_loge.error("time : " + new Date().toString());
+		_loge.error("name : DataBindModule getParameters");
+		_loge.error("-------------------------------------------------");
+		_loge.error(err.stack);
+		_loge.error("=================================================");
+		
 		$(el).html("<span> ParseException : <strong>" + value + "</strong> </span><br/><br/><pre>" + err.stack + "</pre>");
 		param = null;
 	}
@@ -162,7 +173,12 @@ DataBindModule.prototype.compile = function($, list, req, callback)
 				catch(err)
 				{
 					//모듈 호출시 오류 발생하는경우
-					_log.error(err.stack);
+					_loge.error("=================================================");
+					_loge.error("time : " + new Date().toString());
+					_loge.error("name : DataBindModule compile");
+					_loge.error("-------------------------------------------------");
+					_loge.error(err.stack);
+					_loge.error("=================================================");
 
 					//다음으로 넘어감
 					this.compile($, list, req, callback); //끝나면 다음 시블링 data-bind로 넘어감.

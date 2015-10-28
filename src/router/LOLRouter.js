@@ -18,7 +18,12 @@ module.exports.lol_getTeam =
 		{
 			if(error)
 			{
-				_log.error(error);
+				_loge.error("=================================================");
+				_loge.error("time : " + new Date().toString());
+				_loge.error("name : LOLRouter lol_getTeam");
+				_loge.error("-------------------------------------------------");
+				_loge.error(err.stack);
+				_loge.error("=================================================");
 				res.end(JSON.stringify({code : _code.ERROR, data : error}));
 			}
 			else
@@ -40,7 +45,12 @@ module.exports.lol_getMembers =
 		{
 			if(error)
 			{
-				_log.error(error);
+				_loge.error("=================================================");
+				_loge.error("time : " + new Date().toString());
+				_loge.error("name : LOLRouter lol_getMembers");
+				_loge.error("-------------------------------------------------");
+				_loge.error(err.stack);
+				_loge.error("=================================================");
 				res.end(JSON.stringify({code : _code.ERROR, data : error}));
 			}
 			else
@@ -64,7 +74,12 @@ module.exports.lol_getChampions =
 			{
 				if(error)
 				{
-					_log.error(error);
+					_loge.error("=================================================");
+					_loge.error("time : " + new Date().toString());
+					_loge.error("name : LOLRouter lol_getChampions");
+					_loge.error("-------------------------------------------------");
+					_loge.error(err.stack);
+					_loge.error("=================================================");
 					res.end(JSON.stringify({code : _code.ERROR, data : error}));
 				}
 				else
@@ -120,7 +135,12 @@ module.exports.lol_getChampionsOfSummoner =
 		{
 			if(error)
 			{
-				_log.error(error);
+				_loge.error("=================================================");
+				_loge.error("time : " + new Date().toString());
+				_loge.error("name : LOLRouter lol_getChampionsOfSummoner");
+				_loge.error("-------------------------------------------------");
+				_loge.error(err.stack);
+				_loge.error("=================================================");
 				res.end(JSON.stringify({code : _code.ERROR, data : error}));
 			}
 			else
@@ -250,7 +270,12 @@ module.exports.lol_getChampionsOfSummoner =
 						}
 						catch(err)
 						{
-							_log.error(err);
+							_loge.error("=================================================");
+							_loge.error("time : " + new Date().toString());
+							_loge.error("name : LOLRouter getMembers");
+							_loge.error("-------------------------------------------------");
+							_loge.error(err.stack);
+							_loge.error("=================================================");
 						}
 					});
 				},
@@ -318,7 +343,12 @@ module.exports.lol_getChampionsOfSummoner =
 									}
 									catch(err)
 									{
-										_log.error(err);
+										_loge.error("=================================================");
+										_loge.error("time : " + new Date().toString());
+										_loge.error("name : LOLRouter getChampions");
+										_loge.error("-------------------------------------------------");
+										_loge.error(err.stack);
+										_loge.error("=================================================");
 									}
 								});
 							},
@@ -404,7 +434,12 @@ module.exports.lol_getChampionsOfSummoner =
 									}
 									catch(err)
 									{
-										_log.error(err);
+										_loge.error("=================================================");
+										_loge.error("time : " + new Date().toString());
+										_loge.error("name : LOLRouter getChampionsOfSummoner");
+										_loge.error("-------------------------------------------------");
+										_loge.error(err.stack);
+										_loge.error("=================================================");
 									}
 								});
 							},
@@ -433,16 +468,26 @@ module.exports.lol_getChampionsOfSummoner =
 				}
 				else
 				{
-					_log.error(error);
+					_loge.error("=================================================");
+					_loge.error("time : " + new Date().toString());
+					_loge.error("name : LOLRouter getChampionsOfSummoner");
+					_loge.error("-------------------------------------------------");
+					_loge.error(err.stack);
+					_loge.error("=================================================");
 				}
 			}
 			catch(err)
 			{
-				_log.error(err.stack);
+				_loge.error("=================================================");
+				_loge.error("time : " + new Date().toString());
+				_loge.error("name : LOLRouter getChampionsOfSummoner");
+				_loge.error("-------------------------------------------------");
+				_loge.error(err.stack);
+				_loge.error("=================================================");
 			}
 		});
 	};
 	
-	this.getChampionsOfSummoner("10539425", "SEASON2015");
+//	this.getChampionsOfSummoner("10539425", "SEASON2015");
 	
 }).call(LOL);

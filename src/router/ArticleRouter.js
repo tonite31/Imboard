@@ -575,7 +575,12 @@ module.exports.uploadFile =
 						}
 						catch(err)
 						{
-							_log.error(err.stack);
+							_loge.error("=================================================");
+							_loge.error("time : " + new Date().toString());
+							_loge.error("name : ArticleRouter uploadFile");
+							_loge.error("-------------------------------------------------");
+							_loge.error(err.stack);
+							_loge.error("=================================================");
 						}
 						finally
 						{
@@ -593,7 +598,12 @@ module.exports.uploadFile =
 					}
 					catch(err)
 					{
-						_log.error(err.stack);
+						_loge.error("=================================================");
+						_loge.error("time : " + new Date().toString());
+						_loge.error("name : ArticleRouter uploadFile");
+						_loge.error("-------------------------------------------------");
+						_loge.error(err.stack);
+						_loge.error("=================================================");
 					}
 					finally
 					{
@@ -723,7 +733,12 @@ function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback
 			}
 			catch(err)
 			{
-				_log.error(err.stack);
+				_loge.error("=================================================");
+				_loge.error("time : " + new Date().toString());
+				_loge.error("name : ArticleRouter uploadLocal");
+				_loge.error("-------------------------------------------------");
+				_loge.error(err.stack);
+				_loge.error("=================================================");
 			}
 		});
 	}
@@ -818,7 +833,12 @@ function uploadFileToS3(param)
 				{
 					if(err)
 					{
-						_log.error(err.stack);
+						_loge.error("=================================================");
+						_loge.error("time : " + new Date().toString());
+						_loge.error("name : ArticleRouter uploadFileToS3");
+						_loge.error("-------------------------------------------------");
+						_loge.error(err.stack);
+						_loge.error("=================================================");
 						callback();
 					}
 					else
@@ -831,7 +851,12 @@ function uploadFileToS3(param)
 	}
 	catch(err)
 	{
-		_log.error(err.stack);
+		_loge.error("=================================================");
+		_loge.error("time : " + new Date().toString());
+		_loge.error("name : ArticleRouter uploadFileToS3");
+		_loge.error("-------------------------------------------------");
+		_loge.error(err.stack);
+		_loge.error("=================================================");
 		callback();
 	}
 }

@@ -77,7 +77,12 @@ module.exports.create = function(func)
 		}
 		catch(err)
 		{
-			_log.error(err.stack);
+			_loge.error("=================================================");
+			_loge.error("time : " + new Date().toString());
+			_loge.error("name : RouterCallbackWrapper create");
+			_loge.error("-------------------------------------------------");
+			_loge.error(err.stack);
+			_loge.error("=================================================");
 		}
 	};
 	

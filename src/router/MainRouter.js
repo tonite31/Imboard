@@ -47,7 +47,12 @@ module.exports.main =
 				}
 				catch(err)
 				{
-					_log.error(err.stack);
+					_loge.error("=================================================");
+					_loge.error("time : " + new Date().toString());
+					_loge.error("name : MainRouter main");
+					_loge.error("-------------------------------------------------");
+					_loge.error(err.stack);
+					_loge.error("=================================================");
 				}
 				
 				if(req.session.user != null && req.session.user.id != null)
@@ -90,7 +95,12 @@ module.exports.main =
 		}
 		catch(err)
 		{
-			_log.error(err.stack);
+			_loge.error("=================================================");
+			_loge.error("time : " + new Date().toString());
+			_loge.error("name : MainRouter main");
+			_loge.error("-------------------------------------------------");
+			_loge.error(err.stack);
+			_loge.error("=================================================");
 			render(req, res, "common", "core", "/500.html");
 		}
 	}
@@ -114,7 +124,12 @@ function replaceData(html, req, frame)
 	}
 	catch(err)
 	{
-		_log.error(err.stack);
+		_loge.error("=================================================");
+		_loge.error("time : " + new Date().toString());
+		_loge.error("name : MainRouter replaceData");
+		_loge.error("-------------------------------------------------");
+		_loge.error(err.stack);
+		_loge.error("=================================================");
 	}
 	finally
 	{
@@ -300,7 +315,12 @@ function replaceData(html, req, frame)
 		}
 		catch(err)
 		{
-			_log.error(err.stack);
+			_loge.error("=================================================");
+			_loge.error("time : " + new Date().toString());
+			_loge.error("name : MainRouter replaceData");
+			_loge.error("-------------------------------------------------");
+			_loge.error(err.stack);
+			_loge.error("=================================================");
 		}
 	}
 	

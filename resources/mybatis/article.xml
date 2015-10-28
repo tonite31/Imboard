@@ -108,10 +108,8 @@
 			       		<if test="#{orderByIsNotice}">, IS_NOTICE ${orderByIsNotice}</if>
 			       		<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
         	) B
-     	<if test="startIndex">
-        	<if test="endIndex">
-        		LIMIT #{startIndex}, #{endIndex}
-        	</if>
+     	<if test="#{startIndex} and #{endIndex}">
+       		LIMIT #{startIndex}, #{endIndex}
         </if>
     </select>
     

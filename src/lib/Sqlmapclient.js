@@ -5,27 +5,27 @@ var SqlMapClient = function(namespace)
 
 SqlMapClient.prototype.selectQuery = function(id, param, callback)
 {
-	global.sqlMapConfig.selecioneUm(this.namespace + "." + id, param, callback);
+	global._immy.selectOne(this.namespace, id, param, callback);
 };
 
 SqlMapClient.prototype.selectsQuery = function(id, param, callback)
 {
-	global.sqlMapConfig.selecioneVarios(this.namespace + "." + id, param, callback);
+	global._immy.select(this.namespace, id, param, callback);
 };
 
 SqlMapClient.prototype.insertQuery = function(id, param, callback)
 {
-	global.sqlMapConfig.insira(this.namespace + "." + id, param, callback);
+	global._immy.insert(this.namespace, id, param, callback);
 };
 
 SqlMapClient.prototype.updateQuery = function(id, param, callback)
 {
-	global.sqlMapConfig.atualize(this.namespace + "." + id, param, callback);
+	global._immy.update(this.namespace, id, param, callback);
 };
 
 SqlMapClient.prototype.deleteQuery = function(id, param, callback)
 {
-	global.sqlMapConfig.remova(this.namespace + "." + id, param, callback);
+	global._immy.remove(this.namespace, id, param, callback);
 };
 
 module.exports = SqlMapClient;

@@ -1,5 +1,5 @@
 {
-    "frame": "lolteam",
+    "frame": "sample",
     "server": {
         "port": 3001
     },
@@ -9,6 +9,7 @@
     },
     "code": {
         "SUCCESS": "1000",
+        "EXCEPTION" : "-10000",
         "ERROR": "-9999",
         "ACCESS_DENIED": "-9998",
         "SIGNIN": "-9997",

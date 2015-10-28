@@ -82,7 +82,6 @@ module.exports.loginSuccessCallback =
 		userVo.id = user.id;
     	UserDao.getUser(userVo, function(result)
 		{
-    		_log.error("뭐야 : ", result);
 			if(!result)
 			{
 				var vo = new UserVo();

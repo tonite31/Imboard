@@ -67,14 +67,13 @@ catch(err)
 var express = require('express');
 var methodOverride = require('method-override');
 var mysql = require('mysql');
-var mybatis = require('immybatis');
 var session = require('express-session');
 var bodyParser = require("body-parser");
 var cookieParser = require("cookie-parser");
 var favicon = require('serve-favicon');
 var https = require("https");
 
-var Immybatis = require(_path.lib + "/Immybatis");
+var Immy = require(_path.lib + "/Immy");
 var Logger  = require(_path.lib + "/Logger");
 var ModuleScanner = require(_path.lib + "/ModuleScanner");
 
@@ -91,19 +90,12 @@ if(!fs.existsSync(_path.userdata))
 global.pool = mysql.createPool(_config.jdbc);
 global._log = new Logger(_path.log + "/debug.log", _config.log.level, _config.log.colorize, useConsole);
 global._loge = new Logger(_path.log + "/exception.log", _config.log.level, _config.log.colorize, useConsole);
-global._mybatis = new mybatis.Principal();
-global.sqlMapConfig = _mybatis.processe(_path.src + "/handler/Typehandler", _path.src + "/vo/");
 global.ParameterBinder = require(_path.lib + "/ParameterBinder.js");
 global.Delegator = require(_path.lib + "/Delegator.js");
 global.Render = require(_path.lib + "/Render.js");
 global._async = require('async');
 global._utils = require(_path.lib + "/Utils.js");
-var imm = new Immybatis(pool);
-imm.setQuery("resources/mybatis");
-setTimeout(function()
-{
-	imm.executeQuery("data", "getData", {id : "test"});
-}, 2000);
+global._immy = new Immy(pool, _log, _loge);
 
 var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
@@ -138,13 +130,35 @@ app.use('/content', express.static(_path.content));
 app.use('/resources', express.static(_path.userdata));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-//app.use(express.bodyParser());
 app.use(cookieParser());
 app.use(session({ secret: 'imboard', resave: true, saveUninitialized: true}));
 app.use(methodOverride());
 app.use(require('express-domain-middleware'));
-app.use(mybatis.Contexto.domainMiddleware);
-app.use(mybatis.Contexto.middlewareOnError);
+app.use(function(req, res, next)
+{
+	var domain = require("domain");
+	var reqDomain = domain.create();
+
+    reqDomain.add(req);
+    reqDomain.add(res);
+
+    reqDomain.on('error', function (err)
+    {
+    	_immy.releaseConnection();
+    	
+    	_loge.error("\n\n");
+    	_loge.error("=================================================");
+    	_loge.error("time : " + new Date().toString());
+    	_loge.error("name : Domain Error");
+    	_loge.error("-------------------------------------------------");
+    	_loge.error(err.stack);
+    	_loge.error("=================================================\n\n");
+    	
+    	res.end(JSON.stringify({code : _code.EXCEPTION, message : err.stack}));
+    });
+
+    reqDomain.run(next);
+});
 
 app.use(function(err, req, res, next)
 {
@@ -178,9 +192,11 @@ FacebookIP(app);
 TwitterIP(app);
 GoogleIP(app);
 
+_immy.scanTypeHandler(_path.src + "/handler");
+_immy.scanModel(_path.src + "/vo");
+_immy.scanQuery(_path.resources + "/mybatis");
+
 ModuleScanner.setLogger(_log);
 ModuleScanner.scanRouter(_path.src + "/router");
-ModuleScanner.scanModel(_path.src + '/vo');
-ModuleScanner.scanMybatisXml(_path.resources + '/mybatis');
 
 DataBindModuleLoader.load(_path.src + "/module");
