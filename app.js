@@ -25,45 +25,10 @@ global._code = _config.code;
 global._port = _config.server.port;
 global._modules = {};
 
-try
-{
-	global._localize = require(__dirname + '/content/frame/' + _config.frame + '/properties/localize');
-}
-catch(err)
-{
-	global._localize = {};
-}
-
-try
-{
-	global._localizeCore = require(__dirname + '/content/common/core/properties/localize');
-}
-catch(err)
-{
-	global._localizeCore = {};
-}
-
-try
-{
-	global._localizeSettings = require(__dirname + '/content/common/settings/properties/localize');
-}
-catch(err)
-{
-	global._localizeSettings = {};
-}
-
-try
-{
-	global._variables = require(__dirname + "/content/frame/" + _config.frame + "/properties/variables");
-}
-catch(err)
-{
-	global._variables = {};
-}
-
 /**
  * 
  */
+var fs = require('fs');
 var express = require('express');
 var methodOverride = require('method-override');
 var mysql = require('mysql');
@@ -76,6 +41,9 @@ var https = require("https");
 var Immy = require(_path.lib + "/Immy");
 var Logger  = require(_path.lib + "/Logger");
 var ModuleScanner = require(_path.lib + "/ModuleScanner");
+var PropertyLoader = require(_path.lib + "/PropertyLoader");
+var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
+var ServiceLoader = require(_path.lib + "/ServiceLoader");
 
 var fs = require('fs');
 if(!fs.existsSync(_path.log))
@@ -96,8 +64,6 @@ global.Render = require(_path.lib + "/Render.js");
 global._async = require('async');
 global._utils = require(_path.lib + "/Utils.js");
 global._immy = new Immy(pool, _log, _loge);
-
-var DataBindModuleLoader = require(_path.lib + "/DataBindModuleLoader");
 
 /**
  * 서버에 백그라운드로 올렸을때 오류 나는거때문에 콘솔 오버라이드
@@ -200,3 +166,12 @@ ModuleScanner.setLogger(_log);
 ModuleScanner.scanRouter(_path.src + "/router");
 
 DataBindModuleLoader.load(_path.src + "/module");
+
+if(fs.existsSync(_path.content + "/frame/" + _config.frame + "/src/module"))
+	DataBindModuleLoader.load(_path.content + "/frame/" + _config.frame + "/src/module");
+if(fs.existsSync(_path.content + "/frame/" + _config.frame + "/src/router"))
+	ModuleScanner.scanRouter(_path.content + "/frame/" + _config.frame + "/src/router");
+if(fs.existsSync(_path.content + "/frame/" + _config.frame + "/src/service"))
+	ServiceLoader.load(_path.content + "/frame/" + _config.frame + "/src/service");
+
+PropertyLoader.load();
