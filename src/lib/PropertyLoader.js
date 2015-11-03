@@ -1,8 +1,8 @@
-module.exports.load = function()
+module.exports.load = function(dir)
 {
 	try
 	{
-		global._localize = require(__dirname + '/content/frame/' + _config.frame + '/properties/localize');
+		global._localize = require(dir + '/content/frame/' + _config.frame + '/properties/localize');
 	}
 	catch(err)
 	{
@@ -11,7 +11,7 @@ module.exports.load = function()
 
 	try
 	{
-		global._localizeCore = require(__dirname + '/content/common/core/properties/localize');
+		global._localizeCore = require(dir + '/content/common/core/properties/localize');
 	}
 	catch(err)
 	{
@@ -20,7 +20,7 @@ module.exports.load = function()
 
 	try
 	{
-		global._localizeSettings = require(__dirname + '/content/common/settings/properties/localize');
+		global._localizeSettings = require(dir + '/content/common/settings/properties/localize');
 	}
 	catch(err)
 	{
@@ -29,7 +29,7 @@ module.exports.load = function()
 
 	try
 	{
-		global._variables = require(__dirname + "/content/frame/" + _config.frame + "/properties/variables");
+		global._variables = require(dir + "/content/frame/" + _config.frame + "/properties/variables");
 	}
 	catch(err)
 	{

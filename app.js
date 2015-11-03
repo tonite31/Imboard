@@ -174,4 +174,4 @@ if(fs.existsSync(_path.content + "/frame/" + _config.frame + "/src/router"))
 if(fs.existsSync(_path.content + "/frame/" + _config.frame + "/src/service"))
 	ServiceLoader.load(_path.content + "/frame/" + _config.frame + "/src/service");
 
-PropertyLoader.load();
+PropertyLoader.load(__dirname);
