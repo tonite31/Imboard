@@ -221,7 +221,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 			{
 				var key = matchs[i].replace("#\{", "").replace("\}", "");
 				
-				var value = "null";
+				var value = null;
 				if(param)
 				{
 					if(typeof param == "object")
