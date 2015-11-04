@@ -4,6 +4,9 @@ $(document).ready(function()
 
 	$("#addBoardButton").on("click", function()
 	{
+		if($("#addBoardForm").length > 0)
+			return;
+		
 		var roleList = $.api.role.getRoleList();
 		var html = $("#settings-board-template").html();
 		var template = Handlebars.compile(html);
@@ -23,7 +26,7 @@ $(document).ready(function()
 		
 		var form = clone.get(0);
 		
-		$(form).removeAttr("novalidate").attr("data-component", "form");
+		$(form).removeAttr("novalidate").attr("data-component", "form").attr("id", "addBoardForm");
 		$(form).compile(function(data)
 		{
 			if(!data.id)
