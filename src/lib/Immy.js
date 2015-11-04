@@ -226,7 +226,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 				{
 					if(typeof param == "object")
 					{
-						if(param[key])
+						if(param[key] != null)
 							value = param[key];
 					}
 					else
@@ -255,7 +255,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 				var key = matchs[i].replace("$\{", "").replace("\}", "");
 				
 				var value = "null";
-				if(param[key])
+				if(param[key] != null)
 				{
 					if(typeof param[key] == "number")
 						value = param[key];
@@ -334,7 +334,7 @@ Immy.prototype.test = function(test, param)
 			var key = matchs[i].replace("#\{", "").replace("\}", "");
 			
 			var value = "null";
-			if(param[key])
+			if(param[key] != null)
 			{
 				if(typeof param[key] == "number")
 					value = param[key];
@@ -399,12 +399,15 @@ Immy.prototype.executeQuery = function(namespace, queryId, param, callback)
 						{
 							var value = result[i][key];
 							
-							if(resultMap.map[key].typeHandler)
+							if(resultMap.map[key])
 							{
-								value = self.typeHandlerMap[resultMap.map[key].typeHandler](value);
+								if(resultMap.map[key].typeHandler)
+								{
+									value = self.typeHandlerMap[resultMap.map[key].typeHandler](value);
+								}
+								
+								data[resultMap.map[key].property] = value;
 							}
-							
-							data[resultMap.map[key].property] = value;
 						}
 						
 						temp.push(data);
