@@ -228,6 +228,8 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 					{
 						if(param[key] != null)
 							value = param[key];
+						else
+							value = null;
 					}
 					else
 					{

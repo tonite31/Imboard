@@ -89,8 +89,21 @@ DataBindModule.prototype.getTemplate = function($, el)
 				html = html.replace(matchs[i], replaceString);
 			}
 		}
+		
+		var f = function(data)
+		{
+			var template = Handlebars.compile(html);
+			try
+			{
+				return template(data);
+			}
+			catch(err)
+			{
+				return err.toString();
+			}
+		};
 
-		return Handlebars.compile(html);
+		return f;
 	}
 	catch(err)
 	{

@@ -115,7 +115,7 @@ app.use(function(req, res, next)
     	_loge.error("\n\n");
     	_loge.error("=================================================");
     	_loge.error("time : " + new Date().toString());
-    	_loge.error("name : Domain Error");
+    	_loge.error("name : DomainException");
     	_loge.error("-------------------------------------------------");
     	_loge.error(err.stack);
     	_loge.error("=================================================\n\n");
@@ -130,7 +130,7 @@ app.use(function(err, req, res, next)
 {
 	_loge.error("=================================================");
 	_loge.error("time : " + new Date().toString());
-	_loge.error("name : DomainError");
+	_loge.error("name : Exception");
 	_loge.error("-------------------------------------------------");
 	_loge.error(err.stack);
 	_loge.error("=================================================");
