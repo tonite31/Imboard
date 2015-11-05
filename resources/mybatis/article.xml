@@ -278,7 +278,7 @@
         	BAD,
         	A.WRITER_ID,
         	A.WRITER_NAME,
-        	B.DISPLAY_ID AS DISPLAY_ID,
+        	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
         	GROUP_ID,
         	STATUS,
