@@ -35,4 +35,12 @@ module.exports.load = function(dir)
 	{
 		global._variables = {};
 	}
+	
+	try
+	{
+		require(dir + "/content/frame/" + _config.frame + "/properties/helper");
+	}
+	catch(err)
+	{
+	}
 };

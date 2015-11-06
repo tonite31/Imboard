@@ -1,5 +1,5 @@
 {
-    "frame": "sample",
+    "frame": "espace",
     "server": {
         "port": 3001
     },
@@ -19,9 +19,9 @@
     },
     "jdbc": {
         "host": "localhost",
-        "user": "imboard",
-        "password": "imboard",
-        "database": "imboard",
+        "user": "user",
+        "password": "password",
+        "database": "database",
         "port": 3306,
         "typeCast": true,
         "multipleStatements": true
