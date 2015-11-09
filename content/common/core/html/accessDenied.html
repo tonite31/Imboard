@@ -19,8 +19,26 @@
 <script src="#{path.module}/imboard/js/imboard-api.js"></script>
 <script src="#{path.module}/imboard/js/imboard-ui.js"></script>
 <script src="#{path.module}/imboard/js/handlebars-helper.js"></script>
+
+<script>
+$(document).ready(function()
+{
+	var rect = $("#container").get(0).getBoundingClientRect();
+	$("#container").css("margin-top", $(window).height()/2.3 - rect.height/2 + "px");
+	
+	$("#prev").on("click", function()
+	{
+		history.back();
+	});
+});
+</script>
 </head>
 <body>
-<h1>접근이 거부되었습니다.</h1>
+	<div id="container" style="margin:0 auto; width: 600px; text-align: center;">
+		<h1>접근권한이 없습니다.</h1>
+		<p>
+			<button type="button" class="btn btn-warning" id="prev">이전페이지로 돌아가기</button>
+		</p>
+	</div>
 </body>
 </html>
