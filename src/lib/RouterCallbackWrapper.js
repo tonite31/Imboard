@@ -34,7 +34,7 @@ module.exports.create = function(func)
 	    	{
 	    		if(urlAuth && urlAuth.length > 0)
 	    		{
-	    			if(req.session.user == null || req.session.user.level == null)
+	    			if(req.session.user == null)
 	    			{
 	    				if(req.body.__ajax == "true")
 						{
@@ -52,7 +52,7 @@ module.exports.create = function(func)
 	    			}
 	    			else
 	    			{
-	    				if(urlAuth.level < req.session.user.level)
+	    				if(req.session.user.level == null || urlAuth.level < req.session.user.level)
 	    				{
 	    					if(req.body.__ajax == "true")
 	    					{
