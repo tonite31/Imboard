@@ -119,7 +119,8 @@ function replaceData(html, req, frame)
 		{
 			cc = req.headers["accept-language"].split(",")[0];
 			var split = cc.split("-");
-			cc = split[0] + "-" + split[1].toUpperCase();
+			if(split && split.length == 2)
+				cc = split[0] + "-" + split[1].toUpperCase();
 		}
 	}
 	catch(err)
