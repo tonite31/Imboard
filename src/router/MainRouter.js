@@ -64,6 +64,10 @@ module.exports.main =
 					render(req, res, "common", "core", "/signin.html");
 				}
 			}
+			else if(path.match(/^\/accessDenied\/?$/) != null)
+			{
+				render(req, res, "common", "core", "/accessDenied.html");
+			}
 			else if(path.match(/^\/favicon.ico\/?$/) != null)
 			{
 				next();

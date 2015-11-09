@@ -60,7 +60,7 @@ module.exports.create = function(func)
 	    					}
 	    					else
 	    					{
-	    						render(req, res, "common", "core", "/accessDenied.html");
+	    						res.redirect("/accessDenied");
 	    					}
 	    				}
 	    				else
