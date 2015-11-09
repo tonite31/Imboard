@@ -570,6 +570,8 @@ module.exports.uploadFile =
 
 							var data = fs.readFileSync(filepath);
 							fs.writeFileSync(path + filename, data);
+							
+							fs.unlinkSync(filepath);
 
 							pathList.push("/resources/" + folder + "/" + filename);
 						}
@@ -594,6 +596,7 @@ module.exports.uploadFile =
 					{
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
+						fs.unlinkSync(filepath);
 						pathList.push("/resources/" + folder + "/" + filename);
 					}
 					catch(err)
@@ -663,6 +666,8 @@ module.exports.uploadFileToAWS =
 					{
 						uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
 						{
+							fs.unlinkSync(file.path);
+							
 							if(path != null)
 								pathList.push(path);
 
@@ -702,55 +707,55 @@ module.exports.uploadFileToAWS =
 	}
 };
 
-function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback)
-{
-	if(keyList.length == 0)
-	{
-		successCallback();
-		return;
-	}
-
-	var file = files[keyList.pop()];
-	var filepath = file.path;
-	var filename = file.originalFilename;
-
-	if(filepath.lastIndexOf(".gif") == filepath.length-4)
-	{
-		easyimg.convert({src : filepath + "[0]", dst : filepath.replace(".gif", ".png"), quality:100}).then(function()
-		{
-			try
-			{
-				var data = fs.readFileSync(filepath.replace(".gif", ".png"));
-
-				fs.writeFileSync(rootPath + filename.replace(".gif", ".png"), data);
-
-				var data = fs.readFileSync(filepath);
-				fs.writeFileSync(rootPath + filename, data);
-
-				pathList.push("/resources/" + folder + "/" + filename);
-
-				uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
-			}
-			catch(err)
-			{
-				_loge.error("=================================================");
-				_loge.error("time : " + new Date().toString());
-				_loge.error("name : ArticleRouter uploadLocal");
-				_loge.error("-------------------------------------------------");
-				_loge.error(err.stack);
-				_loge.error("=================================================");
-			}
-		});
-	}
-	else
-	{
-		var data = fs.readFileSync(filepath);
-		fs.writeFileSync(rootPath + filename, data);
-
-		pathList.push("/resources/" + folder + "/" + filename);
-		uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
-	}
-}
+//function uploadLocal(files, keyList, rootPath, folder, pathList, successCallback)
+//{
+//	if(keyList.length == 0)
+//	{
+//		successCallback();
+//		return;
+//	}
+//
+//	var file = files[keyList.pop()];
+//	var filepath = file.path;
+//	var filename = file.originalFilename;
+//
+//	if(filepath.lastIndexOf(".gif") == filepath.length-4)
+//	{
+//		easyimg.convert({src : filepath + "[0]", dst : filepath.replace(".gif", ".png"), quality:100}).then(function()
+//		{
+//			try
+//			{
+//				var data = fs.readFileSync(filepath.replace(".gif", ".png"));
+//
+//				fs.writeFileSync(rootPath + filename.replace(".gif", ".png"), data);
+//
+//				var data = fs.readFileSync(filepath);
+//				fs.writeFileSync(rootPath + filename, data);
+//
+//				pathList.push("/resources/" + folder + "/" + filename);
+//
+//				uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
+//			}
+//			catch(err)
+//			{
+//				_loge.error("=================================================");
+//				_loge.error("time : " + new Date().toString());
+//				_loge.error("name : ArticleRouter uploadLocal");
+//				_loge.error("-------------------------------------------------");
+//				_loge.error(err.stack);
+//				_loge.error("=================================================");
+//			}
+//		});
+//	}
+//	else
+//	{
+//		var data = fs.readFileSync(filepath);
+//		fs.writeFileSync(rootPath + filename, data);
+//
+//		pathList.push("/resources/" + folder + "/" + filename);
+//		uploadLocal(files, keyList, rootPath, folder, pathList, successCallback);
+//	}
+//}
 
 //function uploadAws(files, keyList, folder, pathList, successCallback)
 //{
