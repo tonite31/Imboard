@@ -248,30 +248,30 @@ function replaceData(html, req, frame)
 				}
 			}
 			
-			matchs = html.match(/[^]?#{user\.[^}]*}/gi);
-			if(matchs != null)
-			{
-				for(var i=0; i<matchs.length; i++)
-				{
-					var m = matchs[i].substring(1);
-					if(matchs[i][0] == "#")
-					{
-						html = html.replace(matchs[i], m);
-						continue;
-					}
-					
-					var key = m.replace("#{user.", "").replace("}", "");
-					var value = "";
-					
-					if(req.session && req.session.user)
-						value = req.session.user[key];
-					
-					if(value == null)
-						value = "";
-					
-					html = html.replace(m, value);
-				}
-			}
+//			matchs = html.match(/[^]?#{user\.[^}]*}/gi);
+//			if(matchs != null)
+//			{
+//				for(var i=0; i<matchs.length; i++)
+//				{
+//					var m = matchs[i].substring(1);
+//					if(matchs[i][0] == "#")
+//					{
+//						html = html.replace(matchs[i], m);
+//						continue;
+//					}
+//					
+//					var key = m.replace("#{user.", "").replace("}", "");
+//					var value = "";
+//					
+//					if(req.session && req.session.user)
+//						value = req.session.user[key];
+//					
+//					if(value == null)
+//						value = "";
+//					
+//					html = html.replace(m, value);
+//				}
+//			}
 			
 			matchs = html.match(/[^]?#{path\.[^}]*}/gi);
 			if(matchs != null)

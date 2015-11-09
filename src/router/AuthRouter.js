@@ -80,7 +80,7 @@ module.exports.loginSuccessCallback =
 		req.session.user = user;
 		var userVo = new UserVo();
 		userVo.id = user.id;
-    	UserDao.getUser(userVo, function(result)
+    	UserDao.getUserById(user.id, function(result)
 		{
 			if(!result)
 			{
@@ -91,18 +91,16 @@ module.exports.loginSuccessCallback =
 				
 				UserDao.insertUser(vo, function(response)
 				{
-					req.session.user = vo;
 					res.redirect(req.session.lastUrl ? req.session.lastUrl : "/");
 				});
 			}
 			else
 			{
+				req.session.user.level = result.level;
+				
 				UserDao.getEncryptKey(result.id, function(encryptKey)
 				{
-					req.session.user = result;
-					req.session.user.encryptKey = encryptKey;
 					UserDao.updateLastAccessDate(result.id);
-					
 					res.redirect(req.session.lastUrl ? req.session.lastUrl : "/");
 				})
 			}
@@ -129,7 +127,7 @@ module.exports.signin =
 		var param = req.body;
 		var userVo = new UserVo();
 		userVo.id = param.id;
-		UserDao.getUser(userVo, function(result)
+		UserDao.getUserById(param.id, function(result)
 		{
 			UserDao.getEncryptKey(userVo.id, function(encryptKey)
 			{
@@ -138,9 +136,12 @@ module.exports.signin =
 					if(!req.session)
 						req.session = {};
 					
+					if(!req.session.user)
+					{
+						req.session.user = {id : result.id, level : result.level};
+					}
+					
 					result.password = null;
-					req.session.user = result;
-					req.session.user.encryptKey = encryptKey;
 					
 					UserDao.updateLastAccessDate(result.id);
 					

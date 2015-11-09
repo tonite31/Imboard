@@ -23,8 +23,27 @@ UserDao.prototype.getUserList = function(callback)
 	this.sqlMapClient.selectsQuery("getUserList", {}, callback);
 };
 
-UserDao.prototype.getUser = function(userVo, callback)
+UserDao.prototype.getUserById = function(id, callback)
 {
+	var vo = new UserVo();
+	vo.id = id;
+	
+	this.sqlMapClient.selectQuery("getUser", vo, callback);
+};
+
+UserDao.prototype.getUserByName = function(name, callback)
+{
+	var vo = new UserVo();
+	vo.name = name;
+	
+	this.sqlMapClient.selectQuery("getUser", userVo, callback);
+};
+
+UserDao.prototype.getUserByDisplayId = function(displayId, callback)
+{
+	var vo = new UserVo();
+	vo.displayId = displayId;
+	
 	this.sqlMapClient.selectQuery("getUser", userVo, callback);
 };
 

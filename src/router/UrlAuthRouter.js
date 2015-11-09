@@ -26,7 +26,7 @@ module.exports.checkUrlAuth =
 		var param = req.body;
 		var userVo = new UserVo();
 		userVo.id = req.session.user.id;
-		UserDao.getUser(userVo, function(member)
+		UserDao.getUserById(userVo.id, function(member)
 		{
 			urlAuthDao.getUrlAuth(req.session.imboardId, param.boardId, param.url, function(response)
 			{

@@ -23,7 +23,7 @@ module.exports.getUser =
 	callback : function(req, res)
 	{
 		var param = req.body;
-		UserDao.getUser(new UserVo(param), function(response)
+		UserDao.getUserById(param.id, function(response)
 		{
 			res.end(JSON.stringify({code : _code.SUCCESS, data : response, msg : "SUCCESS"}));
 		});
@@ -39,15 +39,13 @@ module.exports.insertUser =
 		if(req.session.user && req.body.id == req.session.user.id)
 		{
 			var userVo = new UserVo(req.body);
-			req.session.user = userVo;
-			UserDao.getUser(userVo, function(response)
+			req.session.user = {id : userVo.id};
+			UserDao.getUserById(userVo.id, function(response)
 			{
 				if(response)
 				{
 					UserDao.updateUser(userVo, function(response)
 					{
-						req.session.user.name = userVo.name;
-						req.session.user.displayId = userVo.displayId;
 						res.end(JSON.stringify({code : _code.SUCCESS, data : _code.SUCCESS, msg : "SUCCESS"}));
 					});
 				}
@@ -76,10 +74,6 @@ module.exports.updateUser =
 		var userVo = new UserVo(req.body);
 		UserDao.updateUser(userVo, function(response)
 		{
-			req.session.user.name = userVo.name;
-			req.session.user.displayId = userVo.displayId;
-			req.session.user.profileImgUrl = userVo.profileImgUrl;
-			req.session.user.password = null;
 			res.end(JSON.stringify({code : _code.SUCCESS, data : req.session.user, msg : "SUCCESS"}));
 		});
 	}
@@ -97,7 +91,7 @@ module.exports.updateUserPassword =
 			//현재 로그인한 사용자와 변경하려는 사용자 아이디가 일치할때만 변경하므로 아래에서 oldPassword체크할필요 없음.
 			UserDao.getEncryptKey(userVo.id, function(encryptKey)
 			{
-				UserDao.getUser(userVo, function(response)
+				UserDao.getUserById(userVo.id, function(response)
 				{
 					UserDao.updateUserPassword(userVo.id, Utils.encrypt(userVo.password, encryptKey), function(response)
 					{
