@@ -95,7 +95,8 @@ var server = app.listen(_port, function()
 app.use('/content', express.static(_path.content));
 app.use('/resources', express.static(_path.userdata));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit : '10mb'}));
+app.use(_multipart({uploadDir: __dirname + "/temp"}));
 app.use(cookieParser());
 app.use(session({ secret: 'imboard', resave: true, saveUninitialized: true}));
 app.use(methodOverride());
