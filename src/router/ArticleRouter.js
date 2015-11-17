@@ -571,7 +571,13 @@ module.exports.uploadFile =
 							var data = fs.readFileSync(filepath);
 							fs.writeFileSync(path + filename, data);
 							
-							fs.unlinkSync(filepath);
+							fs.unlink(filepath, function(err, result)
+							{
+								if(err)
+								{
+									_log.error(err);
+								}
+							});
 
 							pathList.push("/resources/" + folder + "/" + filename);
 						}
@@ -596,7 +602,13 @@ module.exports.uploadFile =
 					{
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
-						fs.unlinkSync(filepath);
+						fs.unlink(filepath, function(err, result)
+						{
+							if(err)
+							{
+								_log.error(err);
+							}
+						});
 						pathList.push("/resources/" + folder + "/" + filename);
 					}
 					catch(err)
@@ -666,7 +678,13 @@ module.exports.uploadFileToAWS =
 					{
 						uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
 						{
-							fs.unlinkSync(file.path);
+							fs.unlink(file.path, function(err, result)
+							{
+								if(err)
+								{
+									_log.error(err);
+								}
+							});
 							
 							if(path != null)
 								pathList.push(path);
@@ -693,6 +711,14 @@ module.exports.uploadFileToAWS =
 			{
 				param.callback = function(path)
 				{
+					fs.unlink(file.path, function(err, result)
+					{
+						if(err)
+						{
+							_log.error(err);
+						}
+					});
+					
 					if(path != null)
 						pathList.push(path);
 
