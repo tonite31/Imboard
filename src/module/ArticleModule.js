@@ -278,6 +278,10 @@ module.exports.articleComponent = function($, el, param, req, next)
 			}
 			else
 			{
+				var templateId = $(el).attr("data-template-id");
+				if(templateId)
+					$(el).html($("#" + templateId).html());
+				
 				$(el).find("*[data-parts='body']").each(function()
 				{
 					$(this).removeAttr("data-parts");
