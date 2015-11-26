@@ -4,7 +4,7 @@ $(document).ready(function()
 	{
 		var seq = $(this).attr("data-id");
 
-		var result = $.api.article.deleteArticle({boardId : $.queyr.boardId, seq : seq, isRemove : "Y"});
+		var result = $.api.article.deleteArticle({boardId : $.query.boardId, seq : seq, isRemove : "Y"});
 		if(result.code == 1000)
 			location.reload();
 		else
