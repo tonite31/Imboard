@@ -26,6 +26,39 @@
         <result column="READ_STATUS" property="readStatus" />
     </resultMap>
     
+    <resultMap type="ArticleVo" id="articleWithFileResult">
+        <id column="BOARD_ID" property="boardId" />
+        <id column="SEQ" property="seq" />
+        <result column="BOARD_NAME" property="boardName" />
+        <result column="SUBJECT" property="subject" />
+        <result column="CONTENT" property="content" typeHandler="BlobTypeHandler" javaType="java.lang.String"/>
+        <result column="REGISTER_DATE" property="registerDate" />
+        <result column="HIT" property="hit" />
+        <result column="GOOD" property="good" />
+        <result column="BAD" property="bad" />
+        <result column="WRITER_ID" property="writerId" />
+        <result column="WRITER_NAME" property="writerName" />
+        <result column="WRITER_DISPLAY_ID" property="writerDisplayId" />
+        <result column="WRITER_PROFILE_IMG_URL" property="writerProfileImgUrl" />
+        <result column="GROUP_ID" property="groupId" />
+        <result column="PARENT_ARTICLE_WRITER_ID" property="parentArticleWriterId" />
+        <result column="STATUS" property="status" />
+        <result column="THUMBNAIL_URL" property="thumbnailUrl" />
+        <result column="TAG" property="tag" />
+        <result column="COMMENT_COUNT" property="commentCount" />
+        <result column="PASSWORD" property="password" />
+        <result column="IS_NOTICE" property="isNotice" />
+        <result column="READ_STATUS" property="readStatus" />
+        <collection property="fileList" resultMap="articleFileResult"></collection>
+    </resultMap>
+    
+    <resultMap type="ArticleFileVo" id="articleFileResult">
+        <result column="FILE_SEQ" property="seq" />
+        <result column="FILE_PATH" property="filePath" />
+        <result column="FILE_NAME" property="fileName" />
+        <result column="FILE_SIZE" property="fileSize" />
+    </resultMap>
+    
     <select id="getNextSeq" parameterType="ArticleVo" resultType="String">
         SELECT
         	MAX(SEQ) AS SEQ
@@ -265,36 +298,41 @@
       	<if test="#{orderByRegisterDate}">, REGISTER_DATE ${orderByRegisterDate}</if>
     </select>
     
-    <select id="getArticle" parameterType="ArticleVo" resultMap="articleResult">
+    <select id="getArticle" parameterType="ArticleVo" resultMap="articleWithFileResult">
         SELECT
         	A.BOARD_ID,
         	(SELECT NAME FROM IMB_BOARD WHERE ID = A.BOARD_ID) AS BOARD_NAME,
-        	SEQ,
-        	SUBJECT,
-        	CONTENT,
+        	A.SEQ,
+        	A.SUBJECT,
+        	A.CONTENT,
    	        DATE_FORMAT(A.REGISTER_DATE, '%Y-%m-%d %H:%i:%s') AS REGISTER_DATE,
-        	HIT,
-        	GOOD,
-        	BAD,
+        	A.HIT,
+        	A.GOOD,
+        	A.BAD,
         	A.WRITER_ID,
         	A.WRITER_NAME,
         	B.DISPLAY_ID AS WRITER_DISPLAY_ID,
         	B.PROFILE_IMG_URL AS WRITER_PROFILE_IMG_URL,
-        	GROUP_ID,
-        	STATUS,
-        	THUMBNAIL_URL,
-        	TAG,
-        	IS_NOTICE,
+        	A.GROUP_ID,
+        	A.STATUS,
+        	A.THUMBNAIL_URL,
+        	A.TAG,
+        	A.IS_NOTICE,
         	(SELECT COUNT(SEQ) FROM IMB_COMMENT WHERE A.BOARD_ID = BOARD_ID AND A.SEQ = ARTICLE_SEQ) AS COMMENT_COUNT,
         	A.PASSWORD,
-        	(SELECT STATUS FROM IMB_ARTICLE_READER WHERE BOARD_ID = A.BOARD_ID AND ARTICLE_SEQ = A.SEQ AND USER_ID = #{signinUserId}) AS READ_STATUS
+        	(SELECT STATUS FROM IMB_ARTICLE_READER WHERE BOARD_ID = A.BOARD_ID AND ARTICLE_SEQ = A.SEQ AND USER_ID = #{signinUserId}) AS READ_STATUS,
+        	F.SEQ AS FILE_SEQ,
+        	F.FILE_PATH,
+        	F.FILE_NAME,
+        	F.FILE_SIZE
         FROM
         	IMB_ARTICLE AS A LEFT OUTER JOIN IMB_USER B ON A.WRITER_ID = B.ID LEFT OUTER JOIN IMB_BOARD_AUTH D ON D.BOARD_ID = A.BOARD_ID
+        	LEFT OUTER JOIN IMB_ARTICLE_FILE F ON A.BOARD_ID = F.BOARD_ID AND A.SEQ = F.ARTICLE_SEQ
         WHERE
         	(D.VIEW_DETAIL_LEVEL IS NULL OR D.VIEW_DETAIL_LEVEL &gt;= #{signinUserLevel})
         	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
        		AND A.BOARD_ID = #{boardId}
-       	    AND SEQ = #{seq}
+       	    AND A.SEQ = #{seq}
         	<if test="#{subject}">
 	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
 	        </if>

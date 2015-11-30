@@ -33,10 +33,7 @@ _immy.scanTypeHandler(_path.src + "/handler");
 _immy.scanModel(_path.src + "/vo");
 _immy.scanQuery(_path.resources + "/mybatis");
 
-_immy.executeQuery('articleFile', 'getArticleListWithFile', {}, function(result)
+_immy.executeQuery('article', 'getArticle', {boardId : '123', seq : 1}, function(result)
 {
-	for(var i=0; i<result.length; i++)
-	{
-		console.log(result[i]);
-	}
+	console.log("결과", result[0].fileList);
 });

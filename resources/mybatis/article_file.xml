@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="articleFile">
+    <resultMap type="ArticleFileVo" id="articleFileResult">
+        <result column="BOARD_ID" property="boardId" />
+        <result column="ARTICLE_SEQ" property="articleSeq" />
+        <result column="FILE_SEQ" property="seq" />
+        <result column="FILE_NAME" property="fileName" />
+    </resultMap>
+    
+    <select id="getArticleFileList" parameterType="ArticleFileVo" resultMap="articleFileResult">
+        SELECT
+        	BOARD_ID,
+        	ARTICLE_SEQ,
+        	SEQ,
+        	FILE_PATH,
+        	FILE_NAME,
+        	FILE_SIZE
+        FROM
+        	IMB_ARTICLE_FILE
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+    </select>
+    
+    <insert id="insertArticleFile" parameterType="ArticleFileVo">
+        INSERT IMB_ARTICLE_FILE
+        	(
+	        	BOARD_ID,
+	        	ARTICLE_SEQ,
+	        	FILE_PATH,
+	        	FILE_NAME,
+	        	FILE_SIZE
+        	)
+        VALUES
+        	(
+        		#{boardId},
+        		#{articleSeq},
+        		#{filePath},
+        		#{fileName},
+        		#{fileSize}
+        	)
+    </insert>
+    
+    <delete id="deleteArticleFile" parameterType="ArticleFileVo">
+        DELETE FROM
+        	IMB_ARTICLE_FILE
+        WHERE
+        		BOARD_ID = #{boardId}
+        	AND ARTICLE_SEQ = #{articleSeq}
+        	AND SEQ = #{seq}
+    </delete>
+</mapper>

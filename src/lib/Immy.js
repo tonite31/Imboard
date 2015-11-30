@@ -74,7 +74,7 @@ Immy.prototype.scanQuery = function(path)
 							var id = node.getAttribute("id");
 							var type = node.getAttribute("type");
 							
-							this.resultMap[namespace + "_" + id] = {type : type, map : this.parseResultMap(node)};
+							this.resultMap[namespace + "_" + id] = {type : type, map : this.parseResultMap(namespace, node)};
 						}
 						else
 						{
@@ -97,26 +97,68 @@ Immy.prototype.scanQuery = function(path)
 				}
 			}
 		}
+		
+		this.parseResultMapCollections(this.resultMap);
 	}
 };
 
-Immy.prototype.parseResultMap = function(node)
+Immy.prototype.parseResultMap = function(namespace, node)
 {
 	var result = {};
 	for(var i=0; i<node.childNodes.length; i++)
 	{
 		var child = node.childNodes[i];
-		if(child.nodeName == "result")
+		if(child.nodeName == "result" || child.nodeName == "id")
 		{
 			var column = child.getAttribute("column");
 			var property = child.getAttribute("property");
 			var typeHandler = child.getAttribute("typeHandler");
 			
-			result[column] = {property : property, typeHandler : typeHandler ? typeHandler : null};
+			result[column] = {property : property, typeHandler : typeHandler ? typeHandler : null, isKey : child.nodeName == "id"};
+		}
+		else if(child.nodeName == "collection")
+		{
+			var property = child.getAttribute("property");
+			var resultMap = child.getAttribute("resultMap");
+			
+			if(!result._collections)
+				result._collections = [];
+			
+			result._collections.push({property : property, mapId : namespace + "_" + resultMap});
 		}
 	}
 	
 	return result;
+};
+
+Immy.prototype.parseResultMapCollections = function(resultMap)
+{
+	//리절트맵 뽑아내는게 끝났기때문에 collection 바인딩 작업을 여기서 해주자. 쿼리 후 데이터 만들어줄때 반복을 최소화하기 위한 작업을 여기서 처리한다.
+	for(var key in resultMap)
+	{
+		var map = resultMap[key].map;
+		if(map._collections)
+		{
+			var temp = [];
+			for(var i=0; i<map._collections.length; i++)
+			{
+				var row = {};
+				var mapId = map._collections[i].mapId;
+				var subMap = resultMap[mapId];
+				if(subMap)
+				{
+					//일단 collection in collection은 없다고 치고.
+					delete subMap.map._collections;
+					subMap.map._property = map._collections[i].property;
+					temp.push(subMap.map);
+					//					this.parseResultMapCollections(subMap);
+				}
+			}
+			
+			if(temp.length > 0)
+				map._collections = temp;
+		}
+	}
 };
 
 Immy.prototype.parseQuery = function(node)
@@ -393,28 +435,107 @@ Immy.prototype.executeQuery = function(namespace, queryId, param, callback)
 				{
 					var model = self.modelMap[resultMap.type];
 					
+					var map = resultMap.map;
+					
 					var temp = [];
-					for(var i=0; i<result.length; i++)
+					var row = null;
+					while(row = result.shift())
 					{
 						var data = {};
-						for(var key in result[i])
+						
+						for(var key in row)
 						{
-							var value = result[i][key];
-							
-							if(resultMap.map[key])
+							var value = row[key];
+							var d = map[key];
+
+							if(map.hasOwnProperty(key))
 							{
-								if(resultMap.map[key].typeHandler)
-								{
-									value = self.typeHandlerMap[resultMap.map[key].typeHandler](value);
-								}
+								if(d.typeHandler)
+									value = self.typeHandlerMap[d.typeHandler](value);
 								
-								data[resultMap.map[key].property] = value;
+								if(d.isKey)
+								{
+									if(!data._pk)
+										data._pk = [];
+									
+									data._pk.push(d.property);
+								}
+									
+								data[d.property] = value;
+							}
+							else if(map._collections)
+							{
+								//없거나 콜렉션 안에 있거나.
+								for(var i=0; i<map._collections.length; i++)
+								{
+									if(map._collections[i].hasOwnProperty(key))
+									{
+										d = map._collections[i][key];
+										if(d.typeHandler)
+											value = self.typeHandlerMap[d.typeHandler](value);
+										
+										if(value)
+										{
+											if(!data[map._collections[i]._property])
+												data[map._collections[i]._property] = [];
+											
+											var arr = data[map._collections[i]._property];
+											var index = arr.length;
+											if(index == 0)
+												arr[index] = {};
+											else
+												index--;
+											
+											arr[index][key] = value;
+										}
+									}
+								}
 							}
 						}
 						
-						temp.push(data);
+						var merge = true;
+						if(map._collections && temp.length > 0)
+						{
+							var prev = temp[temp.length-1];
+							//이전데이터가 있고, primary key가 일치하는게 위에 또 있으면
+							if(data._pk)
+							{
+								for(var i=0; i<data._pk.length; i++)
+								{
+									if(prev[data._pk[i]] != data[data._pk[i]])
+									{
+										merge = false;
+										break;
+									}
+								}
+								
+								if(merge)
+								{
+									//콜렉션으로 지정되어있던애들만 머지.
+									for(var i=0; i<map._collections.length; i++)
+									{
+										prev[map._collections[i]._property] = prev[map._collections[i]._property].concat(data[map._collections[i]._property]);
+									}
+								}
+							}
+							else
+							{
+								merge = false;
+							}
+						}
+						else
+						{
+							merge = false;
+						}
+						
+						delete data._pk;
+						
+						if(!merge)
+						{
+							temp.push(data);
+						}
 					}
-					
+
 					result = temp;
 				}
 				else
