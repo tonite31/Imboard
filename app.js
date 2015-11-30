@@ -13,7 +13,8 @@ global._path =
 	resources : __dirname + "/resources",
 	lib : __dirname + "/src/lib",
 	log : __dirname + "/logs",
-	userdata : __dirname + "/userdata"
+	userdata : __dirname + "/userdata",
+	temp : __dirname + "/temp"
 };
 	
 global._multipart = require('connect-multiparty');
@@ -51,6 +52,9 @@ if(!fs.existsSync(_path.log))
 
 if(!fs.existsSync(_path.userdata))
 	fs.mkdirSync(_path.userdata, 0777);
+
+if(!fs.existsSync(_path.temp))
+	fs.mkdirSync(_path.temp, 0777);
 
 /**
  * global 객체 생성

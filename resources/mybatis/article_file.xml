@@ -6,6 +6,7 @@
         <result column="ARTICLE_SEQ" property="articleSeq" />
         <result column="FILE_SEQ" property="seq" />
         <result column="FILE_NAME" property="fileName" />
+        <result column="FILE_SIZE" property="fileSize" />
     </resultMap>
     
     <select id="getArticleFileList" parameterType="ArticleFileVo" resultMap="articleFileResult">

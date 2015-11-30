@@ -33,7 +33,19 @@ _immy.scanTypeHandler(_path.src + "/handler");
 _immy.scanModel(_path.src + "/vo");
 _immy.scanQuery(_path.resources + "/mybatis");
 
-_immy.executeQuery('article', 'getArticle', {boardId : '123', seq : 1}, function(result)
+var ArticleFileVo = require(_path.src + "/vo/ArticleFileVo.js");
+
+var vo = new ArticleFileVo();
+vo.boardId = "123";
+vo.articleSeq = 1;
+vo.filePath = "test";
+vo.fileName = "test";
+
+_immy.executeQuery('articleFile', 'insertArticleFile', vo, function(result)
 {
-	console.log("결과", result[0].fileList);
+	_immy.executeQuery('article', 'getArticle', {boardId : "123", seq : 1}, function(result)
+	{
+		console.log("하하 : ", result[0].fileList);
+	})
 });
+

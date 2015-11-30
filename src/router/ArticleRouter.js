@@ -5,9 +5,12 @@ var UserVo = require(_path.src + '/vo/UserVo.js');
 
 var ArticleReaderVo = require(_path.src + "/vo/ArticleReaderVo.js");
 
+var ArticleFileVo = require(_path.src + "/vo/ArticleFileVo.js");
+
 var UserDao = require(_path.src + "/dao/UserDao.js");
 
 var ArticleReaderDao = require(_path.src + "/dao/ArticleReaderDao.js");
+var ArticleFileDao = require(_path.src + "/dao/ArticleFileDao.js");
 
 var easyimg = require('easyimage');
 
@@ -600,6 +603,7 @@ module.exports.uploadFile =
 				{
 					try
 					{
+						var stats = fs.statSync(filepath);
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
 						fs.unlink(filepath, function(err, result)
@@ -609,6 +613,16 @@ module.exports.uploadFile =
 								_log.error(err);
 							}
 						});
+						
+						var articleFileVo = new ArticleFileVo();
+						articleFileVo.boardId = param.boardId;
+						articleFileVo.articleSeq = param.articleSeq;
+						articleFileVo.filePath = filepath;
+						articleFileVo.fileName = filename;
+						articleFileVo.fileSize = stats["size"];
+						
+						ArticleFileDao.insertArticleFile(articleFileVo);
+						
 						pathList.push("/resources/" + folder + "/" + filename);
 					}
 					catch(err)
@@ -678,6 +692,16 @@ module.exports.uploadFileToAWS =
 					{
 						uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
 						{
+							var stats = fs.statSync(filepath);
+							var articleFileVo = new ArticleFileVo();
+							articleFileVo.boardId = param.boardId;
+							articleFileVo.articleSeq = param.articleSeq;
+							articleFileVo.filePath = filepath;
+							articleFileVo.fileName = filename;
+							articleFileVo.fileSize = stats["size"];
+							
+							ArticleFileDao.insertArticleFile(articleFileVo);
+							
 							fs.unlink(file.path, function(err, result)
 							{
 								if(err)
@@ -711,6 +735,16 @@ module.exports.uploadFileToAWS =
 			{
 				param.callback = function(path)
 				{
+					var stats = fs.statSync(filepath);
+					var articleFileVo = new ArticleFileVo();
+					articleFileVo.boardId = param.boardId;
+					articleFileVo.articleSeq = param.articleSeq;
+					articleFileVo.filePath = filepath;
+					articleFileVo.fileName = filename;
+					articleFileVo.fileSize = stats["size"];
+					
+					ArticleFileDao.insertArticleFile(articleFileVo);
+					
 					fs.unlink(file.path, function(err, result)
 					{
 						if(err)
