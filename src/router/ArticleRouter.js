@@ -4,7 +4,6 @@ var ArticleVo = require(_path.src + '/vo/ArticleVo.js');
 var UserVo = require(_path.src + '/vo/UserVo.js');
 
 var ArticleReaderVo = require(_path.src + "/vo/ArticleReaderVo.js");
-
 var ArticleFileVo = require(_path.src + "/vo/ArticleFileVo.js");
 
 var UserDao = require(_path.src + "/dao/UserDao.js");
@@ -213,7 +212,36 @@ module.exports.insertArticle =
 
 			ArticleDao.insertArticleWithSeq(vo, function(response)
 			{
-				res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+				var fileList = param.fileList;
+				if(fileList)
+				{
+					var forEach = require('async-foreach').forEach;
+					forEach(fileList, function(file, index)
+					{
+						var done = this.async();
+						
+						var filePath = file.filePath;
+						var stats = fs.statSync(filePath.replace("/resources", _path.userdata));
+						var articleFileVo = new ArticleFileVo();
+						articleFileVo.boardId = vo.boardId;
+						articleFileVo.articleSeq = vo.seq;
+						articleFileVo.filePath = filePath;
+						articleFileVo.fileName = file.fileName;
+						articleFileVo.fileSize = stats["size"];
+						
+						ArticleFileDao.insertArticleFile(articleFileVo, function()
+						{
+							done();
+						});
+					},
+					function(){
+						res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+					});
+				}
+				else
+				{
+					res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+				}
 			});
 		});
 	}
@@ -237,10 +265,43 @@ function updateArticle(req, res)
 			{
 				ArticleDao.updateArticle(vo, function(response)
 				{
-					if(response == 1)
-						res.end(JSON.stringify({code : _code.SUCCESS, data : {seq : param.seq}, msg : "SUCCESS"}));
+					var fileList = param.fileList;
+					if(fileList)
+					{
+						var forEach = require('async-foreach').forEach;
+						forEach(fileList, function(file, index)
+						{
+							var done = this.async();
+							
+							var filePath = file.filePath;
+							var stats = fs.statSync(filePath.replace("/resources", _path.userdata));
+							var articleFileVo = new ArticleFileVo();
+							articleFileVo.boardId = vo.boardId;
+							articleFileVo.articleSeq = vo.seq;
+							articleFileVo.filePath = filePath;
+							articleFileVo.fileName = file.fileName;
+							articleFileVo.fileSize = stats["size"];
+							
+							ArticleFileDao.insertArticleFile(articleFileVo, function()
+							{
+								done();
+							});
+						},
+						function()
+						{
+							if(response == 1)
+								res.end(JSON.stringify({code : _code.SUCCESS, data : {seq : param.seq}, msg : "SUCCESS"}));
+							else
+								res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+						});
+					}
 					else
-						res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+					{
+						if(response == 1)
+							res.end(JSON.stringify({code : _code.SUCCESS, data : {seq : param.seq}, msg : "SUCCESS"}));
+						else
+							res.end(JSON.stringify({code : _code.ERROR, message : "FAIL", data : response}));
+					}
 				});
 			}
 			else
@@ -300,7 +361,36 @@ module.exports.writeArticle =
 
 				ArticleDao.insertArticleWithSeq(vo, function(response)
 				{
-					res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+					var fileList = param.fileList;
+					if(fileList)
+					{
+						var forEach = require('async-foreach').forEach;
+						forEach(fileList, function(file, index)
+						{
+							var done = this.async();
+							
+							var filePath = file.filePath;
+							var stats = fs.statSync(filePath.replace("/resources", _path.userdata));
+							var articleFileVo = new ArticleFileVo();
+							articleFileVo.boardId = vo.boardId;
+							articleFileVo.articleSeq = vo.seq;
+							articleFileVo.filePath = filePath;
+							articleFileVo.fileName = file.fileName;
+							articleFileVo.fileSize = stats["size"];
+							
+							ArticleFileDao.insertArticleFile(articleFileVo, function()
+							{
+								done();
+							});
+						},
+						function(){
+							res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+						});
+					}
+					else
+					{
+						res.end(JSON.stringify({code : _code.SUCCESS, message : "SUCCESS", data:{seq : seq}}));
+					}
 				});
 			});
 		}
@@ -603,7 +693,6 @@ module.exports.uploadFile =
 				{
 					try
 					{
-						var stats = fs.statSync(filepath);
 						var data = fs.readFileSync(filepath);
 						fs.writeFileSync(path + filename, data);
 						fs.unlink(filepath, function(err, result)
@@ -613,16 +702,6 @@ module.exports.uploadFile =
 								_log.error(err);
 							}
 						});
-						
-						var articleFileVo = new ArticleFileVo();
-						articleFileVo.boardId = param.boardId;
-						articleFileVo.articleSeq = param.articleSeq;
-						articleFileVo.filePath = filepath;
-						articleFileVo.fileName = filename;
-						articleFileVo.fileSize = stats["size"];
-						
-						ArticleFileDao.insertArticleFile(articleFileVo);
-						
 						pathList.push("/resources/" + folder + "/" + filename);
 					}
 					catch(err)
@@ -692,16 +771,6 @@ module.exports.uploadFileToAWS =
 					{
 						uploadFileToS3({filePath : file.path, fileName : file.originalFilename, folder : folder, callback : function(path)
 						{
-							var stats = fs.statSync(filepath);
-							var articleFileVo = new ArticleFileVo();
-							articleFileVo.boardId = param.boardId;
-							articleFileVo.articleSeq = param.articleSeq;
-							articleFileVo.filePath = filepath;
-							articleFileVo.fileName = filename;
-							articleFileVo.fileSize = stats["size"];
-							
-							ArticleFileDao.insertArticleFile(articleFileVo);
-							
 							fs.unlink(file.path, function(err, result)
 							{
 								if(err)
@@ -735,16 +804,6 @@ module.exports.uploadFileToAWS =
 			{
 				param.callback = function(path)
 				{
-					var stats = fs.statSync(filepath);
-					var articleFileVo = new ArticleFileVo();
-					articleFileVo.boardId = param.boardId;
-					articleFileVo.articleSeq = param.articleSeq;
-					articleFileVo.filePath = filepath;
-					articleFileVo.fileName = filename;
-					articleFileVo.fileSize = stats["size"];
-					
-					ArticleFileDao.insertArticleFile(articleFileVo);
-					
 					fs.unlink(file.path, function(err, result)
 					{
 						if(err)
