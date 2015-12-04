@@ -389,8 +389,8 @@
         		#{content},
         		#{writerId},
         		<choose>
-        			<when test="#{writerId}">(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</when>
-        			<otherwise>#{writerName},</otherwise>
+        			<when test="#{writerName}">#{writerName},</when>
+        			<otherwise>(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</otherwise>
         		</choose>
         		<choose>
         		    <when test="#{groupId}">
@@ -419,8 +419,8 @@
         		#{content},
         		#{writerId},
         		<choose>
-        			<when test="#{writerId}">(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</when>
-        			<otherwise>#{writerName},</otherwise>
+        			<when test="#{writerName}">#{writerName},</when>
+        			<otherwise>(SELECT NAME FROM IMB_USER WHERE ID = #{writerId}),</otherwise>
         		</choose>
         		<choose>
         		    <when test="#{groupId}">
