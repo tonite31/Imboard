@@ -133,7 +133,7 @@ Immy.prototype.parseResultMap = function(namespace, node)
 
 Immy.prototype.parseResultMapCollections = function(resultMap)
 {
-	//리절트맵 뽑아내는게 끝났기때문에 collection 바인딩 작업을 여기서 해주자. 쿼리 후 데이터 만들어줄때 반복을 최소화하기 위한 작업을 여기서 처리한다.
+	//由ъ젅�몃㏊ 戮묒븘�대뒗寃� �앸궗湲곕븣臾몄뿉 collection 諛붿씤�� �묒뾽�� �ш린�� �댁＜��. 荑쇰━ �� �곗씠�� 留뚮뱾�댁쨪�� 諛섎났�� 理쒖냼�뷀븯湲� �꾪븳 �묒뾽�� �ш린�� 泥섎━�쒕떎.
 	for(var key in resultMap)
 	{
 		var map = resultMap[key].map;
@@ -147,7 +147,7 @@ Immy.prototype.parseResultMapCollections = function(resultMap)
 				var subMap = resultMap[mapId];
 				if(subMap)
 				{
-					//일단 collection in collection은 없다고 치고.
+					//�쇰떒 collection in collection�� �녿떎怨� 移섍퀬.
 					delete subMap.map._collections;
 					subMap.map._property = map._collections[i].property;
 					temp.push(subMap.map);
@@ -168,7 +168,7 @@ Immy.prototype.parseQuery = function(node)
 	{
 		var child = node.childNodes[i];
 		
-		//일단 if와 choose만
+		//�쇰떒 if�� choose留�
 		switch(child.nodeName)
 		{
 		case "if" :
@@ -216,7 +216,7 @@ Immy.prototype.parseChoose = function(node)
 		}
 		else if(child.nodeName == "otherwise")
 		{
-			result.otherwise = child.firstChild.data;
+			result.otherwise = {children : this.parseQuery(child)}
 		}
 	}
 	
@@ -283,7 +283,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 				
 				if(queryInfo.parameterType)
 				{
-					//만약 파라미터 타입이 지정되어있고 모델이라면 모델에 있는애들만 인서트 해야된다.
+					//留뚯빟 �뚮씪誘명꽣 ���낆씠 吏��뺣릺�댁엳怨� 紐⑤뜽�대씪硫� 紐⑤뜽�� �덈뒗�좊뱾留� �몄꽌�� �댁빞�쒕떎.
 				}
 				
 				params.push(value);
@@ -359,7 +359,9 @@ Immy.prototype.mergeQuery = function(info, param)
 				}
 				
 				if(!isWhen)
-					result += info[i].otherwise;
+				{
+					result += this.mergeQuery(info[i].otherwise.children, param);
+				}
 			}
 		}
 	}
@@ -465,7 +467,7 @@ Immy.prototype.executeQuery = function(namespace, queryId, param, callback)
 							}
 							else if(map._collections)
 							{
-								//없거나 콜렉션 안에 있거나.
+								//�녾굅�� 肄쒕젆�� �덉뿉 �덇굅��.
 								for(var i=0; i<map._collections.length; i++)
 								{
 									if(map._collections[i].hasOwnProperty(key))
@@ -497,7 +499,7 @@ Immy.prototype.executeQuery = function(namespace, queryId, param, callback)
 						if(map._collections && temp.length > 0)
 						{
 							var prev = temp[temp.length-1];
-							//이전데이터가 있고, primary key가 일치하는게 위에 또 있으면
+							//�댁쟾�곗씠�곌� �덇퀬, primary key媛� �쇱튂�섎뒗寃� �꾩뿉 �� �덉쑝硫�
 							if(data._pk)
 							{
 								for(var i=0; i<data._pk.length; i++)
@@ -511,7 +513,7 @@ Immy.prototype.executeQuery = function(namespace, queryId, param, callback)
 								
 								if(merge)
 								{
-									//콜렉션으로 지정되어있던애들만 머지.
+									//肄쒕젆�섏쑝濡� 吏��뺣릺�댁엳�섏븷�ㅻ쭔 癒몄�.
 									for(var i=0; i<map._collections.length; i++)
 									{
 										prev[map._collections[i]._property] = prev[map._collections[i]._property].concat(data[map._collections[i]._property]);

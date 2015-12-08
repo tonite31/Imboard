@@ -241,12 +241,19 @@
 	        <if test="#{boardId}">
 	        	AND A.BOARD_ID = #{boardId}
 	        </if>
-	        <if test="#{subject}">
-	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
-	        </if>
-	        <if test="#{content}">
-	            AND CONTENT LIKE CONCAT('%',#{content},'%')
-	        </if>
+	        <choose>
+	            <when test="#{subject} and #{content}">
+	                AND (SUBJECT LIKE CONCAT('%',#{subject},'%') OR CONTENT LIKE CONCAT('%',#{content},'%'))
+	            </when>
+	            <otherwise>
+	                <if test="#{subject}">
+			            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
+			        </if>
+			        <if test="#{content}">
+			            AND CONTENT LIKE CONCAT('%',#{content},'%')
+			        </if>
+	            </otherwise>
+	        </choose>
 	        <if test="#{writerId}">
 	            AND WRITER_ID = #{writerId}
 	        </if>
@@ -333,12 +340,19 @@
         	AND (A.STATUS = 1 <if test="!#{checkSigninUser} or #{checkSigninUser} == 'Y'">OR A.WRITER_ID = #{signinUserId}</if> OR #{signinUserLevel} &lt; 0)
        		AND A.BOARD_ID = #{boardId}
        	    AND A.SEQ = #{seq}
-        	<if test="#{subject}">
-	            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
-	        </if>
-	        <if test="#{content}">
-	            AND CONTENT LIKE CONCAT('%',#{content},'%')
-	        </if>
+        	<choose>
+	            <when test="#{subject} and #{content}">
+	                AND (SUBJECT LIKE CONCAT('%',#{subject},'%') OR CONTENT LIKE CONCAT('%',#{content},'%'))
+	            </when>
+	            <otherwise>
+	                <if test="#{subject}">
+			            AND SUBJECT LIKE CONCAT('%',#{subject},'%')
+			        </if>
+			        <if test="#{content}">
+			            AND CONTENT LIKE CONCAT('%',#{content},'%')
+			        </if>
+	            </otherwise>
+	        </choose>
 	        <if test="#{writerId}">
 	            AND WRITER_ID = #{writerId}
 	        </if>
