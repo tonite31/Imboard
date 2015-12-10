@@ -433,7 +433,23 @@
     			var inputList = $(context).find("*[name]");
     			for(var i=0; i<inputList.length; i++)
     			{
-    				var result = inputList[i].checkValidity();
+    				var result = true;
+    				if(inputList[i].checkValidity)
+    				{
+    					result = inputList[i].checkValidity();
+    				}
+    				else
+    				{
+    					if(inputList[i].attributes.hasOwnProperty("required"))
+    					{
+    						result = inputList[i].value ? true : false;
+    					}
+    					else if(inputList[i].attributes.hasOwnProperty("pattern"))
+    					{
+    						result = inputList[i].value.match(new RegExp(inputList[i].getAttribute("pattern"), "gi")) ? true : false;
+    					}
+    				}
+    				
     				if(!result)
     				{
     					$(inputList[i]).makeValidationMessage($(inputList[i]).attr("data-validation-message"));
