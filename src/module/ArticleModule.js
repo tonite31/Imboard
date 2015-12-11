@@ -197,15 +197,7 @@ module.exports.articleComponent = function($, el, param, req, next)
 					pageList.push({pageNumber : i, href : "?piece=" + req.query.piece + "&boardId=" + data.boardId + "&pageIndex=" + i});
 				}
 
-				$(el).find("*[data-parts='pagination']").each(function()
-				{
-					$(this).removeAttr("data-parts");
-
-					var template = that.getTemplate($, this);
-					$(this).html(template({pageList : pageList, pageIndex : parseInt(pageIndex), maxPage : maxPage}));
-				});
-
-				cb();
+				cb(null, pageList, startPage, maxPage);
 			});
 
 //				var totalCount = $.api.article.getArticleListCount(data);
@@ -216,7 +208,7 @@ module.exports.articleComponent = function($, el, param, req, next)
 		}
 	}
 
-	var setArticleList = function(cb)
+	var setArticleList = function(pageList, startPage, maxPage, cb)
 	{
 		data.searchData.cpp = cpp;
 		data.searchData.pageIndex = pageIndex;
@@ -289,6 +281,17 @@ module.exports.articleComponent = function($, el, param, req, next)
 					var template = that.getTemplate($, this);
 					$(this).html(template({articleList : list}));
 				});
+				
+				if(pageList)
+				{
+					$(el).find("*[data-parts='pagination']").each(function()
+					{
+						$(this).removeAttr("data-parts");
+
+						var template = that.getTemplate($, this);
+						$(this).html(template({pageList : pageList, pageIndex : parseInt(pageIndex), maxPage : maxPage}));
+					});
+				}
 			}
 
 			next();
