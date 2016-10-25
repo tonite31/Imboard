@@ -1,0 +1,54 @@
+.background
+{
+	background-color: #f7f7f7;
+	
+	padding: 20px 51px;
+}
+
+.teacherBackground
+{
+	width: 100%;
+	clear: both;
+	display: table;
+	margin-bottom: 40px;
+	background-color: white;
+	padding: 20px 0;
+}
+
+.teacherBackground img
+{
+	width: 100%;
+}
+
+.teacherName
+{
+	font-size: 1.5em;
+	-webkit-margin-before: 0.83em;
+    -webkit-margin-after: 0.83em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+	color: white;
+    margin: 0;
+    padding: 10px;
+    background-color: black;
+    margin-bottom: 15px;
+    width:50%;
+}
+
+.teacherName a
+{
+	color:white;
+	cursor: pointer;
+	margin:0 5px;
+}
+
+.teacherFunction
+{
+	position: absolute; top: 14px; right: 14px; font-size:14px; font-weight:normal;
+}
+
+.teacherFunction a
+{
+	cursor: pointer;
+}

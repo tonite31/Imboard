@@ -1,0 +1,96 @@
+<script id="qna-list" type="text/x-handlebars-template">
+{{#if articleList}}
+{{#each articleList}}
+<tr{{#equals isNotice "Y"}} class="notice"{{/equals}}>
+	<td align="center">
+		{{#equals isNotice "Y"}}
+			<span>FAQ</span>
+		{{/equals}}
+		{{#notequals isNotice "Y"}}
+			{{seq}}
+		{{/notequals}}
+	</td>
+	<td>
+		{{#equals isNotice "Y"}}
+			<a href="?body=viewArticle&boardId=qna&seq={{seq}}" {{#equals isNotice "Y"}}style="font-weight:bold;"{{/equals}}>{{subject}}</a>
+		{{/equals}}
+		{{#notequals isNotice "Y"}}
+			<a href="?body=viewQna&seq={{seq}}" {{#equals isNotice "Y"}}style="font-weight:bold;"{{/equals}}>{{subject}}</a>
+		{{/notequals}}
+		{{#notequals isNotice "Y"}}
+		{{#sign commentCount ">" 0}}
+		<span class="answered">[답변]</span>
+		{{/sign}}
+		{{#sign commentCount "<=" 0}}
+		<span>[미답변]</span>
+		{{/sign}}
+		{{/notequals}}
+	</td>
+	<td align="center">{{writerName}}</td>
+	<td align="center">{{shortDate registerDate}}</td>
+	<td align="center">{{hit}}</td>
+</tr>
+{{/each}}
+{{else}}
+<tr>
+	<td align="center" colspan="5">등록된 수강문의가 없습니다</td>
+</tr>
+{{/if}}
+</script>
+
+<script id="qna-pagination" type="text/x-handlebars-template">
+{{#sign pageIndex ">" "1"}}
+<a style="font-size:12px;" href="?body=qna&pageIndex={{math pageIndex "-" 1}}">이전</a>
+{{/sign}}
+{{#if pageList}}
+{{#each pageList}}
+<a class="number {{#equals ../pageIndex pageNumber}}selected{{/equals}}" href="?body=qna&pageIndex={{pageNumber}}">{{pageNumber}}</a>
+{{/each}}
+{{/if}}
+{{#if maxPage}}
+{{#notequals pageIndex maxPage}}
+<a href="?body=qna&pageIndex={{math pageIndex "+" 1}}">다음</a>
+{{/notequals}}
+{{/if}}
+</script>
+
+<script id="qnaButtonTemplate" type="text/x-handlebars-template">
+{{#if user}}
+{{#sign user.level "<" 0}}
+<a href="?body=writeArticle&boardId=qna" class="btn btn-default">자주묻는질문 작성하기</a>
+{{/sign}}
+{{/if}}
+<a href="?body=writeQna" class="btn btn-default">문의하기</a>
+</script>
+
+<div class="container">
+	<div>
+		<img src="#{path.root}/images/qna_up.png"/>
+	</div>
+	<div>
+		<img src="#{path.root}/images/qna_bottom.png"/>
+	</div>
+	<div style="text-align: right; padding:15px 0;" data-bind="signedUser" data-template-id="qnaButtonTemplate"></div>
+	<div data-bind="articleComponent" data-param='{"boardId" : "qna", "cpp" : 10}'>
+		<table class="qnaTable">
+			<colgroup>
+				<col style="width: 10%;"/>
+				<col style="width: 50%;"/>
+				<col style="width: 15%;"/>
+				<col style="width: 15%;"/>
+				<col style="width: 10%;"/>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회</th>
+				</tr>
+			</thead>
+			<tbody data-parts="body" data-template-id="qna-list"></tbody>
+		</table>
+		<div class="pagination" data-parts="pagination" data-template-id="qna-pagination"></div>
+	</div>
+</div>

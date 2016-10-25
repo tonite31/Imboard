@@ -1,0 +1,21 @@
+<div class="container">
+	<form id="form" data-component="form">
+		<p>
+			<input type="text" id="writerName" class="textinput" name="writerName" placeholder="이름을 입력해주세요" style="width:300px;" required="required" autofocus="autofocus" />
+		</p>
+		<p>
+			<input type="text" id="subject" class="textinput" name="subject" placeholder="제목을 입력해주세요" style="width:100%;" required="required" />
+		</p>
+		<p>
+			<textarea id="ckeditor"></textarea>
+		</p>
+		<p data-bind="signedUser">
+			{{#empty user}}
+			<input type="password" class="textinput" name="password" placeholder="비밀번호를 입력해주세요" style="width:300px;" required="required" pattern=".{4,20}" title="4글자 이상 20글자 이하로 입력해주세요" />
+			{{/empty}}
+		</p>
+		<p style="text-align: center;">
+			<input type="submit" class="btn btn-default" value="문의등록"/>
+		</p>
+	</form>
+</div>

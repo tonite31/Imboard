@@ -1,0 +1,27 @@
+<div class="container">
+	<form id="form" data-component="form" data-bind="article" data-param='{"boardId" : "#{query.boardId}", "seq" : "#{query.seq}"}'>
+		<p>
+			<input type="text" id="subject" class="textinput" name="subject" placeholder="제목을 입력해주세요" style="width:100%;" required="required" value="{{subject}}" autofocus="autofocus" />
+		</p>
+		<p>
+			{{#equals isNotice "Y"}}
+			<input type="checkbox" name="isNotice" id="isNotice" value="Y" checked="checked"/><span style="padding:0 5px;">공지로지정</span>
+			{{else}}
+			<input type="checkbox" name="isNotice" id="isNotice" value="Y"/><span style="padding:0 5px;">공지로지정</span>
+			{{/equals}}
+		</p>
+		<p>
+			<button id="uploadImage" data-component="fileUploader" type="button" class="btn btn-default">이미지</button>
+			<button id="uploadYoutube" type="button" class="btn btn-default">유투브</button>
+		</p>
+		<p>
+			<textarea id="ckeditor" style="margin-top:10px; height: 600px;">{{{content}}}</textarea>
+		</p>
+		<p>
+			<input type="text" id="tag" class="textinput" name="tag" placeholder="태그를 입력해주세요" style="width: 30%;" value="{{tag}}"/>
+		</p>
+		<p style="text-align: center;">
+			<input type="submit" class="btn btn-default" id="submit" value="저장"/>
+		</p>
+	</form>
+</div>

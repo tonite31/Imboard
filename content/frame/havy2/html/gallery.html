@@ -1,0 +1,51 @@
+<script id="galleryListTemplate" type="text/x-handlebars-template">
+{{#if articleList}}
+<div class="thumbnailContainer">
+{{#each articleList}}
+<div class="col-xs-3">
+	<a href="?body=viewArticle&boardId=live&seq={{seq}}"><img src="{{thumbnailUrl}}"></a>
+	<p class="caption" style="bottom:25px; height: 20px; line-height:20px;">{{subject}}</p>
+	<p class="caption" style="height: 20px; line-height:20px; font-size:10px;">조회 {{hit}}</p>
+</div>
+{{/each}}
+</div>
+{{else}}
+<div style="text-align: center; padding: 10px 0;">등록된 게시물이 없습니다.</div>
+{{/if}}
+</script>
+
+<script id="galleryPaginationTemplate" type="text/x-handlebars-template">
+{{#sign pageIndex ">" "1"}}
+<a style="font-size:12px;" href="?body=gallery&boardId=#{query.boardId}&pageIndex={{math pageIndex "-" 1}}">이전</a>
+{{/sign}}
+{{#if pageList}}
+{{#each pageList}}
+<a class="number {{#equals ../pageIndex pageNumber}}selected{{/equals}}" href="?body=gallery&boardId=#{query.boardId}&pageIndex={{pageNumber}}">{{pageNumber}}</a>
+{{/each}}
+{{/if}}
+{{#if maxPage}}
+{{#notequals pageIndex maxPage}}
+<a href="?body=gallery&boardId=#{query.boardId}&pageIndex={{math pageIndex "+" 1}}">다음</a>
+{{/notequals}}
+{{/if}}
+</script>
+
+<script id="writeTemplate" type="text/x-handlebars-template">
+{{#sign user.level "<" 0}}
+<a href="?body=writeArticle&prevBody=gallery&boardId=#{query.boardId}" class="btn btn-default">글쓰기</a>
+{{/sign}}
+</script>
+
+<div class="container">
+	<div style="position:relative; height: 40px;">
+		<div style="text-align: right; position:absolute; right:0;" data-bind="signedUser" data-template-id="writeTemplate"></div>
+	</div>
+	<div data-bind="template">
+		{{#test "'#{query.boardId}' == 'live' || '#{query.boardId}' == 'photo'"}}
+		<div data-bind="articleComponent" data-param='{"boardId" : "#{query.boardId}", "cpp" : 16}' style="margin-bottom: 40px;">
+			<div data-parts="body" data-template-id="galleryListTemplate" style="display:table; width: 100%;"></div>
+			<div class="pagination" data-parts="pagination" data-template-id="galleryPaginationTemplate" style="text-align: center; clear:both; margin-top: 20px;"></div>
+		</div>
+		{{/test}}
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<script id="teacherMovieTemplate" type="text/x-handlebars-template" data-precompile="true">
+{{#if articleList}}
+{{#each articleList}}
+	<div class="col-xs-4">
+		<img src="{{thumbnailUrl}}" alt="...">
+		<p class="caption">{{subject}}</p>
+	</div>
+{{/each}}
+{{/if}}
+</script>
+
+<script id="teacherTemplate" type="text/x-handlebars-template">
+{{#if articleList}}
+{{#each articleList}}
+<div class="teacherBackground">
+	<div class="col-xs-4">
+		<img src="{{thumbnailUrl}}"/>
+	</div>
+	<div class="col-xs-8" style="position: relative;">
+		<p class="teacherName">
+			{{subject}}
+		</p>
+		<div class="teacherProfile">{{{content}}}</div>
+		<div class="thumbnailContainer" data-bind="articleList" data-param='{"boardId" : "live", "searchData" : {"tag" : "(강사){{subject}}", "startIndex" : 0, "endIndex" : 3}}' data-template-id="teacherMovieTemplate"></div>
+		{{#sign "#{user.level}" "<" 0}}
+		<span class="teacherFunction">
+			<a href="?body=registerTeacher&seq={{seq}}">수정</a>
+			<a data-seq="{{seq}}">삭제</a>
+		<span>
+		{{/sign}}
+	</div>
+</div>
+{{/each}}
+{{/if}}
+</script>
+
+<div class="container background" style="text-align: center;">
+	<img src="#{path.root}/images/teacher_main.png"/>
+	<img src="#{path.root}/images/teacher_about.png"/>
+</div>
+<p style="text-align: center; margin:0;" data-bind="signedUser">
+	{{#sign user.level "lt" 0}}
+	<a style="margin: 15px 0;" href="?body=registerTeacher" class="btn btn-default">강사등록</a>
+	{{/sign}}
+</p>
+<div class="container background" data-bind="articleList" data-param='{"boardId" : "teacher", "searchData" : {"withContent" : "true"}}' data-template-id="teacherTemplate"></div>

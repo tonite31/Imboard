@@ -1,5 +1,5 @@
 {
-    "frame": "sample",
+    "frame": "havy2",
     "server": {
         "port": 3001
     },
@@ -19,9 +19,9 @@
     },
     "jdbc": {
         "host": "localhost",
-        "user": "user",
-        "password": "password",
-        "database": "database",
+        "user": "imboard",
+        "password": "imboard",
+        "database": "imboard",
         "port": 3306,
         "typeCast": true,
         "multipleStatements": true

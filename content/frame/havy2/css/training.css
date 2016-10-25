@@ -1,0 +1,27 @@
+.article
+{
+	padding: 20px 5px;
+	position:relative;
+	overflow:hidden;
+	margin-bottom:50px;
+}
+
+.subject-area
+{
+	position: relative;
+}
+
+.subject-area h3
+{
+	border-bottom: 1px dashed #ccc;
+    padding-bottom: 10px;
+}
+
+.subject-area h3 small
+{
+	color: #333;
+    font-size: 12px;
+    font-weight: normal;
+    border-left: 1px dotted #ccc;
+    padding-left: 10px;
+}

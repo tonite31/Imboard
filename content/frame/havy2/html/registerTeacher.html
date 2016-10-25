@@ -1,0 +1,21 @@
+<form class="container" data-component="form" id="registerTeacherForm" data-bind="article" data-param='{"boardId" : "teacher", "seq" : "#{query.seq}"}' style="margin: 20px auto;">
+	<div class="col-xs-4">
+		<div data-component="fileUploader" id="imageUploader" style="width: 100%; min-height: 300px; border: 1px solid #ccc;">
+			{{#if thumbnailUrl}}
+				<img src="{{thumbnailUrl}}" style="width: 100%;"/>
+			{{/if}}
+		</div>
+		<div style="margin-top: 10px; text-align: center;">
+			<button type="button" class="btn btn-default" id="uploadImage">이미지 업로드</button>
+		</div>
+	</div>
+	<div class="col-xs-8">
+		<p><input type="text" class="textinput" name="subject" placeholder="이름" required="required" value="{{subject}}"/></p>
+		<p>
+			<textarea name="editor" id="editor">{{{content}}}</textarea>
+		</p>
+		<p style="text-align: center; clear:both; padding: 20px 0;">
+			<input type="submit" class="btn btn-default" value="저장"/>
+		</p>
+	</div>
+</form>

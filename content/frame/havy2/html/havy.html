@@ -1,0 +1,43 @@
+<style>
+.title-toggle
+{
+	position: absolute;
+	top:0; left: 0;
+	width: 200px;
+	height: 100%;
+}
+
+.title
+{
+	position: absolute;
+	top: 0; left: 200px;
+	right: 0;
+	height: 100%;
+}
+</style>
+
+
+<header style="position: fixed; top: 0; left: 0; right: 0; z-index: 1;">
+	<img src="#{path.root}/images/title1.png" style="width: 100%;" />
+	<a class="title-toggle" href="?body=a"></a>
+	<a class="title" href="?body=havy"></a>
+</header>
+<div style="position: fxied; top: 200px; left: 0; right: 0; bottom: 157px; overflow: auto;">
+	<div>
+		<img src="#{path.root}/images/main2.png" style="width: 100%;" />
+	</div>
+	<div style="height: 80px; line-height: 80px; text-align: center; background-color: #f6f1ea;">
+		<img src="#{path.root}/images/main-slide-button-selected.png" style="padding: 0 5px;"/>
+		<img src="#{path.root}/images/main-slide-button.png" style="padding: 0 5px;"/>
+		<img src="#{path.root}/images/main-slide-button.png" style="padding: 0 5px;"/>
+		<img src="#{path.root}/images/main-slide-button.png" style="padding: 0 5px;"/>
+	</div>
+	<div>
+		<img src="#{path.root}/images/main2-1.png" style="width: 100%;" />
+	</div>
+</div>
+<footer style="text-align: center; font-size: 0; position: fixed; bottom:0; left:0; right: 0; z-index: 1;">
+	<img src="#{path.root}/images/footer1.png" style="width: 33%;" />
+	<img src="#{path.root}/images/footer2.png" style="width: 33%;" />
+	<img src="#{path.root}/images/footer3.png" style="width: 33%;" />
+</footer>

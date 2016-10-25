@@ -1,0 +1,8 @@
+INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('teacher', '강사게시판', 0, '강사 게시판', 'Y', 'admin');
+INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('training', '트레이닝효과', 0, '트레이닝효과 게시판', 'Y', 'admin');
+INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('qna', '수강문의', 0, '수강문의 게시판', 'Y', 'admin');
+INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('live', '공연&녹음', 0, '공연&녹음 게시판', 'Y', 'admin');
+INSERT INTO IMB_BOARD (ID, NAME, PRIORITY, DESCRIPTION, USE_YN, CREATOR) VALUES ('photo', '방문객', 0, '방문객 게시판', 'Y', 'admin');
+
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('body=registerTeacher', -1, 'Y', 'Y');
+INSERT INTO IMB_URL_AUTH (URL, LEVEL, USE_YN, EDITABLE) VALUES ('body=writeArticle', -1, 'Y', 'Y');

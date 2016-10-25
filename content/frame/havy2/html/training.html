@@ -1,0 +1,53 @@
+<script id="writeButtonTemplate" type="text/x-handlebars-template">
+{{#if user}}
+{{#sign user.level "<" 0}}
+	<a href="?body=writeArticle&boardId=training" class="btn btn-default">글쓰기</a>
+{{/sign}}
+{{/if}}
+</script>
+
+<script id="trainingList" type="text/x-handlebars-template">
+{{#if articleList}}
+{{#each articleList}}
+<div>
+<div class="subject-area">
+	<h3>{{subject}} <small>{{shortDate registerDate}}</small></h3>
+	<div style="position: absolute; right:0; bottom:5px;">
+		{{#sign "#{user.level}" "<" 0}}
+		<a href="?body=writeArticle&boardId=training&seq={{seq}}&prevBody=training" class="btn btn-default">수정</a>
+		<button type="button" class="btn btn-default" data-delete="{{seq}}">삭제</button>
+		{{/sign}}
+	</div>
+</div>
+<div class="article" style="max-height: 430px;">{{{content}}}<button type="button" class="btn btn-default" style="position: absolute; right:5px; bottom:5px;" data-id="expandButton" data-state="collapsed">펼치기</button></div>
+</div>
+{{/each}}
+{{/if}}
+</script>
+
+<script id="trainingPagination" type="text/x-handlebars-template">
+{{#sign pageIndex ">" "1"}}
+<a style="font-size:12px;" href="?body=training&pageIndex={{math pageIndex "-" 1}}">이전</a>
+{{/sign}}
+{{#if pageList}}
+{{#each pageList}}
+<a class="number {{#equals ../pageIndex pageNumber}}selected{{/equals}}" href="?body=training&pageIndex={{pageNumber}}">{{pageNumber}}</a>
+{{/each}}
+{{/if}}
+{{#if maxPage}}
+{{#notequals pageIndex maxPage}}
+<a href="?body=training&pageIndex={{math pageIndex "+" 1}}">다음</a>
+{{/notequals}}
+{{/if}}
+</script>
+
+<div class="container">
+	<img src="#{path.root}/images/train.jpg" />
+
+	<div style="text-align: right; padding:15px 0;" data-bind="signedUser" data-template-id="writeButtonTemplate"></div>
+	
+	<div data-bind="articleComponent" data-param='{"boardId" : "training", "searchData" : {"withContent" : "true"}}'>
+		<div data-parts="body" data-template-id="trainingList"></div>
+		<div class="pagination" data-parts="pagination" data-template-id="trainingPagination" style="text-align: center; margin-bottom: 10px;"></div>
+	</div>
+</div>

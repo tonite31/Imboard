@@ -1,0 +1,47 @@
+<script id="viewQna" type="text/x-handlebars-template">
+{{#if user}}
+	<div data-bind="article" data-param='{"boardId" : "qna", "seq" : #{query.seq}}' data-template-id="qnaArticle"></div>
+	{{#sign user.level "<" 0}}
+	<div id="writeCommentArea" style="font-size:0;">
+		<textarea class="commentConent" placeholder="답변을 입력하세요" id="commentContent"></textarea>
+		<button type="button" class="btn btn-default writeCommentBtn" id="writeComment">작성</button>
+	</div>
+	{{/sign}}
+{{/if}}
+</script>
+
+<script id="qnaArticle" type="text/x-handlebars-template" data-precompile="true">
+<div class="subject-area">
+	<h3>{{subject}} <small>{{writerName}}</small></h3>
+	<span style="position: absolute; right:0; bottom:5px;">{{registerDate}}</span>
+</div>
+<div style="padding: 20px 5px;">{{{content}}}</div>
+<div style="text-align:right; padding: 10px 0;">
+	<a href="?body=writeQna&seq={{seq}}&prevBody=qna" class="btn btn-default">수정</a>
+	<button id="deleteQna" type="button" class="btn btn-default">삭제</button>
+	<a href="?body=qna" class="btn btn-default">목록</a>
+</div>
+<div class="answer-area" data-bind="commentList" data-param='{"boardId" : "qna", "articleSeq" : #{query.seq}, "searchData" : {"orderByGroupId" : "ASC"}}' data-template-id="qnaComment"></div>
+</script>
+
+<script id="qnaComment" type="text/x-handlebars-template" data-precompile="true">
+{{#if commentList}}
+{{#each commentList}}
+	<p style="position: relative;">{{{content}}}<span data-seq="{{seq}}" data-article-seq="{{articleSeq}}" class="deleteComment">삭제</span></p>
+{{/each}}
+{{/if}}
+</script>
+
+<div class="container" style="margin-bottom: 20px;">
+	<div id="passwordConfirmArea" style="width: 500px; text-align: center; margin: 200px auto;">
+		<form data-component="form">
+			<p>
+				<input type="password" name="password" class="textinput" placeholder="비밀번호를 입력하세요" style="width: 300px;" />
+			</p>
+			<p>
+				<input type="submit" value="확인" class="btn btn-default"/>
+			</p>
+		</form>
+	</div>
+	<div id="qnaArea" data-bind="signedUser" data-template-id="viewQna"></div>
+</div>
