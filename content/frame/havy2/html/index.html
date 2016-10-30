@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE"/>
+<meta name="viewport" content="width=device-width, user-scalable=no">
 
 <meta name="Title" content="하비실용음악학원">
 <meta name="author" content="Alprensia"/>
@@ -11,120 +12,12 @@
 <meta name="robots" content="INDEX, FOLLOW" />
 
 <title>하비실용음악학원</title>
-
-<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap-theme.min.css" />
-<link rel="stylesheet" type="text/css" href="#{path.root}/lib/bootstrap/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="#{path.module}/imboard/css/imboard-ui.css" />
-
-<script src="#{path.lib}/jquery/jquery-1.10.2.js"></script>
-<script src="#{path.root}/lib/bootstrap/js/bootstrap.min.js"></script>
-<script src="#{path.lib}/handlebars/handlebars-v1.3.0.js"></script>
-
-<script src="#{path.module}/imboard/js/imboard-ui.js"></script>
-<script src="#{path.module}/imboard/js/imboard-api.js"></script>
-<script src="#{path.module}/imboard/js/handlebars-helper.js"></script>
-
-<script src="#{path.root}/lib/ckeditor/ckeditor.js"></script>
-
-<script id="signedUserTemplate" type="text/x-handlebars-template">
-{{#if user}}
-	{{#sign user.level "<" 0}}
-	<li><a href="/settings"><img src="#{path.root}/images/menu_admin.png" style="width: 43px;" alt="관리자"/></a></li>
-	<li><a href="/signout.do"><img src="#{path.root}/images/menu_logout.png" style="width: 55px;" alt="로그아웃"/></a></li>
-	{{/sign}}
-{{else}}
-	<li><a href="/signin"><img src="#{path.root}/images/menu_login.png" style="width: 45px;" alt="로그인"/></a></li>
-{{/if}}
-</script>
 </head>
 
-<body>
-	<div data-fragment="body">
-		<img src="#{path.root}/images/main1-top.png" style="width: 100%;"/>
-		<a href="?body=havy">
-			<img src="#{path.root}/images/main1-bottom.png" style="width: 100%; margin-top: -2px;"/>
-		</a>
+<body style="padding: 0; margin: 0; overflow: hidden;">
+	<div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-color: #2b344c;">
+		<iframe src="/main.html" style="width: 100%; height: 100%; border: 0;"></iframe>
 	</div>
-<!-- 	<header> -->
-<!-- 		<div class="container"> -->
-<!-- 			<nav class="navbar navbar-default"> -->
-<!-- 				<div class="container-fluid"> -->
-<!-- 					<div class="navbar-header"> -->
-<!-- 				      	<a class="navbar-brand" href="/"><img src="#{path.root}/images/title_logo.png" alt="하비실용음악학원" style="width: 180px; opacity:1;"/></a> -->
-<!-- 				    </div> -->
-<!-- 				    <div class="collapse navbar-collapse" id="menuList"> -->
-<!-- 						<ul class="nav navbar-nav"> -->
-<!-- 						  	<li><a href="?body=teacher"><img src="#{path.root}/images/menu_teacher.png" style="width: 55px;" alt="강사소개"/></a></li> -->
-<!-- 						  	<li><a href="?body=curriculum"><img src="#{path.root}/images/menu_curriculumn.png" style="width: 57px;" alt="교육과정"/></a></li> -->
-<!-- 						  	<li><a href="?body=training"><img src="#{path.root}/images/menu_training.png" style="width: 85px;" alt="트레이닝 효과"/></a></li> -->
-<!-- 						  	<li><a href="?body=qna"><img src="#{path.root}/images/menu_qna.png" style="width: 55px;" alt="수강문의"/></a></li> -->
-<!-- 						  	<li><a href="?body=gallery&boardId=live"><img src="#{path.root}/images/menu_live.png" style="width: 65px;" alt="공연&녹음"/></a></li> -->
-<!-- 						  	<li><a href="?body=gallery&boardId=photo"><img src="#{path.root}/images/menu_photo.png" style="width: 43px;" alt="방문객"/></a></li> -->
-<!-- 						  	<li><a target="_blank" href="http://map.naver.com/?query=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EB%85%BC%ED%98%84%EB%A1%9C102%EA%B8%B8%2012"><img src="#{path.root}/images/menu_map.png" style="width: 55px;" alt="오시는길"/></a></li> -->
-<!-- 						</ul> -->
-<!-- 						<ul class="nav navbar-nav navbar-right" data-bind="signedUser" data-template-id="signedUserTemplate"></ul> -->
-<!-- 				    </div> -->
-<!-- 				</div> -->
-<!-- 			</nav> -->
-<!-- 		</div> -->
-<!-- 	</header> -->
-<!-- 	<div data-fragment="body"> -->
-<!-- 		<div class="container"> -->
-<!-- 			<img src="#{path.root}/images/main.png" alt="메인이미지" style="width: 100%;"/> -->
-<!-- 		</div> -->
-<!-- 		<div class="container" style="margin: 10px auto 20px auto; border-bottom: 1px dotted #dedede; padding-bottom: 15px;"> -->
-<!-- 			<a class="col-xs-4"><img src="#{path.root}/images/link_curriculumn.png" alt="커리큘럼 링크 이미지" style="width: 100%;"/></a> -->
-<!-- 			<a class="col-xs-4"><img src="#{path.root}/images/link_before_after.png" alt="트레이닝효과 링크 이미지" style="width: 100%;"/></a> -->
-<!-- 			<a class="col-xs-4"><img src="#{path.root}/images/link_teacher.png" alt="강사소개 링크 이미지" style="width: 100%;"/></a> -->
-<!-- 		</div> -->
-<!-- 		<div class="container" style="border-bottom: 1px dotted #dedede; padding-bottom: 15px;"> -->
-<!-- 			<div class="col-xs-3"> -->
-<!-- 				<img src="#{path.root}/images/call.png" alt="문의전화번호 이미지" style="width: 100%;"/> -->
-<!-- 			</div> -->
-<!-- 			<div class="col-xs-5" style="text-align:center;"> -->
-<!-- 				<iframe width="360" height="259" src="https://www.youtube.com/embed/tney4R2Tkcs" frameborder="0" allowfullscreen></iframe> -->
-<!-- 			</div> -->
-<!-- 			<div class="col-xs-4 faqArea"> -->
-<!-- 				<p class="h4"><a href="?body=qna">자주묻는질문</a><a href="?body=qna" class="more">더보기</a></p> -->
-<!-- 				<div data-bind="articleList" data-param='{"boardId" : "qna", "searchData" : {"isNotice" : "Y"}}'> -->
-<!-- 					{{#if articleList}} -->
-<!-- 					{{#each articleList}} -->
-<!-- 						<p class="faq"><a href="?body=viewArticle&boardId=qna&seq={{seq}}">{{subject}}</a></p> -->
-<!-- 					{{/each}} -->
-<!-- 					{{/if}} -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class="container" style="margin: 15px auto;"> -->
-<!-- 			<p class="h3"><a href="?body=gallery&boardId=live" style="color:#444;">공연&amp;녹음</a></p> -->
-<!-- 			<div class="thumbnailContainer" data-bind="articleList" data-param='{"boardId" : "live", "searchData" : {"startIndex" : 0, "endIndex" : 8}}'> -->
-<!-- 			{{#if articleList}} -->
-<!-- 			{{#each articleList}} -->
-<!-- 				<div class="col-xs-3"> -->
-<!-- 					<a href="?body=viewArticle&boardId={{boardId}}&seq={{seq}}"><img src="{{thumbnailUrl}}"></a> -->
-<!-- 					<p class="caption">{{subject}}</p> -->
-<!-- 				</div> -->
-<!-- 			{{/each}} -->
-<!-- 			{{/if}} -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class="container" style="margin: 30px auto;"> -->
-<!-- 			<p class="h3"><a href="?body=gallery&boardId=photo" style="color:#444;">방문객</a></p> -->
-<!-- 			<div class="thumbnailContainer" data-bind="articleList" data-param='{"boardId" : "photo", "searchData" : {"startIndex" : 0, "endIndex" : 8}}'> -->
-<!-- 			{{#if articleList}} -->
-<!-- 			{{#each articleList}} -->
-<!-- 				<div class="col-xs-3"> -->
-<!-- 					<a href="?body=viewArticle&boardId={{boardId}}&seq={{seq}}"><img src="{{thumbnailUrl}}"></a> -->
-<!-- 					<p class="caption">{{subject}}</p> -->
-<!-- 				</div> -->
-<!-- 			{{/each}} -->
-<!-- 				{{/if}} -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- 	<footer class="container"> -->
-<!-- 		<img src="#{path.root}/images/footer.png" style="width: 100%;"/> -->
-<!-- 	</footer> -->
 </body>
 
 </html>

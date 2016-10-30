@@ -1,55 +1,96 @@
 <style>
-.title-toggle
+header
 {
+	background-color: #f6f1ea;
+	padding-top: 10px;
+	padding-bottom: 2px;
+	
 	position: absolute;
-	top:0; left: 0;
-	width: 200px;
-	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
 }
 
 .title
 {
+	margin: 10px 0;
+}
+
+.content
+{
 	position: absolute;
-	top: 0; left: 200px;
+	top: 129px;
+	left: 0;
 	right: 0;
+	bottom: 62px;
+	overflow: auto;
+	
+	background-color: #f6f1ea;
+}
+
+.owl-carousel, .owl-wrapper-outer
+{
+	position: absolute !important;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.owl-wrapper, .owl-item
+{
 	height: 100%;
+}
+
+.owl-item
+{
+	overflow: auto;
+}
+
+.content img
+{
+	width: 100%;
+}
+
+footer
+{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+footer > img
+{
+	width: 100%;
 }
 </style>
 
+<script>
+$(document).ready(function()
+{
+	$('#slideCotnents').owlCarousel({pagination: false});
+});
+</script>
 
-<header style="position: absolute; top: 0; left: 0; right: 0; z-index: 1;">
-	<img src="#{path.root}/images/title1.png" style="width: 100%;" />
-	<a class="title-toggle" href="?body=a"></a>
-	<a class="title" href="?body=havy"></a>
+<header>
+	<div class="title">
+		<img src="#{path.root}/images/title.png" style="width: 100%;" />
+	</div>
+	<div class="menu">
+		<img src="#{path.root}/images/menu.png" style="width: 100%;" />
+	</div>
 </header>
-<div style="position: absolute; top: 200px; left: 0; right: 0; bottom: 157px; overflow: auto;">
-	<div>
-		<img src="#{path.root}/images/main2-1-1.png" style="width: 100%;" />
-		<img src="#{path.root}/images/main2-1-2.png" style="width: 100%;" />
-		<img src="#{path.root}/images/main2-1-3.png" style="width: 100%;" />
-	</div>
-	<div>
-		<img src="#{path.root}/images/main2-2-1.png" style="width: 100%;" />
-		<img src="#{path.root}/images/main2-2-2.png" style="width: 100%; margin: -1px 0 -3px 0;" />
-		<img src="#{path.root}/images/main2-2-3.png" style="width: 100%;" />
-	</div>
-	<div>
-		<img src="#{path.root}/images/main2-3-1.png" style="width: 100%;" />
-		<img src="#{path.root}/images/main2-3-2.png" style="width: 100%; margin: -2px 0 -2px 0;" />
-		<img src="#{path.root}/images/main2-3-3.png" style="width: 100%;" />
-		<div>
-		최원장 비포 애프터
+<div class="content">
+	<div data-fragment="subbody">
+		<div id="slideCotnents" class="owl-carousel">
+			<div><img src="#{path.root}/images/main/main1.png"/></div>
+			<div><img src="#{path.root}/images/main/main2.png"/></div>
+			<div><img src="#{path.root}/images/main/main3-1.png"/><img src="#{path.root}/images/main/main3-2.png"/></div>
+			<div><img src="#{path.root}/images/main/main4.png"/></div>
 		</div>
-		<img src="#{path.root}/images/main2-3-4.png" style="width: 100%;" />
-	</div>
-	<div>
-		<img src="#{path.root}/images/main2-4-1.png" style="width: 100%;" />
-		<img src="#{path.root}/images/main2-4-2.png" style="width: 100%; margin: -2px 0 -2px 0;" />
-		<img src="#{path.root}/images/main2-4-3.png" style="width: 100%;" />
 	</div>
 </div>
-<footer style="text-align: center; font-size: 0; position: absolute; bottom:0; left:0; right: 0; z-index: 1;">
-	<img src="#{path.root}/images/footer1.png" style="width: 324px;" />
-	<img src="#{path.root}/images/footer2.png" style="width: 324px;" />
-	<img src="#{path.root}/images/footer3.png" style="width: 324px;" />
+<footer>
+	<img src="#{path.root}/images/bottom.png"/>
 </footer>
