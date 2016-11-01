@@ -1,3 +1,28 @@
+<script>
+$(document).ready(function()
+{
+	$('.class-submenu img').on('click', function()
+	{
+		var type = $(this).attr('data-type');
+		console.log('type', type);
+		$('.class-content img').hide();
+		$('.class-content .' + type).show();
+	});
+});
+</script>
+
 <div>
-	<img src="#{path.root}/images/class/#{query.subbody}.png" style="width: 100%; marin-top: -5px;">
+	<div class="class-submenu" style="text-align: center; font-size: 0;">
+		<img src="#{path.root}/images/menu/hard.png" style="width: 25%;" data-type="1"/>
+		<img src="#{path.root}/images/menu/test.png" style="width: 25%;" data-type="3"/>
+		<img src="#{path.root}/images/menu/pro.png" style="width: 25%;" data-type="4"/>
+		<img src="#{path.root}/images/menu/master.png" style="width: 25%;" data-type="2"/>
+	</div>
+	<div class="class-content">
+		<img src="#{path.root}/images/class/class0.png" style="width: 100%; marin-top: -5px;">
+		<img src="#{path.root}/images/class/class1.png" class="1" style="width: 100%; marin-top: -5px; display: none;">
+		<img src="#{path.root}/images/class/class2.png" class="2" style="width: 100%; marin-top: -5px; display: none;">
+		<img src="#{path.root}/images/class/class3.png" class="3" style="width: 100%; marin-top: -5px; display: none;">
+		<img src="#{path.root}/images/class/class4.png" class="4" style="width: 100%; marin-top: -5px; display: none;">
+	</div>
 </div>
