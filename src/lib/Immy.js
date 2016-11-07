@@ -213,8 +213,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 	{
 		var query = this.mergeQuery(queryInfo.query, param);
 		var params = [];
-		var regex = new RegExp('#\{[^\}]*\}', 'gi');
-		var matchs = query.match(regex);
+		var matchs = query.match(/\#\{[^\}]*\}/gi);
 		if(matchs)
 		{
 			for(var i=0; i<matchs.length; i++)
@@ -248,8 +247,7 @@ Immy.prototype.getQuery = function(namespace, queryId, param)
 			}
 		}
 		
-		regex = new RegExp('$\{[^\}]*\}', 'gi');
-		matchs = query.match(regex);
+		matchs = query.match(/\$\{[^\}]*\}/gi);
 		if(matchs)
 		{
 			for(var i=0; i<matchs.length; i++)

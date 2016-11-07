@@ -1,9 +1,6 @@
 .answer-area
 {
-    border-top: 1px dotted #bfbfbf;
-    border-bottom: 1px dotted #bfbfbf;
-    padding: 0 10px;
-    background-color: #f8f8f8;
+    padding: 10px;
     margin-bottom: 5px;
 }
 
@@ -27,7 +24,7 @@
 
 .commentConent
 {
-	width: 90%;
+	width: 80%;
 	height:100px;
 	border: 1px solid #ccc;
 	border-right:0;
@@ -38,7 +35,7 @@
 
 .writeCommentBtn
 {
-	width: 10%;
+	width: 20%;
 	height:100px;
 	vertical-align:top;
 	border-top-left-radius:0;

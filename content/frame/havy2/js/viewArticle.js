@@ -1,5 +1,12 @@
 $(document).ready(function()
 {
+	var signedUser = $.api.user.getSignedUser();
+	if(signedUser.code == 1000 && (!signedUser.data.level || signedUser.data.level >= 0))
+	{
+		$('#editArticle').remove();
+		$('#deleteArticle').remove();
+	}
+	
 	$("#deleteArticle").on("click", function()
 	{
 		if(confirm("정말 삭제하시겠습니까?"))
@@ -18,14 +25,6 @@ $(document).ready(function()
 	
 	$("#viewList").on("click", function()
 	{
-		var body = "";
-		if($.query.boardId == "live" || $.query.boardId == "photo")
-			body = "gallery";
-		else if($.query.boardId == "training")
-			body = "training";
-		else if($.query.boardId == "qna")
-			body = "qna";
-		
-		location.href = "?body=" + body + ($.query.boardId ? "&boardId=" + $.query.boardId : "") + ($.query.seq ? "&seq=" + $.query.seq : "") + ($.query.pageIndex ? "&pageIndex=" + $.query.pageIndex : "");
+		location.href = "?body=havy&subbody=contact";
 	});
 });

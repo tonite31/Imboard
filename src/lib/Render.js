@@ -14,7 +14,6 @@ module.exports.getData = function(filepath)
 
 module.exports.render = function(req, res, data)
 {
-	console.log("흠 : ", data);
 	res.writeHead(200, {"Content-Type" : "text/html"});
 	res.end(data);
 }; 

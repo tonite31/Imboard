@@ -22,87 +22,51 @@
 .write-area .input-group
 {
 	margin: 10px 0;
-} 
+}
+
+.qnaTable
+{
+	width: 100%;
+	border-bottom: 1px solid #dfdfdf;
+}
+.qnaTable thead tr
+{
+	border-bottom: 1px solid #dfdfdf;
+}
+
+.qnaTable th
+{
+	text-align: center;
+	font-size: 13px;
+}
+
+.qnaTable th, .qnaTable td
+{
+	padding: 5px;
+}
+
+.qnaTable td
+{
+	font-size: 12px;
+}
+
+.noanswered, .answered
+{
+	font-size: 12px;
+}
+
+.pagination
+{
+	text-align: center;
+	width: 100%;
+	font-size: 12px;
+}
+
+.answered
+{
+	color:#0064ff;
+}
 </style>
-
-<script id="qna-template" type="text/x-handlebars-template">
-<table class="qnaTable">
-<colgroup>
-	<col style="width: 10%;"/>
-	<col style="width: 50%;"/>
-	<col style="width: 15%;"/>
-	<col style="width: 15%;"/>
-	<col style="width: 10%;"/>
-</colgroup>
-<thead>
-	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>작성일</th>
-		<th>조회</th>
-	</tr>
-</thead>
-<tbody data-parts="body" data-template-id="qna-list"></tbody>
-</table>
-<div class="pagination" data-parts="pagination" data-template-id="qna-pagination"></div>
-</script>
-
-<script id="qna-list" type="text/x-handlebars-template">
-{{#if articleList}}
-{{#each articleList}}
-<tr{{#equals isNotice "Y"}} class="notice"{{/equals}}>
-	<td align="center">
-		{{#equals isNotice "Y"}}
-			<span>FAQ</span>
-		{{/equals}}
-		{{#notequals isNotice "Y"}}
-			{{seq}}
-		{{/notequals}}
-	</td>
-	<td>
-		{{#equals isNotice "Y"}}
-			<a href="?body=viewArticle&boardId=qna&seq={{seq}}" {{#equals isNotice "Y"}}style="font-weight:bold;"{{/equals}}>{{subject}}</a>
-		{{/equals}}
-		{{#notequals isNotice "Y"}}
-			<a href="?body=viewQna&seq={{seq}}" {{#equals isNotice "Y"}}style="font-weight:bold;"{{/equals}}>{{subject}}</a>
-		{{/notequals}}
-		{{#notequals isNotice "Y"}}
-		{{#sign commentCount ">" 0}}
-		<span class="answered">[답변]</span>
-		{{/sign}}
-		{{#sign commentCount "<=" 0}}
-		<span>[미답변]</span>
-		{{/sign}}
-		{{/notequals}}
-	</td>
-	<td align="center">{{writerName}}</td>
-	<td align="center">{{shortDate registerDate}}</td>
-	<td align="center">{{hit}}</td>
-</tr>
-{{/each}}
-{{else}}
-<tr>
-	<td align="center" colspan="5">등록된 수강문의가 없습니다</td>
-</tr>
-{{/if}}
-</script>
-
-<script id="qna-pagination" type="text/x-handlebars-template">
-{{#sign pageIndex ">" "1"}}
-<a style="font-size:12px;" href="?body=qna&pageIndex={{math pageIndex "-" 1}}">이전</a>
-{{/sign}}
-{{#if pageList}}
-{{#each pageList}}
-<a class="number {{#equals ../pageIndex pageNumber}}selected{{/equals}}" href="?body=qna&pageIndex={{pageNumber}}">{{pageNumber}}</a>
-{{/each}}
-{{/if}}
-{{#if maxPage}}
-{{#notequals pageIndex maxPage}}
-<a href="?body=qna&pageIndex={{math pageIndex "+" 1}}">다음</a>
-{{/notequals}}
-{{/if}}
-</script>
 
 <script>
 var savedSeq = null;
@@ -110,12 +74,13 @@ $(document).ready(function()
 {
 	$('#contactWrite').on('click', function()
 	{
-		$(this).hide().parent().next().show();		
+		$(this).hide().parent().next().show();	
+		$('#qnaList').hide();
 	});
 	
 	$('#cancelWrite').on('click', function()
 	{
-		$(this).parent().parent().hide().parent().show();	
+		location.reload();
 	});
 	
 	$('#write').on('click', function()
@@ -125,6 +90,13 @@ $(document).ready(function()
 	
 	formSubmit('#writeForm', function(param)
 	{
+		var signedUser = $.api.user.getSignedUser();
+		if(signedUser.code == 1000 && signedUser.data.level < 0)
+		{
+			param.isNotice = "Y";
+			delete param.password;
+		}
+		
 		param.boardId = "qna";
 		var result = null;
 		if(savedSeq != null)
@@ -145,7 +117,7 @@ $(document).ready(function()
 			}
 			else
 			{
-				console.log("리절트 : ", result);
+				location.reload();
 			}
 		}
 	});
@@ -160,17 +132,17 @@ $(document).ready(function()
 </div>
 <form class="write-area" id="writeForm">
 	<div class="input-group">
-		<input type="text" name="subject" class="form-control" placeholder="제목" style="width: 70%;"> <input type="text" name="writerName" class="form-control" placeholder="이름" style="width: 29%;">
+		<input type="text" name="subject" class="form-control" placeholder="제목" style="width: 65%; margin-right: 5px;" autocomplete="off"> <input type="text" name="writerName" class="form-control" placeholder="이름" style="width: 29%;" autocomplete="off">
 	</div>
 	<div class="input-group">
-		<textarea name="content" class="form-control" placeholder="내용"></textarea>
+		<textarea name="content" class="form-control" placeholder="내용" autocomplete="off"></textarea>
 	</div>
 	<div class="input-group">
-		<input type="password" name="password" class="form-control" placeholder="비밀번호">
+		<input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off">
 	</div>
 	<div>
 		<img src="#{path.root}/images/contact/write.png" style="width: 100px;" id="write">
 		<p style="margin-top: 15px;"><a href="#" id="cancelWrite" style="color: #343434;">돌아가기</a></p>
 	</div>
 </form>
-<div data-bind="articleComponent" data-param='{"boardId" : "qna", "cpp" : 10}' data-template-id="qna-template"></div>
+<div id="qnaList" data-bind="articleComponent" data-param='{"boardId" : "qna", "cpp" : 10}' data-template-id="qna-template"></div>

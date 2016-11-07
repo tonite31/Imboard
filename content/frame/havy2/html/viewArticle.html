@@ -1,20 +1,15 @@
-<script id="qnaArticle" type="text/x-handlebars-template">
+<script id="qnaArticle2" type="text/x-handlebars-template">
 <div class="subject-area">
 	<h3>{{subject}} <small>{{writerName}}</small></h3>
-	<span style="position: absolute; right:0; bottom:5px;">{{registerDate}}</span>
 </div>
 <div style="padding: 20px 5px;">{{{content}}}</div>
 <div style="text-align:right; padding: 10px 0; border-bottom: 1px solid #dfdfdf">
-{{#if '#{user.id}'}}
-{{#test "'#{user.id}' && ('#{user.id}' == '" writerId "' || '#{user.level}' < 0)"}}
-<a href="?body=writeArticle&prevBody=viewArticle&boardId={{boardId}}&seq={{seq}}" class="btn btn-default">수정</a>
+<a href="?body=writeArticle&prevBody=viewArticle&boardId={{boardId}}&seq={{seq}}" id="editArticle" class="btn btn-default">수정</a>
 <button type="button" id="deleteArticle" class="btn btn-default">삭제</button>
-{{/test}}
-{{/if}}
 <button type="button" id="viewList" class="btn btn-default">목록</button>
 </div>
 </script>
 
 <div class="container">
-	<div data-bind="article" data-param='{"boardId" : "#{query.boardId}", "seq" : #{query.seq}}' data-template-id="qnaArticle"></div>
+	<div data-bind="article" data-param='{"boardId" : "#{query.boardId}", "seq" : #{query.seq}}' data-template-id="qnaArticle2"></div>
 </div>

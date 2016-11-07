@@ -4,6 +4,48 @@ $(document).ready(function()
 	if(signedUser.code == 1000 && signedUser.data.level < 0)
 	{
 		$("#passwordConfirmArea").remove();
+		var result = $.api.comment.getCommentList({boardId : "qna", articleSeq : $.query.seq});
+		if(result.code == 1000)
+		{
+			if(result.data.length <= 0)
+			{
+				$("#qnaArea .answer-area").html("답변이 아직 등록되지 않았습니다");
+			}
+			else
+			{
+				var template = Handlebars.compile($("#qnaComment").html());
+				$("#qnaArea .answer-area").html(template({commentList : result.data}));
+
+				if(!signedUser.data.level || signedUser.data.level >= 0)
+				{
+					$(".deleteComment").remove();
+				}
+			}
+		}
+		else
+		{
+			$("#qnaArea .answer-area").html("답변을 불러오는데 실패했습니다.");
+		}
+		
+		$("#passwordConfirmArea").remove();
+		$("#deleteQna").on("click", function()
+		{
+			if(confirm("정말 삭제하시겠습니까?"))
+			{
+				var result = $.api.article.deleteArticle({boardId : "qna", seq : $.query.seq, password: data.password, isRemove : "Y"});
+				if(result.code == 1000)
+				{
+					location.href = "?body=havy&subbody=contact";
+				}
+				else
+				{
+					alert("오류가 발생했습니다.");
+					console.error(result);
+				}
+			}
+		});
+		
+		$('#editQna').attr('href', $('#editQna').attr('href'));
 	}
 	
 	$("#passwordConfirmArea > form").compile(function(data)
@@ -26,6 +68,11 @@ $(document).ready(function()
 				{
 					var template = Handlebars.compile($("#qnaComment").html());
 					$("#qnaArea .answer-area").html(template({commentList : result.data}));
+
+					if(!signedUser.data.level || signedUser.data.level >= 0)
+					{
+						$(".deleteComment").remove();
+					}
 				}
 			}
 			else
@@ -38,10 +85,10 @@ $(document).ready(function()
 			{
 				if(confirm("정말 삭제하시겠습니까?"))
 				{
-					var result = $.api.article.deleteArticle({boardId : "qna", seq : $.query.seq, isRemove : "Y"});
+					var result = $.api.article.deleteArticle({boardId : "qna", seq : $.query.seq, password: data.password, isRemove : "Y"});
 					if(result.code == 1000)
 					{
-						location.href = "?body=qna";
+						location.href = "?body=havy&subbody=contact";
 					}
 					else
 					{
@@ -50,6 +97,8 @@ $(document).ready(function()
 					}
 				}
 			});
+			
+			$('#editQna').attr('href', $('#editQna').attr('href') + '&password=' + data.password);
 		}
 		else if(result.code == -9998)
 		{
@@ -67,7 +116,8 @@ $(document).ready(function()
 		var result = $.api.comment.insertComment({boardId : "qna", articleSeq : $.query.seq, content : content});
 		if(result.code == 1000)
 		{
-			var commentList = $.api.comment.getCommentList({boardId : "qna", articleSeq : $.query.seq, searchData : {orderByGroupId : "ASC"}});
+			var commentList = $.api.comment.getCommentList({boardId : "qna", articleSeq : $.query.seq});
+			console.log("리스트 : ", commentList);
 			if(commentList.code == 1000)
 			{
 				var template = Handlebars.compile($("#qnaComment").html());

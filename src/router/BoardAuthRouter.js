@@ -20,7 +20,6 @@ module.exports.updateBoardAuth =
 	path : '/boardAuth/updateBoardAuth.do',
 	callback : function(req, res)
 	{
-		console.log("머지 : ", req.body);
 		var boardAuthVo = new BoardAuthVo(req.body);
 		BoardAuthDao.getBoardAuth(boardAuthVo.boardId, function(response)
 		{

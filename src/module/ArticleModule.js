@@ -164,6 +164,12 @@ module.exports.articleComponent = function($, el, param, req, next)
 	};
 
 	data.searchData.registerDateType = registerDateType;
+	
+	var template = this.getTemplate($, el);
+	if(!$(el).html())
+	{
+		$(el).html(template());
+	}
 
 	var setPagination = function(cb)
 	{
@@ -186,7 +192,6 @@ module.exports.articleComponent = function($, el, param, req, next)
 			{
 				var maxPage = Math.ceil(totalCount / cpp);
 				maxPage = maxPage == 0 ? 1 : maxPage;
-
 
 				var startPage = Math.ceil(pageIndex / pgc);
 				startPage = startPage + (startPage - 1) * (pgc - 1);

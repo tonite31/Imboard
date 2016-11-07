@@ -1,15 +1,44 @@
 var savedSeq = null;
 $(document).ready(function()
 {
-	CKEDITOR.replace("ckeditor", { height: 300 });
+	var signedUser = $.api.user.getSignedUser();
 	
 	if($.query.seq != null)
 		savedSeq = $.query.seq;
 	
-	$("#form").compile(function(param)
+	var result = $.api.article.getArticle({boardId : "qna", seq : $.query.seq, password : $.query.password});
+	if(result.code == 1000)
+	{
+		$('#subject').val(result.data.subject);
+		$('#content').val(result.data.content);
+		$('#writerName').val(result.data.writerName);
+		$('#password').val(result.data.password);
+	}
+	else if(result.code == -9998)
+	{
+		alert("비밀번호가 일치하지 않습니다");
+		history.back();
+	}
+	else
+	{
+		alert("게시글이 존재하지 않습니다");
+		history.back();
+	}
+	
+	$('#write').on('click', function()
+	{
+		$('#writeForm').submit();
+	});
+	
+	formSubmit('#writeForm', function(param)
 	{
 		param.boardId = "qna";
-		param.content = CKEDITOR.instances.ckeditor.getData();
+		if(signedUser.code == 1000 && signedUser.data.level < 0)
+		{
+			param.isNotice = "Y";
+			delete param.password;
+		}
+		
 		var result = null;
 		if(savedSeq != null)
 		{
@@ -25,11 +54,11 @@ $(document).ready(function()
 		{
 			if(result.code == -9998)
 			{
-				alert("권한이 없습니다");
+				alert("비밀번호가 일치하지 않습니다.");
 			}
 			else
 			{
-				location.href = "?body=qna";
+				location.href = "?body=havy&subbody=contact";
 			}
 		}
 	});
