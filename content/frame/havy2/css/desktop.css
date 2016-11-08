@@ -4,5 +4,10 @@
 	{
 		top: 188px !important;
 		bottom: 97px !important;
-	}	
+	}
+	
+	.youtube
+	{
+		height: 315px !important;
+	}
 }
