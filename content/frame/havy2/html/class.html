@@ -17,7 +17,7 @@ $(document).ready(function()
 	{
 		var type = $(this).attr('data-type');
 		console.log('type', type);
-		$('.class-content img').hide();
+		$('.class-content > *').hide();
 		$('.class-content .' + type).show();
 	});
 });
