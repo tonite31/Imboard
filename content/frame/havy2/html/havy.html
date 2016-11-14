@@ -82,6 +82,7 @@ footer > img
 </style>
 
 <script>
+var timer = null;
 $(document).ready(function()
 {
 	var subBody = '#{query.subbody}';
@@ -89,7 +90,25 @@ $(document).ready(function()
 	if(img.length == 1)
 		img.attr('src', img.attr('src').replace('1', '2'));
 	
-	$('#slideCotnents').owlCarousel({pagination: false, singleItem: true});
+	var owl = $('#slideCotnents');
+	owl.owlCarousel({pagination: false, singleItem: true});
+	
+	owl.trigger('owl.play', 5000);
+	
+	$('.owl-item').on('scroll', function()
+	{
+		owl.trigger('owl.stop');
+		if(timer)
+		{
+			clearTimeout(timer);
+			timer = null;
+		}
+		
+		timer = setTimeout(function()
+		{
+			owl.trigger('owl.play', 5000);
+		}, 5000);
+	});
 });
 </script>
 
