@@ -76,12 +76,13 @@ footer > img
 .youtube
 {
 	width: 95%;
-	margin: 0 auto;
+	margin: 15px auto;
 	height: 230px;
 }
 </style>
 
 <script>
+var timer = null;
 $(document).ready(function()
 {
 	var subBody = '#{query.subbody}';
@@ -89,7 +90,25 @@ $(document).ready(function()
 	if(img.length == 1)
 		img.attr('src', img.attr('src').replace('1', '2'));
 	
-	$('#slideCotnents').owlCarousel({pagination: false, singleItem: true});
+	var owl = $('#slideCotnents');
+	owl.owlCarousel({pagination: false, singleItem: true});
+	
+	owl.trigger('owl.play', 5000);
+	
+	$('.owl-item').on('scroll', function()
+	{
+		owl.trigger('owl.stop');
+		if(timer)
+		{
+			clearTimeout(timer);
+			timer = null;
+		}
+		
+		timer = setTimeout(function()
+		{
+			owl.trigger('owl.play', 5000);
+		}, 5000);
+	});
 });
 </script>
 
@@ -107,7 +126,7 @@ $(document).ready(function()
 		</div>
 	</header>
 	<div class="content">
-		<div data-fragment="subbody">
+		<div data-fragment="subbody" style="height: 100%;">
 			<div id="slideCotnents" class="owl-carousel">
 				<div>
 					<img src="#{path.root}/images/main/main1-1.png"/>
