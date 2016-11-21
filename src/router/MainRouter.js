@@ -172,6 +172,16 @@ function replaceData(html, req, frame)
 					}
 				}
 			}
+			
+			var ua = req.headers['user-agent'];
+//			if (/mobile/i.test(ua))
+//			{
+				html = html.replace(/#{imageType}/gi, 'small-');
+//			}
+//			else
+//			{
+//				html = html.replace(/#{imageType}/gi, '');
+//			}
 
 			matchs = html.match(/[^]?#{locale}/gi);
 			if(matchs)
