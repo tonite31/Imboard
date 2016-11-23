@@ -22,6 +22,13 @@ module.exports.main =
 //				return;
 //			}
 			
+			var ua = req.headers['user-agent'];
+			if (/mobile/i.test(ua))
+			{
+				res.redirect('http://54.64.208.201:3001');
+				return;
+			}
+			
 			if(!req.session)
 				req.session = {};			
 			
